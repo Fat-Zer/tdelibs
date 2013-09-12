@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef tdefilesharedlg_h
-#define tdefilesharedlg_h
+#ifndef TDEFILESHAREDLG_H
+#define TDEFILESHAREDLG_H
 
 #include <kpropertiesdialog.h>
 class TQVBoxLayout;

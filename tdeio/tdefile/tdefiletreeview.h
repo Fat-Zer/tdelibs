@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef tdefile_tree_view_h
-#define tdefile_tree_view_h
+#ifndef TDEFILE_TREE_VIEW_H
+#define TDEFILE_TREE_VIEW_H
 
 #include <tqmap.h>
 #include <tqpoint.h>

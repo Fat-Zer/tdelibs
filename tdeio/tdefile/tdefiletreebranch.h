@@ -19,8 +19,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef tdefile_tree_branch_h
-#define tdefile_tree_branch_h
+#ifndef TDEFILE_TREE_BRANCH_H
+#define TDEFILE_TREE_BRANCH_H
 
 #include <tqdict.h>
 #include <tqlistview.h>

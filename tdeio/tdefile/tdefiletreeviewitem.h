@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef tdefile_tree_view_item_h
-#define tdefile_tree_view_item_h
+#ifndef TDEFILE_TREE_VIEW_ITEM_H
+#define TDEFILE_TREE_VIEW_ITEM_H
 
 #include <tqptrlist.h>
 #include <tdelistview.h>

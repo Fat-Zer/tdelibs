@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef tdefileshare_h
-#define tdefileshare_h
+#ifndef TDEFILESHARE_H
+#define TDEFILESHARE_H
 #include <tqobject.h>
 
 #include <tdelibs_export.h>
