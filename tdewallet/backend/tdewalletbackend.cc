@@ -51,7 +51,7 @@
 
 using namespace TDEWallet;
 
-#define KWMAGIC "TDEWALLET\n\r\0\r\n"
+#define KWMAGIC "KWALLET\n\r\0\r\n"
 #define KWMAGIC_LEN 12
 
 static void initTDEWalletDir()
