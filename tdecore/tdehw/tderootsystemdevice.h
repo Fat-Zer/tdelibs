@@ -37,6 +37,7 @@ namespace TDESystemPowerState {
 enum TDESystemPowerState {
 	Active,
 	Standby,
+	Freeze,
 	Suspend,
 	Hibernate,
 	PowerOff,
@@ -66,7 +67,7 @@ class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		*  @param Device type
 		*/
 		TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
-		
+
 		/**
 		* Destructor.
 		*/
@@ -106,6 +107,11 @@ class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		* @return TRUE if hardware and permissions allow the system to enter standby, FALSE if not
 		*/
 		bool canStandby();
+
+		/**
+		* @return TRUE if hardware and permissions allow the system to enter freeze state, FALSE if not
+		*/
+		bool canFreeze();
 
 		/**
 		* @return TRUE if hardware and permissions allow the system to be suspended, FALSE if not

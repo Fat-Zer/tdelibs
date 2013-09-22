@@ -147,6 +147,45 @@ bool TDERootSystemDevice::canStandby() {
 	return FALSE;
 }
 
+bool TDERootSystemDevice::canFreeze() {
+	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
+	// See Bug 1615 for details
+	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
+		return FALSE;
+	}
+
+	TQString statenode = "/sys/power/state";
+	int rval = access (statenode.ascii(), W_OK);
+	if (rval == 0) {
+		if (powerStates().contains(TDESystemPowerState::Freeze)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can freeze?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.trinitydesktop.hardwarecontrol",
+						"/org/trinitydesktop/hardwarecontrol",
+						"org.trinitydesktop.hardwarecontrol.Power",
+						"CanFreeze");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
+	}
+#endif // WITH_TDEHWLIB_DAEMONS
+
+	return FALSE;
+}
+
 bool TDERootSystemDevice::canSuspend() {
 	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
 	// See Bug 1615 for details
@@ -352,7 +391,7 @@ bool TDERootSystemDevice::canHibernate() {
 bool TDERootSystemDevice::canPowerOff() {
 	TDEConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
-	
+
 	config->setGroup("General" );
 	bool maysd = false;
 #ifdef WITH_CONSOLEKIT
@@ -394,7 +433,7 @@ bool TDERootSystemDevice::canPowerOff() {
 bool TDERootSystemDevice::canReboot() {
 	TDEConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
-	
+
 	config->setGroup("General" );
 	bool mayrb = false;
 #ifdef WITH_CONSOLEKIT
@@ -460,13 +499,16 @@ void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESy
 }
 
 bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState ps) {
-	if ((ps == TDESystemPowerState::Standby) || (ps == TDESystemPowerState::Suspend) || (ps == TDESystemPowerState::Hibernate)) {
+	if ((ps == TDESystemPowerState::Standby) || (ps == TDESystemPowerState::Freeze) || (ps == TDESystemPowerState::Suspend) || (ps == TDESystemPowerState::Hibernate)) {
 		TQString statenode = "/sys/power/state";
 		TQFile file( statenode );
 		if ( file.open( IO_WriteOnly ) ) {
 			TQString powerCommand;
 			if (ps == TDESystemPowerState::Standby) {
 				powerCommand = "standby";
+			}
+			if (ps == TDESystemPowerState::Freeze) {
+				powerCommand = "freeze";
 			}
 			if (ps == TDESystemPowerState::Suspend) {
 				powerCommand = "mem";
@@ -586,6 +628,17 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 								"/org/trinitydesktop/hardwarecontrol",
 								"org.trinitydesktop.hardwarecontrol.Power",
 								"Standby");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::Freeze) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.trinitydesktop.hardwarecontrol",
+								"/org/trinitydesktop/hardwarecontrol",
+								"org.trinitydesktop.hardwarecontrol.Power",
+								"Freeze");
 					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
 					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
 						return true;

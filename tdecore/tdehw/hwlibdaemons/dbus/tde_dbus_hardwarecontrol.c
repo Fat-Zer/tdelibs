@@ -356,6 +356,12 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 			"    <method name=\"Standby\">\n"
 			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
 			"    </method>\n"
+			"    <method name=\"CanFreeze\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"Freeze\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
 			"    <method name=\"CanSuspend\">\n"
 			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
 			"    </method>\n"
@@ -487,6 +493,12 @@ void listen() {
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Standby")) {
 			reply_SetPower(msg, conn, "standby");
 		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanFreeze")) {
+			reply_CanSetPower(msg, conn, "freeze");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Freeze")) {
+			reply_SetPower(msg, conn, "freeze");
+		}
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanSuspend")) {
 			reply_CanSetPower(msg, conn, "mem");
 		}
@@ -508,7 +520,7 @@ void listen() {
 		else {
 			error_UnknownMessage(msg, conn);
 		}
-		
+
 		// free the message
 		dbus_message_unref(msg);
 	}
