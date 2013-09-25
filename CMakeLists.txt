@@ -96,6 +96,7 @@ OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KD
 OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
 OPTION( WITH_XRANDR "Build the tderandr library" ON )
+OPTION( WITH_XCOMPOSITE "Enable xcomposite support" ON )
 OPTION( WITH_KDE4_MENU_SUFFIX "Add [KDE4] tag to KDE4 menu items" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
@@ -621,10 +622,15 @@ endif( XRENDER_FOUND )
 
 ##### check for xcomposite #########################
 
-pkg_search_module( XCOMPOSITE xcomposite )
-if( XCOMPOSITE_FOUND )
-  set( HAVE_XCOMPOSITE 1 )
-endif( XCOMPOSITE_FOUND )
+if( WITH_XCOMPOSITE )
+  pkg_search_module( XCOMPOSITE xcomposite )
+  if( XCOMPOSITE_FOUND )
+    set( HAVE_XCOMPOSITE 1 )
+  else( WITH_XCOMPOSITE )
+    tde_message_fatal( "xcomposite support was requested, but xcomposite was not found on your system" )
+  endif( XCOMPOSITE_FOUND )
+endif( WITH_XCOMPOSITE )
+
 
 ##### check for libxml-2.0 ######################
 
