@@ -2982,6 +2982,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						if (line.contains("standby")) {
 							powerstates.append(TDESystemPowerState::Standby);
 						}
+						if (line.contains("freeze")) {
+							powerstates.append(TDESystemPowerState::Freeze);
+						}
 						if (line.contains("mem")) {
 							powerstates.append(TDESystemPowerState::Suspend);
 						}
