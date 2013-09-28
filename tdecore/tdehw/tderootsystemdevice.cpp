@@ -103,9 +103,26 @@ bool TDERootSystemDevice::canSetHibernationMethod() {
 	if (rval == 0) {
 		return TRUE;
 	}
-	else {
-		return FALSE;
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can set hibernation method?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.trinitydesktop.hardwarecontrol",
+						"/org/trinitydesktop/hardwarecontrol",
+						"org.trinitydesktop.hardwarecontrol.Power",
+						"CanSetHibernationMethod");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
 	}
+#endif // WITH_TDEHWLIB_DAEMONS
+
+	return FALSE;
 }
 
 bool TDERootSystemDevice::canStandby() {
@@ -495,7 +512,43 @@ void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESy
 		TQTextStream stream( &file );
 		stream << hibernationCommand;
 		file.close();
+		return;
 	}
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Power", dbusConn);
+			if (hardwareControl.canSend()) {
+				// set hibernation method
+				TQValueList<TQT_DBusData> params;
+				TQString hibernationCommand;
+				if (hm == TDESystemHibernationMethod::Platform) {
+					hibernationCommand = "platform";
+				}
+				if (hm == TDESystemHibernationMethod::Shutdown) {
+					hibernationCommand = "shutdown";
+				}
+				if (hm == TDESystemHibernationMethod::Reboot) {
+					hibernationCommand = "reboot";
+				}
+				if (hm == TDESystemHibernationMethod::TestProc) {
+					hibernationCommand = "testproc";
+				}
+				if (hm == TDESystemHibernationMethod::Test) {
+					hibernationCommand = "test";
+				}
+				params << TQT_DBusData::fromString(hibernationCommand);
+				TQT_DBusMessage reply = hardwareControl.sendWithReply("SetHibernationMethod", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					return;
+				}
+			}
+		}
+	}
+#endif // WITH_TDEHWLIB_DAEMONS
+
 }
 
 bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState ps) {

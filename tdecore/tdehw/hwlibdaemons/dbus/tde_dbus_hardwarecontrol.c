@@ -286,6 +286,37 @@ void reply_SetPower(DBusMessage* msg, DBusConnection* conn, char* state) {
 	reply_SetGivenPath(msg, conn, "/sys/power/state", state);
 }
 
+void reply_CanSetHibernationMethod(DBusMessage* msg, DBusConnection* conn) {
+
+	// check if path is writable
+	reply_CanSetGivenPath(msg, conn, "/sys/power/disk");
+}
+
+void reply_SetHibernationMethod(DBusMessage* msg, DBusConnection* conn) {
+	DBusMessageIter args;
+	const char* member = dbus_message_get_member(msg);
+	char* method = NULL;
+
+	// read the arguments
+	if (!dbus_message_iter_init(msg, &args)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: no arguments supplied\n", member);
+	}
+	else if (DBUS_TYPE_STRING != dbus_message_iter_get_arg_type(&args)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: argument not string\n", member);
+	}
+	else {
+		dbus_message_iter_get_basic(&args, &method);
+	}
+
+	// set hibernation method
+	if (method) {
+		reply_SetGivenPath(msg, conn, "/sys/power/disk", method);
+	}
+	else {
+		reply_Bool(msg, conn, false);
+	}
+}
+
 void signal_NameAcquired(DBusMessage* msg) {
 	DBusMessageIter args;
 	char *name = NULL;
@@ -301,7 +332,7 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 	DBusMessage* reply;
 	DBusMessageIter args;
 	dbus_uint32_t serial = 0;
-	size_t size = 2048;
+	size_t size = 4096;
 	const char* member = dbus_message_get_member(msg);
 	const char *path = dbus_message_get_path(msg);
 	char *data = malloc(size);
@@ -372,6 +403,13 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
 			"    </method>\n"
 			"    <method name=\"Hibernate\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"CanSetHibernationMethod\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"SetHibernationMethod\">\n"
+			"      <arg name=\"method\" direction=\"in\" type=\"s\" />\n"
 			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
 			"    </method>\n"
 			"  </interface>\n",
@@ -510,6 +548,12 @@ void listen() {
 		}
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Hibernate")) {
 			reply_SetPower(msg, conn, "disk");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanSetHibernationMethod")) {
+			reply_CanSetHibernationMethod(msg, conn);
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "SetHibernationMethod")) {
+			reply_SetHibernationMethod(msg, conn);
 		}
 		else if (dbus_message_is_signal(msg, "org.freedesktop.DBus", "NameAcquired")) {
 			signal_NameAcquired(msg);
