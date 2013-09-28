@@ -31,6 +31,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include <tqregexp.h>
 #include <tqstring.h>
 #include <tqfile.h>
 #include <tqdir.h>
@@ -206,13 +207,24 @@ KService::init( KDesktopFile *config )
   m_strExec = config->readPathEntry( "Exec" );
   if (kde4application && !m_strExec.startsWith("/")) {
     m_strExec = "XDG_DATA_DIRS=" + kde4applicationprefix + "/share XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
-  } else if (config->readBoolEntry("X-TDE-SubstituteUID") || config->readBoolEntry("X-KDE-SubstituteUID")) {
+  }
+  else if (config->readBoolEntry("X-TDE-SubstituteUID") || config->readBoolEntry("X-KDE-SubstituteUID")) {
+    TQString path = TQString::fromLocal8Bit(getenv("PATH"));
+    TQString command;
+    TQString params;
     int space = m_strExec.find(" ");
-    if (space==-1)
-      m_strExec = TDEStandardDirs::findExe(m_strExec);
+    if (space==-1) {
+      command = m_strExec;
+    }
     else {
-      const TQString command = m_strExec.left(space);
-      m_strExec.replace(command,TDEStandardDirs::findExe(command));
+      command = m_strExec.left(space);
+      params = m_strExec.mid(space);
+    }
+    path.replace(TQRegExp("(^|:)(/usr/local|/usr)/bin($|:)"), "\\1\\2/sbin:\\2/bin\\3");
+    path.replace(TQRegExp("(^|:)/bin($|:)"), "\\1/sbin:/bin\\2");
+    m_strExec = TDEStandardDirs::findExe(command, path);
+    if (!m_strExec.isEmpty() && !params.isEmpty()) {
+      m_strExec += params;
     }
   }
 
