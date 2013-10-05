@@ -880,7 +880,7 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const TQString &errorMsg )
 
     if (!callOK)
     {
-       kdWarning(7019) << "Can't communicate with kded_kpasswdserver!" << endl;
+       kdWarning(7019) << "Can't communicate with kded_kpasswdserver (openPassDlg)!" << endl;
        return false;
     }
 
@@ -1219,7 +1219,7 @@ bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
     if ( !d->dcopClient->call( "kded", "kpasswdserver", "checkAuthInfo(TDEIO::AuthInfo, long int, unsigned long int)",
                                params, replyType, reply ) )
     {
-       kdWarning(7019) << "Can't communicate with kded_kpasswdserver!" << endl;
+       kdWarning(7019) << "Can't communicate with kded_kpasswdserver (checkCachedAuthentication)!" << endl;
        return false;
     }
 
