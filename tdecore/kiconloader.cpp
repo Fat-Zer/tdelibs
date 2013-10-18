@@ -106,7 +106,11 @@ struct TDEIconGroup
     bool alphaBlending;
 };
 
-#define KICONLOADER_CHECKS
+// WARNING
+// Enabling this in production will cause a massive slowdown of (and a related memory leak in)
+// any application that creates and destroys large numbers of TDEIconLoader instances
+//#define KICONLOADER_CHECKS
+
 #ifdef KICONLOADER_CHECKS
 // Keep a list of recently created and destroyed TDEIconLoader instances in order
 // to detect bugs like #68528.
