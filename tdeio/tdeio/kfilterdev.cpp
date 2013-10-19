@@ -181,7 +181,7 @@ TQIODevice::Offset KFilterDev::size() const
 
     // But readAll, which is not virtual, needs the size.........
 
-    kdWarning(7005) << "KFilterDev::size - can't be implemented !!!!!!!! Returning -1 " << endl;
+    kdDebug(7005) << "KFilterDev::size - can't be implemented, returning -1" << endl;
     //abort();
     return (uint)-1;
 }
