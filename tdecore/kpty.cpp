@@ -203,12 +203,9 @@ KPty::~KPty()
 
 bool KPty::setPty(int pty_master)
 {
-   kdWarning(175)
-      << "setPty()" << endl;
    // a pty is already open
    if(d->masterFd >= 0) {
-      kdWarning(175)
-	 << "d->masterFd >= 0" << endl;
+      kdWarning(175) << "KPty::setPty(): " << "d->masterFd >= 0" << endl;
       return false;
    }
    d->masterFd = pty_master;
@@ -219,8 +216,7 @@ bool KPty::_attachPty(int pty_master)
 {
   TQCString ptyName;
 
-    kdWarning(175)
-       << "_attachPty() " << pty_master << endl;
+    kdDebug(175) << "KPty::_attachPty(): " << pty_master << endl;
 #if defined(HAVE_PTSNAME) && defined(HAVE_GRANTPT)
     char *ptsn = ptsname(d->masterFd);
     if (ptsn) {
@@ -242,8 +238,8 @@ bool KPty::_attachPty(int pty_master)
       !chownpty(true))
   {
     kdWarning(175)
-      << "chownpty failed for device " << ptyName << "::" << d->ttyName
-      << "\nThis means the communication can be eavesdropped." << endl;
+      << "KPty::_attachPty(): " << "chownpty failed for device " << ptyName << "::" << d->ttyName << endl
+      << "KPty::_attachPty(): " << "This means the communication can be eavesdropped." << endl;
   }
 
 #ifdef BSD
@@ -257,7 +253,7 @@ bool KPty::_attachPty(int pty_master)
   d->slaveFd = ::open(d->ttyName.data(), O_RDWR | O_NOCTTY);
   if (d->slaveFd < 0)
   {
-    kdWarning(175) << "Can't open slave pseudo teletype" << endl;
+    kdWarning(175) << "KPty::_attachPty(): " << "Can't open slave pseudo teletype" << endl;
     ::close(d->masterFd);
     d->masterFd = -1;
     return false;
@@ -381,7 +377,7 @@ bool KPty::open()
     }
   }
 
-  kdWarning(175) << "Can't open a pseudo teletype" << endl;
+  kdWarning(175) << "KPty::open(): " << "Can't open a pseudo teletype" << endl;
   return false;
 
  gotpty:
