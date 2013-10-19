@@ -16,6 +16,11 @@
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/14 Michele Calgaro:
+      add "scroll tabs on mouse wheel event" functionality
 */
 
 #ifndef KTABWIDGET_H
@@ -44,14 +49,17 @@ class TDEUI_EXPORT KTabWidget : public TQTabWidget
 
 public:
     KTabWidget( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+
     /**
      * Destructor.
      */
     virtual ~KTabWidget();
+
     /*!
       Set the tab of the given widget to \a color.
     */
     void setTabColor( TQWidget *, const TQColor& color );
+
     /*!
       Returns the tab color for the given widget.
     */
@@ -101,6 +109,13 @@ public:
       @since 3.4
     */
     bool isTabBarHidden() const;
+
+    /*!
+      Enable/disable "scroll tabs on mouse wheel event" functionality
+      \a mouseWheelScroll true -> scroll enabled, false -> scroll disabled
+      @since 14.0
+    */
+    void setMouseWheelScroll(bool mouseWheelScroll);
 
     /*!
       Reimplemented for internal reasons.

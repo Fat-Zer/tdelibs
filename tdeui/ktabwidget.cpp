@@ -16,6 +16,11 @@
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/14 Michele Calgaro:
+      add "scroll tabs on mouse wheel event" functionality
 */
 
 #include <tqapplication.h>
@@ -32,16 +37,16 @@
 class KTabWidgetPrivate {
 public:
     bool m_automaticResizeTabs;
-    int m_maxLength;
-    int m_minLength;
+    int  m_maxLength;
+    int  m_minLength;
     unsigned int m_CurrentMaxLength;
+    bool m_mouseWheelScroll;
 
-    //holds the full names of the tab, otherwise all we
-    //know about is the shortened name
+    // Holds the full names of the tab, otherwise all we know about is the shortened name
     TQStringList m_tabNames;
 
-    KTabWidgetPrivate() {
-        m_automaticResizeTabs = false;
+    KTabWidgetPrivate() : m_automaticResizeTabs(false), m_mouseWheelScroll(true)
+    {
         TDEConfigGroupSaver groupsaver(TDEGlobal::config(), "General");
         m_maxLength = TDEGlobal::config()->readNumEntry("MaximumTabLength", 30);
         m_minLength = TDEGlobal::config()->readNumEntry("MinimumTabLength", 3);
@@ -120,6 +125,11 @@ void KTabWidget::setTabBarHidden( bool hide )
 bool KTabWidget::isTabBarHidden() const
 {
     return !( tabBar()->isVisible() );
+}
+
+void KTabWidget::setMouseWheelScroll(bool mouseWheelScroll)
+{
+  d->m_mouseWheelScroll = mouseWheelScroll;
 }
 
 void KTabWidget::setTabColor( TQWidget *w, const TQColor& color )
@@ -332,20 +342,21 @@ void KTabWidget::wheelEvent( TQWheelEvent *e )
         e->ignore();
 }
 
-void KTabWidget::wheelDelta( int delta )
+void KTabWidget::wheelDelta(int delta)
 {
-    if ( count() < 2 )
-        return;
+    if (count()<2 || !d->m_mouseWheelScroll)
+      return;
 
     int page = currentPageIndex();
-    if ( delta < 0 )
-         page = (page + 1) % count();
-    else {
-        page--;
-        if ( page < 0 )
-            page = count() - 1;
+    if (delta<0)
+       page = (page + 1) % count();
+    else
+    {
+      page--;
+      if (page<0)
+        page = count() - 1;
     }
-    setCurrentPage( page );
+    setCurrentPage(page);
 }
 #endif
 
