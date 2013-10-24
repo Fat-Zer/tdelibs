@@ -102,6 +102,8 @@ OPTION( WITH_KDE4_MENU_SUFFIX "Add [KDE4] tag to KDE4 menu items" OFF )
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_HSPELL "Enable hspell support" ${WITH_ALL_OPTIONS} )
 
+OPTION( WITH_TDEICONLOADER_DEBUG "Enable debugging in TDEIconLoader class" OFF )
+
 
 ##### set PKG_CONFIG_PATH #######################
 
@@ -951,6 +953,13 @@ if( WITH_HSPELL )
     message(FATAL_ERROR "\nHSPELL support are requested, but not found on your system" )
   endif( NOT HSPELL_FOUND )
 endif( WITH_HSPELL )
+
+
+##### enable TDEIconLoader debugging ############
+
+if ( WITH_TDEICONLOADER_DEBUG )
+  set ( TDEICONLOADER_DEBUG 1 )
+endif ( WITH_TDEICONLOADER_DEBUG )
 
 
 ##### write configure files #####################

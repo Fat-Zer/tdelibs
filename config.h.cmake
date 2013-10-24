@@ -911,6 +911,9 @@
 /* Defined if compiling with old XDG standard support */
 #cmakedefine WITH_OLD_XDG_STD 1
 
+/* Defined if compiling with TDEIconLoader debugging */
+#cmakedefine TDEICONLOADER_DEBUG 1
+
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
 #if defined AC_APPLE_UNIVERSAL_BUILD

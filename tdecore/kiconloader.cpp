@@ -109,9 +109,9 @@ struct TDEIconGroup
 // WARNING
 // Enabling this in production will cause a massive slowdown of (and a related memory leak in)
 // any application that creates and destroys large numbers of TDEIconLoader instances
-//#define KICONLOADER_CHECKS
+//#define TDEICONLOADER_DEBUG
 
-#ifdef KICONLOADER_CHECKS
+#ifdef TDEICONLOADER_DEBUG
 // Keep a list of recently created and destroyed TDEIconLoader instances in order
 // to detect bugs like #68528.
 struct TDEIconLoaderDebug
@@ -133,7 +133,7 @@ static TQValueList< TDEIconLoaderDebug > *kiconloaders;
 
 TDEIconLoader::TDEIconLoader(const TQString& _appname, TDEStandardDirs *_dirs)
 {
-#ifdef KICONLOADER_CHECKS
+#ifdef TDEICONLOADER_DEBUG
     if( kiconloaders == NULL )
         kiconloaders = new TQValueList< TDEIconLoaderDebug>();
     // check for the (very unlikely case) that new TDEIconLoader gets allocated
@@ -266,7 +266,7 @@ void TDEIconLoader::init( const TQString& _appname, TDEStandardDirs *_dirs )
 
 TDEIconLoader::~TDEIconLoader()
 {
-#ifdef KICONLOADER_CHECKS
+#ifdef TDEICONLOADER_DEBUG
     for( TQValueList< TDEIconLoaderDebug >::Iterator it = kiconloaders->begin();
          it != kiconloaders->end();
          ++it )
@@ -1233,7 +1233,7 @@ TDEIconFactory::TDEIconFactory( const TQString& iconName_P, TDEIcon::Group group
 
 TQPixmap* TDEIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconSet::Mode mode_P, TQIconSet::State )
     {
-#ifdef KICONLOADER_CHECKS
+#ifdef TDEICONLOADER_DEBUG
     bool found = false;
     for( TQValueList< TDEIconLoaderDebug >::Iterator it = kiconloaders->begin();
          it != kiconloaders->end();
