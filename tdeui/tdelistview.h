@@ -17,18 +17,48 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
+
 #ifndef TDELISTVIEW_H
 #define TDELISTVIEW_H
 
 #include <tqheader.h>
 #include <tqlistview.h>
-
+#include <tdeshortcut.h>
 #include <tqptrlist.h>
 #include <tdelibs_export.h>
 
 class TQDragObject;
 class TDEConfig;
 class KLineEdit;
+
+// Used to set the 'move to next/previous item' after renaming is completed
+class TDEListViewRenameSettings
+{
+  public:
+    bool m_useRenameSignals;   // if true, emits renameNext/renamePrev signals
+    TDEShortcut m_SCNext;      // the shortcut key for moving to the next cell
+    TDEShortcut m_SCPrev;      // the shortcut key for moving to the previous cell
+
+    TDEListViewRenameSettings()
+       : m_useRenameSignals(false), m_SCNext(), m_SCPrev() {}
+
+    TDEListViewRenameSettings(bool useRenameSignals, TDEShortcut scNext, TDEShortcut scPrev)
+       : m_useRenameSignals(useRenameSignals), m_SCNext(scNext), m_SCPrev(scPrev) {}
+    
+    TDEListViewRenameSettings(const TDEListViewRenameSettings &that)
+       : m_useRenameSignals(that.m_useRenameSignals), m_SCNext(that.m_SCNext), m_SCPrev(that.m_SCPrev) {}
+
+    TDEListViewRenameSettings& operator=(const TDEListViewRenameSettings &that)
+    {
+      if (this==&that) return *this;
+      m_useRenameSignals = that.m_useRenameSignals;
+      m_SCNext = that.m_SCNext;
+      m_SCPrev = that.m_SCPrev;
+      return *this;
+    }
+};
+
+
 /**
  * This Widget extends the functionality of TQListView to honor the system
  * wide settings for Single Click/Double Click mode, AutoSelection and
@@ -419,6 +449,17 @@ public:
    */
   bool useSmallExecuteArea() const;
 
+  /**
+   * Allows to set the rename settings for the TDEListViewLineEdit editor.
+   * It is possible to select whether to move or not the item selection when the rename
+   * operation is completed and which shortcuts to use to move to the next or previous item. 
+   * @param renSett A TDEListViewRenameSettings object containing the specified settings.
+   *
+   * @since 14.0
+   */
+  void setRenameSettings(const TDEListViewRenameSettings &renSett);
+
+
 signals:
 
   /**
@@ -571,10 +612,36 @@ signals:
    * @param i is the item for which the menu should be shown. May be 0L.
    * @param p is the point at which the menu should be shown.
    */
-  void contextMenu (TDEListView* l, TQListViewItem* i, const TQPoint& p);
+  void contextMenu(TDEListView* l, TQListViewItem* i, const TQPoint& p);
 
   void itemAdded(TQListViewItem *item);
   void itemRemoved(TQListViewItem *item);
+
+  /**
+   * This signal is emitted when item renaming is completed by a TAB.
+   * It signals the receiver that the sender would like to start renaming the next item.
+   * This is not hardcoded in TDEListView because the next item is application depended
+   * (for example it could be the next column or the next row or something completely different)
+   *
+   * @param item is the renamed item.
+   * @param col is the renamed column.
+   *
+   * @since 14.0
+   */
+  void renameNext(TQListViewItem* item, int col);
+
+  /**
+   * This signal is emitted when item renaming is completed by a Shift+TAB.
+   * It signals the receiver that the sender would like to start renaming the previous item.
+   * This is not hardcoded in TDEListView because the next item is application depended
+   * (for example it could be the next column or the next row or something completely different)
+   *
+   * @param item is the renamed item.
+   * @param col is the renamed column.
+   *
+   * @since 14.0
+   */
+  void renamePrev(TQListViewItem* item, int col);
 
 public slots:
   /**
@@ -942,10 +1009,11 @@ protected slots:
    * @internal
    */
   void slotSettingsChanged(int);
-
   void slotMouseButtonClicked( int btn, TQListViewItem *item, const TQPoint &pos, int c );
   void doneEditing(TQListViewItem *item, int row);
-
+  void renameNextProxy(TQListViewItem *item, int col);
+  void renamePrevProxy(TQListViewItem *item, int col);
+  
   /**
    * Repaint the rect where I was drawing the drop line.
    */

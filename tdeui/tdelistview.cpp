@@ -17,6 +17,7 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
+
 #include "config.h"
 
 #include <tqdragobject.h>
@@ -72,8 +73,8 @@ public:
       autoSelectDelay(0),
       useSmallExecuteArea(false),
       dragOverItem(0),
-      dragDelay (TDEGlobalSettings::dndEventDelay()),
-      editor (new TDEListViewLineEdit (listview)),
+      dragDelay(TDEGlobalSettings::dndEventDelay()),
+      editor(new TDEListViewLineEdit(listview)),
       cursorInExecuteArea(false),
       itemsMovable (true),
       selectedBySimpleMove(false),
@@ -106,6 +107,8 @@ public:
   {
       renameable.append(0);
       connect(editor, TQT_SIGNAL(done(TQListViewItem*,int)), listview, TQT_SLOT(doneEditing(TQListViewItem*,int)));
+      connect(editor, TQT_SIGNAL(renameNext(TQListViewItem*,int)), listview, TQT_SLOT(renameNextProxy(TQListViewItem*,int)));
+      connect(editor, TQT_SIGNAL(renamePrev(TQListViewItem*,int)), listview, TQT_SLOT(renamePrevProxy(TQListViewItem*,int)));
   }
 
   ~TDEListViewPrivate ()
@@ -176,13 +179,13 @@ public:
 
 
 TDEListViewLineEdit::TDEListViewLineEdit(TDEListView *parent)
-        : KLineEdit(parent->viewport()), item(0), col(0), p(parent)
+    : KLineEdit(parent->viewport()), item(0), col(0), p(parent), m_renSett()
 {
-        setFrame( false );
-        hide();
-        connect( parent, TQT_SIGNAL( selectionChanged() ), TQT_SLOT( slotSelectionChanged() ));
-        connect( parent, TQT_SIGNAL( itemRemoved( TQListViewItem * ) ),
-                         TQT_SLOT( slotItemRemoved( TQListViewItem * ) ));
+  setFrame( false );
+  hide();
+  connect( parent, TQT_SIGNAL( selectionChanged() ), TQT_SLOT( slotSelectionChanged() ));
+  connect( parent, TQT_SIGNAL( itemRemoved( TQListViewItem * ) ),
+                    TQT_SLOT( slotItemRemoved( TQListViewItem * ) ));
 }
 
 TDEListViewLineEdit::~TDEListViewLineEdit()
@@ -323,37 +326,58 @@ void TDEListViewLineEdit::selectNextCell (TQListViewItem *pitem, int column, boo
 #undef KeyPress
 #endif
 
-bool TDEListViewLineEdit::event (TQEvent *pe)
+bool TDEListViewLineEdit::event(TQEvent *pe)
 {
 	if (pe->type() == TQEvent::KeyPress)
 	{
-		TQKeyEvent *k = (TQKeyEvent *) pe;
-
-	    if ((k->key() == Qt::Key_Backtab || k->key() == Qt::Key_Tab) &&
-			p->tabOrderedRenaming() && p->itemsRenameable() &&
-			!(k->state() & ControlButton || k->state() & AltButton))
+		TQKeyEvent *k = (TQKeyEvent*)pe;
+    KKey kk(k);
+    if (m_renSett.m_useRenameSignals &&
+        (m_renSett.m_SCNext.contains(kk) || m_renSett.m_SCPrev.contains(kk)))
+    {
+      keyPressEvent(k);
+      return true;
+    }
+	  else if ((k->key() == Qt::Key_Backtab || k->key() == Qt::Key_Tab) &&
+			       p->tabOrderedRenaming() && p->itemsRenameable() &&
+			       !(k->state() & ControlButton || k->state() & AltButton))
 		{
-			selectNextCell(item, col,
-				(k->key() == Key_Tab && !(k->state() & ShiftButton)));
+			selectNextCell(item, col, (k->key() == Key_Tab && !(k->state() & ShiftButton)));
 			return true;
-	    }
+	  }
 	}
-
 	return KLineEdit::event(pe);
 }
 
 void TDEListViewLineEdit::keyPressEvent(TQKeyEvent *e)
 {
-	if(e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter )
+  KKey kk(e);
+  if (m_renSett.m_useRenameSignals &&
+      (m_renSett.m_SCNext.contains(kk) || m_renSett.m_SCPrev.contains(kk)))
+  {
+    TQListViewItem *i=item;
+    int c=col;
+    terminate(true);
+    KLineEdit::keyPressEvent(e);
+    if (m_renSett.m_SCNext.contains(kk))
+    {
+      emit renameNext(i,c);
+    }
+    else
+    {
+      emit renamePrev(i,c);
+    }
+  }
+  else if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter)
 		terminate(true);
 	else if(e->key() == Qt::Key_Escape)
 		terminate(false);
-        else if (e->key() == Qt::Key_Down || e->key() == Qt::Key_Up)
-        {
+  else if (e->key() == Qt::Key_Down || e->key() == Qt::Key_Up)
+  {
 		terminate(true);
-                KLineEdit::keyPressEvent(e);
-        }
-	else
+    KLineEdit::keyPressEvent(e);
+  }
+  else
 		KLineEdit::keyPressEvent(e);
 }
 
@@ -425,8 +449,7 @@ void TDEListViewLineEdit::slotItemRemoved(TQListViewItem *i)
 
 
 TDEListView::TDEListView( TQWidget *parent, const char *name )
-  : TQListView( parent, name ),
-        d (new TDEListViewPrivate (this))
+  : TQListView(parent, name), d(new TDEListViewPrivate(this))
 {
   setDragAutoScroll(true);
 
@@ -1415,6 +1438,17 @@ void TDEListView::doneEditing(TQListViewItem *item, int row)
   emit itemRenamed(item, item->text(row), row);
   emit itemRenamed(item);
 }
+
+void TDEListView::renameNextProxy(TQListViewItem *item, int col)
+{
+  emit renameNext(item, col);
+}
+
+void TDEListView::renamePrevProxy(TQListViewItem *item, int col)
+{
+  emit renamePrev(item, col);
+}
+
 
 bool TDEListView::acceptDrag(TQDropEvent* e) const
 {
@@ -2422,6 +2456,11 @@ void TDEListView::setUseSmallExecuteArea(bool enable)
 bool TDEListView::useSmallExecuteArea() const
 {
     return d->useSmallExecuteArea;
+}
+
+void TDEListView::setRenameSettings(const TDEListViewRenameSettings &renSett)
+{
+  d->editor->setRenameSettings(renSett);
 }
 
 void TDEListView::virtual_hook( int, void* )

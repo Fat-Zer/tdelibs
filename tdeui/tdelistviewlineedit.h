@@ -15,6 +15,7 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
+
 #ifndef TDELISTVIEWLINEEDIT_H
 #define TDELISTVIEWLINEEDIT_H
 
@@ -33,9 +34,36 @@ public:
 	~TDEListViewLineEdit();
 
 	TQListViewItem *currentItem() const;
+  void setRenameSettings(const TDEListViewRenameSettings &renSett) { m_renSett = renSett; };
 
 signals:
 	void done(TQListViewItem*, int);
+  
+  /**
+   * This signal is emitted when item renaming is completed by a TAB.
+   * It signals the receiver that the sender would like to start renaming the next item.
+   * This is not hardcoded in TDEListView because the next item is application depended
+   * (for example it could be the next column or the next row or something completely different)
+   *
+   * @param item is the renamed item.
+   * @param col is the renamed column.
+   *
+   * @since 14.0
+   */
+  void renameNext(TQListViewItem* item, int col);
+
+  /**
+   * This signal is emitted when item renaming is completed by a Shift+TAB.
+   * It signals the receiver that the sender would like to start renaming the previous item.
+   * This is not hardcoded in TDEListView because the next item is application depended
+   * (for example it could be the next column or the next row or something completely different)
+   *
+   * @param item is the renamed item.
+   * @param col is the renamed column.
+   *
+   * @since 14.0
+   */
+  void renamePrev(TQListViewItem* item, int col);
 
 public slots:
 	void terminate();
@@ -53,6 +81,7 @@ protected:
 	TQListViewItem *item;
 	int col;
 	TDEListView* const p;
+  TDEListViewRenameSettings m_renSett;
 
 protected slots:
 	void slotSelectionChanged();
