@@ -381,6 +381,8 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
     layout->addWidget( d->bCancel );
 
     resize( sizeHint() );
+
+    d->m_pLineEdit->setFocus();
 }
 
 RenameDlg::~RenameDlg()
