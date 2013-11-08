@@ -86,8 +86,8 @@ KURLDrag * KURLDrag::newDrag( const KURL::List &urls, const TQMap<TQString, TQSt
 
 bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris )
 {
-    if ( e->provides( "application/x-kde-urilist" ) ) {
-        TQByteArray payload = e->encodedData( "application/x-kde-urilist" );
+    if ( e->provides( "application/x-tde-urilist" ) ) {
+        TQByteArray payload = e->encodedData( "application/x-tde-urilist" );
         if ( payload.size() ) {
             uint c=0;
             const char* d = payload.data();

@@ -181,7 +181,7 @@ TDEIO::CopyJob* TDEIO::pasteMimeSource( TQMimeSource* data, const KURL& dest_url
       for ( int i = 0; ( fmt = data->format( i ) ); ++i ) {
           if ( qstrcmp( fmt, "application/x-qiconlist" ) == 0 ) // see QIconDrag
               continue;
-          if ( qstrcmp( fmt, "application/x-kde-cutselection" ) == 0 ) // see KonqDrag
+          if ( qstrcmp( fmt, "application/x-tde-cutselection" ) == 0 ) // see KonqDrag
               continue;
           if ( strchr( fmt, '/' ) == 0 ) // e.g. TARGETS, MULTIPLE, TIMESTAMP
               continue;
