@@ -181,7 +181,7 @@ void* KLibrary::symbol( const char* symname ) const
     void* sym = lt_dlsym( (lt_dlhandle) m_handle, symname );
     if ( !sym )
     {
-        KLibLoader::self()->d->errorMessage = "KLibrary: " + TQString::fromLocal8Bit( lt_dlerror() );
+        KLibLoader::self()->d->errorMessage = "KLibrary: " + TQString::fromLocal8Bit( lt_dlerror() ) + i18n( " %1 %2" ).arg( name() ).arg( symname );
         kdWarning(150) << KLibLoader::self()->d->errorMessage << endl;
         return 0;
     }
