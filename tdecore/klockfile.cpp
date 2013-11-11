@@ -206,7 +206,7 @@ static TDELockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_str
       if ((KDE_lstat(lckFile, &st_buf2) == 0) && statResultIsEqual(st_buf1, st_buf2))
       {
          // - - if yes, delete lock file, delete temp file, retry lock
-         tqWarning("WARNING: deleting stale lockfile %s", lckFile.data());
+         tqWarning("[tdecore] Deleting stale lockfile %s", lckFile.data());
          ::unlink(lckFile);
          ::unlink(tmpFile);
          return TDELockFile::LockOK;
@@ -224,14 +224,14 @@ static TDELockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_str
        statResultIsEqual(st_buf, st_buf2))
    {
       // Without support for link counts we will have a little race condition
-      tqWarning("WARNING: deleting stale lockfile %s", lckFile.data());
+      tqWarning("[tdecore] Deleting stale lockfile %s", lckFile.data());
       ::unlink(lckFile);
       ::unlink(tmpFile);
       return TDELockFile::LockOK;
    }
    
    // Failed to delete stale lock file
-   tqWarning("WARNING: Problem deleting stale lockfile %s", lckFile.data());
+   tqWarning("[tdecore] WARNING: Problem deleting stale lockfile %s", lckFile.data());
    ::unlink(tmpFile);
    return TDELockFile::LockFail;
 }
