@@ -777,7 +777,7 @@ TQString TDEStorageDevice::determineFileSystemType(TQString path) {
 	int pos;
 	struct stat directory_info;
 	if (path.startsWith("/")) {
-		stat(path.ascii(), &directory_info);
+		stat(path.local8Bit(), &directory_info);
 		prevDev = directory_info.st_dev;
 		// Walk the directory tree up to the root, checking for any change in st_dev
 		// If a change is found, the previous value of path is the mount point itself
@@ -790,7 +790,7 @@ TQString TDEStorageDevice::determineFileSystemType(TQString path) {
 			if (path == "") {
 				path = "/";
 			}
-			stat(path.ascii(), &directory_info);
+			stat(path.local8Bit(), &directory_info);
 			if (directory_info.st_dev != prevDev) {
 				break;
 			}
