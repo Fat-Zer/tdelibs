@@ -2269,7 +2269,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
 	
 			// Get disk specific info
-			TQString disklabel(udev_device_get_property_value(dev, "ID_FS_LABEL"));
+			TQString disklabel(TQString::fromLocal8Bit(udev_device_get_property_value(dev, "ID_FS_LABEL")));
 			TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
 			TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
 			TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
