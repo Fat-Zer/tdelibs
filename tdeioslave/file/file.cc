@@ -1658,18 +1658,43 @@ void FileProtocol::unmount( const TQString& _point )
 
 bool FileProtocol::pmount(const TQString &dev)
 {
-    TQString epath = getenv("PATH");
-    TQString path = TQString::fromLatin1("/sbin:/bin");
-    if (!epath.isEmpty())
-        path += ":" + epath;
-    TQString pmountProg = TDEGlobal::dirs()->findExe("pmount", path);
-
-    if (pmountProg.isEmpty())
-        return false;
-
+    TQString mountProg;
     TQCString buffer;
-    buffer.sprintf( "%s %s", TQFile::encodeName(pmountProg).data(),
-                    TQFile::encodeName(TDEProcess::quote(dev)).data() );
+
+#ifdef WITH_UDISKS2
+    // Use 'udisksctl' (UDISKS2) if available
+    if (mountProg.isEmpty()) {
+        mountProg = TDEGlobal::dirs()->findExe("udisksctl");
+        if (!mountProg.isEmpty()) {
+            buffer.sprintf( "%s mount -b %s", TQFile::encodeName(mountProg).data(),
+                        TQFile::encodeName(TDEProcess::quote(dev)).data() );
+        }
+    }
+#endif // WITH_UDISKS2
+
+#ifdef WITH_UDISKS
+    // Use 'udisks' (UDISKS1) if available
+    if (mountProg.isEmpty()) {
+        mountProg = TDEGlobal::dirs()->findExe("udisks");
+        if (!mountProg.isEmpty()) {
+            buffer.sprintf( "%s --mount %s", TQFile::encodeName(mountProg).data(),
+                        TQFile::encodeName(TDEProcess::quote(dev)).data() );
+        }
+    }
+#endif // WITH_UDISKS
+
+    // Use 'pmount', if available
+    if (mountProg.isEmpty()) {
+        mountProg = TDEGlobal::dirs()->findExe("pmount");
+        if (!mountProg.isEmpty()) {
+            buffer.sprintf( "%s %s", TQFile::encodeName(mountProg).data(),
+                        TQFile::encodeName(TDEProcess::quote(dev)).data() );
+        }
+    }
+
+    if (mountProg.isEmpty()) {
+        return false;
+    }
 
     int res = system( buffer.data() );
 
@@ -1700,18 +1725,43 @@ bool FileProtocol::pumount(const TQString &point)
     if (dev.isEmpty()) return false;
     if (dev.endsWith("/")) dev.truncate(dev.length()-1);
 
-    TQString epath = getenv("PATH");
-    TQString path = TQString::fromLatin1("/sbin:/bin");
-    if (!epath.isEmpty())
-        path += ":" + epath;
-    TQString pumountProg = TDEGlobal::dirs()->findExe("pumount", path);
-
-    if (pumountProg.isEmpty())
-        return false;
-
+    TQString umountProg;
     TQCString buffer;
-    buffer.sprintf( "%s %s", TQFile::encodeName(pumountProg).data(),
+
+#ifdef WITH_UDISKS2
+    // Use 'udisksctl' (UDISKS2), if available
+    if (umountProg.isEmpty()) {
+        umountProg = TDEGlobal::dirs()->findExe("udisksctl");
+        if (!umountProg.isEmpty()) {
+            buffer.sprintf( "%s unmount -b %s", TQFile::encodeName(umountProg).data(),
                     TQFile::encodeName(TDEProcess::quote(dev)).data() );
+        }
+    }
+#endif // WITH_UDISKS2
+
+#ifdef WITH_UDISKS
+    // Use 'udisks' (UDISKS1), if available
+    if (umountProg.isEmpty()) {
+        umountProg = TDEGlobal::dirs()->findExe("udisks");
+        if (!umountProg.isEmpty()) {
+            buffer.sprintf( "%s --unmount %s", TQFile::encodeName(umountProg).data(),
+                    TQFile::encodeName(TDEProcess::quote(dev)).data() );
+        }
+    }
+#endif // WITH_UDISKS
+
+    // Use 'pumount', if available
+    if (umountProg.isEmpty()) {
+        umountProg = TDEGlobal::dirs()->findExe("pumount");
+        if (!umountProg.isEmpty()) {
+            buffer.sprintf( "%s %s", TQFile::encodeName(umountProg).data(),
+                    TQFile::encodeName(TDEProcess::quote(dev)).data() );
+        }
+    }
+
+    if (umountProg.isEmpty()) {
+        return false;
+    }
 
     int res = system( buffer.data() );
 

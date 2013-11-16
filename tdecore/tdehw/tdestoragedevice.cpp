@@ -32,6 +32,7 @@
 #include "tdeglobal.h" 
 #include "kiconloader.h" 
 #include "tdetempfile.h" 
+#include "kstandarddirs.h"
 
 #include "tdehardwaredevices.h" 
 
@@ -601,47 +602,151 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 
 	TQString ret = mountPath();
 
+	// Device is already mounted
 	if (!ret.isNull()) {
 		return ret;
 	}
 
-	// Create dummy password file
-	KTempFile passwordFile(TQString::null, "tmp", 0600);
-	passwordFile.setAutoDelete(true);
-
-	TQString optionString;
-	if (mountOptions["ro"] == "true") {
-		optionString.append(" -r");
-	}
-	
-	if (mountOptions["atime"] != "true") {
-		optionString.append(" -A");
-	}
-	
-	if (mountOptions["utf8"] == "true") {
-		optionString.append(" -c utf8");
-	}
-	
-	if (mountOptions["sync"] == "true") {
-		optionString.append(" -s");
-	}
-
-	if (mountOptions.contains("filesystem")) {
-		optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
-	}
-
-	if (mountOptions.contains("locale")) {
-		optionString.append(TQString(" -c %1").arg(mountOptions["locale"]));
-	}
-
-	TQString passFileName = passwordFile.name();
+	TQString command;
 	TQString devNode = deviceNode();
-	passFileName.replace("'", "'\\''");
 	devNode.replace("'", "'\\''");
 	mediaName.replace("'", "'\\''");
-	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mediaName);
 
-	FILE *exepipe = popen(command.ascii(), "r");
+#if defined(WITH_UDISKS2) || defined(WITH_UDISKS)
+	// Prepare filesystem options for mount
+	TQString optionString;
+
+	if (mountOptions["ro"] == "true") {
+		optionString.append(",ro");
+	}
+
+	if (mountOptions["atime"] != "true") {
+		optionString.append(",noatime");
+	}
+
+	if (mountOptions["sync"] == "true") {
+		optionString.append(",sync");
+	}
+
+	if(  (mountOptions["filesystem"] == "fat")
+	  || (mountOptions["filesystem"] == "vfat")
+	  || (mountOptions["filesystem"] == "msdos")
+	  || (mountOptions["filesystem"] == "umsdos")
+	) {
+		if (mountOptions.contains("shortname")) {
+			optionString.append(TQString(",shortname=%1").arg(mountOptions["shortname"]));
+		}
+	}
+
+	if( (mountOptions["filesystem"] == "jfs")) {
+		if (mountOptions["utf8"] == "true") {
+			optionString.append(",iocharset=utf8");
+		}
+	}
+
+	if( (mountOptions["filesystem"] == "ntfs-3g") ) {
+		if (mountOptions.contains("locale")) {
+			optionString.append(TQString(",locale=%1").arg(mountOptions["locale"]));
+		}
+	}
+
+	if(  (mountOptions["filesystem"] == "ext3")
+	  || (mountOptions["filesystem"] == "ext4")
+	) {
+		if (mountOptions.contains("journaling")) {
+			optionString.append(TQString(",data=%1").arg(mountOptions["journaling"]));
+		}
+	}
+
+	if (!optionString.isEmpty()) {
+		optionString.remove(0, 1);
+	}
+#endif // defined(WITH_UDISKS2) || defined(WITH_UDISKS)
+
+#ifdef WITH_UDISKS2
+	if(command.isEmpty()) {
+		// Use 'udisksctl' command (from UDISKS2), if available
+		TQString udisksctlProg = TDEGlobal::dirs()->findExe("udisksctl");
+		if (!udisksctlProg.isEmpty()) {
+
+			if(!optionString.isEmpty()) {
+				optionString.insert(0, "-o ");
+			}
+
+			if (mountOptions.contains("filesystem")) {
+				optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
+			}
+
+			command = TQString("udisksctl mount -b '%1' %2 2>&1").arg(devNode).arg(optionString);
+		}
+	}
+#endif // WITH_UDISKS2
+
+#ifdef WITH_UDISKS
+	if(command.isEmpty()) {
+		// Use 'udisks' command (from UDISKS1), if available
+		TQString udisksProg = TDEGlobal::dirs()->findExe("udisks");
+		if (!udisksProg.isEmpty()) {
+			TQString optionString;
+
+			if(!optionString.isEmpty()) {
+				optionString.insert(0, "--mount-options ");
+			}
+
+			if (mountOptions.contains("filesystem")) {
+				optionString.append(TQString(" --mount-fstype %1").arg(mountOptions["filesystem"]));
+			}
+
+			command = TQString("udisks --mount '%1' %2 2>&1").arg(devNode).arg(optionString);
+		}
+	}
+#endif // WITH_UDISKS
+
+	if(command.isEmpty()) {
+		// Use 'pmount' command, if available
+		TQString pmountProg = TDEGlobal::dirs()->findExe("pmount");
+		if (!pmountProg.isEmpty()) {
+			// Create dummy password file
+			KTempFile passwordFile(TQString::null, "tmp", 0600);
+			passwordFile.setAutoDelete(true);
+
+			TQString optionString;
+			if (mountOptions["ro"] == "true") {
+				optionString.append(" -r");
+			}
+
+			if (mountOptions["atime"] != "true") {
+				optionString.append(" -A");
+			}
+
+			if (mountOptions["utf8"] == "true") {
+				optionString.append(" -c utf8");
+			}
+
+			if (mountOptions["sync"] == "true") {
+				optionString.append(" -s");
+			}
+
+			if (mountOptions.contains("filesystem")) {
+				optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
+			}
+
+			if (mountOptions.contains("locale")) {
+				optionString.append(TQString(" -c %1").arg(mountOptions["locale"]));
+			}
+
+			TQString passFileName = passwordFile.name();
+			passFileName.replace("'", "'\\''");
+
+			command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mediaName);
+		}
+	}
+
+	if(command.isEmpty()) {
+		return ret;
+	}
+
+	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
 		TQString pmount_output;
 		char buffer[8092];
@@ -715,7 +820,7 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	mediaName.replace("'", "'\\''");
 	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mediaName);
 
-	FILE *exepipe = popen(command.ascii(), "r");
+	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
 		TQString pmount_output;
 		char buffer[8092];
@@ -741,14 +846,38 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 
 	TQString mountpoint = mountPath();
+	TQString devNode = deviceNode();
 
 	if (mountpoint.isNull()) {
 		return true;
 	}
 
 	mountpoint.replace("'", "'\\''");
-	TQString command = TQString("pumount '%1' 2>&1").arg(mountpoint);
-	FILE *exepipe = popen(command.ascii(), "r");
+
+	TQString command;
+
+#ifdef WITH_UDISKS2
+	if(command.isEmpty() &&
+	   !(TDEGlobal::dirs()->findExe("udisksctl").isEmpty())) {
+		command = TQString("udisksctl unmount -b '%1' 2>&1").arg(devNode);
+	}
+#endif // WITH_UDISKS2
+#ifdef WITH_UDISKS
+	if(command.isEmpty() &&
+	   !(TDEGlobal::dirs()->findExe("udisks").isEmpty()) ) {
+		command = TQString("udisks --unmount '%1' 2>&1").arg(devNode);
+	}
+#endif // WITH_UDISKS
+	if(command.isEmpty() &&
+	   !(TDEGlobal::dirs()->findExe("pumount").isEmpty())) {
+		command = TQString("pumount '%1' 2>&1").arg(mountpoint);
+	}
+
+	if(command.isEmpty()) {
+		return true;
+	}
+
+	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
 		TQString pmount_output;
 		char buffer[8092];
