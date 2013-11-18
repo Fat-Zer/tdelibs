@@ -118,23 +118,16 @@ bool ejectDriveUDisks(TDEStorageDevice* sdevice) {
 			TQT_DBusMessage reply = driveControl.sendWithReply("DriveEject", params, &error);
 			if (error.isValid()) {
 				// Error!
-				printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
+				printf("[ERROR][tdehwlib] ejectDriveUDisks: %s\n", error.name().ascii()); fflush(stdout);
 				return FALSE;
 			}
 			else {
 				return TRUE;
 			}
 		}
-		else {
-			return FALSE;
-		}
 	}
-	else {
-		return FALSE;
-	}
-#else // WITH_UDISKS
-	return FALSE;
 #endif // WITH_UDISKS
+	return FALSE;
 }
 
 bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
@@ -153,7 +146,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 			TQT_DBusMessage reply = hardwareControl.sendWithReply("Get", params, &error);
 			if (error.isValid()) {
 				// Error!
-				printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
+				printf("[ERROR][tdehwlib] ejectDriveUDisks2: %s\n", error.name().ascii()); fflush(stdout);
 				return FALSE;
 			}
 			else {
@@ -162,7 +155,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 					if (!driveObjectPath.isValid()) {
 						return FALSE;
 					}
-	
+
 					error = TQT_DBusError();
 					TQT_DBusProxy driveInformation("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.DBus.Properties", dbusConn);
 					// can eject?
@@ -171,7 +164,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 					TQT_DBusMessage reply = driveInformation.sendWithReply("Get", params, &error);
 					if (error.isValid()) {
 						// Error!
-						printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
+						printf("[ERROR][tdehwlib] ejectDriveUDisks2: %s\n", error.name().ascii()); fflush(stdout);
 						return FALSE;
 					}
 					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
@@ -179,7 +172,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 						if (!ejectable) {
 							return FALSE;
 						}
-	
+
 						// Eject the drive!
 						TQT_DBusProxy driveControl("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.UDisks2.Drive", dbusConn);
 						TQValueList<TQT_DBusData> params;
@@ -188,71 +181,64 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 						TQT_DBusMessage reply = driveControl.sendWithReply("Eject", params, &error);
 						if (error.isValid()) {
 							// Error!
-							printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
+							printf("[ERROR][tdehwlib] ejectDriveUDisks2: %s\n", error.name().ascii()); fflush(stdout);
 							return FALSE;
 						}
 						else {
 							return TRUE;
 						}
 					}
-					else {
-						return FALSE;
-					}
-				}
-				else {
-					return FALSE;
 				}
 			}
 		}
-		else {
-			return FALSE;
-		}
 	}
-	else {
-		return FALSE;
-	}
-#else // WITH_UDISKS2
-	return FALSE;
 #endif // WITH_UDISKS2
+	return FALSE;
 }
 
 bool TDEStorageDevice::ejectDrive() {
-	if (ejectDriveUDisks2(this)) {
-		return TRUE;
-	}
-	else {
 #ifdef WITH_UDISKS2
-		printf("[tdehwlib] Failed to eject drive '%s' via udisks2, falling back to alternate mechanism\n", deviceNode().ascii());
+	if (!(TDEGlobal::dirs()->findExe("udisksctl").isEmpty())) {
+		if (ejectDriveUDisks2(this)) {
+			return TRUE;
+		}
+		else {
+			printf("[tdehwlib] Failed to eject drive '%s' via udisks2, falling back to alternate mechanism\n", deviceNode().ascii());
+			fflush(stdout);
+		}
+	}
 #endif // WITH_UDISKS2
+
+#ifdef WITH_UDISKS
+	if (!(TDEGlobal::dirs()->findExe("udisks").isEmpty())) {
 		if (ejectDriveUDisks(this)) {
 			return TRUE;
 		}
 		else {
-#ifdef WITH_UDISKS
 			printf("[tdehwlib] Failed to eject drive '%s' via udisks, falling back to alternate mechanism\n", deviceNode().ascii());
-#endif // WITH_UDISKS
-			TQString command = TQString("eject -v '%1' 2>&1").arg(deviceNode());
-	
-			FILE *exepipe = popen(command.ascii(), "r");
-			if (exepipe) {
-				TQString pmount_output;
-				char buffer[8092];
-				pmount_output = fgets(buffer, sizeof(buffer), exepipe);
-				int retcode = pclose(exepipe);
-				if (retcode == 0) {
-					return TRUE;
-				}
-				else {
-					printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n", deviceNode().ascii());
-					return FALSE;
-				}
-			}
-			else {
-				printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n", deviceNode().ascii());
-				return FALSE;
-			}
+			fflush(stdout);
 		}
 	}
+#endif // WITH_UDISKS
+
+	if (!(TDEGlobal::dirs()->findExe("eject").isEmpty())) {
+		TQString command = TQString("eject -v '%1' 2>&1").arg(deviceNode());
+
+		FILE *exepipe = popen(command.ascii(), "r");
+		if (exepipe) {
+			TQString pmount_output;
+			char buffer[8092];
+			pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+			int retcode = pclose(exepipe);
+			if (retcode == 0) {
+				return TRUE;
+			}
+		}
+		printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n", deviceNode().ascii());
+		fflush(stdout);
+	}
+
+	return FALSE;
 }
 
 bool TDEStorageDevice::ejectDriveMedia() {
