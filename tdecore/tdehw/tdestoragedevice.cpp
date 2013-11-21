@@ -626,7 +626,8 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 
 	if( (mountOptions["filesystem"] == "jfs")) {
 		if (mountOptions["utf8"] == "true") {
-			optionString.append(",iocharset=utf8");
+			// udisks/udisks2 for now does not support option iocharset= for jfs
+			// optionString.append(",iocharset=utf8");
 		}
 	}
 
@@ -640,7 +641,8 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	  || (mountOptions["filesystem"] == "ext4")
 	) {
 		if (mountOptions.contains("journaling")) {
-			optionString.append(TQString(",data=%1").arg(mountOptions["journaling"]));
+			// udisks/udisks2 for now does not support option data= for ext3/ext4
+			// optionString.append(TQString(",data=%1").arg(mountOptions["journaling"]));
 		}
 	}
 
