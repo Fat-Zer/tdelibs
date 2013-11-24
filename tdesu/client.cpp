@@ -37,7 +37,7 @@
 
 #include "client.h"
 
-class KDEsuClient::KDEsuClientPrivate {
+class TDEsuClient::TDEsuClientPrivate {
 public:
     TQString daemon;
 };
@@ -47,7 +47,7 @@ public:
 	             + strlen ((ptr)->sun_path))
 #endif
 
-KDEsuClient::KDEsuClient()
+TDEsuClient::TDEsuClient()
 {
     sockfd = -1;
 #ifdef Q_WS_X11
@@ -65,19 +65,19 @@ KDEsuClient::KDEsuClient()
 #endif
 
     sock = TQFile::encodeName(locateLocal("socket", TQString("tdesud_%1").arg(display.data())));
-    d = new KDEsuClientPrivate;
+    d = new TDEsuClientPrivate;
     connect();
 }
 
 
-KDEsuClient::~KDEsuClient()
+TDEsuClient::~TDEsuClient()
 {
     delete d;
     if (sockfd >= 0)
 	close(sockfd);
 }
 
-int KDEsuClient::connect()
+int TDEsuClient::connect()
 {
     if (sockfd >= 0)
 	close(sockfd);
@@ -165,7 +165,7 @@ int KDEsuClient::connect()
     return 0;
 }
 
-TQCString KDEsuClient::escape(const TQCString &str)
+TQCString TDEsuClient::escape(const TQCString &str)
 {
     TQCString copy = str;
     int n = 0;
@@ -185,7 +185,7 @@ TQCString KDEsuClient::escape(const TQCString &str)
     return copy;
 }
 
-int KDEsuClient::command(const TQCString &cmd, TQCString *result)
+int TDEsuClient::command(const TQCString &cmd, TQCString *result)
 {
     if (sockfd < 0)
 	return -1;
@@ -211,7 +211,7 @@ int KDEsuClient::command(const TQCString &cmd, TQCString *result)
     return 0;
 }
 
-int KDEsuClient::setPass(const char *pass, int timeout)
+int TDEsuClient::setPass(const char *pass, int timeout)
 {
     TQCString cmd = "PASS ";
     cmd += escape(pass);
@@ -221,7 +221,7 @@ int KDEsuClient::setPass(const char *pass, int timeout)
     return command(cmd);
 }
 
-int KDEsuClient::exec(const TQCString &prog, const TQCString &user, const TQCString &options, const QCStringList &env)
+int TDEsuClient::exec(const TQCString &prog, const TQCString &user, const TQCString &options, const QCStringList &env)
 {
     TQCString cmd;
     cmd = "EXEC ";
@@ -243,7 +243,7 @@ int KDEsuClient::exec(const TQCString &prog, const TQCString &user, const TQCStr
     return command(cmd);
 }
 
-int KDEsuClient::setHost(const TQCString &host)
+int TDEsuClient::setHost(const TQCString &host)
 {
     TQCString cmd = "HOST ";
     cmd += escape(host);
@@ -251,21 +251,21 @@ int KDEsuClient::setHost(const TQCString &host)
     return command(cmd);
 }
 
-int KDEsuClient::setPriority(int prio)
+int TDEsuClient::setPriority(int prio)
 {
     TQCString cmd;
     cmd.sprintf("PRIO %d\n", prio);
     return command(cmd);
 }
 
-int KDEsuClient::setScheduler(int sched)
+int TDEsuClient::setScheduler(int sched)
 {
     TQCString cmd;
     cmd.sprintf("SCHD %d\n", sched);
     return command(cmd);
 }
 
-int KDEsuClient::delCommand(const TQCString &key, const TQCString &user)
+int TDEsuClient::delCommand(const TQCString &key, const TQCString &user)
 {
     TQCString cmd = "DEL ";
     cmd += escape(key);
@@ -274,7 +274,7 @@ int KDEsuClient::delCommand(const TQCString &key, const TQCString &user)
     cmd += "\n";
     return command(cmd);
 }
-int KDEsuClient::setVar(const TQCString &key, const TQCString &value, int timeout,
+int TDEsuClient::setVar(const TQCString &key, const TQCString &value, int timeout,
                         const TQCString &group)
 {
     TQCString cmd = "SET ";
@@ -289,7 +289,7 @@ int KDEsuClient::setVar(const TQCString &key, const TQCString &value, int timeou
     return command(cmd);
 }
 
-TQCString KDEsuClient::getVar(const TQCString &key)
+TQCString TDEsuClient::getVar(const TQCString &key)
 {
     TQCString cmd = "GET ";
     cmd += escape(key);
@@ -299,7 +299,7 @@ TQCString KDEsuClient::getVar(const TQCString &key)
     return reply;
 }
 
-TQValueList<TQCString> KDEsuClient::getKeys(const TQCString &group)
+TQValueList<TQCString> TDEsuClient::getKeys(const TQCString &group)
 {
     TQCString cmd = "GETK ";
     cmd += escape(group);
@@ -332,7 +332,7 @@ TQValueList<TQCString> KDEsuClient::getKeys(const TQCString &group)
     return list;
 }
 
-bool KDEsuClient::findGroup(const TQCString &group)
+bool TDEsuClient::findGroup(const TQCString &group)
 {
     TQCString cmd = "CHKG ";
     cmd += escape(group);
@@ -342,7 +342,7 @@ bool KDEsuClient::findGroup(const TQCString &group)
     return true;
 }
 
-int KDEsuClient::delVar(const TQCString &key)
+int TDEsuClient::delVar(const TQCString &key)
 {
     TQCString cmd = "DELV ";
     cmd += escape(key);
@@ -350,7 +350,7 @@ int KDEsuClient::delVar(const TQCString &key)
     return command(cmd);
 }
 
-int KDEsuClient::delGroup(const TQCString &group)
+int TDEsuClient::delGroup(const TQCString &group)
 {
     TQCString cmd = "DELG ";
     cmd += escape(group);
@@ -358,7 +358,7 @@ int KDEsuClient::delGroup(const TQCString &group)
     return command(cmd);
 }
 
-int KDEsuClient::delVars(const TQCString &special_key)
+int TDEsuClient::delVars(const TQCString &special_key)
 {
     TQCString cmd = "DELS ";
     cmd += escape(special_key);
@@ -366,12 +366,12 @@ int KDEsuClient::delVars(const TQCString &special_key)
     return command(cmd);
 }
 
-int KDEsuClient::ping()
+int TDEsuClient::ping()
 {
     return command("PING\n");
 }
 
-int KDEsuClient::exitCode()
+int TDEsuClient::exitCode()
 {
     TQCString result;
     if (command("EXIT\n", &result) != 0)
@@ -380,7 +380,7 @@ int KDEsuClient::exitCode()
     return result.toLong();
 }
 
-int KDEsuClient::stopServer()
+int TDEsuClient::stopServer()
 {
     return command("STOP\n");
 }
@@ -398,7 +398,7 @@ static TQString findDaemon()
     return daemon;
 }
 
-bool KDEsuClient::isServerSGID()
+bool TDEsuClient::isServerSGID()
 {
     if (d->daemon.isEmpty())
        d->daemon = findDaemon();
@@ -414,7 +414,7 @@ bool KDEsuClient::isServerSGID()
     return (sbuf.st_mode & S_ISGID);
 }
 
-int KDEsuClient::startServer()
+int TDEsuClient::startServer()
 {
     if (d->daemon.isEmpty())
        d->daemon = findDaemon();

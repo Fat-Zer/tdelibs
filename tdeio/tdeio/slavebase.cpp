@@ -1182,7 +1182,7 @@ bool SlaveBase::pingCacheDaemon() const
 {
 #ifdef Q_OS_UNIX
     // TODO: Ping kded / kpasswdserver
-    KDEsuClient client;
+    TDEsuClient client;
     int success = client.ping();
     if( success == -1 )
     {

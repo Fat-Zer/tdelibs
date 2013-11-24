@@ -47,10 +47,10 @@ typedef TQValueList<TQCString> QCStringList;
  * See setVar, delVar, delGroup.
  */
 
-class TDESU_EXPORT KDEsuClient {
+class TDESU_EXPORT TDEsuClient {
 public:
-    KDEsuClient();
-    ~KDEsuClient();
+    TDEsuClient();
+    ~TDEsuClient();
 
     /**
      * Lets tdesud execute a command. If the daemon does not have a password
@@ -198,8 +198,8 @@ private:
     int command(const TQCString &cmd, TQCString *result=0L);
     TQCString escape(const TQCString &str);
 
-    class KDEsuClientPrivate;
-    KDEsuClientPrivate *d;
+    class TDEsuClientPrivate;
+    TDEsuClientPrivate *d;
 };
 
 #endif //Q_OS_UNIX

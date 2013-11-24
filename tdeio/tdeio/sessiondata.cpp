@@ -82,14 +82,14 @@ public:
 
 private:
 #ifdef Q_OS_UNIX
-  KDEsuClient * m_tdesuClient;
+  TDEsuClient * m_tdesuClient;
 #endif
 };
 
 SessionData::AuthDataList::AuthDataList()
 {
 #ifdef Q_OS_UNIX
-  m_tdesuClient = new KDEsuClient;
+  m_tdesuClient = new TDEsuClient;
 #endif
   setAutoDelete(true);
 }
