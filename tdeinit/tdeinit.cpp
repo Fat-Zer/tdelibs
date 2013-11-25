@@ -256,18 +256,18 @@ static void setup_tty( const char* tty )
     int fd = open( tty, O_WRONLY );
     if( fd < 0 )
     {
-        fprintf(stderr, "[tdeinit] couldn't open() %s: %s\n", tty, strerror (errno) );
+        fprintf(stderr, "[tdeinit] Couldn't open() %s: %s\n", tty, strerror (errno) );
         return;
     }
     if( dup2( fd, STDOUT_FILENO ) < 0 )
     {
-        fprintf(stderr, "[tdeinit] couldn't dup2() %s: %s\n", tty, strerror (errno) );
+        fprintf(stderr, "[tdeinit] Couldn't dup2() %s: %s\n", tty, strerror (errno) );
         close( fd );
         return;
     }
     if( dup2( fd, STDERR_FILENO ) < 0 )
     {
-        fprintf(stderr, "[tdeinit] couldn't dup2() %s: %s\n", tty, strerror (errno) );
+        fprintf(stderr, "[tdeinit] Couldn't dup2() %s: %s\n", tty, strerror (errno) );
         close( fd );
         return;
     }
@@ -690,7 +690,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
           if (d.result == 2)
           {
 #ifndef NDEBUG
-             fprintf(stderr, "[tdeinit] %s is executable. Launching with exec.\n", _name );
+             fprintf(stderr, "[tdeinit] %s is executable. Launching.\n", _name );
 #endif
              exec = true;
              continue;
@@ -1350,9 +1350,10 @@ static void handle_requests(pid_t waitForPid)
         exit_pid = waitpid(-1, 0, WNOHANG);
         if (exit_pid > 0)
         {
-#ifndef NDEBUG
-           fprintf(stderr, "[tdeinit] PID %ld terminated.\n", (long) exit_pid);
-#endif
+// FIXME: This disabled fprintf might need to be reinstated when converting to kdDebug.
+// #ifndef NDEBUG
+//            fprintf(stderr, "[tdeinit] PID %ld terminated.\n", (long) exit_pid);
+// #endif
            if (waitForPid && (exit_pid == waitForPid))
               return;
 
@@ -1505,7 +1506,7 @@ static void tdeinit_library_path()
    if (lt_dlinit())
    {
       const char * ltdlError = lt_dlerror();
-      fprintf(stderr, "can't initialize dynamic loading: %s\n", ltdlError != 0 ? ltdlError : "(null)" );
+      fprintf(stderr, "[tdeinit] Can't initialize dynamic loading: %s\n", ltdlError != 0 ? ltdlError : "(null)" );
    }
    if (!extra_path.isEmpty())
       lt_dlsetsearchpath(extra_path.data());
@@ -1630,7 +1631,7 @@ static int initXconnection()
         BlackPixelOfScreen(DefaultScreenOfDisplay(X11display)),
         BlackPixelOfScreen(DefaultScreenOfDisplay(X11display)) );
 #ifndef NDEBUG
-    fprintf(stderr, "[tdeinit] opened connection to %s\n", DisplayString(X11display));
+    fprintf(stderr, "[tdeinit] Opened connection to %s\n", DisplayString(X11display));
 #endif
     int fd = XConnectionNumber( X11display );
     int on = 1;
@@ -1896,7 +1897,7 @@ int main(int argc, char **argv, char **envp)
    }
    free (safe_argv);
 
-   tdeinit_setproctitle("tdeinit Running...");
+   tdeinit_setproctitle("[tdeinit] tdeinit Running...");
 
    if (!keep_running)
       return 0;
