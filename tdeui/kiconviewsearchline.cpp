@@ -127,6 +127,9 @@ void TDEIconViewSearchLine::updateSearch( const TQString &s )
 
 void TDEIconViewSearchLine::clear()
 {
+	if( ! d->iconView )
+		return; // disabled
+
 	// Clear hidden list, give items back to TQIconView, if it still exists
 	TQIconViewItem *item = NULL;
 
