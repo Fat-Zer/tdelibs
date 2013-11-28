@@ -2414,7 +2414,7 @@ void KLegacyStyle::drawPopupMenuItem(TQPainter *p, bool checkable, int maxpmw, i
     TQColorGroup itemg = (! enabled) ? pal.disabled() : pal.active();
 
     if (checkable)
-	maxpmw = QMAX(maxpmw, 15);
+	maxpmw = TQMAX(maxpmw, 15);
 
     int checkcol = maxpmw;
 

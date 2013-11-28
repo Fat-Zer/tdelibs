@@ -333,10 +333,10 @@ TQRect TDECompletionBox::calculateGeometry() const
 {
     int x = 0, y = 0;
     int ih = itemHeight();
-    int h = QMIN( 15 * ih, (int) count() * ih ) + 2*frameWidth();
+    int h = TQMIN( 15 * ih, (int) count() * ih ) + 2*frameWidth();
 
     int w = (d->m_parent) ? d->m_parent->width() : TDEListBox::minimumSizeHint().width();
-    w = QMAX( TDEListBox::minimumSizeHint().width(), w );
+    w = TQMAX( TDEListBox::minimumSizeHint().width(), w );
 
     //If we're inside a combox, Qt by default makes the dropdown
     // as wide as the combo, and gives the style a chance
@@ -348,7 +348,7 @@ TQRect TDECompletionBox::calculateGeometry() const
         const TQComboBox* cb = static_cast<const TQComboBox*>(TQT_TQWIDGET_CONST(combo));
 
         //Expand to the combo width
-        w = QMAX( w, cb->width() );
+        w = TQMAX( w, cb->width() );
 
         TQPoint parentCorner = d->m_parent->mapToGlobal(TQPoint(0, 0));
         TQPoint comboCorner  = cb->mapToGlobal(TQPoint(0, 0));

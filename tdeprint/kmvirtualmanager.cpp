@@ -186,14 +186,14 @@ void KMVirtualManager::refresh()
 	if (getuid() == 0)
 		fi.setFile(fi2.absFilePath());
 
-	if (!m_checktime.isValid() || m_checktime < QMAX(fi.lastModified(),fi2.lastModified()))
+	if (!m_checktime.isValid() || m_checktime < TQMAX(fi.lastModified(),fi2.lastModified()))
 	{
                 m_defaultprinter = TQString::null;
 		if (fi2.exists())
 			loadFile(fi2.absFilePath());
 		if (fi.exists() && fi.absFilePath() != fi2.absFilePath())
                 	loadFile(fi.absFilePath());
-		m_checktime = QMAX(fi.lastModified(),fi2.lastModified());
+		m_checktime = TQMAX(fi.lastModified(),fi2.lastModified());
 	}
         else
         { // parse printers looking for instances -> undiscarded them, real printers

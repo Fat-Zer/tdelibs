@@ -892,7 +892,7 @@ void TDEStyle::drawControl( TQ_ControlElement element,
 			// Draw progress bar
 			if (progress > 0 || steps == 0) {
 				double pg = (steps == 0) ? 0.1 : progress / steps;
-				int width = QMIN(cr.width(), (int)(pg * cr.width()));
+				int width = TQMIN(cr.width(), (int)(pg * cr.width()));
 				if (steps == 0) { //Busy indicator
 
 					if (width < 1) width = 1; //A busy indicator with width 0 is kind of useless
@@ -959,7 +959,7 @@ void TDEStyle::drawControl( TQ_ControlElement element,
 			// Draw label
 			if (progress > 0 || steps == 0) {
 				double pg = (steps == 0) ? 1.0 : progress / steps;
-				int width = QMIN(cr.width(), (int)(pg * cr.width()));
+				int width = TQMIN(cr.width(), (int)(pg * cr.width()));
 				TQRect crect;
 				if (reverse)
 					crect.setRect(cr.x()+(cr.width()-width), cr.y(), cr.width(), cr.height());
@@ -1334,7 +1334,7 @@ void TDEStyle::drawComplexControl( TQ_ComplexControl control,
 
 					// paint stuff in the magical area
 					TQListView* v = item->listView();
-					int lh = QMAX( p->fontMetrics().height() + 2 * v->itemMargin(),
+					int lh = TQMAX( p->fontMetrics().height() + 2 * v->itemMargin(),
 								   TQApplication::globalStrut().height() );
 					if ( lh % 2 > 0 )
 						lh++;
@@ -1895,7 +1895,7 @@ int TDEStyle::styleHint( TQ_StyleHint sh, const TQStyleControlElementData &ceDat
 
 		case SH_PopupMenu_SubMenuPopupDelay:
 			if ( styleHint( SH_PopupMenu_SloppySubMenus, ceData, elementFlags, TQStyleOption::Default, 0, w ) )
-				return QMIN( 100, d->popupMenuDelay );
+				return TQMIN( 100, d->popupMenuDelay );
 			else
 				return d->popupMenuDelay;
 

@@ -587,7 +587,7 @@ kdbgstream& kdbgstream::operator<<( const TQByteArray& data) {
     if (!print) return *this;
     output += '[';
     unsigned int i = 0;
-    unsigned int sz = QMIN( data.size(), 64 );
+    unsigned int sz = TQMIN( data.size(), 64 );
     for ( ; i < sz ; ++i ) {
         output += TQString::number( (unsigned char) data[i], 16 ).rightJustify(2, '0');
         if ( i < sz )

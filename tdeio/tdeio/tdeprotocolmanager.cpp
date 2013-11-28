@@ -114,7 +114,7 @@ int KProtocolManager::readTimeout()
   TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ReadTimeout", DEFAULT_READ_TIMEOUT );
-  return QMAX(MIN_TIMEOUT_VALUE, val);
+  return TQMAX(MIN_TIMEOUT_VALUE, val);
 }
 
 int KProtocolManager::connectTimeout()
@@ -122,7 +122,7 @@ int KProtocolManager::connectTimeout()
   TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ConnectTimeout", DEFAULT_CONNECT_TIMEOUT );
-  return QMAX(MIN_TIMEOUT_VALUE, val);
+  return TQMAX(MIN_TIMEOUT_VALUE, val);
 }
 
 int KProtocolManager::proxyConnectTimeout()
@@ -130,7 +130,7 @@ int KProtocolManager::proxyConnectTimeout()
   TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ProxyConnectTimeout", DEFAULT_PROXY_CONNECT_TIMEOUT );
-  return QMAX(MIN_TIMEOUT_VALUE, val);
+  return TQMAX(MIN_TIMEOUT_VALUE, val);
 }
 
 int KProtocolManager::responseTimeout()
@@ -138,7 +138,7 @@ int KProtocolManager::responseTimeout()
   TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ResponseTimeout", DEFAULT_RESPONSE_TIMEOUT );
-  return QMAX(MIN_TIMEOUT_VALUE, val);
+  return TQMAX(MIN_TIMEOUT_VALUE, val);
 }
 
 /*========================== PROXY SETTINGS =================================*/

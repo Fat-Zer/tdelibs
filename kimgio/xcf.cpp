@@ -116,7 +116,7 @@ XCFImageFormat::XCFImageFormat()
 
 inline
 int XCFImageFormat::add_lut( int a, int b ) {
-	return QMIN( a + b, 255 );
+	return TQMIN( a + b, 255 );
 }
 
 void XCFImageFormat::readXCF(TQImageIO *io)

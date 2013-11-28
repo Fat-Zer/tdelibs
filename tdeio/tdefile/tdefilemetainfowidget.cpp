@@ -207,7 +207,7 @@ TQWidget* KFileMetaInfoWidget::makeIntWidget()
 
     // make sure that an uint cannot be set to a value < 0
     if (m_item.type() == TQVariant::UInt)
-        sb->setMinValue(QMAX(sb->minValue(), 0));
+        sb->setMinValue(TQMAX(sb->minValue(), 0));
 
     connect(sb, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotChanged(int)));
     return sb;

@@ -94,7 +94,7 @@ void OptionNumericView::setOption(DrBase *opt)
 		int	min_ = opt->get("minval").toInt();
 		int	max_ = opt->get("maxval").toInt();
 		m_slider->setRange(min_,max_);
-		m_slider->setSteps(1,QMAX((max_-min_)/20,1));
+		m_slider->setSteps(1,TQMAX((max_-min_)/20,1));
 		m_minval->setText(TQString::number(min_));
 		m_maxval->setText(TQString::number(max_));
 	}
@@ -104,7 +104,7 @@ void OptionNumericView::setOption(DrBase *opt)
 		int	min_ = (int)rint(opt->get("minval").toFloat()*1000);
 		int	max_ = (int)rint(opt->get("maxval").toFloat()*1000);
 		m_slider->setRange(min_,max_);
-		m_slider->setSteps(1,QMAX((max_-min_)/20,1));
+		m_slider->setSteps(1,TQMAX((max_-min_)/20,1));
 		m_minval->setText(opt->get("minval"));
 		m_maxval->setText(opt->get("maxval"));
 	}

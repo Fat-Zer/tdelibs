@@ -371,7 +371,7 @@ KDatePicker::selectMonthClicked()
   int day = calendar->day(date);
   // ----- construct a valid date in this month:
   calendar->setYMD(date, calendar->year(date), month, 1);
-  date = TQT_TQDATE_OBJECT(date.addDays(QMIN(day, calendar->daysInMonth(date)) - 1));
+  date = TQT_TQDATE_OBJECT(date.addDays(TQMIN(day, calendar->daysInMonth(date)) - 1));
   // ----- set this month
   setDate(date);
 }
@@ -406,9 +406,9 @@ KDatePicker::selectYearClicked()
       day=calendar->day(date);
       // ----- construct a valid date in this month:
       //date.setYMD(year, date.month(), 1);
-      //date.setYMD(year, date.month(), QMIN(day, date.daysInMonth()));
+      //date.setYMD(year, date.month(), TQMIN(day, date.daysInMonth()));
       calendar->setYMD(date, year, calendar->month(date),
-                       QMIN(day, calendar->daysInMonth(date)));
+                       TQMIN(day, calendar->daysInMonth(date)));
       // ----- set this month
       setDate(date);
     } else {
@@ -503,8 +503,8 @@ KDatePicker::setFontSize(int s)
          TDEGlobal::locale()->calendar()->year(table->getDate()), false);
       if (str.isNull()) break;
       r=metrics.boundingRect(str);
-      maxMonthRect.setWidth(QMAX(r.width(), maxMonthRect.width()));
-      maxMonthRect.setHeight(QMAX(r.height(),  maxMonthRect.height()));
+      maxMonthRect.setWidth(TQMAX(r.width(), maxMonthRect.width()));
+      maxMonthRect.setHeight(TQMAX(r.height(),  maxMonthRect.height()));
     }
 
   TQSize metricBound = style().tqsizeFromContents(TQStyle::CT_ToolButton,

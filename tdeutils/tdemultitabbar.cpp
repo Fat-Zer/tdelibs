@@ -468,7 +468,7 @@ TQSize KMultiTabBarButton::sizeHint() const
         int iw = iconSet()->pixmap( TQIconSet::Small, TQIconSet::Normal ).width() + 4;
         int ih = iconSet()->pixmap( TQIconSet::Small, TQIconSet::Normal ).height();
         w += iw;
-        h = QMAX( h, ih );
+        h = TQMAX( h, ih );
     }
 #endif
     if ( isMenuButton() )
@@ -488,7 +488,7 @@ TQSize KMultiTabBarButton::sizeHint() const
         if(!empty || !w)
             w += sz.width();
         if(!empty || !h)
-            h = QMAX(h, sz.height());
+            h = TQMAX(h, sz.height());
     }
 
     return (style().tqsizeFromContents(TQStyle::CT_ToolButton, this, TQSize(w, h)).

@@ -209,7 +209,7 @@ void KURLBarItem::paint( TQPainter *p )
         // ### mostly cut & paste of TQListBoxPixmap::paint() until Qt 3.1
         // (where it will properly use pixmap() instead of the internal pixmap)
         const TQPixmap *pm = pixmap();
-        int yPos = QMAX( 0, (height(box) - pm->height())/2 );
+        int yPos = TQMAX( 0, (height(box) - pm->height())/2 );
 
         p->drawPixmap( margin, yPos, *pm );
         if ( !text().isEmpty() ) {
@@ -245,7 +245,7 @@ void KURLBarItem::paint( TQPainter *p )
 
         if ( !pm->isNull() ) {
             int x = (w - pm->width()) / 2;
-            x = QMAX( x, margin );
+            x = TQMAX( x, margin );
             p->drawPixmap( x, y, *pm );
         }
 
@@ -256,7 +256,7 @@ void KURLBarItem::paint( TQPainter *p )
             int stringWidth = box->width() - (margin * 2);
             TQString visibleText = KStringHandler::rPixelSqueeze( text(), fm, stringWidth );
             int x = (w - fm.width( visibleText )) / 2;
-            x = QMAX( x, margin );
+            x = TQMAX( x, margin );
 
             if ( isCurrent() || isSelected() ) {
                 p->setPen( box->colorGroup().highlight().dark(115) );
@@ -281,14 +281,14 @@ TQSize KURLBarItem::sizeHint() const
         hmin = TQListBoxPixmap::height( lb ) + KDialog::spacingHint() * 2;
     }
     else {
-        wmin = QMAX(lb->fontMetrics().width(text()), pixmap()->width()) + KDialog::spacingHint() * 2;
+        wmin = TQMAX(lb->fontMetrics().width(text()), pixmap()->width()) + KDialog::spacingHint() * 2;
         hmin = lb->fontMetrics().lineSpacing() + pixmap()->height() + KDialog::spacingHint() * 2;
     }
 
     if ( lb->isVertical() )
-        wmin = QMIN( wmin, lb->viewport()->sizeHint().width() );
+        wmin = TQMIN( wmin, lb->viewport()->sizeHint().width() );
     else
-        hmin = QMIN( hmin, lb->viewport()->sizeHint().height() );
+        hmin = TQMIN( hmin, lb->viewport()->sizeHint().height() );
 
     return TQSize( wmin, hmin );
 }
@@ -296,7 +296,7 @@ TQSize KURLBarItem::sizeHint() const
 int KURLBarItem::width( const TQListBox *lb ) const
 {
     if ( static_cast<const KURLBarListBox *>( lb )->isVertical() )
-        return QMAX( sizeHint().width(), lb->viewport()->width() );
+        return TQMAX( sizeHint().width(), lb->viewport()->width() );
     else
         return sizeHint().width();
 }
@@ -306,7 +306,7 @@ int KURLBarItem::height( const TQListBox *lb ) const
     if ( static_cast<const KURLBarListBox *>( lb )->isVertical() )
         return sizeHint().height();
     else
-        return QMAX( sizeHint().height(), lb->viewport()->height() );
+        return TQMAX( sizeHint().height(), lb->viewport()->height() );
 }
 
 bool KURLBarItem::isPersistent() const
@@ -489,12 +489,12 @@ TQSize KURLBar::sizeHint() const
         TQSize sh = item->sizeHint();
 
         if ( vertical ) {
-            w = QMAX( w, sh.width() );
+            w = TQMAX( w, sh.width() );
             h += sh.height();
         }
         else {
             w += sh.width();
-            h = QMAX( h, sh.height() );
+            h = TQMAX( h, sh.height() );
         }
     }
 

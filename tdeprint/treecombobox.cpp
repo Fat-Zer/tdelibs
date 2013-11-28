@@ -82,7 +82,7 @@ int TreeListBoxItem::width(const TQListBox *lb) const
 		w += (pixmap()->width() + 2);
 	if (!m_path[m_depth].isEmpty())
 		w += (lb->fontMetrics().width(m_path[m_depth]) + 2);
-	return QMAX(w, TQListBoxPixmap::width(lb));
+	return TQMAX(w, TQListBoxPixmap::width(lb));
 }
 
 void TreeListBoxItem::paint(TQPainter *p)

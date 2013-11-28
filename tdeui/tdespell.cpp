@@ -1219,7 +1219,7 @@ void KSpell::dialog( const TQString & word, TQStringList & sugg, const char *_sl
   // the RichText display and highlight the possibly wrong word
   TQString marker( "_MARKER_" );
   tmpBuf.replace( lastpos, word.length(), marker );
-  TQString context = tmpBuf.mid(QMAX(lastpos-18,0), 2*18+marker.length());
+  TQString context = tmpBuf.mid(TQMAX(lastpos-18,0), 2*18+marker.length());
   context.replace( '\n',TQString::fromLatin1(" "));
   context.replace( '<', TQString::fromLatin1("&lt;") );
   context.replace( '>', TQString::fromLatin1("&gt;") );

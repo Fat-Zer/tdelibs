@@ -211,7 +211,7 @@ void QEventLoopEx::registerSocketNotifier( TQSocketNotifier *notifier )
 
 	FD_SET( sockfd, fds );
 
-	d->sn_highest = QMAX( d->sn_highest, sockfd );
+	d->sn_highest = TQMAX( d->sn_highest, sockfd );
 	LeaveCriticalSection(&d->m_csVec);
 	
 #ifdef _DEBUG_EVENTLOOPEX
@@ -267,7 +267,7 @@ void QEventLoopEx::unregisterSocketNotifier( TQSocketNotifier *notifier )
 		d->sn_highest = -1;
 		for ( int i=0; i<3; i++ ) {
 			if ( d->sn_vec[i].list && ! d->sn_vec[i].list->isEmpty() )
-			d->sn_highest = QMAX( d->sn_highest,  // list is fd-sorted
+			d->sn_highest = TQMAX( d->sn_highest,  // list is fd-sorted
 				d->sn_vec[i].list->getFirst()->fd );
 		}
 	}
@@ -412,7 +412,7 @@ void QEventLoopEx::run()
 		}
 
 		FD_SET(d->m_sockUpdate,&d->sn_vec[0].select_fds);
-		d->sn_highest = QMAX(d->sn_highest,(int)d->m_sockUpdate);
+		d->sn_highest = TQMAX(d->sn_highest,(int)d->m_sockUpdate);
 //		FD_SET(m_sockUpdate,&sn_vec[1].select_fds);
 //		FD_SET(m_sockUpdate,&sn_vec[2].select_fds);
 

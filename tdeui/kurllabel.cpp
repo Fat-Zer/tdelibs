@@ -410,14 +410,14 @@ TQRect KURLLabel::activeRect() const
   int hAlign = TQApplication::horizontalAlignment( alignment() );
   int indentX = (hAlign && indent()>0) ? indent() : 0;
   TQFontMetrics fm(font());
-  r.setWidth( QMIN(fm.width(text()), r.width()));
+  r.setWidth( TQMIN(fm.width(text()), r.width()));
   if ( hAlign & AlignLeft )
       r.moveLeft(r.left() + indentX);
   if ( hAlign & AlignCenter )
       r.moveLeft((contentsRect().width()-r.width())/2+margin());
   if ( hAlign & AlignRight )
       r.moveLeft(contentsRect().width()-r.width()-indentX+margin());
-  int add = QMIN(3, margin());
+  int add = TQMIN(3, margin());
   r = TQRect(r.left()-add, r.top()-add, r.width()+2*add, r.height()+2*add);
   return r;
 }

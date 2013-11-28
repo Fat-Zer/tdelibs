@@ -161,7 +161,7 @@ static int password2hash(const TQByteArray& password, TQByteArray& hash) {
 
 	TQByteArray block1(shasz);
 
-	sha.process(password.data(), QMIN(password.size(), 16));
+	sha.process(password.data(), TQMIN(password.size(), 16));
 
 	// To make brute force take longer
 	for (int i = 0; i < 2000; i++) {
@@ -173,7 +173,7 @@ static int password2hash(const TQByteArray& password, TQByteArray& hash) {
 	sha.reset();
 
 	if (password.size() > 16) {
-		sha.process(password.data() + 16, QMIN(password.size() - 16, 16));
+		sha.process(password.data() + 16, TQMIN(password.size() - 16, 16));
 		TQByteArray block2(shasz);
 		// To make brute force take longer
 		for (int i = 0; i < 2000; i++) {
@@ -185,7 +185,7 @@ static int password2hash(const TQByteArray& password, TQByteArray& hash) {
 		sha.reset();
 
 		if (password.size() > 32) {
-			sha.process(password.data() + 32, QMIN(password.size() - 32, 16));
+			sha.process(password.data() + 32, TQMIN(password.size() - 32, 16));
 
 			TQByteArray block3(shasz);
 			// To make brute force take longer

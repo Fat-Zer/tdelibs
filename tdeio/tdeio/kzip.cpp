@@ -492,7 +492,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
             // skip rest of extra field in case it is too long
             unsigned int extraFieldEnd = dev->at() + extralen;
 	    pfi->extralen = extralen;
-	    int handledextralen = QMIN(extralen, (int)sizeof buffer);
+	    int handledextralen = TQMIN(extralen, (int)sizeof buffer);
 
 	    kdDebug(7040) << "handledextralen: " << handledextralen << endl;
 

@@ -693,7 +693,7 @@ void TDEIconEffect::overlay(TQImage &src, TQImage &overlay)
 		r2 = (a1 * r1 + (0xff - a1) * r2) >> 8;
 		g2 = (a1 * g1 + (0xff - a1) * g2) >> 8;
 		b2 = (a1 * b1 + (0xff - a1) * b2) >> 8;
-		a2 = QMAX(a1, a2);
+		a2 = TQMAX(a1, a2);
 
 		sline[j] = tqRgba(r2, g2, b2, a2);
 	    }
@@ -711,7 +711,7 @@ TDEIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 
     uint actSpeed = TDEGlobalSettings::visualActivateSpeed();
 
-    uint actCount = QMIN(rect.width(), rect.height()) / 2;
+    uint actCount = TQMIN(rect.width(), rect.height()) / 2;
 
     // Clip actCount to range 1..10.
 
@@ -749,7 +749,7 @@ TDEIconEffect::visualActivate(TQWidget * widget, TQRect rect)
     // The spacing between the rects we draw.
     // Use the minimum of width and height to avoid painting outside the
     // pixmap area.
-    //unsigned int delta(QMIN(rect.width() / actCount, rect.height() / actCount));
+    //unsigned int delta(TQMIN(rect.width() / actCount, rect.height() / actCount));
 
     // Support for rectangles by David
     unsigned int deltaX = rect.width() / actCount;

@@ -118,15 +118,15 @@ void PosterPreview::drawContents( TQPainter *painter )
 			TQSimpleRichText richtext( ( m_buffer.isEmpty() ? txt : m_buffer.prepend( "<pre>" ).append( "</pre>" ) ), p->font() );
 			richtext.adjustSize();
 			int x = ( width()-richtext.widthUsed() )/2, y = ( height()-richtext.height() )/2;
-			x = QMAX( x, 0 );
-			y = QMAX( y, 0 );
+			x = TQMAX( x, 0 );
+			y = TQMAX( y, 0 );
 			richtext.draw( p, x, y, TQRect( x, y, richtext.widthUsed(), richtext.height() ), colorGroup() );
 			m_boundingrect = TQRect();
 		}
 		else
 		{
 			int totalx = m_cols*m_pw, totaly = m_rows*m_ph;
-			float scale = QMIN( float( width()-1 )/totalx, float( height()-1 )/totaly );
+			float scale = TQMIN( float( width()-1 )/totalx, float( height()-1 )/totaly );
 			p->translate( 0, height()-1 );
 			p->scale( scale, -scale );
 			int x = ( int )( width()/scale-totalx )/2, y = ( int )( height()/scale-totaly )/2;
@@ -143,7 +143,7 @@ void PosterPreview::drawContents( TQPainter *painter )
 					p->fillRect( x+1, y+1, m_pw-2, m_ph-2, ( selected ? TDEGlobalSettings::highlightColor() : white ) );
 					p->drawRect( x, y, m_pw, m_ph );
 					if ( pw > 0 && ph > 0 )
-						p->fillRect( x+m_mw+px, y+m_mh+py, QMIN( pw, m_pw-2*m_mw-px ), QMIN( ph, m_ph-2*m_mh-py ),
+						p->fillRect( x+m_mw+px, y+m_mh+py, TQMIN( pw, m_pw-2*m_mw-px ), TQMIN( ph, m_ph-2*m_mh-py ),
 								( selected ? TQColor(TDEGlobalSettings::highlightColor().dark( 160 )) : lightGray ) );
 					p->setPen( Qt::DotLine );
 					p->drawRect( x+m_mw, y+m_mh, m_pw-2*m_mw, m_ph-2*m_mh );

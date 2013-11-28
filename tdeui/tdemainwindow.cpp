@@ -292,10 +292,10 @@ void TDEMainWindow::parseGeometry(bool parsewidth)
             w = width();
         if ( !(m & HeightValue) )
             h = height();
-         w = QMIN(w,maxSize.width());
-         h = QMIN(h,maxSize.height());
-         w = QMAX(w,minSize.width());
-         h = QMAX(h,minSize.height());
+         w = TQMIN(w,maxSize.width());
+         h = TQMIN(h,maxSize.height());
+         w = TQMAX(w,minSize.width());
+         h = TQMAX(h,minSize.height());
          resize(w, h);
     } else {
         if ( parsewidth && !(m & XValue) )

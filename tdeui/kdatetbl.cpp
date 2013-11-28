@@ -435,13 +435,13 @@ KDateTable::setFontSize(int size)
     {
       rect=metrics.boundingRect(TDEGlobal::locale()->calendar()
                                 ->weekDayName(count+1, true));
-      maxCell.setWidth(QMAX(maxCell.width(), rect.width()));
-      maxCell.setHeight(QMAX(maxCell.height(), rect.height()));
+      maxCell.setWidth(TQMAX(maxCell.width(), rect.width()));
+      maxCell.setHeight(TQMAX(maxCell.height(), rect.height()));
     }
   // ----- compare with a real wide number and add some space:
   rect=metrics.boundingRect(TQString::fromLatin1("88"));
-  maxCell.setWidth(QMAX(maxCell.width()+2, rect.width()));
-  maxCell.setHeight(QMAX(maxCell.height()+4, rect.height()));
+  maxCell.setWidth(TQMAX(maxCell.width()+2, rect.width()));
+  maxCell.setHeight(TQMAX(maxCell.height()+4, rect.height()));
 }
 
 void

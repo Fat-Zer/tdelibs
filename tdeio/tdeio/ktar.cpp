@@ -238,7 +238,7 @@ bool KTar::readLonglink(char *buffer,TQCString &longlink) {
   dummy = longlink.data();
   int offset = 0;
   while (size > 0) {
-    int chunksize = QMIN(size, 0x200);
+    int chunksize = TQMIN(size, 0x200);
     n = dev->readBlock( dummy + offset, chunksize );
     if (n == -1) return false;
     size -= chunksize;
@@ -744,7 +744,7 @@ void KTar::writeLonglink(char *buffer, const TQCString &name, char typeflag,
   device()->writeBlock( buffer, 0x200 );
   int offset = 0;
   while (namelen > 0) {
-    int chunksize = QMIN(namelen, 0x200);
+    int chunksize = TQMIN(namelen, 0x200);
     memcpy(buffer, name.data()+offset, chunksize);
     // write long name
     device()->writeBlock( buffer, 0x200 );

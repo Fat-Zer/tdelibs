@@ -1544,7 +1544,7 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
         case PE_SpinWidgetMinus: {
             p->setPen( cg.buttonText() );
 
-            int l = QMIN( w-2, h-2 );
+            int l = TQMIN( w-2, h-2 );
             // make the length even so that we get a nice symmetric plus...
             if(l%2 != 0)
                 --l;
@@ -2527,7 +2527,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
             bool reverse    = TQApplication::reverseLayout();
             if ( checkable )
-                checkcol = QMAX( checkcol, 20 );
+                checkcol = TQMAX( checkcol, 20 );
 
             // Draw the menu item background
             if (active) {
@@ -3228,9 +3228,9 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
 
             TQSize bs;
             if(heightDividable) {
-                bs.setHeight(QMAX(8, (r.height()-2)/2));
+                bs.setHeight(TQMAX(8, (r.height()-2)/2));
             } else {
-                bs.setHeight(QMAX(8, (r.height()-2-1)/2));
+                bs.setHeight(TQMAX(8, (r.height()-2-1)/2));
             }
             bs.setWidth(15);
 
@@ -3408,14 +3408,14 @@ TQSize PlastikStyle::sizeFromContents(ContentsType t,
                 h = 2;
             } else {
                 if (mi->pixmap()) {
-                    h = QMAX(h, mi->pixmap()->height() + 2);
+                    h = TQMAX(h, mi->pixmap()->height() + 2);
                 } else {
-                    h = QMAX(h, 16 + 2 );
-                    h = QMAX(h, popup->fontMetrics().height() + 4 );
+                    h = TQMAX(h, 16 + 2 );
+                    h = TQMAX(h, popup->fontMetrics().height() + 4 );
                 }
 
                 if (mi->iconSet()) {
-                    h = QMAX(h, mi->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).height() + 2);
+                    h = TQMAX(h, mi->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).height() + 2);
                 }
             }
 
@@ -3483,7 +3483,7 @@ int PlastikStyle::styleHint( TQ_StyleHint stylehint,
 		bool checkable = (elementFlags & CEF_IsCheckable);
 	
 		if ( checkable )
-                	checkcol = QMAX( checkcol, 20 );
+                	checkcol = TQMAX( checkcol, 20 );
 	
 		return checkcol;
 	}

@@ -142,7 +142,7 @@ DrawView::DrawView()
     TQFontMetrics fm = bgroup->fontMetrics();
     for ( i=0; (n=ourDrawFunctions[i].name) != 0; i++ ) {
         int w = fm.width( n );
-        maxwidth = QMAX(w,maxwidth);
+        maxwidth = TQMAX(w,maxwidth);
     }
     maxwidth = maxwidth + 20;			// add 20 pixels
 

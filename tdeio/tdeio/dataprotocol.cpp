@@ -266,7 +266,7 @@ void DataProtocol::get(const KURL& url) {
   parseDataHeader(url,hdr);
 
   int size = (int)hdr.url.length();
-  int data_ofs = QMIN(hdr.data_offset,size);
+  int data_ofs = TQMIN(hdr.data_offset,size);
   // FIXME: string is copied, would be nice if we could have a reference only
   TQString url_data = hdr.url.mid(data_ofs);
   TQCString outData;

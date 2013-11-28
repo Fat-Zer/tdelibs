@@ -62,7 +62,7 @@ static int minimumListWidth( const TQListBox *list )
   for( uint i=0; i<list->count(); i++ )
   {
     int itemWidth = list->item(i)->width(list);
-    w = QMAX(w,itemWidth);
+    w = TQMAX(w,itemWidth);
   }
   if( w == 0 ) { w = 40; }
   w += list->frameWidth() * 2;

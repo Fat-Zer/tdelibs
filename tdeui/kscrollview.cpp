@@ -177,7 +177,7 @@ void KScrollView::wheelEvent( TQWheelEvent *e )
 {
     int pageStep = verticalScrollBar()->pageStep();
     int lineStep = verticalScrollBar()->lineStep();
-    int step = QMIN( TQApplication::wheelScrollLines()*lineStep, pageStep );
+    int step = TQMIN( TQApplication::wheelScrollLines()*lineStep, pageStep );
     if ( ( e->state() & ControlButton ) || ( e->state() & ShiftButton ) )
         step = pageStep;
 

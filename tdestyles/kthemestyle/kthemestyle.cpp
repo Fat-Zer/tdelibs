@@ -277,13 +277,13 @@ TQSize KThemeStyle::sizeFromContents( ContentsType contents,
                 else
                 {
                     if ( mi->pixmap() )
-                        h = QMAX( h, mi->pixmap() ->height() + 2 * itemFrame );
+                        h = TQMAX( h, mi->pixmap() ->height() + 2 * itemFrame );
                     else
-                        h = QMAX( h, popup->fontMetrics().height()
+                        h = TQMAX( h, popup->fontMetrics().height()
                                   + 2 * itemVMargin + 2 * itemFrame );
 
                     if ( mi->iconSet() )
-                        h = QMAX( h, mi->iconSet() ->pixmap(
+                        h = TQMAX( h, mi->iconSet() ->pixmap(
                                       TQIconSet::Small, TQIconSet::Normal ).height() +
                                   2 * itemFrame );
                 }
@@ -1512,7 +1512,7 @@ void KThemeStyle::drawControl( ControlElement element,
 
 
                 if ( checkable )
-                    checkcol = QMAX( checkcol, 20 );
+                    checkcol = TQMAX( checkcol, 20 );
 
                 // Are we a menu item separator?
                 if ( separator )
@@ -1753,7 +1753,7 @@ void KThemeStyle::drawControl( ControlElement element,
                 if (progress > 0 || steps == 0)
                 {
                         double pg = (steps == 0) ? 0.1 : progress / steps;
-                        int width = QMIN(cr.width(), (int)(pg * cr.width()));
+                        int width = TQMIN(cr.width(), (int)(pg * cr.width()));
                         if (steps == 0)
                         { //Busy indicator
 
@@ -2274,7 +2274,7 @@ int KThemeStyle::styleHint( StyleHint sh, const TQStyleControlElementData &ceDat
             bool checkable = (elementFlags & CEF_IsCheckable);
 
             if ( checkable )
-                    checkcol = QMAX( checkcol, 20 );
+                    checkcol = TQMAX( checkcol, 20 );
 
             return checkcol;
             break;
@@ -2432,7 +2432,7 @@ int KThemeStyle::popupMenuItemHeight( bool /*checkable*/, TQMenuItem *mi,
                                       const TQFontMetrics &fm )
 {
     int h2, h = 0;
-    int offset = QMAX( decoWidth( MenuItemDown ), decoWidth( MenuItem ) ) + 4;
+    int offset = TQMAX( decoWidth( MenuItemDown ), decoWidth( MenuItem ) ) + 4;
 
     if ( mi->isSeparator() )
         return ( 2 );

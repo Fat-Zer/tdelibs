@@ -308,7 +308,7 @@ void KEditListBox::removeItem()
 
         m_listBox->removeItem( selected );
         if ( count() > 0 )
-            m_listBox->setSelected( QMIN( selected, count() - 1 ), true );
+            m_listBox->setSelected( TQMIN( selected, count() - 1 ), true );
 
         emit changed();
 	emit removed( removedText );

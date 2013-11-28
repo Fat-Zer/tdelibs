@@ -191,8 +191,8 @@ void TDEIconView::slotAutoSelect()
       TQRect r;
       TQRect redraw;
       if ( previousItem )
-	r = TQRect( QMIN( previousItem->x(), m_pCurrentItem->x() ),
-		   QMIN( previousItem->y(), m_pCurrentItem->y() ),
+	r = TQRect( TQMIN( previousItem->x(), m_pCurrentItem->x() ),
+		   TQMIN( previousItem->y(), m_pCurrentItem->y() ),
 		   0, 0 );
       else
 	r = TQRect( 0, 0, 0, 0 );
@@ -555,10 +555,10 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
     // Should not be higher than pixmap if text is alongside icons
     if ( view->itemTextPos() != TQIconView::Bottom ) {
         if ( d && !d->m_pixmapSize.isNull() )
-            height = QMIN( d->m_pixmapSize.height() + 2, height );
+            height = TQMIN( d->m_pixmapSize.height() + 2, height );
         else
-            height = QMIN( itemIconRect.height(), height );
-        height = QMAX( height, fm->height() );
+            height = TQMIN( itemIconRect.height(), height );
+        height = TQMAX( height, fm->height() );
     }
 
     // Calculate the word-wrap
@@ -566,7 +566,7 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
     m_wordWrap = KWordWrap::formatText( *fm, outerRect, 0, t );
     r = m_wordWrap->boundingRect();
 
-    int realWidth = QMAX( QMIN( r.width() + 4, tw ), fm->width( "X" ) );
+    int realWidth = TQMAX( TQMIN( r.width() + 4, tw ), fm->width( "X" ) );
     if (drawRoundedRect == true) {
       itemTextRect.setWidth( realWidth + 2);
     }
@@ -580,7 +580,7 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
         // If the pixmap size has been specified, use it
         if ( d && !d->m_pixmapSize.isNull() )
         {
-            w = QMAX( itemTextRect.width(), d->m_pixmapSize.width() + 2 );
+            w = TQMAX( itemTextRect.width(), d->m_pixmapSize.width() + 2 );
             h = itemTextRect.height() + d->m_pixmapSize.height() + 2 + 1;
 #if 0 // FIXME 
             // Waiting for the qt bug to be solved, the pixmapRect must
@@ -589,14 +589,14 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
 #endif
         }
         else {
-            w = QMAX( itemTextRect.width(), itemIconRect.width() );
+            w = TQMAX( itemTextRect.width(), itemIconRect.width() );
             h = itemTextRect.height() + itemIconRect.height() + 1;
         }
 
         itemRect.setWidth( w );
         itemRect.setHeight( h );
-        int width = QMAX( w, TQApplication::globalStrut().width() ); // see TQIconViewItem::width()
-        int height = QMAX( h, TQApplication::globalStrut().height() ); // see TQIconViewItem::height()
+        int width = TQMAX( w, TQApplication::globalStrut().width() ); // see TQIconViewItem::width()
+        int height = TQMAX( h, TQApplication::globalStrut().height() ); // see TQIconViewItem::height()
         itemTextRect = TQRect( ( width - itemTextRect.width() ) / 2, height - itemTextRect.height(),
                               itemTextRect.width(), itemTextRect.height() );
         itemIconRect = TQRect( ( width - itemIconRect.width() ) / 2, y,
@@ -605,7 +605,7 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
     else {
         // If the pixmap size has been specified, use it
         if ( d && !d->m_pixmapSize.isNull() ) {
-            h = QMAX( itemTextRect.height(), d->m_pixmapSize.height() + 2 );
+            h = TQMAX( itemTextRect.height(), d->m_pixmapSize.height() + 2 );
 #if 0 // FIXME 
             // Waiting for the qt bug to be solved, the pixmapRect must
             // stay on the top...
@@ -613,14 +613,14 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
 #endif
         }
         else {
-            h = QMAX( itemTextRect.height(), itemIconRect.height() );
+            h = TQMAX( itemTextRect.height(), itemIconRect.height() );
         }
         w = itemTextRect.width() + itemIconRect.width() + 1;
 
         itemRect.setWidth( w );
         itemRect.setHeight( h );
-        int width = QMAX( w, TQApplication::globalStrut().width() ); // see TQIconViewItem::width()
-        int height = QMAX( h, TQApplication::globalStrut().height() ); // see TQIconViewItem::height()
+        int width = TQMAX( w, TQApplication::globalStrut().width() ); // see TQIconViewItem::width()
+        int height = TQMAX( h, TQApplication::globalStrut().height() ); // see TQIconViewItem::height()
 
         itemTextRect = TQRect( width - itemTextRect.width(), ( height - itemTextRect.height() ) / 2,
                               itemTextRect.width(), itemTextRect.height() );
@@ -629,7 +629,7 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
                                   itemIconRect.width(), itemIconRect.height() );
         }
         else { // icon smaller than text -> place in top or center with first line
-	    itemIconRect = TQRect( 0, QMAX(( fm->height() - itemIconRect.height() ) / 2 + y, 0),
+	    itemIconRect = TQRect( 0, TQMAX(( fm->height() - itemIconRect.height() ) / 2 + y, 0),
                                   itemIconRect.width(), itemIconRect.height() );
         }
         if ( ( itemIconRect.height() <= 20 ) && ( itemTextRect.height() < itemIconRect.height() ) ) {

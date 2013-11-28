@@ -814,7 +814,7 @@ TQPixmap TDEIconLoader::loadIcon(const TQString& _name, TDEIcon::Group group, in
             {
 		QRgb *line = reinterpret_cast<QRgb *>(img->scanLine(y));
                 for (int x = 0; x < img->width();  x++)
-                    line[x] = (line[x] & 0x00ffffff) | (QMIN(0x80, tqAlpha(line[x])) << 24);
+                    line[x] = (line[x] & 0x00ffffff) | (TQMIN(0x80, tqAlpha(line[x])) << 24);
 	    }
 	}
     }

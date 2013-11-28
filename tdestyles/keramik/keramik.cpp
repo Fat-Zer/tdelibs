@@ -1660,7 +1660,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 			bool reverse    = TQApplication::reverseLayout();
 			if ( checkable )
-				checkcol = QMAX( checkcol, 20 );
+				checkcol = TQMAX( checkcol, 20 );
 
 			// Draw the menu item background
 			if ( active )
@@ -1862,9 +1862,9 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			// Draw progress bar
 			if (progress > 0 || steps == 0) {
 				double pg = (steps == 0) ? 0.1 : progress / steps;
-				int width = QMIN(cr.width(), (int)(pg * cr.width()));
+				int width = TQMIN(cr.width(), (int)(pg * cr.width()));
 				if (steps == 0)
-					width = QMIN(width,20); //Don't cross squares
+					width = TQMIN(width,20); //Don't cross squares
 
 				if (steps == 0) { //Busy indicator
 
@@ -2484,7 +2484,7 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 
 			//For some reason kcontrol no longer does this...
 			//if ( (elementFlags & CEF_IsDefault) || (elementFlags & CEF_AutoDefault) )
-			//            w = QMAX( w, 40 );
+			//            w = TQMAX( w, 40 );
 
 			return TQSize( w + 30, h + 5 ); //MX: No longer blank space -- can make a bit smaller
 		}
@@ -2535,17 +2535,17 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 			}
 			else {
 				if ( mi->pixmap() )
-					h = QMAX( h, mi->pixmap()->height() + 2*itemFrame );
+					h = TQMAX( h, mi->pixmap()->height() + 2*itemFrame );
 				else {
 					// Ensure that the minimum height for text-only menu items
 					// is the same as the icon size used by KDE.
-					h = QMAX( h, 16 + 2*itemFrame );
-					h = QMAX( h, popup->fontMetrics().height()
+					h = TQMAX( h, 16 + 2*itemFrame );
+					h = TQMAX( h, popup->fontMetrics().height()
 							+ 2*itemVMargin + 2*itemFrame );
 				}
 
 				if ( mi->iconSet() )
-					h = QMAX( h, mi->iconSet()->pixmap(
+					h = TQMAX( h, mi->iconSet()->pixmap(
 								TQIconSet::Small, TQIconSet::Normal).height() +
 								2 * itemFrame );
 			}
@@ -2643,7 +2643,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 					def.addCoords( 4, -4, -6, 4 );
 					
 					if ((def.width() - suggestedWidth < -12) && (def.width() < 80))
-						def.setWidth(QMIN(80, suggestedWidth - 10));
+						def.setWidth(TQMIN(80, suggestedWidth - 10));
 
 					return def;
 				}
@@ -2723,11 +2723,11 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 			//Shrink the metrics if the widget is too small
 			//to fit our normal values for them.
 			if (horizontal)
-				handleSize = QMIN(handleSize, ceData.rect.height());
+				handleSize = TQMIN(handleSize, ceData.rect.height());
 			else
-				handleSize = QMIN(handleSize, ceData.rect.width());
+				handleSize = TQMIN(handleSize, ceData.rect.width());
 
-			size = QMIN(size, handleSize);
+			size = TQMIN(size, handleSize);
 
 			switch ( subcontrol )
 			{
@@ -2984,7 +2984,7 @@ int KeramikStyle::styleHint(StyleHint sh, const TQStyleControlElementData &ceDat
 				bool checkable = (elementFlags & CEF_IsCheckable);
 
 				if ( checkable )
-					checkcol = QMAX( checkcol, 20 );
+					checkcol = TQMAX( checkcol, 20 );
 			
 				ret = checkcol;
 			}

@@ -1673,16 +1673,16 @@ WebStyle::popupMenuItemHeight(bool, TQMenuItem * i, const TQFontMetrics & fm)
 
   if (0 != i->iconSet())
   {
-    h = QMAX
+    h = TQMAX
       (
        i->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).height(),
        h
       );
   }
 
-  h = QMAX(fm.height() + 4, h);
+  h = TQMAX(fm.height() + 4, h);
 
-  h = QMAX(18, h);
+  h = TQMAX(18, h);
 
   return h;
 

@@ -103,7 +103,7 @@ KWordWrap* KWordWrap::formatText( TQFontMetrics &fm, const TQRect & r, int /*fla
             kw->m_breakPositions.append( breakAt );
             int thisLineWidth = lastBreak == -1 ? x + ww : lineWidth;
             kw->m_lineWidths.append( thisLineWidth );
-            textwidth = QMAX( textwidth, thisLineWidth );
+            textwidth = TQMAX( textwidth, thisLineWidth );
             x = 0;
             y += height;
             wasBreakable = true;
@@ -124,7 +124,7 @@ KWordWrap* KWordWrap::formatText( TQFontMetrics &fm, const TQRect & r, int /*fla
         wasBreakable = isBreakable;
         wasParens = isParens;
     }
-    textwidth = QMAX( textwidth, x );
+    textwidth = TQMAX( textwidth, x );
     kw->m_lineWidths.append( x );
     y += height;
     //kdDebug() << "KWordWrap::formatText boundingRect:" << r.x() << "," << r.y() << " " << textwidth << "x" << y << endl;
@@ -135,7 +135,7 @@ KWordWrap* KWordWrap::formatText( TQFontMetrics &fm, const TQRect & r, int /*fla
     {
         while ( realY > r.height() )
             realY -= height;
-        realY = QMAX( realY, 0 );
+        realY = TQMAX( realY, 0 );
     }
     kw->m_boundingRect.setRect( 0, 0, textwidth, realY );
     return kw;

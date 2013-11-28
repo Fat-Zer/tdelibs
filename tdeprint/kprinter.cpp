@@ -334,14 +334,14 @@ void KPrinter::translateQtOptions()
 		{
 			// Printers can often print very close to the edges (PPD files say ImageArea==PaperDimension).
 			// But that doesn't mean it looks good. Apps which use setFullPage(false) assume that
-			// KPrinter will give them reasonable margins, so let's QMAX with defaults from Qt in that case.
+			// KPrinter will give them reasonable margins, so let's TQMAX with defaults from Qt in that case.
 			// Keep this in sync with KPMarginPage::initPageSize
 			unsigned int it, il, ib, ir;
 			d->m_wrapper->margins( &it, &il, &ib, &ir );
-			top = QMAX( top, (int)it );
-			left = QMAX( left, (int)il );
-			bottom = QMAX( bottom, (int)ib );
-			right = QMAX( right, (int)ir );
+			top = TQMAX( top, (int)it );
+			left = TQMAX( left, (int)il );
+			bottom = TQMAX( bottom, (int)ib );
+			right = TQMAX( right, (int)ir );
 		}
 		d->m_wrapper->setMargins( top, left, bottom, right );
 	}
@@ -502,8 +502,8 @@ TQValueList<int> KPrinter::pageList() const
 						if (ok && p1 <= p2)
 						{
 							// clip to min/max
-							p1 = QMAX(mp,p1);
-							p2 = QMIN(MP,p2);
+							p1 = TQMAX(mp,p1);
+							p2 = TQMIN(MP,p2);
 							for (int i=p1;i<=p2;i++)
 								list.append(i);
 						}

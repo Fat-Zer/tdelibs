@@ -1105,7 +1105,7 @@ TDEAboutContributor::sizeHint()
   TQRect rect;
   // ----- first calculate name and email width:
   maxx=name->sizeHint().width();
-  maxx=QMAX(maxx, email->sizeHint().width()+WORKTEXT_IDENTATION);
+  maxx=TQMAX(maxx, email->sizeHint().width()+WORKTEXT_IDENTATION);
   // ----- now determine "work" text rectangle:
   if(!work.isEmpty()) // save time
     {
@@ -1116,7 +1116,7 @@ TDEAboutContributor::sizeHint()
   {
     maxx=WorkTextWidth+WORKTEXT_IDENTATION;
   }
-  maxx=QMAX(maxx, url->sizeHint().width()+WORKTEXT_IDENTATION);
+  maxx=TQMAX(maxx, url->sizeHint().width()+WORKTEXT_IDENTATION);
   // -----
   maxy=2*(name->sizeHint().height()+Grid); // need a space above the KURLLabels
   maxy+=/* email */ name->sizeHint().height();
@@ -1193,8 +1193,8 @@ TQSize TDEAboutContributor::sizeHint( void )
   int m = frameWidth();
 
   int w = name->sizeHint().width();
-  w = QMAX( w, email->sizeHint().width()+s);
-  w = QMAX( w, url->sizeHint().width()+s);
+  w = TQMAX( w, email->sizeHint().width()+s);
+  w = TQMAX( w, url->sizeHint().width()+s);
 
   if( work.isEmpty() == false )
   {
@@ -1203,9 +1203,9 @@ TQSize TDEAboutContributor::sizeHint( void )
       (0, 0, WorkTextWidth, 32000, WordBreak | AlignLeft, work);
     if( w < r.width() )
     {
-      w = QMAX( w, WorkTextWidth+s );
+      w = TQMAX( w, WorkTextWidth+s );
     }
-    h += QMAX( fontMetrics().lineSpacing(), r.height() ) + s;
+    h += TQMAX( fontMetrics().lineSpacing(), r.height() ) + s;
   }
   return( TQSize( w + 2*m, h + 2*m ) );
 
@@ -1216,8 +1216,8 @@ TQSize TDEAboutContributor::sizeHint( void )
   int h = ls * 3 + s * 2;
   int w = name->sizeHint().width();
 
-  w = QMAX( w, email->sizeHint().width()+WORKTEXT_IDENTATION);
-  w = QMAX( w, url->sizeHint().width()+WORKTEXT_IDENTATION);
+  w = TQMAX( w, email->sizeHint().width()+WORKTEXT_IDENTATION);
+  w = TQMAX( w, url->sizeHint().width()+WORKTEXT_IDENTATION);
   if( work.isEmpty() == false )
   {
     const int WorkTextWidth=200;
@@ -1226,7 +1226,7 @@ TQSize TDEAboutContributor::sizeHint( void )
       (0, 0, WorkTextWidth, 32000, WordBreak | AlignLeft, work);
     if( w < r.width() )
     {
-      w = QMAX( w, WorkTextWidth + WORKTEXT_IDENTATION );
+      w = TQMAX( w, WorkTextWidth + WORKTEXT_IDENTATION );
     }
     h += r.height() + s;
   }
@@ -1361,15 +1361,15 @@ TDEAboutWidget::adjust()
   logo->adjustSize();
   cy=version->sizeHint().height()+Grid;
   cx=logo->width();
-  tempx=QMAX(total_size.width(), maintWidth);
+  tempx=TQMAX(total_size.width(), maintWidth);
   cx+=Grid+tempx;
-  cx=QMAX(cx, version->sizeHint().width());
-  cy+=QMAX(logo->height(),
+  cx=TQMAX(cx, version->sizeHint().width());
+  cy+=TQMAX(logo->height(),
 	   total_size.height()+(showMaintainer ? Grid+maintHeight : 0));
   // -----
   if(!contributors.isEmpty())
     {
-      cx=QMAX(cx, cont->sizeHint().width());
+      cx=TQMAX(cx, cont->sizeHint().width());
       cy+=cont->sizeHint().height()+Grid;
       TQPtrListIterator<TDEAboutContributor> _pos(contributors);
       TDEAboutContributor* currEntry;
@@ -1472,7 +1472,7 @@ TDEAboutWidget::resizeEvent(TQResizeEvent*)
   maintainer->setGeometry
     (tempx, _y+author->height()+Grid, cx, maintainer->sizeHint().height());
 
-  _y+=QMAX(logo->height(),
+  _y+=TQMAX(logo->height(),
 	  author->height()+(showMaintainer ? Grid+maintainer->height() : 0));
   // -----
   if(!contributors.isEmpty())

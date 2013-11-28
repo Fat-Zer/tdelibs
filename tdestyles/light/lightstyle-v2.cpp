@@ -838,7 +838,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 	    if ( !mi )
 		break;
 
-	    maxpmw = QMAX(maxpmw, 16);
+	    maxpmw = TQMAX(maxpmw, 16);
 
 	    TQRect cr, ir, tr, sr;
 	    // check column
@@ -1579,11 +1579,11 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 		if (h < 16)
 		    h = 16;
 		if (mi->pixmap())
-		    h = QMAX(h, mi->pixmap()->height());
+		    h = TQMAX(h, mi->pixmap()->height());
 		else if (! mi->text().isNull())
-		    h = QMAX(h, TQFontMetrics(ceData.font).height() + 2);
+		    h = TQMAX(h, TQFontMetrics(ceData.font).height() + 2);
 		if (mi->iconSet() != 0)
-		    h = QMAX(h, mi->iconSet()->pixmap(TQIconSet::Small,
+		    h = TQMAX(h, mi->iconSet()->pixmap(TQIconSet::Small,
 						      TQIconSet::Normal).height());
 		h += 2;
 	    }
@@ -1591,7 +1591,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 	    // check | 4 pixels | item | 8 pixels | accel | 4 pixels | check
 
 	    // check is at least 16x16
-	    maxpmw = QMAX(maxpmw, 16);
+	    maxpmw = TQMAX(maxpmw, 16);
 	    w += (maxpmw * 2) + 8;
 
 	    if (! mi->text().isNull() && mi->text().find('\t') >= 0)
@@ -1654,7 +1654,7 @@ int LightStyleV2::styleHint( TQ_StyleHint stylehint,
     case SH_MenuIndicatorColumnWidth:
 	{
 		int maxpmw = option.maxIconWidth();
-		maxpmw = QMAX(maxpmw, 16);
+		maxpmw = TQMAX(maxpmw, 16);
 	
 		ret = maxpmw;
 	}

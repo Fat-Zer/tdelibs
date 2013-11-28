@@ -82,7 +82,7 @@ void TDEPopupTitle::calcSize()
     TQFont f = font();
     f.setBold(true);
     int w = miniicon.width()+TQFontMetrics(f).width(titleStr);
-    int h = QMAX( fontMetrics().height(), miniicon.height() );
+    int h = TQMAX( fontMetrics().height(), miniicon.height() );
     setMinimumSize( w+16, h+8 );
 }
 

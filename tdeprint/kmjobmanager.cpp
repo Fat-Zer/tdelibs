@@ -229,7 +229,7 @@ void KMJobManager::removePrinter(const TQString& pr, KMJobManager::JobType type)
 	struct JobFilter	*jf = m_filter.find(pr);
 	if (jf)
 	{
-		jf->m_type[type] = QMAX(0, jf->m_type[type]-1);
+		jf->m_type[type] = TQMAX(0, jf->m_type[type]-1);
 		if (!jf->m_type[0] && !jf->m_type[1])
 			m_filter.remove(pr);
 	}

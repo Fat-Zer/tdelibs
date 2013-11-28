@@ -177,9 +177,9 @@ void TDEConfigSkeleton::ItemInt::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readNumEntry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );
@@ -234,9 +234,9 @@ void TDEConfigSkeleton::ItemInt64::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readNum64Entry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );
@@ -348,9 +348,9 @@ void TDEConfigSkeleton::ItemUInt::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readUnsignedNumEntry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );
@@ -405,9 +405,9 @@ void TDEConfigSkeleton::ItemUInt64::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readUnsignedNum64Entry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );
@@ -461,9 +461,9 @@ void TDEConfigSkeleton::ItemLong::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readLongNumEntry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );
@@ -519,9 +519,9 @@ void TDEConfigSkeleton::ItemULong::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readUnsignedLongNumEntry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );
@@ -576,9 +576,9 @@ void TDEConfigSkeleton::ItemDouble::readConfig( TDEConfig *config )
   config->setGroup( mGroup );
   mReference = config->readDoubleNumEntry( mKey, mDefault );
   if (mHasMin)
-    mReference = QMAX(mReference, mMin);
+    mReference = TQMAX(mReference, mMin);
   if (mHasMax)
-    mReference = QMIN(mReference, mMax);
+    mReference = TQMIN(mReference, mMax);
   mLoadedValue = mReference;
 
   readImmutability( config );

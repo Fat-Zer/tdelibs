@@ -199,9 +199,9 @@ bool TDESharedPixmap::x11Event(XEvent *event)
     }
 
     unsigned w = d->rect.width(), h = d->rect.height();
-    unsigned tw = QMIN(width, w), th = QMIN(height, h);
+    unsigned tw = TQMIN(width, w), th = TQMIN(height, h);
     unsigned xa = d->rect.x() % width, ya = d->rect.y() % height;
-    unsigned t1w = QMIN(width-xa,tw), t1h = QMIN(height-ya,th);
+    unsigned t1w = TQMIN(width-xa,tw), t1h = TQMIN(height-ya,th);
 
     TQPixmap::resize( tw+origin.x(), th+origin.y() );
 

@@ -1357,7 +1357,7 @@ void LineIterator::nextBlock()
     int state;		// not used
     mapRenderPosToTraversalState(cb_outside, cb_outside_end, false, trav);
 #if DEBUG_CARETMODE > 1
-    kdDebug(6200) << "nextBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
+    kdDebug(6200) << "nextBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, TQMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
 #endif
     r = advanceSuitableObject(r, trav, false, base, state);
     if (!r) {
@@ -1426,7 +1426,7 @@ void LineIterator::prevBlock()
     int state;		// not used
     mapRenderPosToTraversalState(cb_outside, cb_outside_end, true, trav);
 #if DEBUG_CARETMODE > 1
-    kdDebug(6200) << "prevBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
+    kdDebug(6200) << "prevBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, TQMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
 #endif
     r = advanceSuitableObject(r, trav, true, base, state);
     if (!r) {
@@ -1647,7 +1647,7 @@ bool EditableCaretBoxIterator::isEditable(const CaretBoxIterator &boxit, bool fr
   RenderObject *r = b->object();
 #if DEBUG_CARETMODE > 0
 //  if (b->isInlineFlowBox()) kdDebug(6200) << "b is inline flow box" << (outside ? " (outside)" : "") << endl;
-  kdDebug(6200) << "isEditable r" << r << ": " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << endl;
+  kdDebug(6200) << "isEditable r" << r << ": " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, TQMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << endl;
 #endif
   // Must check caret mode or design mode *after* r->element(), otherwise
   // lines without a backing DOM node get regarded, leading to a crash.

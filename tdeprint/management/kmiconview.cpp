@@ -68,13 +68,13 @@ void KMIconViewItem::calcRect(const TQString&)
 	if (m_mode == TQIconView::Bottom)
 	{
 		ir.setHeight(pr.height() + tr.height() + 15);
-		ir.setWidth(QMAX(pr.width(), tr.width()) + 10);
+		ir.setWidth(TQMAX(pr.width(), tr.width()) + 10);
 		pr = TQRect((ir.width()-pr.width())/2, 5, pr.width(), pr.height());
 		tr = TQRect((ir.width()-tr.width())/2, 10+pr.height(), tr.width(), tr.height());
 	}
 	else
 	{
-		ir.setHeight(QMAX(pr.height(), tr.height()) + 4);
+		ir.setHeight(TQMAX(pr.height(), tr.height()) + 4);
 		ir.setWidth(pr.width() + tr.width() + 6);
 		pr = TQRect(2, (ir.height()-pr.height())/2, pr.width(), pr.height());
 		tr = TQRect(4+pr.width(), (ir.height()-tr.height())/2, tr.width(), tr.height());

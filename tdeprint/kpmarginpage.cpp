@@ -90,10 +90,10 @@ void KPMarginPage::initPageSize(const TQString& ps, bool landscape)
 			{
 				w = dps->pageWidth();
 				h = dps->pageHeight();
-				mt = QMAX( mt, dps->topMargin() );
-				ml = QMAX( ml, dps->leftMargin() );
-				mb = QMAX( mb, dps->bottomMargin() );
-				mr = QMAX( mr, dps->rightMargin() );
+				mt = TQMAX( mt, dps->topMargin() );
+				ml = TQMAX( ml, dps->leftMargin() );
+				mb = TQMAX( mb, dps->bottomMargin() );
+				mr = TQMAX( mr, dps->rightMargin() );
 			}
 		}
 	}

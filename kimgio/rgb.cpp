@@ -310,7 +310,7 @@ void RLEData::write(TQDataStream& s)
 bool RLEData::operator<(const RLEData& b) const
 {
 	uchar ac, bc;
-	for (unsigned i = 0; i < QMIN(size(), b.size()); i++) {
+	for (unsigned i = 0; i < TQMIN(size(), b.size()); i++) {
 		ac = at(i);
 		bc = b[i];
 		if (ac != bc)

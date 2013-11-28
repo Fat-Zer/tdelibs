@@ -456,7 +456,7 @@ TQSize KDialogBase::minimumSizeHint() const
   {
     s2 = mUrlHelp->minimumSize() + zeroByS;
   }
-  s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
+  s1.rwidth()   = TQMAX( s1.rwidth(), s2.rwidth() );
   s1.rheight() += s2.rheight();
 
   //
@@ -480,7 +480,7 @@ TQSize KDialogBase::minimumSizeHint() const
   {
     s2 = TQSize( 100, 100+s );
   }
-  s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
+  s1.rwidth()  = TQMAX( s1.rwidth(), s2.rwidth() );
   s1.rheight() += s2.rheight();
 
   if (d->detailsWidget && d->bDetails)
@@ -488,7 +488,7 @@ TQSize KDialogBase::minimumSizeHint() const
     s2 = d->detailsWidget->sizeHint() + zeroByS;
     s2 = s2.expandedTo( d->detailsWidget->minimumSize() );
     s2 = s2.expandedTo( d->detailsWidget->minimumSizeHint() );
-    s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
+    s1.rwidth()  = TQMAX( s1.rwidth(), s2.rwidth() );
     s1.rheight() += s2.rheight();
   }
 
@@ -508,13 +508,13 @@ TQSize KDialogBase::minimumSizeHint() const
     s2 = d->mButton.box->minimumSize();
     if( mButtonOrientation == Qt::Horizontal )
     {
-      s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
+      s1.rwidth()   = TQMAX( s1.rwidth(), s2.rwidth() );
       s1.rheight() += s2.rheight();
     }
     else
     {
       s1.rwidth() += s2.rwidth();
-      s1.rheight() = QMAX( s1.rheight(), s2.rheight() );
+      s1.rheight() = TQMAX( s1.rheight(), s2.rheight() );
     }
   }
 

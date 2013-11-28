@@ -580,7 +580,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 			else if (defsearch == -1 && it.current()->name() == printer->searchName())
 				defsearch = d->m_printers->count()-1;
 		}
-		int	defindex = (defsearch != -1 ? defsearch : (defsoft != -1 ? defsoft : QMAX(defhard,0)));
+		int	defindex = (defsearch != -1 ? defsearch : (defsoft != -1 ? defsoft : TQMAX(defhard,0)));
 		d->m_printers->setCurrentItem(defindex);
 		//slotPrinterSelected(defindex);
 	}
