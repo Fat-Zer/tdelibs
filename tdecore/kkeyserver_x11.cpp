@@ -496,8 +496,9 @@ int Sym::qt() const
 
 TQString Sym::toString( bool bUserSpace ) const
 {
-	if( m_sym == 0 )
+	if( m_sym == 0 ) {
 		return TQString::null;
+	}
 
 	// If it's a unicode character,
 #ifdef Q_WS_WIN
@@ -509,14 +510,16 @@ TQString Sym::toString( bool bUserSpace ) const
 		// Print all non-space characters directly when output is user-visible.
 		// Otherwise only print alphanumeric latin1 characters directly (A,B,C,1,2,3).
 		if( (c.latin1() && c.isLetterOrNumber())
-		    || (bUserSpace && !c.isSpace()) )
+		    || (bUserSpace && !c.isSpace()) ) {
 				return c;
+		}
 	}
 
 	// Look up in special names list
 	for( int i = 0; g_rgSymNames[i].sym != 0; i++ ) {
-		if( m_sym == g_rgSymNames[i].sym )
+		if( m_sym == g_rgSymNames[i].sym ) {
 			return bUserSpace ? i18n(g_rgSymNames[i].psName) : TQString(g_rgSymNames[i].psName);
+		}
 	}
 
 	TQString s;
@@ -996,8 +999,9 @@ void Variations::init( const KKey& key, bool bQt )
 		uint nVariations = 0;
 		for( uint i = 0; i < m_nVariations; i++ ) {
 			int keyQt = KKeyNative( m_rgkey[i].code(), m_rgkey[i].mod(), m_rgkey[i].sym() ).keyCodeQt();
-			if( keyQt )
+			if( keyQt ) {
 				m_rgkey[nVariations++].setKeycodeQt( keyQt );
+			}
 		}
 		m_nVariations = nVariations;
 
@@ -1007,8 +1011,9 @@ void Variations::init( const KKey& key, bool bQt )
 			for( uint j = 0; j < i; j++ ) {
 				// If key is already present in list, then remove it.
 				if( m_rgkey[i].keyCodeQt() == m_rgkey[j].keyCodeQt() ) {
-					for( uint k = i; k < m_nVariations - 1; k++ )
+					for( uint k = i; k < m_nVariations - 1; k++ ) {
 						m_rgkey[k].setKeycodeQt( m_rgkey[k+1].keyCodeQt() );
+					}
 					m_nVariations--;
 					i--;
 					break;
@@ -1020,7 +1025,7 @@ void Variations::init( const KKey& key, bool bQt )
 
 } // end of namespace KKeyServer block
 
-// FIXME: This needs to be moved to tdeshortcut.cpp, and create a 
+// FIXME: This needs to be moved to tdeshortcut.cpp, and create a
 //  KKeyServer::method which it will call.
 // Alt+SysReq => Alt+Print
 // Ctrl+Shift+Plus => Ctrl+Plus (en)
@@ -1041,8 +1046,9 @@ void KKey::simplify()
 	}
 
 	// If this is a letter, don't remove any modifiers.
-	if( m_sym < 0x3000 && TQChar(m_sym).isLetter() )
+	if( m_sym < 0x3000 && TQChar(m_sym).isLetter() ) {
 		m_sym = TQChar(m_sym).lower().unicode();
+	}
 
 	// Remove modifers from modifier list which are implicit in the symbol.
 	// Ex. Shift+Plus => Plus (en)

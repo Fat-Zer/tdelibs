@@ -131,7 +131,8 @@ TDEAccelAction* TDEAccelBase::insert( const TQString& sAction, const TQString& s
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
-	//kdDebug(125) << "TDEAccelBase::insert() begin" << endl;
+	kdDebug(125) << "TDEAccelBase::insert() begin" << endl;
+	kdDebug(125) << "\t" << sAction << ": " << rgCutDefaults3.toString() << ": " << rgCutDefaults4.toString() << endl;
 	TDEAccelAction* pAction = m_rgActions.insert(
 		sAction, sDesc, sHelp,
 		rgCutDefaults3, rgCutDefaults4,
@@ -369,7 +370,7 @@ bool TDEAccelBase::updateConnections()
 			info.pAction = 0;
 		}
 
-		//kdDebug(125) << "mapKeyToAction[" << key.toStringInternal() << "] = " << info.pAction << endl;
+		kdDebug(125) << "mapKeyToAction[" << key.key().toStringInternal() << "] = " << info.pAction << endl;
 		mapKeyToAction[key] = info;
 	}
 
@@ -421,9 +422,10 @@ bool TDEAccelBase::updateConnections()
 // Construct a list of keys to be connected, sorted highest priority first.
 void TDEAccelBase::createKeyList( TQValueVector<struct X>& rgKeys )
 {
-	//kdDebug(125) << "TDEAccelBase::createKeyList()" << endl;
-	if( !isEnabledInternal())
+	kdDebug(125) << "TDEAccelBase::createKeyList()" << endl;
+	if( !isEnabledInternal()) {
 		return;
+	}
 
 	// create the list
 	// For each action
@@ -437,13 +439,15 @@ void TDEAccelBase::createKeyList( TQValueVector<struct X>& rgKeys )
 					KKeyServer::Variations vars;
 					vars.init( seq.key(0), !m_bNativeKeys );
 					for( uint iVari = 0; iVari < vars.count(); iVari++ ) {
-						if( vars.key(iVari).code() && vars.key(iVari).sym() )
+						if( vars.key(iVari).code() && vars.key(iVari).sym() ) {
 							rgKeys.push_back( X( iAction, iSeq, iVari, vars.key( iVari ) ) );
-						//kdDebug(125) << "\t" << pAction->name() << ": " << vars.key(iVari).toStringInternal() << endl;
+						}
+						kdDebug(125) << "\t" << pAction->name() << ": " << vars.key(iVari).key().toStringInternal() << " [action specified: " << pAction->toStringInternal() << "]" << endl;
 					}
 				}
-				//else
+				//else {
 				//	kdDebug(125) << "\t*" << pAction->name() << ":" << endl;
+				// }
 			}
 		}
 	}

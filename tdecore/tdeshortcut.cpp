@@ -70,8 +70,9 @@ bool KKey::init( int keyQt )
 
 	//if( sym.initQt( keyQt )
 	if( KKeyServer::keyQtToSym( keyQt, m_sym )
-	    && KKeyServer::keyQtToMod( keyQt, m_mod ) )
+	    && KKeyServer::keyQtToMod( keyQt, m_mod ) ) {
 		return true;
+	}
 	else {
 		m_sym = 0;
 		m_mod = 0;
@@ -422,8 +423,10 @@ bool TDEShortcut::init( int keyQt )
 	if( keyQt ) {
 		m_nSeqs = 1;
 		m_rgseq[0].init( TQKeySequence(keyQt) );
-	} else
+	}
+	else {
 		clear();
+	}
 	return true;
 }
 

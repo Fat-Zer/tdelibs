@@ -69,8 +69,8 @@ static void calculateGrabMasks()
 	g_keyModMaskXOnOrOff =
 			KKeyServer::modXLock() |
 			KKeyServer::modXNumLock() |
-			KKeyServer::modXScrollLock() | 
-			KKeyServer::modXModeSwitch(); 
+			KKeyServer::modXScrollLock() |
+			KKeyServer::modXModeSwitch();
 	//kdDebug() << "g_keyModMaskXAccel = " << g_keyModMaskXAccel
 	//	<< "g_keyModMaskXOnOrOff = " << g_keyModMaskXOnOrOff << endl;
 }
@@ -165,8 +165,9 @@ bool TDEGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, TDE
 	}
 
 	// Make sure that grab masks have been initialized.
-	if( g_keyModMaskXOnOrOff == 0 )
+	if( g_keyModMaskXOnOrOff == 0 ) {
 		calculateGrabMasks();
+	}
 
 	uchar keyCodeX = key.code();
 	uint keyModX = key.mod() & g_keyModMaskXAccel; // Get rid of any non-relevant bits in mod
@@ -177,6 +178,14 @@ bool TDEGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, TDE
 	    keyModX |= KKeyServer::modXAlt();
 	    keyCodeX = 111;
 	}
+	// If the MODE_SWITCH modifier was set in the original key, and was truncated in g_keyModMaskXAccel, XGrabKey will grab the wrong key
+	// See Bug 1676
+	if ((key.mod() & KKeyServer::MODE_SWITCH) && (!(g_keyModMaskXAccel & KKeyServer::MODE_SWITCH))) {
+		// FIXME
+		// Is there any way to make AltGr-based character sequences work with XGrabKey?
+		kdWarning(125) << "TDEGlobalAccelPrivate::grabKey( " << key.key().toStringInternal() << ", " << bGrab << ", \"" << (pAction ? pAction->name().latin1() : "(null)") << "\" ): Tried to grab key requiring ISO_Level3_Shift (AltGr) sequence." << endl;
+		return false;
+	}
 
 #ifndef __osf__
 // this crashes under Tru64 so .....
@@ -184,8 +193,9 @@ bool TDEGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, TDE
 		.arg( key.key().toStringInternal() ).arg( bGrab )
 		.arg( keyCodeX, 0, 16 ).arg( keyModX, 0, 16 ));
 #endif
-	if( !keyCodeX )
+	if( !keyCodeX ) {
 		return false;
+	}
 
 #ifdef Q_WS_X11
         KXErrorHandler handler( XGrabErrorHandler );
@@ -254,8 +264,9 @@ bool TDEGlobalAccelPrivate::x11Event( XEvent* pEvent )
 		x11MappingNotify();
 		return false;
 	 case XKeyPress:
-		if( x11KeyPress( pEvent ) )
+		if( x11KeyPress( pEvent ) ) {
 			return true;
+		}
 	 default:
 		return TQWidget::x11Event( pEvent );
 	}
@@ -276,7 +287,7 @@ void TDEGlobalAccelPrivate::fakeKeyPressed(unsigned int keyCode) {
 	codemod.code = keyCode;
 	codemod.mod = 0;
 
-	KKey key = (keyCode, 0);
+	KKey key(keyCode, 0);
 
 	kdDebug(125) << "fakeKeyPressed: seek " << key.toStringInternal()
 		<< TQString(TQString( " keyCodeX: %1 keyCode: %2 keyModX: %3" )
@@ -294,7 +305,7 @@ void TDEGlobalAccelPrivate::fakeKeyPressed(unsigned int keyCode) {
 #endif
 		return;
 	}
-        
+
 	TDEAccelAction* pAction = m_rgCodeModToAction[codemod];
 
 	if( !pAction ) {
@@ -322,8 +333,9 @@ bool TDEGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
                 XFlush( tqt_xdisplay()); // avoid X(?) bug
         }
 
-	if( !isEnabledInternal() || m_suspended )
+	if( !isEnabledInternal() || m_suspended ) {
 		return false;
+	}
 
 	CodeMod codemod;
 	codemod.code = pEvent->xkey.keycode;
@@ -372,7 +384,7 @@ bool TDEGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 #endif
 		return false;
 	}
-        
+
 	TDEAccelAction* pAction = m_rgCodeModToAction[codemod];
 
 	if( !pAction ) {
