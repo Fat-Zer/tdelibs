@@ -226,9 +226,9 @@ bool TDEStorageDevice::ejectDrive() {
 
 		FILE *exepipe = popen(command.ascii(), "r");
 		if (exepipe) {
-			TQString pmount_output;
-			char buffer[8092];
-			pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+			TQString eject_output;
+			TQTextStream ts(exepipe, IO_ReadOnly);
+			eject_output = ts.read();
 			int retcode = pclose(exepipe);
 			if (retcode == 0) {
 				return TRUE;
@@ -661,7 +661,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 				optionString.insert(0, "-o ");
 			}
 
-			if (mountOptions.contains("filesystem")) {
+			if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
 				optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
 			}
 
@@ -681,7 +681,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 				optionString.insert(0, "--mount-options ");
 			}
 
-			if (mountOptions.contains("filesystem")) {
+			if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
 				optionString.append(TQString(" --mount-fstype %1").arg(mountOptions["filesystem"]));
 			}
 
@@ -715,7 +715,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 				optionString.append(" -s");
 			}
 
-			if (mountOptions.contains("filesystem")) {
+			if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
 				optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
 			}
 
@@ -736,12 +736,12 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 
 	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
-		TQString pmount_output;
-		char buffer[8092];
-		pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+		TQString mount_output;
+		TQTextStream ts(exepipe, IO_ReadOnly);
+		mount_output = ts.read();
 		*retcode = pclose(exepipe);
 		if (errRet) {
-			*errRet = pmount_output;
+			*errRet = mount_output;
 		}
 	}
 
@@ -793,7 +793,7 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 		optionString.append(" -s");
 	}
 
-	if (mountOptions.contains("filesystem")) {
+	if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
 		optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
 	}
 
@@ -810,12 +810,12 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 
 	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
-		TQString pmount_output;
-		char buffer[8092];
-		pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+		TQString mount_output;
+		TQTextStream ts(exepipe, IO_ReadOnly);
+		mount_output = ts.read();
 		*retcode = pclose(exepipe);
 		if (errRet) {
-			*errRet = pmount_output;
+			*errRet = mount_output;
 		}
 	}
 
@@ -867,16 +867,16 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 
 	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
-		TQString pmount_output;
-		char buffer[8092];
-		pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+		TQString umount_output;
+		TQTextStream ts(exepipe, IO_ReadOnly);
+		umount_output = ts.read();
 		*retcode = pclose(exepipe);
 		if (*retcode == 0) {
 			return true;
 		}
 		else {
 			if (errRet) {
-				*errRet = pmount_output;
+				*errRet = umount_output;
 			}
 		}
 	}
