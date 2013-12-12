@@ -144,7 +144,7 @@ bool TDECPUDevice::canSetGovernor() {
 				params << TQT_DBusData::fromInt32(coreNumber());
 				TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetCPUGovernor", params);
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-					return reply[0].toVariant().value.toBool();
+					return reply[0].toBool();
 				}
 			}
 		}

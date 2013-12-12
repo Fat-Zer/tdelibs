@@ -82,7 +82,7 @@ bool TDEBacklightDevice::canSetBrightness() {
 				params << TQT_DBusData::fromString(brightnessnode);
 				TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetBrightness", params);
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-					return reply[0].toVariant().value.toBool();
+					return reply[0].toBool();
 				}
 			}
 		}
