@@ -190,6 +190,12 @@ bool NetAccess::exists( const KURL & url, bool source, TQWidget* window )
   return kioNet.statInternal( url, 0 /*no details*/, source, window );
 }
 
+KURL NetAccess::localURL(const KURL& url, TQWidget* window)
+{
+  NetAccess kioNet;
+  return kioNet.localURLInternal( url, window );
+}
+
 bool NetAccess::stat( const KURL & url, TDEIO::UDSEntry & entry )
 {
   return NetAccess::stat( url, entry, 0 );
@@ -347,6 +353,17 @@ bool NetAccess::statInternal( const KURL & url, int details, bool source,
   return bJobOK;
 }
 
+KURL NetAccess::localURLInternal( const KURL & url, TQWidget* window )
+{
+  m_localURL = url;
+  TDEIO::LocalURLJob* job = TDEIO::localURL(url);
+  job->setWindow (window);
+  connect(job, TQT_SIGNAL( localURL(TDEIO::Job*, const KURL&, bool) ),
+           this, TQT_SLOT( slotLocalURL(TDEIO::Job*, const KURL&, bool) ));
+  enter_loop();
+  return m_localURL;
+}
+
 bool NetAccess::delInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
@@ -387,6 +404,12 @@ TQString NetAccess::mimetypeInternal( const KURL & url, TQWidget* window )
 void NetAccess::slotMimetype( TDEIO::Job *, const TQString & type  )
 {
   m_mimetype = type;
+}
+
+void NetAccess::slotLocalURL(TDEIO::Job*, const KURL & url, bool)
+{
+  m_localURL = url;
+  tqApp->exit_loop();
 }
 
 TQString NetAccess::fish_executeInternal(const KURL & url, const TQString command, TQWidget* window)
@@ -503,25 +526,28 @@ void NetAccess::slotResult( TDEIO::Job * job )
 {
   lastErrorCode = job->error();
   bJobOK = !job->error();
-  if ( !bJobOK )
-  {
-    if ( !lastErrorMsg )
+  if ( !bJobOK ) {
+    if ( !lastErrorMsg ) {
       lastErrorMsg = new TQString;
+    }
     *lastErrorMsg = job->errorString();
   }
-  if ( job->isA("TDEIO::StatJob") )
+  if ( job->isA("TDEIO::StatJob") ) {
     m_entry = static_cast<TDEIO::StatJob *>(job)->statResult();
+  }
 
-  if ( m_metaData )
+  if ( m_metaData ) {
     *m_metaData = job->metaData();
+  }
 
   tqApp->exit_loop();
 }
 
 void NetAccess::slotData( TDEIO::Job*, const TQByteArray& data )
 {
-  if ( data.isEmpty() )
+  if ( data.isEmpty() ) {
     return;
+  }
 
   unsigned offset = m_data.size();
   m_data.resize( offset + data.size() );

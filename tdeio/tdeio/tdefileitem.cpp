@@ -49,6 +49,8 @@
 #include <kmimetype.h>
 #include <krun.h>
 
+#include "netaccess.h"
+
 #ifdef HAVE_ELFICON
 #include "tdelficon.h"
 #endif // HAVE_ELFICON
@@ -234,8 +236,9 @@ void KFileItem::readUDSEntry( bool _urlIsDirectory )
       case TDEIO::UDS_URL:
         UDS_URL_seen = true;
         m_url = KURL((*it).m_str);
-        if ( m_url.isLocalFile() )
+        if ( m_url.isLocalFile() ) {
            m_bIsLocalURL = true;
+        }
         break;
 
       case TDEIO::UDS_MIME_TYPE:
@@ -301,6 +304,7 @@ void KFileItem::setURL( const KURL &url )
 {
   m_url = url;
   setName( url.fileName() );
+  m_bIsLocalURL = m_url.isLocalFile();
 }
 
 void KFileItem::setListerURL( const KURL &url )
@@ -339,20 +343,30 @@ TQString KFileItem::linkDest() const
 
 TQString KFileItem::localPath() const
 {
-  if ( m_bIsLocalURL )
-  {
+  if ( m_bIsLocalURL ) {
     return m_url.path();
   }
-  else
-  {
-    if (&m_entry == NULL) return TQString::null;
+  else {
+    if (&m_entry == NULL) {
+      return TQString::null;
+    }
 
     // Extract the local path from the TDEIO::UDSEntry
     TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
     const TDEIO::UDSEntry::ConstIterator end = m_entry.end();
-    for( ; it != end; ++it )
-      if ( (*it).m_uds == TDEIO::UDS_LOCAL_PATH )
+    for( ; it != end; ++it ) {
+      if ( (*it).m_uds == TDEIO::UDS_LOCAL_PATH ) {
         return (*it).m_str;
+      }
+    }
+  }
+
+  // If we still do not have a local URL, use the lister URL
+  // Without this, Trash functionality will not work with the media:/ tdeioslave!
+  if ((!m_url.isLocalFile())/* && (m_url.protocol() == "media")*/) {
+    if (m_listerURL.isLocalFile()) {
+      return m_listerURL.path();
+    }
   }
 
   return TQString::null;

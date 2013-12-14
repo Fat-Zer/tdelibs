@@ -248,6 +248,20 @@ public:
     static bool move( const KURL::List& src, const KURL& target, TQWidget* window = 0L );
 
     /**
+     * Returns the output of the localURL TDEIO job.
+     *
+     * @param url the URL we are testing
+     * @param window main window associated with this job. This is used to
+     *               automatically cache and discard authentication information
+     *               as needed. If NULL, authentication information will be
+     *               cached only for a short duration after which the user will
+     *               again be prompted for passwords as needed.
+     * @return the local URL for the given URL
+     * @since R14
+     */
+    static KURL localURL(const KURL& url, TQWidget* window);
+
+    /**
      * Tests whether a URL exists.
      *
      * @param url the URL we are testing
@@ -493,6 +507,7 @@ private:
     bool dircopyInternal(const KURL::List& src, const KURL& target,
                          TQWidget* window, bool move);
     bool statInternal(const KURL & url, int details, bool source, TQWidget* window = 0);
+    KURL localURLInternal( const KURL & url, TQWidget* window = 0);
 
     bool delInternal(const KURL & url, TQWidget* window = 0);
     bool mkdirInternal(const KURL & url, int permissions, TQWidget* window = 0);
@@ -516,12 +531,14 @@ private:
 private slots:
     void slotResult( TDEIO::Job * job );
     void slotMimetype( TDEIO::Job * job, const TQString & type );
+    void slotLocalURL(TDEIO::Job*, const KURL&, bool);
     void slotData( TDEIO::Job*, const TQByteArray& );
     void slotRedirection( TDEIO::Job*, const KURL& );
 
 private:
     UDSEntry m_entry;
     TQString m_mimetype;
+    KURL m_localURL;
     TQByteArray m_data;
     KURL m_url;
     TQMap<TQString, TQString> *m_metaData;
