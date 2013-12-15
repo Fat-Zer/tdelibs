@@ -35,7 +35,7 @@
   </entry>
 </xsl:template>
 
-<xsl:template match="sect*/title|emphasis">
+<xsl:template match="*[starts-with(local-name(), 'sect')]/title|emphasis">
   <entry header="2">
     <xsl:apply-templates/>
   </entry>
