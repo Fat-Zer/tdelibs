@@ -99,6 +99,7 @@ void KDiskFreeSp::dfDone()
   readingDFStdErrOut=true;
 
   TQTextStream t (dfStringErrOut, IO_ReadOnly);
+  t.setEncoding(TQTextStream::Locale);
   TQString s=t.readLine();
   if ( (s.isEmpty()) || ( s.left(10) != TQString::fromLatin1("Filesystem") ) )
     kdError() << "Error running df command... got [" << s << "]" << endl;
