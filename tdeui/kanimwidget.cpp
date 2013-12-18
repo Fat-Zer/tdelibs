@@ -189,7 +189,7 @@ void KAnimWidget::updateIcons()
 
   TQString path = TDEGlobal::iconLoader()->iconPath(d->icon_name, -d->size);
   TQImage img(path);
-  
+
   if (img.isNull())
      return;
 
@@ -198,7 +198,7 @@ void KAnimWidget::updateIcons()
   d->transparent = img.hasAlphaBuffer();
   if (d->pixmap.width() != d->size)
   {
-     img = img.smoothScale(d->size, d->size*d->frames);     
+     img = img.smoothScale(d->size, d->size*d->frames);
   }
   d->pixmap = img;
 
