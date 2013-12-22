@@ -2408,7 +2408,6 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             int x, y, w, h;
             r.rect( &x, &y, &w, &h );
 
-            const TQPushButton* button = static_cast<const TQPushButton *>( widget );
             bool active = (elementFlags & CEF_IsOn) || (elementFlags & CEF_IsDown);
             bool cornArrow = false;
 

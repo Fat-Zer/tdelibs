@@ -168,8 +168,8 @@ void HighContrastStyle::polish (const TQStyleControlElementData &ceData, Control
 			TQSpinWidget* spinwidget = dynamic_cast<TQSpinWidget*>(widget);
 			if (spinwidget && spinwidget->editWidget()) {
 				TQWidget* spinEditWidget = spinwidget->editWidget();
-				TQStyleControlElementData swCeData = populateControlElementDataFromWidget(spinEditWidget, TQStyleOption());
-				ControlElementFlags swElementFlags = getControlElementFlagsForObject(spinEditWidget, swCeData.widgetObjectTypes, TQStyleOption());
+				const TQStyleControlElementData &swCeData = populateControlElementDataFromWidget(spinEditWidget, TQStyleOption());
+				ControlElementFlags swElementFlags = getControlElementFlagsForObject(spinEditWidget, TQStyleOption());
 				installObjectEventHandler(swCeData, swElementFlags, spinEditWidget, this);
 			}
 		}

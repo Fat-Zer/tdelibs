@@ -351,8 +351,8 @@ void TDEStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
 								  SFlags flags,
 								  const TQStyleOption &opt ) const
 {
-	TQStyleControlElementData ceData = populateControlElementDataFromWidget(widget, TQStyleOption());
-	drawTDEStylePrimitive(kpe, p, ceData, getControlElementFlagsForObject(widget, ceData.widgetObjectTypes, TQStyleOption()), r, cg, flags, opt);
+	const TQStyleControlElementData &ceData = populateControlElementDataFromWidget(widget, TQStyleOption());
+	drawTDEStylePrimitive(kpe, p, ceData, getControlElementFlagsForObject(widget, TQStyleOption()), r, cg, flags, opt);
 }
 
 void TDEStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
@@ -1022,7 +1022,6 @@ int TDEStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData
 
 		case PM_DockWindowHandleExtent:
 		{
-			TQWidget* parent = 0;
 			// Check that we are not a normal toolbar or a hidden dockwidget,
 			// in which case we need to adjust the height for font size
 			if (widget
