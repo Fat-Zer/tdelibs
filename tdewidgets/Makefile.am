@@ -28,13 +28,13 @@ maketdewidgets_SOURCES = maketdewidgets.cpp
 maketdewidgets_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 maketdewidgets_LDADD = $(LIB_QT) ../tdecore/libtdecore.la 
 
-kde_widget_LTLIBRARIES = kdewidgets.la
-kdewidgets_la_LDFLAGS = $(KDE_PLUGIN) -module $(all_libraries)
-kdewidgets_la_LIBADD = $(LIB_TDEIO) $(LIB_TDEABC) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE)
-kdewidgets_la_SOURCES = classpreviews.cpp kdewidgets.cpp
+kde_widget_LTLIBRARIES = tdewidgets.la
+tdewidgets_la_LDFLAGS = $(KDE_PLUGIN) -module $(all_libraries)
+tdewidgets_la_LIBADD = $(LIB_TDEIO) $(LIB_TDEABC) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE)
+tdewidgets_la_SOURCES = classpreviews.cpp tdewidgets.cpp
 
-kdewidgets.cpp: $(srcdir)/kde.widgets maketdewidgets
-	./maketdewidgets -o kdewidgets.cpp $(srcdir)/kde.widgets
+tdewidgets.cpp: $(srcdir)/kde.widgets maketdewidgets
+	./maketdewidgets -o tdewidgets.cpp $(srcdir)/kde.widgets
 
-CLEANFILES = kdewidgets.cpp
+CLEANFILES = tdewidgets.cpp
 

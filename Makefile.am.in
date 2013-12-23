@@ -28,7 +28,7 @@ COMPILE_BEFORE_kate = interfaces tdeutils
 COMPILE_BEFORE_tdemdi = tdeutils
 COMPILE_BEFORE_tdespell2 = tdeutils
 COMPILE_BEFORE_tdecmshell = tdeutils
-COMPILE_BEFORE_kdewidgets = tdeabc tdehtml
+COMPILE_BEFORE_tdewidgets = tdeabc tdehtml
 COMPILE_BEFORE_interfaces = arts tdeabc
 
 $(top_srcdir)/acinclude.m4: $(top_srcdir)/libltdl/ltdl.m4

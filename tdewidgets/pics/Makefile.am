@@ -1,4 +1,4 @@
-kdewidgetsdata_DATA =  klineedit.png ktextbrowser.png kpasswordedit.png kdatewidget.png \
+tdewidgetsdata_DATA =  klineedit.png ktextbrowser.png kpasswordedit.png kdatewidget.png \
              tdefontrequester.png kurlrequester.png kcombobox.png kiconview.png kintspinbox.png \
              kled.png ksqueezedtextlabel.png  kprogress.png kurllabel.png \
              kruler.png tdecmodule.png kdoublespinbox.png kdoublenuminput.png \
@@ -12,6 +12,6 @@ kdewidgetsdata_DATA =  klineedit.png ktextbrowser.png kpasswordedit.png kdatewid
 	     tdeactionselector.png kdatetable.png kdatetimewidget.png 
 
 
-kdewidgetsdatadir = $(kde_datadir)/kdewidgets/pics
+tdewidgetsdatadir = $(kde_datadir)/tdewidgets/pics
 
-EXTRA_DIST = $(kdewidgetsdata_DATA)
+EXTRA_DIST = $(tdewidgetsdata_DATA)

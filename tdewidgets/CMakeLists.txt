@@ -46,16 +46,16 @@ tde_add_executable( ${target}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-##### kdewidgets ################################
+##### tdewidgets ################################
 
-set( target kdewidgets )
+set( target tdewidgets )
 
 set( ${target}_SRCS
-  classpreviews.cpp kdewidgets.cpp
+  classpreviews.cpp tdewidgets.cpp
 )
 
-add_custom_command( OUTPUT kdewidgets.cpp
-  COMMAND ./maketdewidgets -o kdewidgets.cpp ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
+add_custom_command( OUTPUT tdewidgets.cpp
+  COMMAND ./maketdewidgets -o tdewidgets.cpp ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
   DEPENDS maketdewidgets ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
 )
 

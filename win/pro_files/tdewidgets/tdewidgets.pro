@@ -3,11 +3,11 @@ CONFIG += trinitylib #this is a dynamic kde library
 
 include( $(KDELIBS)/win/common.pro )
 
-system( maketdewidgets -o kdewidgets.cpp kde.widgets )
+system( maketdewidgets -o tdewidgets.cpp kde.widgets )
 
 #no _d because it's a special case
 
-TARGET = kdewidgets
+TARGET = tdewidgets
 
 DESTDIR		= $$KDELIBDESTDIR/trinity/plugins/designer
 
@@ -16,5 +16,5 @@ LIBS +=  $$KDELIBDESTDIR/tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR/tdeio$$KDELIB_SU
 	$$KDELIBDESTDIR/tdeabc$$KDELIB_SUFFIX $$KDELIBDESTDIR/tdeutils$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR/tderesources$$KDELIB_SUFFIX 
 
-SOURCES += classpreviews.cpp kdewidgets.cpp
+SOURCES += classpreviews.cpp tdewidgets.cpp
 

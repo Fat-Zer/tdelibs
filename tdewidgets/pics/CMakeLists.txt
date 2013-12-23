@@ -24,4 +24,4 @@ install( FILES
     kintnuminput.png krestrictedline.png ktextedit.png
     kurlcomborequester.png kkeybutton.png kpalettetable.png
     tdeactionselector.png kdatetable.png kdatetimewidget.png
-  DESTINATION ${DATA_INSTALL_DIR}/kdewidgets/pics )
+  DESTINATION ${DATA_INSTALL_DIR}/tdewidgets/pics )
