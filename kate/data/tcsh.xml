@@ -326,6 +326,7 @@
       <item> ldd </item>
       <item> less </item>
       <item> lex </item>
+      <item> libtool </item>
       <item> ln </item>
       <item> locate </item>
       <item> lockfile </item>
