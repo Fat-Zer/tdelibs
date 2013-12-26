@@ -196,6 +196,81 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 	return FALSE;
 }
 
+int mountDriveUDisks(TQString deviceNode, TQString fileSystemType, TQStringList mountOptions, TQString* errStr = NULL) {
+#ifdef WITH_UDISKS
+	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+	if (dbusConn.isConnected()) {
+		TQString blockDeviceString = deviceNode;
+		blockDeviceString.replace("/dev/", "");
+		blockDeviceString = "/org/freedesktop/UDisks/devices/" + blockDeviceString;
+
+		// Mount the drive!
+		TQT_DBusError error;
+		TQT_DBusProxy driveControl("org.freedesktop.UDisks", blockDeviceString, "org.freedesktop.UDisks.Device", dbusConn);
+		if (driveControl.canSend()) {
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(fileSystemType);
+			params << TQT_DBusData::fromList(TQT_DBusDataList(mountOptions));
+			TQT_DBusMessage reply = driveControl.sendWithReply("FilesystemMount", params, &error);
+			if (error.isValid()) {
+				// Error!
+				if (errStr) {
+					*errStr = error.name() + ": " + error.message();
+				}
+				else {
+					printf("[ERROR][tdehwlib] mountDriveUDisks: %s\n", error.name().ascii()); fflush(stdout);
+				}
+				return -1;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return -2;
+		}
+	}
+#endif // WITH_UDISKS
+	return -2;
+}
+
+int unMountDriveUDisks(TQString deviceNode, TQStringList unMountOptions, TQString* errStr = NULL) {
+#ifdef WITH_UDISKS
+	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+	if (dbusConn.isConnected()) {
+		TQString blockDeviceString = deviceNode;
+		blockDeviceString.replace("/dev/", "");
+		blockDeviceString = "/org/freedesktop/UDisks/devices/" + blockDeviceString;
+
+		// Mount the drive!
+		TQT_DBusError error;
+		TQT_DBusProxy driveControl("org.freedesktop.UDisks", blockDeviceString, "org.freedesktop.UDisks.Device", dbusConn);
+		if (driveControl.canSend()) {
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromList(TQT_DBusDataList(unMountOptions));
+			TQT_DBusMessage reply = driveControl.sendWithReply("FilesystemUnmount", params, &error);
+			if (error.isValid()) {
+				// Error!
+				if (errStr) {
+					*errStr = error.name() + ": " + error.message();
+				}
+				else {
+					printf("[ERROR][tdehwlib] unMountDriveUDisks: %s\n", error.name().ascii()); fflush(stdout);
+				}
+				return -1;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return -2;
+		}
+	}
+#endif // WITH_UDISKS
+	return -2;
+}
+
 bool TDEStorageDevice::ejectDrive() {
 #ifdef WITH_UDISKS2
 	if (!(TDEGlobal::dirs()->findExe("udisksctl").isEmpty())) {
@@ -600,18 +675,19 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 
 #if defined(WITH_UDISKS2) || defined(WITH_UDISKS)
 	// Prepare filesystem options for mount
+	TQStringList udisksOptions;
 	TQString optionString;
 
 	if (mountOptions["ro"] == "true") {
-		optionString.append(",ro");
+		udisksOptions.append("ro");
 	}
 
 	if (mountOptions["atime"] != "true") {
-		optionString.append(",noatime");
+		udisksOptions.append("noatime");
 	}
 
 	if (mountOptions["sync"] == "true") {
-		optionString.append(",sync");
+		udisksOptions.append("sync");
 	}
 
 	if(  (mountOptions["filesystem"] == "fat")
@@ -620,20 +696,20 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	  || (mountOptions["filesystem"] == "umsdos")
 	) {
 		if (mountOptions.contains("shortname")) {
-			optionString.append(TQString(",shortname=%1").arg(mountOptions["shortname"]));
+			udisksOptions.append(TQString("shortname=%1").arg(mountOptions["shortname"]));
 		}
 	}
 
 	if( (mountOptions["filesystem"] == "jfs")) {
 		if (mountOptions["utf8"] == "true") {
 			// udisks/udisks2 for now does not support option iocharset= for jfs
-			// optionString.append(",iocharset=utf8");
+			// udisksOptions.append("iocharset=utf8");
 		}
 	}
 
 	if( (mountOptions["filesystem"] == "ntfs-3g") ) {
 		if (mountOptions.contains("locale")) {
-			optionString.append(TQString(",locale=%1").arg(mountOptions["locale"]));
+			udisksOptions.append(TQString("locale=%1").arg(mountOptions["locale"]));
 		}
 	}
 
@@ -642,8 +718,13 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	) {
 		if (mountOptions.contains("journaling")) {
 			// udisks/udisks2 for now does not support option data= for ext3/ext4
-			// optionString.append(TQString(",data=%1").arg(mountOptions["journaling"]));
+			// udisksOptions.append(TQString("data=%1").arg(mountOptions["journaling"]));
 		}
+	}
+
+	for (TQStringList::Iterator it = udisksOptions.begin(); it != udisksOptions.end(); ++it) {
+		optionString.append(",");
+		optionString.append(*it);
 	}
 
 	if (!optionString.isEmpty()) {
@@ -656,7 +737,6 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 		// Use 'udisksctl' command (from UDISKS2), if available
 		TQString udisksctlProg = TDEGlobal::dirs()->findExe("udisksctl");
 		if (!udisksctlProg.isEmpty()) {
-
 			if(!optionString.isEmpty()) {
 				optionString.insert(0, "-o ");
 			}
@@ -672,20 +752,36 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 
 #ifdef WITH_UDISKS
 	if(command.isEmpty()) {
-		// Use 'udisks' command (from UDISKS1), if available
-		TQString udisksProg = TDEGlobal::dirs()->findExe("udisks");
-		if (!udisksProg.isEmpty()) {
-			TQString optionString;
+		// Try to use UDISKS v1 via DBUS, if available
+		TQString errorString;
+		TQString fileSystemType;
 
-			if(!optionString.isEmpty()) {
-				optionString.insert(0, "--mount-options ");
+		if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
+			fileSystemType = mountOptions["filesystem"];
+		}
+
+		int uDisksRet = mountDriveUDisks(devNode, fileSystemType, udisksOptions, &errorString);
+		if (uDisksRet == 0) {
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
+			ret = mountPath();
+			return ret;
+		}
+		else if (uDisksRet == -1) {
+			if (errRet) {
+				*errRet = errorString;
 			}
 
-			if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
-				optionString.append(TQString(" --mount-fstype %1").arg(mountOptions["filesystem"]));
-			}
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
 
-			command = TQString("udisks --mount '%1' %2 2>&1").arg(devNode).arg(optionString);
+			ret = mountPath();
+			return ret;
+		}
+		else {
+			// The UDISKS v1 DBUS service was either not available or was unusable; try another method...
+			command = TQString::null;
 		}
 	}
 #endif // WITH_UDISKS
@@ -731,6 +827,9 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	}
 
 	if(command.isEmpty()) {
+		if (errRet) {
+			*errRet = i18n("No supported mounting methods were detected on your system");
+		}
 		return ret;
 	}
 
@@ -851,9 +950,29 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 #endif // WITH_UDISKS2
 #ifdef WITH_UDISKS
-	if(command.isEmpty() &&
-	   !(TDEGlobal::dirs()->findExe("udisks").isEmpty()) ) {
-		command = TQString("udisks --unmount '%1' 2>&1").arg(devNode);
+	if(command.isEmpty()) {
+		TQString errorString;
+		int unMountUDisksRet = unMountDriveUDisks(devNode, TQStringList(), &errorString);
+		if (unMountUDisksRet == 0) {
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
+			return true;
+		}
+		else if (unMountUDisksRet == -1) {
+			if (errRet) {
+				*errRet = errorString;
+			}
+
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
+			return false;
+		}
+		else {
+			// The UDISKS v1 DBUS service was either not available or was unusable; try another method...
+			command = TQString::null;
+		}
 	}
 #endif // WITH_UDISKS
 	if(command.isEmpty() &&
@@ -862,6 +981,9 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 
 	if(command.isEmpty()) {
+		if (errRet) {
+			*errRet = i18n("No supported unmounting methods were detected on your system");
+		}
 		return true;
 	}
 
@@ -872,6 +994,9 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 		umount_output = ts.read();
 		*retcode = pclose(exepipe);
 		if (*retcode == 0) {
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
 			return true;
 		}
 		else {
