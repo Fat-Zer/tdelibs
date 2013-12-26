@@ -7,14 +7,14 @@ Lubos Lunak <l.lunak@kde.org>
 --------------------------------
 
 
- When a new application is started in KDE, together with it a startup
+ When a new application is started in TDE, together with it a startup
 notification is sent, which is used to show a startup entry in taskbar,
 the busy icon next to the cursor and put the window of the started app
 on correct desktop.
  This application startup notification ( ASN for short in the following
 text ) usually works fine without problems, but some applications and
 some special cases may need special handling.
- Right now, this is only an internal KDE standard, but since a toolkit
+ Right now, this is only an internal TDE standard, but since a toolkit
 support would improve the results a bit, I'll try to discuss this
 on http://www.freedesktop.org .
 
@@ -55,11 +55,11 @@ X-TDE-WMClass=<string>
             - either if its windows is correctly detected using the default
                 WMClass value ( the name of the binary )
             - or if a window is mapped that is not recognized ( doesn't have
-                neither _KDE_STARTUP_ID nor _NET_WM_PID property /*CHECKME*/),
+                neither _TDE_STARTUP_ID nor _NET_WM_PID property /*CHECKME*/),
                 it's assumed this window belongs to the started app;
                 the start-on-desktop feature won't work then too
     - if not set, it defaults to the binary name of the app ( ok for most apps,
-        including KDE ones )
+        including TDE ones )
     - to get the WMCLASS value for any app, run 'xprop' and click on the app's
         window, WMCLASS value for this app should be any of the strings listed
         in the WM_CLASS property ( it's usually the same as the name of the
@@ -68,7 +68,7 @@ MapNotify=<bool>
     - this key is obsolete
     - true is equivalent to X-TDE-StartupNotify=true and no X-TDE-WMClass set
     - false is equivalent to X-TDE-StartupNotify=true and X-TDE-WMClass=0
-        - many .desktop files in KDE ( especially in tdebase/kappfinder )
+        - many .desktop files in TDE ( especially in tdebase/kappfinder )
             seem to have MapNotify=false even though it's not needed, this
             needs to be checked and replaced by the needed X-TDE-* values,
             often just X-TDE-StartupNotify=true should be enough
@@ -137,28 +137,28 @@ Implementation details :
 this is mainly in hope also non-TDE people will start using it, and
 they wouldn't be very happy with DCOP.
  Before starting an application, and environment variable called
-KDE_STARTUP_ENV is added to it's environment, and it's set to unique
+TDE_STARTUP_ENV is added to it's environment, and it's set to unique
 identifier of its startup notification, or "0" for disabled ASN.
 Ideally, the application should read it, and set a window property
-called _KDE_STARTUP_ID ( type XA_STRING ) at least on its first mapped
+called _TDE_STARTUP_ID ( type XA_STRING ) at least on its first mapped
 toplevel window to this value. It should also unset it, so it doesn't get
 propagated to other applications started from it. It should also
 update the ASN info when necessary, e.g. when KUniqueApplication
 forks into background, it sends the PID change. That's how compliant
 applications should work, and this support for ASN should be provided
-by toolkits. All KDE application should be compliant by now, since
-tdelibs do all the necessary things. The KDE_STARTUP_ENV variable
-is read and unset in TDEApplication constructor, and _KDE_STARTUP_ID
+by toolkits. All TDE application should be compliant by now, since
+tdelibs do all the necessary things. The TDE_STARTUP_ENV variable
+is read and unset in TDEApplication constructor, and _TDE_STARTUP_ID
 is set on every toplevel window in TDEApplication::setTopWidget().
  However, majority of applications aren't compliant now, and even
 if I succeed making this thing a standard ( part of NETWM_SPEC
 or whatever ), there still will be old applications that won't behave
-this way. Not unsetting KDE_STARTUP_ENV is not a big problem, since
+this way. Not unsetting TDE_STARTUP_ENV is not a big problem, since
 the ASN for its value will usually timeout, and when the app starts
 a new application, this ASN identification value will get reused without
 problems. The other problem is detecting, which newly mapped windows
 belong to which starting application. If a newly mapped window doesn't
-have _KDE_STARTUP_ID property, the code tries to read its _NET_WM_PID
+have _TDE_STARTUP_ID property, the code tries to read its _NET_WM_PID
 property, and if it's set, it tries to match it ( together with
 WM_CLIENT_MACHINE ) with PIDs of all ASN infos. And if the window
 doesn't have even the _NET_WM_PID property, WM_CLASS property is used
@@ -218,7 +218,7 @@ Text entries in the messages :
 Every entry is of the form <name>=<value>. Value may be either a number
 or a string. If the string contains spaces, it must be quoted ("), all
 backslashes and quotes (") must be escaped by backslashes. If this ever
-becomes more than an internal KDE standard, non-standard entry names should
+becomes more than an internal TDE standard, non-standard entry names should
 start with an underscore.
 
 Entries :
@@ -268,7 +268,7 @@ Entries :
 
 --------------------
 
- Well, I guess that's all. The KDE2.2 release will show if the users like it
+ Well, I guess that's all. The TDE2.2 release will show if the users like it
 or not ( it's quite good IMHO, even though there are probably some minor
 details to fix or improve ). The only big thing remaining is to make also
 non-TDE people agree on using something like this. My first attempt
