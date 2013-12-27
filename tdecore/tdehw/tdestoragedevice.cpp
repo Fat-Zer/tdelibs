@@ -53,6 +53,11 @@
  	#include "tqdbusdatalist.h"
 #endif // ddefined(WITH_UDISKS)
 
+#if defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+	// Defined in tdehardwaredevices.cpp
+	TQT_DBusData convertDBUSDataToVariantData(TQT_DBusData);
+#endif // defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+
 TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
 	m_diskType = TDEDiskDeviceType::Null;
 	m_diskStatus = TDEDiskDeviceStatus::Null;
@@ -214,6 +219,10 @@ int mountDriveUDisks(TQString deviceNode, TQString fileSystemType, TQStringList 
 			TQT_DBusMessage reply = driveControl.sendWithReply("FilesystemMount", params, &error);
 			if (error.isValid()) {
 				// Error!
+				if (error.name() == "org.freedesktop.DBus.Error.ServiceUnknown") {
+					// Service not installed or unavailable
+					return -2;
+				}
 				if (errStr) {
 					*errStr = error.name() + ": " + error.message();
 				}
@@ -234,6 +243,52 @@ int mountDriveUDisks(TQString deviceNode, TQString fileSystemType, TQStringList 
 	return -2;
 }
 
+int mountDriveUDisks2(TQString deviceNode, TQString fileSystemType, TQString mountOptions, TQString* errStr = NULL) {
+#ifdef WITH_UDISKS2
+	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+	if (dbusConn.isConnected()) {
+		TQString blockDeviceString = deviceNode;
+		blockDeviceString.replace("/dev/", "");
+		blockDeviceString = "/org/freedesktop/UDisks2/block_devices/" + blockDeviceString;
+
+		// Mount the drive!
+		TQT_DBusError error;
+		TQT_DBusProxy driveControl("org.freedesktop.UDisks2", blockDeviceString, "org.freedesktop.UDisks2.Filesystem", dbusConn);
+		if (driveControl.canSend()) {
+			TQValueList<TQT_DBusData> params;
+			TQMap<TQString, TQT_DBusData> optionsMap;
+			if (fileSystemType != "") {
+				optionsMap["fstype"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(fileSystemType));
+			}
+			optionsMap["options"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(mountOptions));
+			params << TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(optionsMap));
+			TQT_DBusMessage reply = driveControl.sendWithReply("Mount", params, &error);
+			if (error.isValid()) {
+				// Error!
+				if (error.name() == "org.freedesktop.DBus.Error.ServiceUnknown") {
+					// Service not installed or unavailable
+					return -2;
+				}
+				if (errStr) {
+					*errStr = error.name() + ": " + error.message();
+				}
+				else {
+					printf("[ERROR][tdehwlib] mountDriveUDisks2: %s\n", error.name().ascii()); fflush(stdout);
+				}
+				return -1;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return -2;
+		}
+	}
+#endif // WITH_UDISKS2
+	return -2;
+}
+
 int unMountDriveUDisks(TQString deviceNode, TQStringList unMountOptions, TQString* errStr = NULL) {
 #ifdef WITH_UDISKS
 	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
@@ -251,6 +306,10 @@ int unMountDriveUDisks(TQString deviceNode, TQStringList unMountOptions, TQStrin
 			TQT_DBusMessage reply = driveControl.sendWithReply("FilesystemUnmount", params, &error);
 			if (error.isValid()) {
 				// Error!
+				if (error.name() == "org.freedesktop.DBus.Error.ServiceUnknown") {
+					// Service not installed or unavailable
+					return -2;
+				}
 				if (errStr) {
 					*errStr = error.name() + ": " + error.message();
 				}
@@ -268,6 +327,49 @@ int unMountDriveUDisks(TQString deviceNode, TQStringList unMountOptions, TQStrin
 		}
 	}
 #endif // WITH_UDISKS
+	return -2;
+}
+
+int unMountDriveUDisks2(TQString deviceNode, TQString unMountOptions, TQString* errStr = NULL) {
+#ifdef WITH_UDISKS2
+	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+	if (dbusConn.isConnected()) {
+		TQString blockDeviceString = deviceNode;
+		blockDeviceString.replace("/dev/", "");
+		blockDeviceString = "/org/freedesktop/UDisks2/block_devices/" + blockDeviceString;
+
+		// Mount the drive!
+		TQT_DBusError error;
+		TQT_DBusProxy driveControl("org.freedesktop.UDisks2", blockDeviceString, "org.freedesktop.UDisks2.Filesystem", dbusConn);
+		if (driveControl.canSend()) {
+			TQValueList<TQT_DBusData> params;
+			TQMap<TQString, TQT_DBusData> optionsMap;
+			optionsMap["options"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(unMountOptions));
+			params << TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(optionsMap));
+			TQT_DBusMessage reply = driveControl.sendWithReply("Unmount", params, &error);
+			if (error.isValid()) {
+				// Error!
+				if (error.name() == "org.freedesktop.DBus.Error.ServiceUnknown") {
+					// Service not installed or unavailable
+					return -2;
+				}
+				if (errStr) {
+					*errStr = error.name() + ": " + error.message();
+				}
+				else {
+					printf("[ERROR][tdehwlib] unMountDriveUDisks2: %s\n", error.name().ascii()); fflush(stdout);
+				}
+				return -1;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return -2;
+		}
+	}
+#endif // WITH_UDISKS2
 	return -2;
 }
 
@@ -734,18 +836,36 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 
 #ifdef WITH_UDISKS2
 	if(command.isEmpty()) {
-		// Use 'udisksctl' command (from UDISKS2), if available
-		TQString udisksctlProg = TDEGlobal::dirs()->findExe("udisksctl");
-		if (!udisksctlProg.isEmpty()) {
-			if(!optionString.isEmpty()) {
-				optionString.insert(0, "-o ");
+		// Try to use UDISKS v2 via DBUS, if available
+		TQString errorString;
+		TQString fileSystemType;
+
+		if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
+			fileSystemType = mountOptions["filesystem"];
+		}
+
+		int uDisks2Ret = mountDriveUDisks2(devNode, fileSystemType, optionString, &errorString);
+		if (uDisks2Ret == 0) {
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
+			ret = mountPath();
+			return ret;
+		}
+		else if (uDisks2Ret == -1) {
+			if (errRet) {
+				*errRet = errorString;
 			}
 
-			if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
-				optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
-			}
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
 
-			command = TQString("udisksctl mount -b '%1' %2 2>&1").arg(devNode).arg(optionString);
+			ret = mountPath();
+			return ret;
+		}
+		else {
+			// The UDISKS v2 DBUS service was either not available or was unusable; try another method...
+			command = TQString::null;
 		}
 	}
 #endif // WITH_UDISKS2
@@ -944,13 +1064,35 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	TQString command;
 
 #ifdef WITH_UDISKS2
-	if(command.isEmpty() &&
-	   !(TDEGlobal::dirs()->findExe("udisksctl").isEmpty())) {
-		command = TQString("udisksctl unmount -b '%1' 2>&1").arg(devNode);
+	if(command.isEmpty()) {
+		// Try to use UDISKS v2 via DBUS, if available
+		TQString errorString;
+		int unMountUDisks2Ret = unMountDriveUDisks2(devNode, TQString::null, &errorString);
+		if (unMountUDisks2Ret == 0) {
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
+			return true;
+		}
+		else if (unMountUDisks2Ret == -1) {
+			if (errRet) {
+				*errRet = errorString;
+			}
+
+			// Update internal mount data
+			TDEGlobal::hardwareDevices()->processModifiedMounts();
+
+			return false;
+		}
+		else {
+			// The UDISKS v2 DBUS service was either not available or was unusable; try another method...
+			command = TQString::null;
+		}
 	}
 #endif // WITH_UDISKS2
 #ifdef WITH_UDISKS
 	if(command.isEmpty()) {
+		// Try to use UDISKS v1 via DBUS, if available
 		TQString errorString;
 		int unMountUDisksRet = unMountDriveUDisks(devNode, TQStringList(), &errorString);
 		if (unMountUDisksRet == 0) {

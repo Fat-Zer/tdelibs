@@ -99,6 +99,20 @@ unsigned int reverse_bits(register unsigned int x)
 
 #define BIT_IS_SET(bits, n) (bits[n >> 3] & (1 << (n & 0x7)))
 
+#if defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_NETWORK_MANAGER_BACKEND)
+#include <tqdbusvariant.h>
+#include <tqdbusdata.h>
+// Convenience method for tdehwlib DBUS calls
+// FIXME
+// Should probably be part of dbus-1-tqt
+TQT_DBusData convertDBUSDataToVariantData(TQT_DBusData object) {
+	TQT_DBusVariant variant;
+	variant.value = object;
+	variant.signature = variant.value.buildDBusSignature();
+	return TQT_DBusData::fromVariant(variant);
+}
+#endif // defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_NETWORK_MANAGER_BACKEND)
+
 TDEHardwareDevices::TDEHardwareDevices() {
 	// Initialize members
 	pci_id_map = 0;
