@@ -56,7 +56,7 @@
                         <string>Skip all &amp;uppercase words</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>If checked, words that consist of only uppercase letters are not spell checked. This is useful if you have a lot of acronyms, such as KDE for example.</string>
+                        <string>If checked, words that consist of only uppercase letters are not spell checked. This is useful if you have a lot of acronyms, such as TDE for example.</string>
                     </property>
                 </widget>
                 <widget class="TQCheckBox" row="2" column="0">
