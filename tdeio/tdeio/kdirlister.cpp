@@ -90,17 +90,6 @@ KDirListerCache::~KDirListerCache()
 bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
                                bool _keep, bool _reload )
 {
-  // HACK
-  // The media:/ tdeioslave has massive problems related to not properly updating its root directory
-  // Therefore, force a reload every time the media:/ tdeioslave root is accessed!
-  // FIXME
-  // For anyone wanting to tackle this problem, it was traced into the KDirListerCache::updateDirectory TDEIO::listDir TDEIO job
-  // Specifically, slotUpdateResult is never called for the root directory *iff* the user descends into an unmounted media device
-  // Strangely, slotUpdateResult *is* called if the user instead right-clicks on the unmounted media device and selects Mount from the context menu
-  if ((_u.protocol() == "media") && (_u.path() == "/")) {
-    _reload = true;
-  }
-
   // like this we don't have to worry about trailing slashes any further
   KURL _url = _u;
   _url.cleanPath(); // kill consecutive slashes

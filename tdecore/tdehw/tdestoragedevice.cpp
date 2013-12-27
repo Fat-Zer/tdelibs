@@ -956,8 +956,9 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
 		TQString mount_output;
-		TQTextStream ts(exepipe, IO_ReadOnly);
-		mount_output = ts.read();
+		TQTextStream* ts = new TQTextStream(exepipe, IO_ReadOnly);
+		mount_output = ts->read();
+		delete ts;
 		*retcode = pclose(exepipe);
 		if (errRet) {
 			*errRet = mount_output;
@@ -1030,8 +1031,9 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
 		TQString mount_output;
-		TQTextStream ts(exepipe, IO_ReadOnly);
-		mount_output = ts.read();
+		TQTextStream* ts = new TQTextStream(exepipe, IO_ReadOnly);
+		mount_output = ts->read();
+		delete ts;
 		*retcode = pclose(exepipe);
 		if (errRet) {
 			*errRet = mount_output;
@@ -1132,8 +1134,9 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	FILE *exepipe = popen(command.local8Bit(), "r");
 	if (exepipe) {
 		TQString umount_output;
-		TQTextStream ts(exepipe, IO_ReadOnly);
-		umount_output = ts.read();
+		TQTextStream* ts = new TQTextStream(exepipe, IO_ReadOnly);
+		umount_output = ts->read();
+		delete ts;
 		*retcode = pclose(exepipe);
 		if (*retcode == 0) {
 			// Update internal mount data

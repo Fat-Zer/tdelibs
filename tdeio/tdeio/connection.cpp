@@ -43,6 +43,8 @@
 #include <kdebug.h>
 #include <tqsocketnotifier.h>
 
+extern char *__progname;
+
 using namespace TDEIO;
 
 Connection::Connection()
@@ -187,19 +189,19 @@ bool Connection::sendnow( int _cmd, const TQByteArray &data )
     size_t n = fwrite( buffer, 1, 10, f_out );
 
     if ( n != 10 ) {
-	kdError(7017) << "Could not send header" << endl;
+	kdError(7017) << "Could not send header (pid " << getpid() << " process \"" << __progname << "\")" << endl;
 	return false;
     }
 
     n = fwrite( data.data(), 1, data.size(), f_out );
 
     if ( n != data.size() ) {
-	kdError(7017) << "Could not write data" << endl;
+	kdError(7017) << "Could not write data (pid " << getpid() << " process \"" << __progname << "\")" << endl;
 	return false;
     }
 
     if (fflush( f_out )) {
-	kdError(7017) << "Could not write data" << endl;
+	kdError(7017) << "Could not write data (pid " << getpid() << " process \"" << __progname << "\")" << endl;
 	return false;
     }
 
@@ -209,7 +211,7 @@ bool Connection::sendnow( int _cmd, const TQByteArray &data )
 int Connection::read( int* _cmd, TQByteArray &data )
 {
     if (fd_in == -1 ) {
-	kdError(7017) << "read: not yet inited" << endl;
+	kdError(7017) << "read: not yet inited (pid " << getpid() << " process \"" << __progname << "\")" << endl;
 	return -1;
     }
 
@@ -221,12 +223,12 @@ int Connection::read( int* _cmd, TQByteArray &data )
 	goto again1;
 
     if ( n == -1) {
-	kdError(7017) << "Header read failed, errno=" << errno << endl;
+	kdError(7017) << "Header read failed, errno=" << errno << " (pid " << getpid() << " process \"" << __progname << "\")" << endl;
     }
 
     if ( n != 10 ) {
       if ( n ) // 0 indicates end of file
-        kdError(7017) << "Header has invalid size (" << n << ")" << endl;
+        kdError(7017) << "Header has invalid size (" << n << ") (pid " << getpid() << " process \"" << __progname << "\")" << endl;
       return -1;
     }
 
@@ -252,11 +254,11 @@ int Connection::read( int* _cmd, TQByteArray &data )
 		if (errno == EINTR)
 		    continue;
 
-		kdError(7017) << "Data read failed, errno=" << errno << endl;
+		kdError(7017) << "Data read failed, errno=" << errno << " (pid " << getpid() << " process \"" << __progname << "\")" << endl;
 		return -1;
 	    }
 	    if ( !n ) { // 0 indicates end of file
-        	kdError(7017) << "Connection ended unexpectedly (" << n << "/" << bytesToGo << ")" << endl;
+        	kdError(7017) << "Connection ended unexpectedly (" << n << "/" << bytesToGo << ") (pid " << getpid() << " process \"" << __progname << "\")" << endl;
       		return -1;
     	    }
 
