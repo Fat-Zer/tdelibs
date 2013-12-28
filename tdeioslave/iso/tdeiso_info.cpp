@@ -75,7 +75,6 @@ int main(int argc, char *argv[])
 				printf("Unable to open device '%s'\n\r", device.ascii());
 				return -2;
 			}
-			// RAJA FIXME
 			TQString fileToFind = args->getOption("exists");
 
 			const KArchiveDirectory* entries = isoFile.directory();
