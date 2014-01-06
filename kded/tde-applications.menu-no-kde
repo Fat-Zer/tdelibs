@@ -564,5 +564,5 @@
   </Menu>
 
   <MergeDir>applications-merged</MergeDir>
-  <MergeFile>applications-kmenuedit.menu</MergeFile>
+  <MergeFile>applications-tdemenuedit.menu</MergeFile>
 </Menu>
