@@ -410,7 +410,7 @@ const char * const packages[] = {
 "tdeaddons/kate-xmltools",
 "tdeaddons/tdehtmlsettings-plugin",
 "tdeaddons/useragent-plugin",
-"kdebugdialog",
+"tdedebugdialog",
 "tdelibs",
 "tdelibs/kbugreport",
 "tdelibs/tdecertpart",

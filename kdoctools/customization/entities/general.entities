@@ -186,7 +186,7 @@
 <!ENTITY kdat	"<application>KDat</application>">
 <!ENTITY kdcop  "<application>kdcop</application>">
 <!ENTITY kde	"<acronym>KDE</acronym>">
-<!ENTITY kdebugdialog	"<application>KDebugDialog</application>">
+<!ENTITY tdedebugdialog	"<application>TDEDebugDialog</application>">
 <!ENTITY kde-http '<ulink url="http://www.kde.org/">http://www.kde.org/</ulink>'>
 <!ENTITY tde-http	'<ulink url="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</ulink>'>
 <!ENTITY kde-ftp	'<ulink url="ftp://ftp.kde.org/pub/kde/">ftp://ftp.kde.org/pub/kde/</ulink>'>
