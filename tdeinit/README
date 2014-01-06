@@ -79,6 +79,6 @@ Disadvantages
 The process name of applications started via tdeinit is "tdeinit". This problem
 can be corrected to a degree by changing the application name as shown
 by 'ps'. However, applications like "killall" will only see "tdeinit" as 
-process name. To workaround this, use "kdekillall", from tdesdk/scripts,
+process name. To workaround this, use "tdekillall", from tdesdk/scripts,
 for applications started via tdeinit.
 
