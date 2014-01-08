@@ -9,7 +9,7 @@
 <!ENTITY ESC    "(\\[ntbr'&quot;\\]|\\[0-9]{3}|\\x[0-9A-Fa-f]{2})"> <!-- OCaml character code escapes. -->
 <!ENTITY DEC    "[0-9][0-9_]*">                                     <!-- Decimal digits with underscores. -->
 ]>
-<language name="Objective Caml" version="1.05" kateversion="2.4" section="Sources" extensions="*.ml;*.mli" mimetype="" priority="10" author="Glyn Webster (glyn@wave.co.nz)" license="LGPL">
+<language name="Objective Caml" version="1.06" kateversion="2.5" section="Sources" extensions="*.ml;*.mli" mimetype="" priority="10" author="Glyn Webster (glyn@wave.co.nz)" license="LGPL">
 
   <highlighting>
     <!-- Revised Syntax keywords are highlighted as identifiers by default. -->

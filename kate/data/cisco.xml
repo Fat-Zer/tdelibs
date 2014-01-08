@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="Cisco" version="1.10" kateversion="2.4" section="Configuration" extensions="*.cis" mimetype="text/cisco" author="Raphaël GRAPINET" license="LGPL">
+<language name="Cisco" version="1.11" kateversion="2.5" section="Configuration" extensions="*.cis" mimetype="text/cisco" author="Raphaël GRAPINET" license="LGPL">
 	<highlighting>
 		<list name = "commands">
 			<item> aaa </item>

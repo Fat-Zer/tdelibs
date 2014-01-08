@@ -22,7 +22,7 @@ Date:     15th April, 2002
 Version:  1.0
 
 This file contains the XML syntax highlighting description for the GNU
-Assembler, for KATE, the KDE Advanced Editor.  Keywords have been taken
+Assembler, for KATE, the TDE Advanced Editor.  Keywords have been taken
 directly from the GNU Assembler source code (read.c).
 
 Known problems: Floating point highlighting does not work correctly.
@@ -43,7 +43,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 -->
 
-<language name="GNU Assembler" version="1.10" kateversion="2.4" section="Assembler" extensions="*.s;*.S" mimetype="text/x-asm" author="John Zaitseff (J.Zaitseff@zap.org.au), Roland Pabel (roland@pabel.name), Miquel Sabaté (mikisabate@gmail.com)" license="GPL">
+<language name="GNU Assembler" version="1.11" kateversion="2.5" section="Assembler" extensions="*.s;*.S" mimetype="text/x-asm" author="John Zaitseff (J.Zaitseff@zap.org.au), Roland Pabel (roland@pabel.name), Miquel Sabaté (mikisabate@gmail.com)" license="GPL">
   <highlighting>
     <list name="keywords">
       <item>.abort</item>

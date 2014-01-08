@@ -108,8 +108,7 @@
 #include <tqwhatsthis.h>
 #include <tqwidgetstack.h>
 
-// trailing slash is important
-#define HLDOWNLOADPATH "http://kate.kde.org/syntax/"
+#define HLDOWNLOADPATH "http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/update-files.xml"
 
 //END
 
@@ -1453,11 +1452,7 @@ KateHlDownloadDialog::KateHlDownloadDialog(TQWidget *parent, const char *name, b
   new TQLabel(i18n("<b>Note:</b> New versions are selected automatically."), vbox);
   actionButton (User1)->setIconSet(SmallIconSet("ok"));
 
-  transferJob = TDEIO::get(
-    KURL(TQString(HLDOWNLOADPATH)
-       + TQString("update-")
-       + TQString(KATEPART_VERSION)
-       + TQString(".xml")), true, true );
+  transferJob = TDEIO::get(KURL(TQString(HLDOWNLOADPATH)), true, true);
   connect(transferJob, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
     this, TQT_SLOT(listDataReceived(TDEIO::Job *, const TQByteArray &)));
 //        void data( TDEIO::Job *, const TQByteArray &data);

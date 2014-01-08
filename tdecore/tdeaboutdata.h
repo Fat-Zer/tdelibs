@@ -420,8 +420,8 @@ class TDECORE_EXPORT TDEAboutData
      * Defines the program homepage.
      *
      * @param homepage The program homepage string.
-     *        Start the address with "http://". "http://kate.kde.org" is
-     *        is correct, "kde.kde.org" is not.
+     *        Start the address with "http://". "http://kate-editor.org/" is
+     *        is correct, "kate-editor.org" is not.
      */
     void setHomepage( const char *homepage );
     

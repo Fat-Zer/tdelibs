@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 <language name="C++" section="Sources"
-          version="1.55" kateversion="2.4"
+          version="1.52" kateversion="2.5"
           indenter="cstyle"
           mimetype="text/x-c++src;text/x-c++hdr;text/x-chdr"
           extensions="*.c++;*.cxx;*.cpp;*.cc;*.C;*.h;*.hh;*.H;*.h++;*.hxx;*.hpp;*.hcc;*.moc"
@@ -85,16 +85,17 @@
       <item> xor </item>
       <item> xor_eq </item>
     </list>
+
+    <!-- QT/TQT extensions -->
     <list name="extensions">
       <item> K_DCOP </item>
       <item> Q_ARG </item>
       <item> Q_ASSERT </item>
       <item> Q_ASSERT_X </item>
       <item> Q_CHECK_PTR </item>
-      <item> TQ_CLASSINFO </item>
+      <item> Q_CLASSINFO </item>
       <item> Q_CLEANUP_RESOURCE </item>
       <item> Q_D </item>
-      <item> Q_DECLARE_FLAGS </item>
       <item> Q_DECLARE_FLAGS </item>
       <item> Q_DECLARE_INTERFACE </item>
       <item> Q_DECLARE_METATYPE </item>
@@ -105,7 +106,7 @@
       <item> Q_DECLARE_TYPEINFO </item>
       <item> Q_DISABLE_COPY </item>
       <item> Q_EMIT </item>
-      <item> TQ_ENUMS </item>
+      <item> Q_ENUMS </item>
       <item> Q_EXPORT </item>
       <item> Q_FLAGS </item>
       <item> Q_FOREACH </item>
@@ -118,13 +119,13 @@
       <item> Q_INVOKABLE </item>
       <item> Q_NOREPLY </item>
       <item> Q_OBJECT </item>
-      <item> TQ_OVERRIDE </item>
+      <item> Q_OVERRIDE </item>
       <item> Q_PRIVATE_SLOT </item>
-      <item> TQ_PROPERTY </item>
+      <item> Q_PROPERTY </item>
       <item> Q_Q </item>
       <item> Q_RETURN_ARG </item>
       <item> Q_SCRIPTABLE </item>
-      <item> TQ_SETS </item>
+      <item> Q_SETS </item>
       <item> Q_SIGNALS </item>
       <item> Q_SLOTS </item>
       <item> Q_UNUSED </item>
@@ -184,7 +185,6 @@
       <item> slots </item>
       <item> foreach </item>
       <item> forever </item>
-
       <item> qint8 </item>
       <item> qint16 </item>
       <item> qint32 </item>
@@ -199,6 +199,7 @@
       <item> quintptr </item>
       <item> qulonglong </item>
     </list>
+
     <list name="types">
       <item> auto </item>
       <item> bool </item>
@@ -291,7 +292,7 @@
 
       <context attribute="Error" lineEndContext="#pop" name="AfterHash">
         <!-- define, elif, else, endif, error, if, ifdef, ifndef, include, include_next, line, pragma, undef, warning -->
-        <RegExpr attribute="Preprocessor" context="Preprocessor" String="#\s*if(?:def|ndef)?(?=\s+\S)" insensitive="true" beginRegion="PP" firstNonSpace="true" />
+        <RegExpr attribute="Preprocessor" context="Preprocessor" String="#\s*if(?:def|ndef)?(?=(?:\(|\s+)\S)" insensitive="true" beginRegion="PP" firstNonSpace="true" />
         <RegExpr attribute="Preprocessor" context="Preprocessor" String="#\s*endif" insensitive="true" endRegion="PP" firstNonSpace="true" />
         <RegExpr attribute="Preprocessor" context="Define" String="#\s*define.*((?=\\))" insensitive="true" firstNonSpace="true" />
         <RegExpr attribute="Preprocessor" context="Preprocessor" String="#\s*(?:el(?:se|if)|include(?:_next)?|define|undef|line|error|warning|pragma)" insensitive="true" firstNonSpace="true" />

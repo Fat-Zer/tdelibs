@@ -23,7 +23,7 @@
   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
   Boston, MA  02110-1301, USA.
  -->
-<language name="GNU Gettext" version="2.00" kateversion="2.4" section="Markup" extensions="*.po;*.pot" mimetype="text/x-gettext-translation" author="Dominik Haumann (dhdev@gmx.de)" license="LGPL">
+<language name="GNU Gettext" version="2.01" kateversion="2.5" section="Markup" extensions="*.po;*.pot" mimetype="text/x-gettext-translation" author="Dominik Haumann (dhdev@gmx.de)" license="LGPL">
   <highlighting>
 
     <contexts>

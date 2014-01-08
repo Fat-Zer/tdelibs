@@ -24,45 +24,39 @@ install( FILES
   DESTINATION ${CONFIG_INSTALL_DIR} )
 
 install( FILES
-    language.dtd syntax.template cpp.xml c.xml html.xml
-    kbasic.xml objectivec.xml changelog.xml ada.xml
-    css.xml perl.xml php.xml xml.xml java.xml rpmspec.xml
-    sql.xml sql-mysql.xml sql-postgresql.xml vhdl.xml
-    diff.xml bash.xml latex.xml postscript.xml ruby.xml
-    rhtml.xml desktop.xml eiffel.xml pascal.xml sather.xml
-    python.xml makefile.xml ferite.xml scheme.xml matlab.xml
-    tcl.xml ilerpg.xml verilog.xml javascript.xml sml.xml
-    winehq.xml cs.xml sgml.xml idconsole.xml xmldebug.xml
-    fortran.xml haskell.xml literate-haskell.xml r.xml
-    gnuassembler.xml mab.xml mason.xml idl.xml prolog.xml
-    rsiidl.xml coldfusion.xml picsrc.xml uscript.xml lpc.xml
-    velocity.xml sci.xml ldif.xml inform.xml xharbour.xml
-    yacas.xml component-pascal.xml asm6502.xml gdl.xml
-    bibtex.xml d.xml vrml.xml rexx.xml cue.xml progress.xml
-    e.xml sieve.xml modula-2.xml awk.xml cisco.xml doxygen.xml
-    lua.xml pike.xml debianchangelog.xml debiancontrol.xml
-    fgl-4gl.xml fgl-per.xml alert.xml gettext.xml commonlisp.xml
-    clipper.xml povray.xml euphoria.xml mup.xml jsp.xml
-    ocaml.xml lex.xml yacc.xml cg.xml ahdl.xml ansic89.xml
-    tibasic.xml purebasic.xml mips.xml logtalk.xml txt2tags.xml
-    xslt.xml stata.xml glsl.xml lilypond.xml abc.xml asp.xml
-    asm-avr.xml rib.xml cmake.xml octave.xml javadoc.xml
-    cgis.xml spice.xml nasm.xml mediawiki.xml apache.xml
-    m3u.xml ini.xml fstab.xml actionscript.xml abap.xml
-    ansys.xml asn1.xml asterisk.xml bmethod.xml ddoc.xml
-    djangotemplate.xml doxygenlua.xml dtd.xml email.xml
-    erlang.xml freebasic.xml gap.xml json.xml maxima.xml
-    mergetagtext.xml modelica.xml monobasic.xml nemerle.xml
-    noweb.xml objectivecpp.xml opal.xml pgn.xml rapidq.xml
-    scala.xml sisu.xml systemc.xml texinfo.xml xorg.xml
-    xul.xml yaml.xml zonnon.xml
-    alert_indent.xml ample.xml asm-dsp56k.xml asm-m68k.xml
-    clojure.xml coffee.xml crk.xml dosbat.xml fsharp.xml
-    gdb.xml glosstex.xml go.xml grammar.xml jam.xml m4.xml
-    mel.xml oors.xml pango.xml qmake.xml qml.xml relaxng.xml
-    relaxngcompact.xml rest.xml sed.xml systemverilog.xml
-    tads3.xml tcsh.xml valgrind-suppression.xml vera.xml
-    wml.xml zsh.xml
+    language.dtd syntax.template
+    abap.xml abc.xml actionscript.xml ada.xml ahdl.xml ahk.xml alert_indent.xml
+    alert.xml ample.xml ansic89.xml ansys.xml apache.xml asm6502.xml asm-avr.xml
+    asm-dsp56k.xml asm-m68k.xml asn1.xml asp.xml asterisk.xml awk.xml bash.xml
+    bibtex.xml bmethod.xml ccss.xml cgis.xml cg.xml changelog.xml chicken.xml
+    cisco.xml clipper.xml clojure.xml cmake.xml coffee.xml coldfusion.xml
+    commonlisp.xml component-pascal.xml context.xml cpp11.xml cpp.xml crk.xml
+    css.xml cs.xml cue.xml curry.xml c.xml ddoc.xml debianchangelog.xml
+    debiancontrol.xml desktop.xml diff.xml djangotemplate.xml dosbat.xml dot.xml
+    doxygenlua.xml doxygen.xml dtd.xml d.xml eiffel.xml email.xml erlang.xml
+    euphoria.xml e.xml ferite.xml fgl-4gl.xml fgl-per.xml fortran.xml freebasic.xml
+    fsharp.xml fstab.xml gap.xml gcc.xml gdb.xml gdl.xml gettext.xml git-rebase.xml
+    glosstex.xml glsl.xml gnuassembler.xml gnuplot.xml go.xml grammar.xml haml.xml
+    haskell.xml html.xml idconsole.xml idl.xml ilerpg.xml inform.xml
+    ini.xml jam.xml javadoc.xml javascript.xml java.xml json.xml
+    jsp.xml julia.xml kbasic.xml latex.xml ldif.xml less.xml lex.xml lilypond.xml
+    literate-curry.xml literate-haskell.xml logtalk.xml lpc.xml lua.xml m3u.xml
+    m4.xml mab.xml makefile.xml mako.xml mason.xml matlab.xml maxima.xml
+    mediawiki.xml mel.xml mergetagtext.xml mips.xml modelica.xml modelines.xml
+    modula-2.xml monobasic.xml mup.xml nasm.xml nemerle.xml nesc.xml noweb.xml
+    objectivecpp.xml objectivec.xml ocaml.xml octave.xml oors.xml opal.xml opencl.xml
+    pango.xml pascal.xml perl.xml pgn.xml php.xml picsrc.xml pig.xml pike.xml
+    postscript.xml povray.xml ppd.xml progress.xml prolog.xml protobuf.xml
+    purebasic.xml python.xml qmake.xml qml.xml qt4.xml rapidq.xml relaxngcompact.xml
+    relaxng.xml restructuredtext.xml rest.xml rexx.xml rhtml.xml rib.xml rpmspec.xml
+    rsiidl.xml ruby.xml r.xml sather.xml scala.xml scheme.xml sci.xml scss.xml
+    sed.xml sgml.xml sieve.xml sisu.xml sml.xml spice.xml sql-mysql.xml
+    sql-postgresql.xml sql.xml stata.xml systemc.xml systemverilog.xml tads3.xml
+    tcl.xml tcsh.xml template-toolkit.xml texinfo.xml textile.xml tibasic.xml
+    txt2tags.xml update-files.xml uscript.xml valgrind-suppression.xml
+    varnishtest.xml varnish.xml vcard.xml velocity.xml vera.xml verilog.xml vhdl.xml
+    vrml.xml winehq.xml wml.xml xharbour.xml xmldebug.xml xml.xml xorg.xml xslt.xml
+    xul.xml yacas.xml yacc.xml yaml.xml zonnon.xml zsh.xml
     ${CMAKE_CURRENT_BINARY_DIR}/html-php.xml
     ${CMAKE_CURRENT_BINARY_DIR}/css-php.xml
     ${CMAKE_CURRENT_BINARY_DIR}/javascript-php.xml

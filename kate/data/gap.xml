@@ -2,7 +2,7 @@
 <!DOCTYPE language SYSTEM "language.dtd">
 <!--
 	====================================================================
-	GAP syntax highlighting file for the KDE editors Kate and Kwrite
+	GAP syntax highlighting file for the TDE editors Kate and Kwrite
 	====================================================================
 
 	The Strings, Two Char Operators, Variable, Number and Operator1
@@ -14,7 +14,7 @@
 	-->
 
 
-<language name="GAP" section="Scientific" extensions="*.gd;*.gi;*.g" mimetype="text/gap" version="0.2" kateversion="2.4" author="Jose Joao Morais" license="GPL">
+<language name="GAP" section="Scientific" extensions="*.gd;*.gi;*.g" mimetype="text/gap" version="0.3" kateversion="2.5" author="Jose Joao Morais" license="GPL">
 
 	<highlighting>
 

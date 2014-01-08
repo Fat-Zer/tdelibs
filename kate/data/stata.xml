@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="Stata" version="2.00" kateversion="2.4" section="Sources" extensions="*.do; *.ado; *.doh; *.DO; *.ADO; *.DOH"
+<language name="Stata" version="2.01" kateversion="2.5" section="Sources" extensions="*.do; *.ado; *.doh; *.DO; *.ADO; *.DOH"
  casesensitive="1" priority="5" author="Larry Radbill (Larry.Radbill gmail com)" license="LGPL" >
 
   <highlighting>
@@ -1290,7 +1290,7 @@
       <item> _svy_fpc_note </item>
       <item> _svy_ftest </item>
       <item> _svy_ivreg_first </item>
-      <item> _svy_mtdeff </item>
+      <item> _svy_mkdeff </item>
       <item> _svy_mkmeff </item>
       <item> _svy_mkvmsp </item>
       <item> _svy_mkvsrs </item>

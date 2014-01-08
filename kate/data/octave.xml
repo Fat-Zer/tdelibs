@@ -2,7 +2,7 @@
 <!DOCTYPE language SYSTEM "language.dtd">
 <!--
   ====================================================================
-  Octave syntax highlighting file for the KDE editors Kate and Kwrite
+  Octave syntax highlighting file for the TDE editors Kate and Kwrite
   ====================================================================
       based on Octave 2.1.64
       function and variable list obtained by dispatch_help()'s output
@@ -15,7 +15,7 @@
 -->
 
 
-<language name="Octave" version="1.01" kateversion="2.3" section="Scientific" extensions="*.octave;*.m;*.M" mimetype="text/octave" casesensitive="1" license="GPL" author="Luis Silvestre and Federico Zenith">
+<language name="Octave" version="1.02" kateversion="2.5" section="Scientific" extensions="*.octave;*.m;*.M" mimetype="text/octave" casesensitive="1" license="GPL" author="Luis Silvestre and Federico Zenith">
 
   <highlighting>
 

@@ -49,7 +49,7 @@
  * Boston, MA  02110-1301, USA.                                       *
  **********************************************************************
  -->
-<language name="Ddoc" version="1.14" kateversion="2.5" section="Markup" author="Diggory Hardy (diggory.hardy@gmail.com)" license="LGPL" extensions="">
+<language name="Ddoc" version="1.15" kateversion="2.5" section="Markup" author="Diggory Hardy (diggory.hardy@gmail.com)" license="LGPL" extensions="">
   <highlighting>
     <contexts>
       <context name="Normal" attribute="Normal Text" lineEndContext="#stay">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="Clipper" version="1.05" kateversion="2.3" section="Sources" extensions="*.prg;*.PRG;*.ch" mimetype="text/x-clipper-src" priority="2" author="Andrey Cherepanov (sibskull@mail.ru)" license="GPL">
+<language name="Clipper" version="1.06" kateversion="2.5" section="Sources" extensions="*.prg;*.PRG;*.ch" mimetype="text/x-clipper-src" priority="2" author="Andrey Cherepanov (sibskull@mail.ru)" license="GPL">
   <highlighting>
 
     <list name="keywords">

@@ -2,7 +2,7 @@
 <!DOCTYPE language SYSTEM "language.dtd">
 <!--
 
-  This file is part of KDE's kate project.
+  This file is part of TDE's kate project.
 
   copyright   : (C) 2004 by Irv Mullins
   email       : irvm at ellijay dot com
@@ -29,7 +29,7 @@
 
 <!-- Store this in /usr/share/apps/katepart/syntax -->
 
-<language name="Euphoria" version="2.08" kateversion="2.4" section="Scripts" extensions="*.e;*.ex;*.exw;*.exu" mimetype="text/x-euphoria" author="Irv Mullins (irvm@ellijay.com)" license="LGPL">
+<language name="Euphoria" version="2.09" kateversion="2.5" section="Scripts" extensions="*.e;*.ex;*.exw;*.exu" mimetype="text/x-euphoria" author="Irv Mullins (irvm@ellijay.com)" license="LGPL">
   <highlighting>
     <list name="keywords">
       <item> abort </item>
