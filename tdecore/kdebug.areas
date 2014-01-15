@@ -429,7 +429,7 @@
 20012        KDB (plugin)
 
 #tdefilereplace
-23000 	     KFileReplace (tdefilereplacepart)
+23000 	     TDEFileReplace (tdefilereplacepart)
 
 #klinkstatus
 23100        KLinkStatus
