@@ -12,19 +12,19 @@
 </refentryinfo>
 
 <refmeta>
-<refentrytitle>qtoptions</refentrytitle>
+<refentrytitle>tqtoptions</refentrytitle>
 <manvolnum>7</manvolnum>
 </refmeta>
 
 <refnamediv>
-<refname>Qt options</refname>
-<refpurpose>Common commandline options for all applications based on the Qt toolkit</refpurpose>
+<refname>TQt options</refname>
+<refpurpose>Common commandline options for all applications based on the TQt toolkit</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 <cmdsynopsis>
-<command><replaceable>Qt application</replaceable></command>
-<arg choice="opt">Qt Generic Options</arg>
+<command><replaceable>TQt application</replaceable></command>
+<arg choice="opt">TQt Generic Options</arg>
 </cmdsynopsis>
 </refsynopsisdiv>
 
@@ -211,7 +211,7 @@ visual on an 8-bit display.</para>
 
 <refsect1>
 <title>See Also</title>
-<para>kde-options.7</para>
+<para>tde-options.7</para>
 
 </refsect1>
 

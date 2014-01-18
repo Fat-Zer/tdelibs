@@ -12,7 +12,7 @@
 </refentryinfo>
 
 <refmeta>
-<refentrytitle>kdeoptions</refentrytitle>
+<refentrytitle>tdeoptions</refentrytitle>
 <manvolnum>7</manvolnum>
 </refmeta>
 
@@ -76,7 +76,7 @@ titlebar.</para></listitem>
 
 <refsect1>
 <title>See Also</title>
-<para>qtoptions.7</para>
+<para>tqtoptions.7</para>
 
 </refsect1>
 

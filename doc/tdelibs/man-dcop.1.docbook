@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-<!ENTITY kdeoptions SYSTEM "kdeoptions.docbook">
-<!ENTITY qtoptions SYSTEM "qtoptions.docbook">
+<!ENTITY tdeoptions SYSTEM "tdeoptions.docbook">
+<!ENTITY tqtoptions SYSTEM "tqtoptions.docbook">
 <!ENTITY % English "INCLUDE">
 ]>
 
