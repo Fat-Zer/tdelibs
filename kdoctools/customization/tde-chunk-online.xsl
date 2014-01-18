@@ -41,10 +41,10 @@
 <xsl:param name="generate.component.toc">0</xsl:param>
 <xsl:param name="use.extensions">0</xsl:param>
 <xsl:param name="admon.graphics">0</xsl:param>
-<xsl:param name="kde.common">/HEAD/common/</xsl:param>
-<xsl:param name="html.stylesheet" select="concat($kde.common,'tde-default.css')"/>
-<xsl:param name="admon.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
-<xsl:param name="callout.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
+<xsl:param name="tde.common">/HEAD/common/</xsl:param>
+<xsl:param name="html.stylesheet" select="concat($tde.common,'tde-default.css')"/>
+<xsl:param name="admon.graphics.path"><xsl:value-of select="tde.common"/></xsl:param>
+<xsl:param name="callout.graphics.path"><xsl:value-of select="tde.common"/></xsl:param>
 
 
 <xsl:template name="dbhtml-filename">

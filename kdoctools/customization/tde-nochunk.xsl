@@ -3,7 +3,7 @@
 
 <xsl:import href="../docbook/xsl/html/autoidx.xsl"/>
 <xsl:import href="../docbook/xsl/html/docbook.xsl"/>
-<!-- <xsl:include href="kde-print-navig.xsl"/> -->
+<!-- <xsl:include href="tde-print-navig.xsl"/> -->
 <xsl:include href="tde-ttlpg.xsl"/>
 <xsl:include href="tde-style.xsl"/>
 
@@ -19,10 +19,10 @@
 <xsl:param name="generate.component.toc">0</xsl:param>
 <xsl:param name="use.extensions">0</xsl:param>
 <xsl:param name="admon.graphics">0</xsl:param>
-<xsl:param name="kde.common">../common/</xsl:param>
-<xsl:param name="html.stylesheet" select="concat($kde.common,'tde-web.css')"/>
-<xsl:param name="admon.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
-<xsl:param name="callout.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
+<xsl:param name="tde.common">../common/</xsl:param>
+<xsl:param name="html.stylesheet" select="concat($tde.common,'tde-web.css')"/>
+<xsl:param name="admon.graphics.path"><xsl:value-of select="tde.common"/></xsl:param>
+<xsl:param name="callout.graphics.path"><xsl:value-of select="tde.common"/></xsl:param>
 
 
 <xsl:template name="dbhtml-filename">

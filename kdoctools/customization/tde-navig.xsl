@@ -40,10 +40,10 @@
     <xsl:variable name="home" select="/*[1]"/>
     <xsl:variable name="up" select="parent::*"/>
     <xsl:if test="$suppress.navigation = '0'">
-      <div style="background-image: url({$kde.common}top-middle.png); width: 100%; height: 131px;">
+      <div style="background-image: url({$tde.common}top-middle.png); width: 100%; height: 131px;">
         <div style="position: absolute; 
                     right: 0px;">
-          <img src="{$kde.common}top-right-konqueror.png"
+          <img src="{$tde.common}top-right-konqueror.png"
             style="margin: 0px" alt="" />
           </div>
             <div style="position: absolute;
@@ -188,17 +188,17 @@
       <br/>
       <br/>
 
-      <div class="bannerBottom" style="background-image: url({$kde.common}bottom-middle.png);
+      <div class="bannerBottom" style="background-image: url({$tde.common}bottom-middle.png);
                                        background-repeat: x-repeat; 
                                        width: 100%; 
                                        height: 100px; 
                                        bottom:0px;">
 	
         <div class="BannerBottomRight">
-          <img src="{$kde.common}bottom-right.png" style="margin: 0px" alt=""/>
+          <img src="{$tde.common}bottom-right.png" style="margin: 0px" alt=""/>
         </div>
         <div class="bannerBottomLeft">
-          <img src="{$kde.common}bottom-left.png" style="margin: 0px;" alt=""/>
+          <img src="{$tde.common}bottom-left.png" style="margin: 0px;" alt=""/>
         </div>
 <div id="comments" style="position:relative; top: 5px; left: 1em; height:85px; width: 50%; color: #cfe1f6">
 	<p>Would you like to comment or contribute an update to this page?<br/>

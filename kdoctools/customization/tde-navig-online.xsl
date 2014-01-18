@@ -50,7 +50,7 @@
 		</tr>
 		<tr id="logo">
 		  <td valign="top">
-		    <a href="http://www.trinitydesktop.org"><img src="{$kde.common}kde_logo.png" alt="TDE -
+		    <a href="http://www.trinitydesktop.org"><img src="{$tde.common}kde_logo.png" alt="TDE -
 		      The Trinity Desktop Environment" width="296" height="79" border="0" /></a>
 		  </td>
 		  <td valign="middle" align="center" id="location">

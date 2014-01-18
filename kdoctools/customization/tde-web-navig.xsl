@@ -14,7 +14,7 @@
 		</tr>
 		<tr id="logo">
 		  <td valign="top">
-		    <img src="{$kde.common}kde_logo.png" alt="TDE -
+		    <img src="{$tde.common}kde_logo.png" alt="TDE -
 		      The Trinity Desktop Environment" width="296" height="79" border="0" />
 		  </td>
 		  <td valign="middle" align="center" id="location">
