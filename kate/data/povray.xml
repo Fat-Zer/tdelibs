@@ -5,62 +5,74 @@
 <!-- features full POV-Ray 3.6 syntax with special highlighting -->
 <!-- of variable and macro declarations                         -->
 <!-- v1.1: added MegaPOV 1.2.1 keywords (Febuary 2006)          -->
-<language name="POV-Ray" version="1.2" kateversion="2.5" section="Other" extensions="*.inc;*.pov" mimetype="text/x-povray-script;text/x-povray-include" author="Christoph Hormann (chris_hormann@gmx.de)" license="LGPL" priority="2">
+<!-- update to POV-Ray 3.7, Jan 2014, Nikolaus Klepp <dr.klepp@gmx.at> -->
+<language name="POV-Ray" version="1.2.1" kateversion="2.5" section="Other" extensions="*.inc;*.pov" mimetype="text/x-povray-script;text/x-povray-include" author="Christoph Hormann (chris_hormann@gmx.de)" license="LGPL" priority="2">
 	<highlighting>
 		<list name="keywords">
-			<item> aa_threshold </item>
 			<item> aa_level </item>
-			<item> absorption </item>
+			<item> aa_threshold </item>
 			<item> abs </item>
+			<item> absorption </item>
 			<item> accuracy </item>
-			<item> acosh </item>
 			<item> acos </item>
+			<item> acosh </item>
 			<item> adaptive </item>
 			<item> adc_bailout </item>
 			<item> agate </item>
 			<item> agate_turb </item>
-			<item> all_intersections </item>
+			<item> albedo </item>
 			<item> all </item>
+			<item> all_intersections </item>
 			<item> alpha </item>
-			<item> always_sample </item>
 			<item> altitude </item>
-			<item> ambient_light </item>
+			<item> always_sample </item>
 			<item> ambient </item>
+			<item> ambient_light </item>
 			<item> angle </item>
+			<item> aoi </item>
 			<item> aperture </item>
 			<item> append </item>
 			<item> arc_angle </item>
+			<item> area_illumination </item>
 			<item> area_light </item>
 			<item> array </item>
-			<item> ascii </item>
 			<item> asc </item>
-			<item> asinh </item>
+			<item> ascii </item>
 			<item> asin </item>
+			<item> asinh </item>
 			<item> assumed_gamma </item>
-			<item> atan2 </item>
-			<item> atanh </item>
 			<item> atan </item>
+			<item> atan2 </item>
+			<item> atand </item>
+			<item> atanh </item>
+			<item> autostop </item>
 			<item> average </item>
 			<item> background </item>
 			<item> bezier_spline </item>
 			<item> bicubic_patch </item>
+			<item> bitwise_and </item>
+			<item> bitwise_or </item>
+			<item> bitwise_xor </item>
 			<item> black_hole </item>
 			<item> blob </item>
 			<item> blue </item>
 			<item> blur_samples </item>
+			<item> bokeh </item>
 			<item> bounded_by </item>
-			<item> boxed </item>
 			<item> box </item>
+			<item> boxed </item>
 			<item> bozo </item>
-			<item> brick_size </item>
+			<item> break </item>
 			<item> brick </item>
+			<item> brick_size </item>
 			<item> brightness </item>
 			<item> brilliance </item>
-			<item> bumps </item>
-			<item> bump_map </item>
-			<item> bump_size </item>
 			<item> b_spline </item>
+			<item> bump_map </item>
+			<item> bumps </item>
+			<item> bump_size </item>
 			<item> camera </item>
+			<item> case </item>
 			<item> caustics </item>
 			<item> ceil </item>
 			<item> cells </item>
@@ -69,40 +81,45 @@
 			<item> chr </item>
 			<item> circular </item>
 			<item> clipped_by </item>
+			<item> clock </item>
 			<item> clock_delta </item>
 			<item> clock_on </item>
-			<item> clock </item>
-			<item> color_map </item>
-			<item> colour_map </item>
+			<item> collect </item>
 			<item> color </item>
+			<item> color_map </item>
 			<item> colour </item>
+			<item> colour_map </item>
 			<item> component </item>
 			<item> composite </item>
 			<item> concat </item>
 			<item> cone </item>
 			<item> confidence </item>
 			<item> conic_sweep </item>
+			<item> conserve_energy </item>
 			<item> contained_by </item>
 			<item> control0 </item>
 			<item> control1 </item>
 			<item> coords </item>
-			<item> cosh </item>
 			<item> cos </item>
+			<item> cosh </item>
 			<item> count </item>
 			<item> crackle </item>
 			<item> crand </item>
 			<item> cube </item>
-			<item> cubic_spline </item>
 			<item> cubic </item>
+			<item> cubic_spline </item>
 			<item> cubic_wave </item>
+			<item> cutaway_textures </item>
 			<item> cylinder </item>
 			<item> cylindrical </item>
+			<item> datetime </item>
 			<item> defined </item>
 			<item> degrees </item>
+			<item> density </item>
 			<item> density_file </item>
 			<item> density_map </item>
-			<item> density </item>
 			<item> dents </item>
+			<item> deprecated </item>
 			<item> df3 </item>
 			<item> difference </item>
 			<item> diffuse </item>
@@ -112,8 +129,8 @@
 			<item> disc </item>
 			<item> dispersion </item>
 			<item> dispersion_samples </item>
-			<item> distance_maximum </item>
 			<item> distance </item>
+			<item> distance_maximum </item>
 			<item> dist_exp </item>
 			<item> div </item>
 			<item> double_illuminate </item>
@@ -122,20 +139,20 @@
 			<item> error_bound </item>
 			<item> evaluate </item>
 			<item> exp </item>
+			<item> expand_thresholds </item>
 			<item> exponent </item>
 			<item> exterior </item>
 			<item> extinction </item>
-			<item> facets </item>
 			<item> face_indices </item>
-			<item> fade_colour </item>
+			<item> facets </item>
 			<item> fade_color </item>
+			<item> fade_colour </item>
 			<item> fade_distance </item>
 			<item> fade_power </item>
-			<item> falloff_angle </item>
 			<item> falloff </item>
+			<item> falloff_angle </item>
 			<item> false </item>
 			<item> file_exists </item>
-			<item> shadowless </item>
 			<item> filter </item>
 			<item> final_clock </item>
 			<item> final_frame </item>
@@ -145,16 +162,20 @@
 			<item> flip </item>
 			<item> floor </item>
 			<item> focal_point </item>
+			<item> fog </item>
 			<item> fog_alt </item>
 			<item> fog_offset </item>
-			<item> fog </item>
 			<item> fog_type </item>
+			<item> for </item>
 			<item> form </item>
 			<item> frame_number </item>
 			<item> frequency </item>
 			<item> fresnel </item>
 			<item> function </item>
+			<item> gamma </item>
+			<item> gather </item>
 			<item> gif </item>
+			<item> global_lights </item>
 			<item> global_settings </item>
 			<item> gradient </item>
 			<item> granite </item>
@@ -167,30 +188,33 @@
 			<item> hierarchy </item>
 			<item> hollow </item>
 			<item> hypercomplex </item>
-			<item> image_width </item>
-			<item> image_height </item>
-			<item> initial_clock </item>
-			<item> initial_frame </item>
-			<item> interior_texture </item>
 			<item> iff </item>
+			<item> image_height </item>
 			<item> image_map </item>
 			<item> image_pattern </item>
+			<item> image_width </item>
+			<item> importance </item>
+			<item> initial_clock </item>
+			<item> initial_frame </item>
+			<item> input_file_name </item>
 			<item> inside </item>
 			<item> inside_vector </item>
+			<item> int </item>
 			<item> interior </item>
+			<item> interior_texture </item>
+			<item> internal </item>
 			<item> interpolate </item>
 			<item> intersection </item>
 			<item> intervals </item>
-			<item> int </item>
 			<item> inverse </item>
 			<item> ior </item>
 			<item> irid </item>
 			<item> irid_wavelength </item>
 			<item> isosurface </item>
 			<item> jitter </item>
+			<item> jpeg </item>
 			<item> julia </item>
 			<item> julia_fractal </item>
-			<item> jpeg </item>
 			<item> lambda </item>
 			<item> lathe </item>
 			<item> leopard </item>
@@ -200,91 +224,106 @@
 			<item> linear_sweep </item>
 			<item> ln </item>
 			<item> load_file </item>
+			<item> local </item>
 			<item> location </item>
 			<item> log </item>
-			<item> looks_like </item>
 			<item> look_at </item>
+			<item> looks_like </item>
 			<item> low_error_factor </item>
+			<item> macro </item>
 			<item> magnet </item>
 			<item> major_radius </item>
 			<item> mandel </item>
 			<item> map_type </item>
 			<item> marble </item>
-			<item> material_map </item>
 			<item> material </item>
+			<item> material_map </item>
 			<item> matrix </item>
+			<item> max </item>
 			<item> max_extent </item>
 			<item> max_gradient </item>
 			<item> max_intersections </item>
 			<item> max_iteration </item>
 			<item> max_sample </item>
-			<item> max </item>
-			<item> max_trace_level </item>
 			<item> max_trace </item>
+			<item> max_trace_level </item>
+			<item> maximum_reuse </item>
+			<item> media </item>
 			<item> media_attenuation </item>
 			<item> media_interaction </item>
-			<item> media </item>
 			<item> merge </item>
-			<item> mesh2 </item>
 			<item> mesh </item>
+			<item> mesh2 </item>
 			<item> metallic </item>
 			<item> method </item>
 			<item> metric </item>
-			<item> minimum_reuse </item>
-			<item> min_extent </item>
 			<item> min </item>
+			<item> min_extent </item>
+			<item> minimum_reuse </item>
+			<item> mm_per_unit </item>
 			<item> mod </item>
 			<item> mortar </item>
 			<item> natural_spline </item>
 			<item> nearest_count </item>
+			<item> no </item>
+			<item> no_bump_scale </item>
+			<item> no_image </item>
+			<item> no_radiosity </item>
+			<item> no_reflection </item>
+			<item> no_shadow </item>
+			<item> noise_generator </item>
 			<item> normal </item>
 			<item> normal_indices </item>
 			<item> normal_map </item>
 			<item> normal_vectors </item>
-			<item> no_image </item>
-			<item> no_reflection </item>
-			<item> no_shadow </item>
-			<item> no </item>
+			<item> now </item>
 			<item> number_of_waves </item>
 			<item> object </item>
 			<item> octaves </item>
-			<item> offset </item>
 			<item> off </item>
+			<item> offset </item>
 			<item> omega </item>
 			<item> omnimax </item>
+			<item> on </item>
 			<item> once </item>
 			<item> onion </item>
-			<item> on </item>
 			<item> open </item>
-			<item> orientation </item>
 			<item> orient </item>
+			<item> orientation </item>
 			<item> orthographic </item>
+			<item> ovus </item>
 			<item> panoramic </item>
 			<item> parallel </item>
 			<item> parametric </item>
+			<item> pass_through </item>
 			<item> pattern </item>
+			<item> pavement </item>
 			<item> perspective </item>
 			<item> pgm </item>
 			<item> phase </item>
-			<item> phong_size </item>
 			<item> phong </item>
-			<item> pigment_map </item>
-			<item> pigment </item>
+			<item> phong_size </item>
+			<item> photons </item>
 			<item> pi </item>
+			<item> pigment </item>
+			<item> pigment_map </item>
+			<item> pigment_pattern </item>
 			<item> planar </item>
 			<item> plane </item>
 			<item> png </item>
 			<item> point_at </item>
-			<item> polygon </item>
 			<item> poly </item>
 			<item> poly_wave </item>
+			<item> polygon </item>
+			<item> polynomial </item>
 			<item> pot </item>
 			<item> pow </item>
 			<item> ppm </item>
 			<item> precision </item>
 			<item> precompute </item>
-			<item> pretrace_start </item>
+			<item> premultiplied </item>
 			<item> pretrace_end </item>
+			<item> pretrace_start </item>
 			<item> prism </item>
 			<item> prod </item>
 			<item> projected_through </item>
@@ -303,19 +342,18 @@
 			<item> rainbow </item>
 			<item> ramp_wave </item>
 			<item> rand </item>
-			<item> range </item>
 			<item> ratio </item>
 			<item> reciprocal </item>
 			<item> recursion_limit </item>
 			<item> red </item>
-			<item> reflection_exponent </item>
 			<item> reflection </item>
+			<item> reflection_exponent </item>
 			<item> refraction </item>
 			<item> repeat </item>
-			<item> rgbft </item>
-			<item> rgbf </item>
-			<item> rgbt </item>
 			<item> rgb </item>
+			<item> rgbf </item>
+			<item> rgbft </item>
+			<item> rgbt </item>
 			<item> right </item>
 			<item> ripples </item>
 			<item> rotate </item>
@@ -327,48 +365,63 @@
 			<item> scattering </item>
 			<item> seed </item>
 			<item> select </item>
+			<item> shadowless </item>
+			<item> sin </item>
 			<item> sine_wave </item>
 			<item> sinh </item>
-			<item> sin </item>
+			<item> sint16be </item>
+			<item> sint16le </item>
+			<item> sint32be </item>
+			<item> sint32le </item>
+			<item> sint8 </item>
 			<item> size </item>
-			<item> sky_sphere </item>
 			<item> sky </item>
+			<item> sky_sphere </item>
 			<item> slice </item>
-			<item> slope_map </item>
 			<item> slope </item>
+			<item> slope_map </item>
 			<item> smooth </item>
 			<item> smooth_triangle </item>
 			<item> solid </item>
 			<item> sor </item>
+			<item> spacing </item>
 			<item> specular </item>
-			<item> sphere_sweep </item>
 			<item> sphere </item>
+			<item> sphere_sweep </item>
 			<item> spherical </item>
 			<item> spiral1 </item>
 			<item> spiral2 </item>
 			<item> spline </item>
+			<item> split_union </item>
 			<item> spotlight </item>
 			<item> spotted </item>
-			<item> sqrt </item>
 			<item> sqr </item>
-			<item> statistics </item>
+			<item> sqrt </item>
+			<item> square </item>
+			<item> srgb </item>
+			<item> srgbf </item>
+			<item> srgbft </item>
+			<item> srgbt </item>
+			<item> str </item>
 			<item> strcmp </item>
 			<item> strength </item>
 			<item> strlen </item>
 			<item> strlwr </item>
 			<item> strupr </item>
-			<item> str </item>
 			<item> sturm </item>
 			<item> substr </item>
+			<item> subsurface </item>
 			<item> sum </item>
 			<item> superellipsoid </item>
 			<item> sys </item>
-			<item> tanh </item>
+			<item> t </item>
 			<item> tan </item>
+			<item> tanh </item>
+			<item> target </item>
+			<item> text </item>
+			<item> texture </item>
 			<item> texture_list </item>
 			<item> texture_map </item>
-			<item> texture </item>
-			<item> text </item>
 			<item> tga </item>
 			<item> thickness </item>
 			<item> threshold </item>
@@ -376,22 +429,27 @@
 			<item> tightness </item>
 			<item> tile2 </item>
 			<item> tiles </item>
-			<item> normal </item>
+			<item> tiling </item>
 			<item> tolerance </item>
 			<item> toroidal </item>
 			<item> torus </item>
 			<item> trace </item>
 			<item> transform </item>
 			<item> translate </item>
+			<item> translucency </item>
 			<item> transmit </item>
 			<item> triangle </item>
 			<item> triangle_wave </item>
+			<item> triangular </item>
 			<item> true </item>
 			<item> ttf </item>
-			<item> turbulence </item>
 			<item> turb_depth </item>
+			<item> turbulence </item>
 			<item> type </item>
-			<item> t </item>
+			<item> u </item>
+			<item> uint16be </item>
+			<item> uint16le </item>
+			<item> uint8 </item>
 			<item> ultra_wide_angle </item>
 			<item> union </item>
 			<item> up </item>
@@ -399,12 +457,12 @@
 			<item> use_color </item>
 			<item> use_colour </item>
 			<item> use_index </item>
+			<item> u_steps </item>
 			<item> utf8 </item>
 			<item> uv_indices </item>
 			<item> uv_mapping </item>
 			<item> uv_vectors </item>
-			<item> u_steps </item>
-			<item> u </item>
+			<item> v </item>
 			<item> val </item>
 			<item> variance </item>
 			<item> vaxis_rotate </item>
@@ -414,147 +472,126 @@
 			<item> vlength </item>
 			<item> vnormalize </item>
 			<item> vrotate </item>
+			<item> v_steps </item>
 			<item> vstr </item>
 			<item> vturbulence </item>
-			<item> v_steps </item>
-			<item> v </item>
-			<item> warning </item>
 			<item> warp </item>
 			<item> water_level </item>
 			<item> waves </item>
-			<item> while </item>
 			<item> width </item>
 			<item> wood </item>
 			<item> wrinkles </item>
-			<item> write </item>
 			<item> x </item>
-			<item> yes </item>
 			<item> y </item>
+			<item> yes </item>
 			<item> z </item>
-			<item> photons </item>
-			<item> steps </item>
-			<item> pass_through </item>
-			<item> collect </item>
-			<item> autostop </item>
-			<item> gather </item>
-			<item> split_union </item>
-			<item> expand_thresholds </item>
-			<item> spacing </item>
-			<item> global </item>
-			<item> target </item>
-			<item> conserve_energy </item>
-			<item> cutaway_textures </item>
-			<item> pigment_pattern </item>
-			<item> no_bump_scale </item>
-			<item> global_lights </item>
-			<item> internal </item>
-			<item> noise_generator </item>
 		</list>
 		<list name="unofficial">
 			<item> akima_spline </item>
-			<item> aoi </item>
+			<item> attach </item>
 			<item> basic_x_spline </item>
+			<item> bias </item>
+			<item> blur </item>
+			<item> bounding </item>
 			<item> camera_view </item>
-			<item> displace </item>
-			<item> exposure </item>
-			<item> exposure_gain </item>
-			<item> extended_x_spline </item>
-			<item> float </item>
-			<item> frame_step </item>
-			<item> date </item>
-			<item> start_chrono </item>
+			<item> collision </item>
+			<item> connection_count </item>
+			<item> connection </item>
+			<item> continuity </item>
 			<item> current_chrono </item>
+			<item> damping </item>
+			<item> date </item>
+			<item> displace </item>
+			<item> element </item>
+			<item> end_time </item>
+			<item> environment </item>
+			<item> exposure_gain </item>
+			<item> exposure </item>
+			<item> extended_x_spline </item>
+			<item> face_count </item>
+			<item> face </item>
+			<item> field </item>
+			<item> fixed </item>
+			<item> float </item>
+			<item> force </item>
+			<item> frame_step </item>
+			<item> friction </item>
 			<item> general_x_spline </item>
 			<item> glow </item>
+			<item> gravity </item>
+			<item> group </item>
+			<item> h_align_center </item>
 			<item> h_align_left </item>
 			<item> h_align_right </item>
-			<item> h_align_center </item>
-			<item> v_align_top </item>
-			<item> v_align_bottom </item>
-			<item> v_align_center </item>
+			<item> hdr </item>
+			<item> index1 </item>
+			<item> index2 </item>
+			<item> index3 </item>
+			<item> input </item>
+			<item> interaction </item>
+			<item> internal_collision </item>
 			<item> inverted_normals </item>
 			<item> is </item>
+			<item> iterations </item>
+			<item> length </item>
 			<item> listed </item>
+			<item> mass </item>
+			<item> mass_count </item>
+			<item> mechsim </item>
+			<item> mesh_output </item>
+			<item> message </item>
+			<item> motion_blur </item>
 			<item> mpeg </item>
 			<item> n_roots </item>
+			<item> neighbors </item>
+			<item> neighbours </item>
+			<item> no_radiosity </item>
 			<item> noise_pigment </item>
+			<item> output </item>
 			<item> output_filename </item>
+			<item> point </item>
+			<item> position </item>
 			<item> post_process </item>
 			<item> projection </item>
-			<item> point </item>
-			<item> blur </item>
+			<item> randomize </item>
 			<item> set </item>
+			<item> show_low_count </item>
+			<item> show_samples </item>
+			<item> simcloth </item>
+			<item> smooth_mesh </item>
 			<item> sor_spline </item>
+			<item> start_chrono </item>
+			<item> start_time </item>
+			<item> step_count </item>
+			<item> stiffness </item>
 			<item> string </item>
 			<item> structure </item>
 			<item> tcb_spline </item>
 			<item> tension </item>
-			<item> continuity </item>
-			<item> bias </item>
-			<item> user_defined </item>
-			<item> vector </item>
-			<item> unofficial_version </item>
-			<item> gravity </item>
-			<item> environment </item>
-			<item> friction </item>
-			<item> damping </item>
-			<item> simcloth </item>
-			<item> wind </item>
-			<item> neighbors </item>
-			<item> neighbours </item>
-			<item> internal_collision </item>
-			<item> viscosity </item>
-			<item> iterations </item>
-			<item> input </item>
-			<item> mesh_output </item>
-			<item> smooth_mesh </item>
-			<item> uv_mesh </item>
-			<item> output </item>
-			<item> stiffness </item>
-			<item> topology </item>
-			<item> mass </item>
-			<item> connection </item>
-			<item> face </item>
-			<item> velocity </item>
-			<item> position </item>
-			<item> mass_count </item>
-			<item> connection_count </item>
-			<item> face_count </item>
-			<item> index1 </item>
-			<item> index2 </item>
-			<item> index3 </item>
 			<item> time </item>
 			<item> time_step </item>
-			<item> step_count </item>
-			<item> start_time </item>
-			<item> end_time </item>
-			<item> fixed </item>
-			<item> collision </item>
-			<item> interaction </item>
-			<item> group </item>
-			<item> attach </item>
-			<item> field </item>
-			<item> mechsim </item>
-			<item> bounding </item>
-			<item> viscoelastic </item>
-			<item> viscoelastic_count </item>
-			<item> element </item>
-			<item> length </item>
-			<item> force </item>
-			<item> message </item>
-			<item> weight </item>
-			<item> randomize </item>
-			<item> hdr </item>
-			<item> no_radiosity </item>
-			<item> motion_blur </item>
 			<item> tone_mapping </item>
-			<item> show_samples </item>
-			<item> show_low_count </item>
+			<item> topology </item>
+			<item> unofficial_version </item>
+			<item> user_defined </item>
+			<item> uv_mesh </item>
+			<item> v_align_bottom </item>
+			<item> v_align_center </item>
+			<item> v_align_top </item>
+			<item> vector </item>
+			<item> velocity </item>
+			<item> viscoelastic_count </item>
+			<item> viscoelastic </item>
+			<item> viscosity </item>
+			<item> weight </item>
+			<item> wind </item>
 		</list>
 		<list name="objects">
+			<item> background </item>
 			<item> bicubic_patch </item>
 			<item> blob </item>
 			<item> box </item>
+			<item> camera </item>
 			<item> cone </item>
 			<item> cubic </item>
 			<item> cylinder </item>
@@ -565,18 +602,23 @@
 			<item> isosurface </item>
 			<item> julia_fractal </item>
 			<item> lathe </item>
+			<item> light_group </item>
 			<item> light_source </item>
 			<item> merge </item>
 			<item> mesh </item>
 			<item> mesh2 </item>
 			<item> object </item>
+			<item> ovus </item>
 			<item> parametric </item>
 			<item> plane </item>
 			<item> poly </item>
 			<item> polygon </item>
+			<item> polynomial </item>
 			<item> prism </item>
 			<item> quadric </item>
 			<item> quartic </item>
+			<item> rainbow </item>
+			<item> sky_sphere </item>
 			<item> smooth_triangle </item>
 			<item> sor </item>
 			<item> sphere </item>
@@ -594,33 +636,35 @@
 			<item> agate </item>
 			<item> agate_turb </item>
 			<item> ambient </item>
+			<item> aoi </item>
 			<item> average </item>
 			<item> black_hole </item>
 			<item> blue </item>
 			<item> boxed </item>
-			<item> brick_size </item>
 			<item> brick </item>
+			<item> brick_size </item>
 			<item> brilliance </item>
-			<item> bumps </item>
 			<item> bump_map </item>
+			<item> bumps </item>
 			<item> bump_size </item>
 			<item> caustics </item>
 			<item> cells </item>
 			<item> checker </item>
-			<item> color_map </item>
-			<item> colour_map </item>
 			<item> color </item>
+			<item> color_map </item>
 			<item> colour </item>
+			<item> colour_map </item>
 			<item> conserve_energy </item>
 			<item> control0 </item>
 			<item> control1 </item>
 			<item> crackle </item>
 			<item> crand </item>
 			<item> cubic_wave </item>
+			<item> cutaway_textures </item>
 			<item> cylindrical </item>
 			<item> density_file </item>
-			<item> density_map </item>
 			<item> density </item>
+			<item> density_map </item>
 			<item> dents </item>
 			<item> diffuse </item>
 			<item> dist_exp </item>
@@ -631,8 +675,8 @@
 			<item> exterior </item>
 			<item> extinction </item>
 			<item> facets </item>
-			<item> fade_colour </item>
 			<item> fade_color </item>
+			<item> fade_colour </item>
 			<item> fade_distance </item>
 			<item> fade_power </item>
 			<item> filter </item>
@@ -646,10 +690,10 @@
 			<item> green </item>
 			<item> hexagon </item>
 			<item> hypercomplex </item>
-			<item> interior_texture </item>
 			<item> image_map </item>
 			<item> image_pattern </item>
 			<item> interior </item>
+			<item> interior_texture </item>
 			<item> interpolate </item>
 			<item> intervals </item>
 			<item> ior </item>
@@ -662,13 +706,14 @@
 			<item> mandel </item>
 			<item> map_type </item>
 			<item> marble </item>
-			<item> material_map </item>
 			<item> material </item>
+			<item> material_map </item>
 			<item> media </item>
 			<item> metallic </item>
 			<item> method </item>
 			<item> metric </item>
 			<item> mortar </item>
+			<item> no_bump_scale </item>
 			<item> normal </item>
 			<item> normal_map </item>
 			<item> number_of_waves </item>
@@ -678,10 +723,12 @@
 			<item> onion </item>
 			<item> orientation </item>
 			<item> phase </item>
-			<item> phong_size </item>
 			<item> phong </item>
-			<item> pigment_map </item>
+			<item> phong_size </item>
+			<item> photons </item>
 			<item> pigment </item>
+			<item> pigment_map </item>
+			<item> pigment_pattern </item>
 			<item> planar </item>
 			<item> quaternion </item>
 			<item> quick_color </item>
@@ -693,35 +740,34 @@
 			<item> reflection_exponent </item>
 			<item> reflection </item>
 			<item> repeat </item>
-			<item> rgbft </item>
-			<item> rgbf </item>
-			<item> rgbt </item>
 			<item> rgb </item>
+			<item> rgbf </item>
+			<item> rgbft </item>
+			<item> rgbt </item>
 			<item> ripples </item>
 			<item> roughness </item>
 			<item> samples </item>
 			<item> scallop_wave </item>
 			<item> scattering </item>
 			<item> sine_wave </item>
-			<item> slope_map </item>
 			<item> slope </item>
+			<item> slope_map </item>
 			<item> solid </item>
 			<item> specular </item>
 			<item> spherical </item>
 			<item> spiral1 </item>
 			<item> spiral2 </item>
 			<item> spotted </item>
+			<item> texture </item>
 			<item> texture_list </item>
 			<item> texture_map </item>
-			<item> texture </item>
 			<item> tile2 </item>
 			<item> tiles </item>
-			<item> normal </item>
 			<item> toroidal </item>
 			<item> transmit </item>
 			<item> triangle_wave </item>
-			<item> turbulence </item>
 			<item> turb_depth </item>
+			<item> turbulence </item>
 			<item> use_alpha </item>
 			<item> use_color </item>
 			<item> use_colour </item>
@@ -731,16 +777,13 @@
 			<item> waves </item>
 			<item> wood </item>
 			<item> wrinkles </item>
-			<item> cutaway_textures </item>
-			<item> pigment_pattern </item>
-			<item> no_bump_scale </item>
 		</list>
 		<list name="transforms">
 			<item> matrix </item>
 			<item> rotate </item>
 			<item> scale </item>
-			<item> translate </item>
 			<item> transform </item>
+			<item> translate </item>
 		</list>
 		<list name="filetypes">
 			<item> df3 </item>
@@ -792,6 +835,9 @@
 			<item> atan </item>
 			<item> atan2 </item>
 			<item> atanh </item>
+			<item> bitwise_and </item>
+			<item> bitwise_or </item>
+			<item> bitwise_xor </item>
 			<item> ceil </item>
 			<item> chr </item>
 			<item> concat </item>
@@ -799,7 +845,7 @@
 			<item> cosh </item>
 			<item> cube </item>
 			<item> defined </item>
-			<item> degress </item>
+			<item> degrees </item>
 			<item> dimension_size </item>
 			<item> dimensions </item>
 			<item> div </item>
@@ -847,6 +893,7 @@
 			<item> #debug </item>
 			<item> #default </item>
 			<item> #else </item>
+			<item> #elseif </item>
 			<item> #end </item>
 			<item> #error </item>
 			<item> #fclose </item>

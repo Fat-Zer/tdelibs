@@ -147,7 +147,7 @@
 <Definition name="Pig" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pig.xml" version="3.1"/>
 <Definition name="Pike" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pike.xml" version="1.08"/>
 <Definition name="PostScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/postscript.xml" version="1.02"/>
-<Definition name="POV-Ray" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/povray.xml" version="1.2"/>
+<Definition name="POV-Ray" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/povray.xml" version="1.2.1"/>
 <Definition name="PostScript Printer Description" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ppd.xml" version="0.2"/>
 <Definition name="progress" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/progress.xml" version="1.11"/>
 <Definition name="Prolog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/prolog.xml" version="1.2"/>
