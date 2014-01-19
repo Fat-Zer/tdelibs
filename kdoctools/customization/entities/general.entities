@@ -425,6 +425,3 @@
 <!ENTITY quanta "<application>Quanta</application>">
 
 <!ENTITY tde-team "The &tde; Team">
-<!ENTITY tde-release-version "R14.0.0 [DEVELOPMENT]">
-<!ENTITY tde-release-date "April 25, 2013">
-<!ENTITY tde-copyright-date "2010-2014">
