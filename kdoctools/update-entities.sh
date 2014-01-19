@@ -36,8 +36,20 @@ else
   exit 1
 fi
 
-# Extract the file date stamp to use as the release date.
-TDE_RELEASE_DATE=`find $TDEVERSION_FILE -printf "%TB %Te, %TY\n"`
+# $TDEVERSION_FILE (tdeversion.h) remains stagnant throughout the git cycle.
+# The internal release data is manually patched only for the official release.
+# Therefore the file date stamp does not change. As the development cycle
+# progresses, the file date stamp looks really old in the help handbooks. As
+# the tde-release-date entity eventually will match the official release file
+# date stamp, we can use the actual date up to that point, which looks nicer
+# in the handbooks during the development cycle.
+if [ -n "`echo \"$TDE_RELEASE_VERSION\" | grep DEVELOPMENT`" ]; then
+  # Development cycle: use the actual date as the release date.
+  TDE_RELEASE_DATE=`date +'%B %e, %Y'`
+else
+  # Official release: extract the file date stamp as the release date.
+  TDE_RELEASE_DATE=`find $TDEVERSION_FILE -printf "%TB %Te, %TY\n"`
+fi
 echo "     TDE Release Date: $TDE_RELEASE_DATE"
 # Create a copyright date string. First release of Trinity was 3.5.11, April 29, 2010.
 TDE_RELEASE_COPYRIGHT="2010-`date +%Y`"
