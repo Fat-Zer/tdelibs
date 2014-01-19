@@ -955,7 +955,7 @@ KURLBarItemDialog::KURLBarItemDialog( bool allowGlobal, const KURL& url,
     TQWhatsThis::add( m_edit, whatsThisText );
 
     whatsThisText = i18n("<qt>This is the location associated with the entry. Any valid URL may be used. For example:<p>"
-                         "%1<br>http://www.kde.org<br>ftp://ftp.kde.org/pub/kde/stable<p>"
+                         "%1<br>http://www.trinitydesktop.org<p>"
                          "By clicking on the button next to the text edit box you can browse to an "
                          "appropriate URL.</qt>").arg(TQDir::homeDirPath());
     label = new TQLabel( i18n("&URL:"), grid );

@@ -87,7 +87,7 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 			     "(closer to what you see on the screen), but larger print data as well."));
 	TQWhatsThis::add(m_fontpath, 
 			i18n("When using font embedding you can select additional directories where "
-			     "KDE should search for embeddable font files. By default, the X server "
+			     "TDE should search for embeddable font files. By default, the X server "
 			     "font path is used, so adding those directories is not needed. The default "
 			     "search path should be sufficient in most cases."));
 
