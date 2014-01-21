@@ -46,6 +46,8 @@ tde_setup_paths( )
 tde_setup_architecture_flags( )
 find_package( TQt )
 
+list( APPEND TDECORE_LIBRARY_DIRS ${TQT_LIBRARY_DIRS} )
+
 
 ##### add apidox targets ############
 
@@ -618,6 +620,7 @@ endif( WITH_XRANDR )
 pkg_search_module( XRENDER xrender )
 if( XRENDER_FOUND )
   set( HAVE_XRENDER 1 )
+  list( APPEND TDECORE_LIBRARY_DIRS ${XRENDER_LIBRARY_DIRS} )
 else( XRENDER_FOUND)
   message(FATAL_ERROR "\nxrender support is required, but not found on your system" )
 endif( XRENDER_FOUND )
@@ -713,6 +716,7 @@ if( WITH_LIBART )
     message(FATAL_ERROR "\nlibart-2.0 support are requested, but not found on your system" )
   endif( NOT LIBART_FOUND )
   set( HAVE_LIBART 1 )
+  list( APPEND TDECORE_LIBRARY_DIRS ${LIBART_LIBRARY_DIRS} )
 endif( WITH_LIBART )
 
 
@@ -727,6 +731,7 @@ if( WITH_LIBIDN )
   check_include_file( "idna.h" HAVE_IDNA_H )
   check_include_file( "punycode.h" HAVE_PUNYCODE_H )
   check_include_file( "stringprep.h" HAVE_STRINGPREP_H )
+  list( APPEND TDECORE_LIBRARY_DIRS ${LIBIDN_LIBRARY_DIRS} )
 endif( WITH_LIBIDN )
 
 ##### check for libbfq ##########################
@@ -865,6 +870,7 @@ if( DBUS_TQT_FOUND )
 else()
   tde_message_fatal( "dbus-1-tqt are required, but not found on your system" )
 endif( )
+list( APPEND TDECORE_LIBRARY_DIRS ${DBUS_TQT_LIBRARY_DIRS} )
 
 
 if( WITH_NETWORK_MANAGER_BACKEND )
@@ -925,6 +931,7 @@ if( WITH_GAMIN )
     pkg_search_module( GAMIN gamin )
     if( GAMIN_FOUND )
       set( HAVE_FAM 1 )
+      list( APPEND TDECORE_LIBRARY_DIRS ${GAMIN_LIBRARY_DIRS} )
     else( GAMIN_FOUND )
       message(FATAL_ERROR "\nfam/gamin support was requested, but gamin was not found on your system" )
     endif( GAMIN_FOUND )

@@ -20,7 +20,7 @@ include_directories(
 list( REMOVE_ITEM CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined" )
 
 link_directories(
-  ${TQT_LIBRARY_DIRS}
+  ${TDECORE_LIBRARY_DIRS}
 )
 
 

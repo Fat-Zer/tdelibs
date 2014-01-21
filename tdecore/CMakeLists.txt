@@ -37,10 +37,7 @@ include_directories(
 )
 
 link_directories(
-  ${TQT_LIBRARY_DIRS}
-  ${LIBIDN_LIBRARY_DIRS}
-  ${GAMIN_LIBDIR}
-  ${LIBART_LIBRARY_DIRS}
+  ${TDECORE_LIBRARY_DIRS}
 )
 
 ##### headers ###################################
