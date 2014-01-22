@@ -39,7 +39,7 @@ include_directories(
 )
 
 link_directories(
-  ${TQT_LIBRARY_DIRS}
+  ${TDECORE_LIBRARY_DIRS}
 )
 
 
