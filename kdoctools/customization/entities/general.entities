@@ -248,8 +248,8 @@
 <!ENTITY kmathtool "<application>KMathTool</application>">
 <!ENTITY kmenuedit	"<application>KMenuEdit</application>">
 <!ENTITY kmessedwords	"<application>KMessedWords</application>">
-<!ENTITY tdemid	"<application>KMid</application>">
-<!ENTITY tdemidi	"<application>KMidi</application>">
+<!ENTITY tdemid	"<application>TDEMid</application>">
+<!ENTITY tdemidi	"<application>TDEMidi</application>">
 <!ENTITY kmines	"<application>KMines</application>">
 <!ENTITY kmix	"<application>KMix</application>">
 <!ENTITY kmoon	"<application>KMoon</application>">
@@ -311,7 +311,7 @@
 <!ENTITY ksnapshot	"<application>KSnapshot</application>">
 <!ENTITY ksokoban	"<application>KSokoban</application>">
 <!ENTITY kspaceduel	"<application>KSpaceDuel</application>">
-<!ENTITY tdespell	"<application>KSpell</application>">
+<!ENTITY tdespell	"<application>TDESpell</application>">
 <!ENTITY ksplash "<application>KSplash</application>">
 <!ENTITY kspread	"<application>KSpread</application>">
 <!ENTITY kstars	"<application>KStars</application>">
