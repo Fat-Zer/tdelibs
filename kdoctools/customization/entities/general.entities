@@ -206,10 +206,10 @@
 <!ENTITY keduca	"<application>KEduca</application>">
 <!ENTITY kexi		"<application>Kexi</application>">
 <!ENTITY kfax	"<application>KFax</application>">
-<!ENTITY kfaxview	"<application>Kfaxview</application>">
+<!ENTITY kfaxview	"<application>KFaxView</application>">
 <!ENTITY kfeeder 	"<application>KFeeder</application>">
 <!ENTITY kfind	"<application>KFind</application>">
-<!ENTITY kfloppy	"<application>Kfloppy</application>">
+<!ENTITY kfloppy	"<application>KFloppy</application>">
 <!ENTITY kformula	"<application>KFormula</application>">
 <!ENTITY kfouleggs	"<application>KFoulEggs</application>">
 <!ENTITY kfract	"<application>KFract</application>">
