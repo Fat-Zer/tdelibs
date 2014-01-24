@@ -102,20 +102,34 @@ TQString HelpProtocol::lookupFile(const TQString &fname,
     {
         result = langLookup(path+"/index.html");
         if (!result.isEmpty())
-	{
+        {
             KURL red( "help:/" );
             red.setPath( path + "/index.html" );
             red.setQuery( query );
             redirection(red);
             kdDebug( 7119 ) << "redirect to " << red.url() << endl;
             redirect = true;
-	}
+        }
         else
-	{
-	    unicodeError( i18n("There is no documentation available for %1." ).arg(path) );
-	    finished();
-            return TQString::null;
-	}
+        {
+            const TQString helpNotFound = "khelpcenter/helpnotfound/index.html";
+            if (!langLookup(helpNotFound).isEmpty())
+            {
+                KURL red;
+                red.setProtocol("help");
+                red.setPath(helpNotFound);
+                red.setQuery(query);
+                redirection(red);
+                kdDebug( 7119 ) << "redirect to " << red.url() << endl;
+                redirect = true;
+            }
+            else
+            {
+                unicodeError( i18n("There is no documentation available for %1." ).arg(path) );
+                finished();
+                return TQString::null;
+            }
+        }
     } else
         kdDebug( 7119 ) << "result " << result << endl;
 
