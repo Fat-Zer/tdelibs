@@ -32,18 +32,18 @@
 <Definition name="Cisco" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cisco.xml" version="1.11"/>
 <Definition name="Clipper" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/clipper.xml" version="1.06"/>
 <Definition name="Clojure" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/clojure.xml" version="2.01"/>
-<Definition name="CMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cmake.xml" version="1.24"/>
+<Definition name="CMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cmake.xml" version="1.25"/>
 <Definition name="CoffeeScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coffee.xml" version="1.5"/>
 <Definition name="ColdFusion" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coldfusion.xml" version="1.05"/>
 <Definition name="Common Lisp" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/commonlisp.xml" version="1.06"/>
 <Definition name="Component-Pascal" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/component-pascal.xml" version="1.06"/>
 <Definition name="ConTeXt" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/context.xml" version="1.2"/>
 <Definition name="C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cpp.xml" version="1.52"/>
-<Definition name="C++11" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cpp11.xml" version="1.63"/>
+<Definition name="C++11" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cpp11.xml" version="1.64"/>
 <Definition name="Crack" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/crk.xml" version="1.2"/>
 <Definition name="C#" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cs.xml" version="1.16"/>
 <Definition name="CSS/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css-php.xml" version="2.07"/>
-<Definition name="CSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css.xml" version="2.07"/>
+<Definition name="CSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css.xml" version="2.08"/>
 <Definition name="CUE Sheet" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cue.xml" version="0.92"/>
 <Definition name="Curry" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/curry.xml" version="0.4"/>
 <Definition name="D" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/d.xml" version="1.63"/>
@@ -161,7 +161,7 @@
 <Definition name="RapidQ" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rapidq.xml" version="1.02"/>
 <Definition name="RELAX NG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/relaxng.xml" version="0.9"/>
 <Definition name="RelaxNG-Compact" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/relaxngcompact.xml" version="0.3"/>
-<Definition name="reStructuredText" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rest.xml" version="1.02"/>
+<Definition name="reStructuredText" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rest.xml" version="1.03"/>
 <Definition name="Restructured Text" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/restructuredtext.xml" version="1.01"/>
 <Definition name="REXX" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rexx.xml" version="1.02"/>
 <Definition name="Ruby/Rails/RHTML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rhtml.xml" version="1.02"/>
