@@ -62,7 +62,7 @@ static TQTextStream cerr_( stderr, IO_WriteOnly );
 
 /**
  * Session to send call to
- * DefaultSession - current session. Current KDE session when called without
+ * DefaultSession - current session. Current TDE session when called without
  *                  --user or --all-users option. Otherwise this value ignores
  *                  all users with more than one active session.
  * AllSessions    - Send to all sessions found. requires --user or --all-users.
@@ -358,11 +358,11 @@ void showHelp( int exitCode = 0 )
 	 << "                  server. Only failed calls to existing DCOP servers will" << endl
 	 << "                  generate an error message. If no DCOP server is available" << endl
 	 << "                  at all, no error will be generated." << endl
-	 << "  --session <ses> Send to the given KDE session. This option can only be" << endl
+	 << "  --session <ses> Send to the given TDE session. This option can only be" << endl
 	 << "                  used in combination with the --user option." << endl
 	 << "  --all-sessions  Send to all sessions found. Only works with the --user" << endl
 	 << "                  and --all-users options." << endl
-	 << "  --list-sessions List all active KDE session for a user or all users." << endl
+	 << "  --list-sessions List all active TDE session for a user or all users." << endl
 	 << "  --no-user-time  Don't update the user activity timestamp in the called" << endl
 	 << "                  application (for usage in scripts running" << endl
 	 << "                  in the background)." << endl
@@ -562,7 +562,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 		    continue;
 		else
 		{
-		    cerr_ << "ERROR: No active KDE sessions!" << endl
+		    cerr_ << "ERROR: No active TDE sessions!" << endl
 			 << "If you are sure there is one, please set the $DCOPSERVER variable manually" << endl
 			 << "before calling dcop." << endl;
 		    exit( -1 );
@@ -583,7 +583,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 	    }
 	    else if( sessions.count() > 1 && session != AllSessions )
 	    {
-		cerr_ << "ERROR: Multiple available KDE sessions!" << endl
+		cerr_ << "ERROR: Multiple available TDE sessions!" << endl
 		     << "Please specify the correct session to use with --session or use the" << endl
 		     << "--all-sessions option to broadcast to all sessions." << endl;
 		exit( -1 );
