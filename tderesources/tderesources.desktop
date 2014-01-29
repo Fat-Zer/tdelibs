@@ -3,11 +3,13 @@ Exec=tdecmshell tderesources
 Icon=about_kde
 Type=Application
 Terminal=false
-
+DocPath=kcontrol/tderesources/index.html
 X-TDE-ModuleType=Library
 X-TDE-Library=tderesources
 X-TDE-FactoryName=tderesources
 X-TDE-HasReadOnlyMode=false
+Categories=Qt;TDE;X-TDE-settings-components;
+OnlyShowIn=TDE;
 
 Name=TDE Resources
 Name[af]=TDE Hulpbronne
@@ -78,7 +80,6 @@ Name[vi]=Tài nguyên TDE
 Name[zh_CN]=TDE 资源
 Name[zh_HK]=TDE 資源
 Name[zh_TW]=TDE 資源組態
-
 Comment=Configure TDE Resources
 Comment[af]=Stel TDE Hulpbronne op
 Comment[be]=Настаўленне рэсурсаў TDE
@@ -149,7 +150,6 @@ Comment[vi]=Cấu hình các tài nguyên TDE.
 Comment[zh_CN]=配置 TDE 资源
 Comment[zh_HK]=設定 TDE 使用的資源
 Comment[zh_TW]=在此設定 TDE 的資源
-
 Keywords=resources,konnector resource,contact resource,calendar resource,notes resource,imap
 Keywords[af]=hulpbronne,konnector hulpbron,kontak hulpbron,kalender hulpbron, notas hulpbron, imap
 Keywords[be]=рэсурсы,кантакты,каляндар,нататкі,resources,konnector resource,contact resource,calendar resource,notes resource,imap
@@ -204,7 +204,3 @@ Keywords[tr]=kaynaklar,bağlantı kaynağı,iletiişm kaynağı,takvim kaynak,no
 Keywords[uk]=ресурси,ресурс для konnector,ресурс контактів,ресурс календаря,ресурс приміток,imap
 Keywords[vi]=tài nguyên,tài nguyên konnector,tài nguyên liên lạc,tài nguyên lịch,tài nguyên ghi chú,imap
 Keywords[zh_CN]=resources,konnector resource,contact resource,calendar resource,notes resource,imap资源,konnector 资源,联系人资源,日历资源,备忘资源
-
-Categories=Qt;TDE;X-TDE-settings-components;
-OnlyShowIn=TDE;
-
