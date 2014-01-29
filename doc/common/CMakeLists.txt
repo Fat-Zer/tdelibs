@@ -25,4 +25,5 @@ install( FILES
     docheadergears.png headerbg.png grad.png kmenu.png
     kde_logo.png kde_logo_bg.png bottom-left.png bottom-middle.png
     bottom-right.png top-left.png top-middle.png top-right-konqueror.png
+    tde-docs.css
   DESTINATION ${HTML_INSTALL_DIR}/en/common )

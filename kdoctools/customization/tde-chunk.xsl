@@ -7,7 +7,7 @@
 <xsl:include href="tde-ttlpg.xsl"/>
 <xsl:include href="tde-style.xsl"/>
 
-<xsl:variable name="TDE_VERSION">1.13</xsl:variable> 
+<xsl:variable name="TDE_VERSION">1.13</xsl:variable>
 
 <xsl:template name="make-relative-filename">
   <xsl:param name="base.dir" select="'./'"/>
@@ -29,8 +29,8 @@
   <xsl:param name="method" select="'html'"/>
   <xsl:param name="encoding" select="'utf-8'"/>
   <xsl:param name="content" select="''"/>
-  
-  <FILENAME filename="{$filename}"> 
+
+  <FILENAME filename="{$filename}">
   <xsl:copy-of select="$content"/>
   </FILENAME>
 </xsl:template>
@@ -41,7 +41,7 @@
 <xsl:param name="use.extensions">0</xsl:param>
 <xsl:param name="admon.graphics">0</xsl:param>
 <xsl:param name="tde.common">help:/common/</xsl:param>
-<xsl:param name="html.stylesheet" select="concat($tde.common,'tde-default.css')"/>
+<xsl:param name="html.stylesheet" select="concat($tde.common,'tde-default.css',' ',$tde.common,'tde-docs.css',' ',$tde.common,'tde-localised.css')"/>
 <xsl:param name="admon.graphics.path"><xsl:value-of select="tde.common"/></xsl:param>
 <xsl:param name="callout.graphics.path"><xsl:value-of select="tde.common"/></xsl:param>
 
@@ -83,7 +83,7 @@ set       toc,title
 </xsl:template>
 
 <xsl:template name="user.head.content">
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <meta name="GENERATOR" content="TDE XSL Stylesheet V{$TDE_VERSION} using libxslt"/>
 </xsl:template>
 
