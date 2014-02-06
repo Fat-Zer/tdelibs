@@ -224,7 +224,7 @@
 <!ENTITY khelpcenter	"<application>KHelpCenter</application>">
 <!ENTITY khexedit	"<application>KHexEdit</application>">
 <!ENTITY kicker	"<application>Kicker</application>">
-<!ENTITY kiconedit	"<application>TDEIconEdit</application>">
+<!ENTITY tdeiconedit	"<application>TDEIconEdit</application>">
 <!ENTITY kig	"<application>Kig</application>">
 <!ENTITY kikbd	"<application>kikbd</application>">
 <!ENTITY kinfocenter    "<application>KInfoCenter</application>">

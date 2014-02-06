@@ -644,7 +644,7 @@ const char * const packages[] = {
 "kicker/taskbarapplet",
 "kicker/transparency",
 "kicker/trashapplet",
-"kiconedit",
+"tdeiconedit",
 "kig",
 "kile",
 "kile/editor",

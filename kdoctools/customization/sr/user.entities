@@ -251,8 +251,8 @@
 </inlinemediaobject>
 </guiicon> icon"  >
     <!--NOCHECK:-->
-<!ENTITY  kiconedit-a         "<application>К уређивач икона</application>"  >
-<!ENTITY  kiconedit-n         "<application>К уређивач икона</application>"  >
+<!ENTITY  tdeiconedit-a         "<application>К уређивач икона</application>"  >
+<!ENTITY  tdeiconedit-n         "<application>К уређивач икона</application>"  >
 <!ENTITY  klipper-n           "<application>Клипер</application>"  >
 <!ENTITY  KLyX-n              "<application>Кликс</application>"  >
 <!ENTITY  kmahjongg-n         "<application>К-махђонг</application>"  >
