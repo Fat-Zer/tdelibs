@@ -14,5 +14,5 @@ defaultMimetype=application/octet-stream
 determineMimetypeFromExtension=false
 Icon=www
 maxInstances=3
-DocPath=tdeioslave/webdav.html
+DocPath=tdeioslave/webdav/index.html
 Class=:internet

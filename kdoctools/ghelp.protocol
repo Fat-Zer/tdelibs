@@ -7,3 +7,4 @@ reading=true
 defaultMimetype=text/html
 Icon=help
 Class=:local
+DocPath=tdeioslave/ghelp/index.html

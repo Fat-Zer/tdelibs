@@ -11,5 +11,6 @@ deleting=true
 linking=true
 moving=true
 maxInstances=4
-DocPath=tdeioslave/file.html
+DocPath=tdeioslave/file/index.html
 Class=:local
+Icon=filenew

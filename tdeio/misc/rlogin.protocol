@@ -9,5 +9,5 @@ reading=false
 writing=false
 makedir=false
 deleting=false
-DocPath=tdeioslave/rlogin.html
+DocPath=tdeioslave/rlogin/index.html
 Icon=konsole

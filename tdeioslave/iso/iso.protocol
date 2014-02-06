@@ -9,3 +9,4 @@ source=true
 Icon=cd
 Description=A tdeioslave for ISO9660 filesystems
 MimeType=application/x-iso
+DocPath=tdeioslave/iso/index.html
