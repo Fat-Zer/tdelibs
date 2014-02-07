@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name=".desktop" version="1.06" kateversion="2.5"
-          section="Configuration" extensions="*.desktop;*.kdelnk;*.desktop.cmake"
+<language name=".desktop" version="1.07" kateversion="2.5"
+          section="Configuration" extensions="*.desktop;*.kdelnk;*.desktop.cmake;*.protocol"
           mimetype="application/x-desktop">
   <highlighting>
     <contexts>
