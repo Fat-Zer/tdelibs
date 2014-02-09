@@ -259,7 +259,7 @@ void RenderQuote::generateContent()
         visual = true;
 
     if (!m_counterNode)
-        m_counterNode = getCounter("-tdehtml-quotes", visual, false);
+        m_counterNode = getCounter("-khtml-quotes", visual, false);
 
     int value = m_counterNode->count();
     if (m_counterNode->isReset()) value = m_counterNode->value();

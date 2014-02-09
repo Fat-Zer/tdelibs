@@ -2801,7 +2801,7 @@ void TDEHTMLView::print(bool quick)
         // We ignore margin settings for html and body when printing
         // and use the default margins from the print-system
         // (In Qt 3.0.x the default margins are hardcoded in Qt)
-        m_part->xmlDocImpl()->setPrintStyleSheet( printer->option("app-tdehtml-printfriendly") == "true" ?
+        m_part->xmlDocImpl()->setPrintStyleSheet( printer->option("app-khtml-printfriendly") == "true" ?
                                                   "* { background-image: none !important;"
                                                   "    background-color: white !important;"
                                                   "    color: black !important; }"
@@ -2825,7 +2825,7 @@ void TDEHTMLView::print(bool quick)
 
         m_part->xmlDocImpl()->styleSelector()->computeFontSizes(&metrics, 100);
         m_part->xmlDocImpl()->updateStyleSelector();
-        root->setPrintImages( printer->option("app-tdehtml-printimages") == "true");
+        root->setPrintImages( printer->option("app-khtml-printimages") == "true");
         root->makePageBreakAvoidBlocks();
 
         root->setNeedsLayoutAndMinMaxRecalc();
@@ -2834,7 +2834,7 @@ void TDEHTMLView::print(bool quick)
 
         // check sizes ask for action.. (scale or clip)
 
-        bool printHeader = (printer->option("app-tdehtml-printheader") == "true");
+        bool printHeader = (printer->option("app-khtml-printheader") == "true");
 
         int headerHeight = 0;
         TQFont headerFont("Sans Serif", 8);

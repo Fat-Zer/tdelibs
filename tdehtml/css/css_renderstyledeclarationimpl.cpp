@@ -199,23 +199,23 @@ DOMString tdehtml::stringForListStyleType(EListStyleType type)
         case tdehtml::LBOX:
             return "box";
         case tdehtml::LDIAMOND:
-            return "-tdehtml-diamond";
+            return "-khtml-diamond";
         case tdehtml::LDECIMAL:
             return "decimal";
         case tdehtml::DECIMAL_LEADING_ZERO:
             return "decimal-leading-zero";
         case tdehtml::ARABIC_INDIC:
-            return "-tdehtml-arabic-indic";
+            return "-khtml-arabic-indic";
         case tdehtml::LAO:
-            return "-tdehtml-lao";
+            return "-khtml-lao";
         case tdehtml::PERSIAN:
-            return "-tdehtml-persian";
+            return "-khtml-persian";
         case tdehtml::URDU:
-            return "-tdehtml-urdu";
+            return "-khtml-urdu";
         case tdehtml::THAI:
-            return "-tdehtml-thai";
+            return "-khtml-thai";
         case tdehtml::TIBETAN:
-            return "-tdehtml-tibetan";
+            return "-khtml-tibetan";
         case tdehtml::LOWER_ROMAN:
             return "lower-roman";
         case tdehtml::UPPER_ROMAN:
@@ -229,21 +229,21 @@ DOMString tdehtml::stringForListStyleType(EListStyleType type)
         case tdehtml::CJK_IDEOGRAPHIC:
             return "cjk-ideographic";
         case tdehtml::JAPANESE_FORMAL:
-            return "-tdehtml-japanese-formal";
+            return "-khtml-japanese-formal";
         case tdehtml::JAPANESE_INFORMAL:
-            return "-tdehtml-japanese-informal";
+            return "-khtml-japanese-informal";
         case tdehtml::SIMP_CHINESE_FORMAL:
-            return "-tdehtml-simp-chinese-formal";
+            return "-khtml-simp-chinese-formal";
         case tdehtml::SIMP_CHINESE_INFORMAL:
-            return "-tdehtml-simp-chinese-informal";
+            return "-khtml-simp-chinese-informal";
         case tdehtml::TRAD_CHINESE_FORMAL:
-            return "-tdehtml-trad-chinese-formal";
+            return "-khtml-trad-chinese-formal";
         case tdehtml::TRAD_CHINESE_INFORMAL:
-            return "-tdehtml-trad-chinese-informal";
+            return "-khtml-trad-chinese-informal";
         case tdehtml::LOWER_GREEK:
             return "lower-greek";
         case tdehtml::UPPER_GREEK:
-            return "-tdehtml-upper-greek";
+            return "-khtml-upper-greek";
         case tdehtml::LOWER_ALPHA:
             return "lower-alpha";
         case tdehtml::UPPER_ALPHA:

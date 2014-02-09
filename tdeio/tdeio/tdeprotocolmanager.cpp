@@ -72,7 +72,7 @@ KProtocolManagerPrivate::~KProtocolManagerPrivate()
 
 // DEFAULT USERAGENT STRING
 #define CFG_DEFAULT_UAGENT(X) \
-TQString("Mozilla/5.0 (compatible; Konqueror/%1.%2%3) TDEHTML/%4.%5.%6 (like Gecko)") \
+TQString("Mozilla/5.0 (compatible; Konqueror/%1.%2%3) KHTML/TDEHTML/%4.%5.%6 (like Gecko)") \
         .arg(TDE_VERSION_MAJOR).arg(TDE_VERSION_MINOR).arg(X).arg(TDE_VERSION_MAJOR).arg(TDE_VERSION_MINOR).arg(TDE_VERSION_RELEASE)
 
 void KProtocolManager::reparseConfiguration()

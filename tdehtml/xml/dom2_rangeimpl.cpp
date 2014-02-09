@@ -1139,7 +1139,7 @@ DOMString RangeImpl::toHTML( int &exceptioncode )
       text = DOMString("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
 		      "<head>\n"
 		      "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n"
-		      "<meta name=\"Generator\" content=\"TDEHTML, the KDE Web Page Viewer\" />\n"
+		      "<meta name=\"Generator\" content=\"TDEHTML, the TDE Web Page Viewer\" />\n"
 		      "</head>\n") +
 	    text +
 	    "</html>";

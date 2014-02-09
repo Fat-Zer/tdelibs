@@ -355,7 +355,7 @@ void KJSProxyImpl::applyUserAgent()
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
     if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
         userAgent.find(TQString::fromLatin1("compatible")) == -1 &&
-        userAgent.find(TQString::fromLatin1("TDEHTML")) == -1)
+        userAgent.find(TQString::fromLatin1("KHTML")) == -1)
     {
       m_script->setCompatMode(Interpreter::NetscapeCompat);
 #ifdef KJS_VERBOSE

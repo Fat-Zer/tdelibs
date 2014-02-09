@@ -93,16 +93,16 @@ TDEHTMLPrintSettings::~TDEHTMLPrintSettings()
 
 void TDEHTMLPrintSettings::getOptions(TQMap<TQString,TQString>& opts, bool /*incldef*/)
 {
-	opts["app-tdehtml-printfriendly"] = (m_printfriendly->isChecked() ? "true" : "false");
-	opts["app-tdehtml-printimages"] = (m_printimages->isChecked() ? "true" : "false");
-	opts["app-tdehtml-printheader"] = (m_printheader->isChecked() ? "true" : "false");
+	opts["app-khtml-printfriendly"] = (m_printfriendly->isChecked() ? "true" : "false");
+	opts["app-khtml-printimages"] = (m_printimages->isChecked() ? "true" : "false");
+	opts["app-khtml-printheader"] = (m_printheader->isChecked() ? "true" : "false");
 }
 
 void TDEHTMLPrintSettings::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	m_printfriendly->setChecked(opts["app-tdehtml-printfriendly"] != "false");
-	m_printimages->setChecked(opts["app-tdehtml-printimages"] != "false");
-	m_printheader->setChecked(opts["app-tdehtml-printheader"] != "false");
+	m_printfriendly->setChecked(opts["app-khtml-printfriendly"] != "false");
+	m_printimages->setChecked(opts["app-khtml-printimages"] != "false");
+	m_printheader->setChecked(opts["app-khtml-printheader"] != "false");
 }
 
 #include "tdehtml_printsettings.moc"

@@ -314,7 +314,7 @@
 2005-12-09  Germain Garand  <germain@ebooksfrance.org>
 
         implement quirky HTML alignment ; introduce special float values
-        -tdehtml-left/-tdehtml-right to this effect.
+        -khtml-left/-khtml-right to this effect.
 
         * css/cssparser.cpp: ditto. Fix memory leak from Function struct deletion also.
         * css/cssstyleselector.cpp: ditto.
@@ -662,7 +662,7 @@
         Implement ideographic enumeration including the CSS 2.1 cjk-ideographic and several from CSS 3 List (working draft).
         Also add three more numeric: (Lao, Thai and Tibetan)
 
-        * css/cssvalues.in: Add new CSS3 values with -tdehtml-
+        * css/cssvalues.in: Add new CSS3 values with -khtml-
         * rendering/render_style.h: Add new enums
         * rendering/enumerate.cpp: Implement the ideographic algorithm.
 
@@ -1393,8 +1393,8 @@
         * rendering/render_list.cpp: New algorithms for hiragana, katakana,
             armenian, georgian and decimal-leading-zero.
             Also fix greek and latin list-styles for larger values.
-        * css/cssvalues.cpp: Parse box, -tdehtml-diamond, -tdehtml-arabic-indic,
-            -tdehtml-persian, -tdehtml-urdu and -tdehtml-upper-greek
+        * css/cssvalues.cpp: Parse box, -khtml-diamond, -khtml-arabic-indic,
+            -khtml-persian, -khtml-urdu and -khtml-upper-greek
         * rendering/render_style.h: Expand list-style enum
 
 2004-11-30  Germain Garand  <germain@ebooksfrance.org>
@@ -1451,10 +1451,10 @@
 
         Implement CSS border on form-widgets
 
-        * css/cssvalues.in: Add -tdehtml-native
-        * css/cssparser.cpp: Accept -tdehtml-native as a border-type
+        * css/cssvalues.in: Add -khtml-native
+        * css/cssparser.cpp: Accept -khtml-native as a border-type
         * css/cssstyleselector.cpp: BNATIVE and not BNONE is now lowest border-style
-        * css/html4.css: Make -tdehtml-native default border-style for form-widgets
+        * css/html4.css: Make -khtml-native default border-style for form-widgets
         * render/render_style.h: Add BNATIVE
         * render/render_object.cpp: Treat BNATIVE like BNONE
         * render/render_replaced.cpp: Remove native, and paint CSS border when allowed
@@ -1463,7 +1463,7 @@
 
         float and flowAroundFloat fixes.
 
-        * css/html4.css: make fieldset -tdehtml-around-floats (#92979)
+        * css/html4.css: make fieldset -khtml-around-floats (#92979)
 
         * rendering/render_block.cpp (layoutBlockChildren): cleanup float/flowAroundFloats
         logic. Merges: add better RTL layouting of fAFs.
@@ -2095,14 +2095,14 @@
 	* tdehtml_part.cpp: (clear) Stopping marquees.
 	* css/cssparser.cpp: (parserValue) Parse overflow: marquee.
 	Inserted CSS3 Properties section.
-	Moved -tdehtml-user-input to CSS3 Properties.
-	Added parsing of -tdehtml-marquee{,-direction,-increment,-style,-repetition,
+	Moved -khtml-user-input to CSS3 Properties.
+	Added parsing of -khtml-marquee{,-direction,-increment,-style,-repetition,
 	-speed}.
 	* css/cssproperties.{c,h}: Regenerated.
-	* css/cssproperties.in: Added -tdehtml-marquee{,-direction,-increment,
+	* css/cssproperties.in: Added -khtml-marquee{,-direction,-increment,
 	-style,-repetition,	-speed} keywords.
 	* css/cssstyleselector: (applyRule) Handle overflow: marquee.
-	Handle applying of -tdehtml-marquee{,-direction,-increment,-style,-repetition,
+	Handle applying of -khtml-marquee{,-direction,-increment,-style,-repetition,
 	-speed}.
 	* css/cssvalues.{c,h}: Regenerated.
 	* css/cssvalues.in: Added marquee, forwards, backwards, ahead, reverse,

@@ -16,7 +16,7 @@ initial
 # CSS_PROP_BORDER_TOP_STYLE
 # CSS_PROP_BORDER_BOTTOM_STYLE
 # CSS_PROP_BORDER_LEFT_STYLE
--tdehtml-native
+-khtml-native
 none
 hidden
 inset
@@ -73,7 +73,7 @@ medium
 large
 x-large
 xx-large
--tdehtml-xxx-large
+-khtml-xxx-large
 smaller
 larger
 #
@@ -156,7 +156,7 @@ windowtext
 #
 # colors in non strict mode
 grey
--tdehtml-text
+-khtml-text
 #
 # CSS_PROP_BACKGROUND_REPEAT:
 #
@@ -176,18 +176,18 @@ text-bottom
 top
 bottom
 # HTML alignment MIDDLE has no corresponding CSS alignment
--tdehtml-baseline-middle
+-khtml-baseline-middle
 #
 # CSS_PROP_TEXT_ALIGN:
 #
--tdehtml-auto
+-khtml-auto
 left
 right
 center
 justify
--tdehtml-left
--tdehtml-right
--tdehtml-center
+-khtml-left
+-khtml-right
+-khtml-center
 #
 # CSS_PROP_LIST_STYLE_POSITION:
 #
@@ -200,29 +200,29 @@ disc
 circle
 square
 box
--tdehtml-diamond
+-khtml-diamond
 decimal
 decimal-leading-zero
--tdehtml-arabic-indic
--tdehtml-lao
--tdehtml-persian
--tdehtml-urdu
--tdehtml-thai
--tdehtml-tibetan
+-khtml-arabic-indic
+-khtml-lao
+-khtml-persian
+-khtml-urdu
+-khtml-thai
+-khtml-tibetan
 lower-roman
 upper-roman
 hebrew
 armenian
 georgian
 cjk-ideographic
--tdehtml-japanese-formal
--tdehtml-japanese-informal
--tdehtml-simp-chinese-formal
--tdehtml-simp-chinese-informal
--tdehtml-trad-chinese-formal
--tdehtml-trad-chinese-informal
+-khtml-japanese-formal
+-khtml-japanese-informal
+-khtml-simp-chinese-formal
+-khtml-simp-chinese-informal
+-khtml-trad-chinese-formal
+-khtml-trad-chinese-informal
 lower-greek
--tdehtml-upper-greek
+-khtml-upper-greek
 lower-alpha
 lower-latin
 upper-alpha
@@ -231,8 +231,8 @@ hiragana
 katakana
 hiragana-iroha
 katakana-iroha
--tdehtml-open-quote
--tdehtml-close-quote
+-khtml-open-quote
+-khtml-close-quote
 #none
 #
 # CSS_PROP_DISPLAY:
@@ -307,7 +307,7 @@ nowrap
 pre
 pre-wrap
 pre-line
--tdehtml-nowrap
+-khtml-nowrap
 #
 # CSS_PROP_WORD_WRAP
 #
@@ -351,8 +351,8 @@ thin
 underline
 #
 # CSS_PROP__TDEHTML_FLOW_MODE
--tdehtml-normal
--tdehtml-around-floats
+-khtml-normal
+-khtml-around-floats
 
 # CSS3 Values
 # CSS_PROP__TDEHTML_BOX_SIZING

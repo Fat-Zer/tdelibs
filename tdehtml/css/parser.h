@@ -1,35 +1,28 @@
-/* A Bison parser, made by GNU Bison 2.5.  */
+/* A Bison parser, made by GNU Bison 1.875d.  */
 
-/* Bison interface for Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
-   
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-   
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-   
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+/*  Skeleton parser for Yacc-like parsing with Bison,
+    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 
-/* As a special exception, you may create a larger work that contains
-   part or all of the Bison parser skeleton and distribute that work
-   under terms of your choice, so long as that work isn't itself a
-   parser generator using the skeleton or a modified version thereof
-   as a parser skeleton.  Alternatively, if you modify or redistribute
-   the parser skeleton itself, you may (at your option) remove this
-   special exception, which will cause the skeleton and the resulting
-   Bison output files to be licensed under the GNU General Public
-   License without this special exception.
-   
-   This special exception was added by the Free Software Foundation in
-   version 2.2 of Bison.  */
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2, or (at your option)
+    any later version.
 
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU Library General Public License
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA 02110-1301, USA.
+*/
+
+/* As a special exception, when this file is copied by Bison into a
+   Bison output file, you may use that output file without restriction.
+   This special exception was added by the Free Software Foundation
+   in version 1.24 of Bison.  */
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -85,14 +78,59 @@
      UNICODERANGE = 303
    };
 #endif
+#define UNIMPORTANT_TOK 258
+#define S 259
+#define SGML_CD 260
+#define INCLUDES 261
+#define DASHMATCH 262
+#define BEGINSWITH 263
+#define ENDSWITH 264
+#define CONTAINS 265
+#define STRING 266
+#define IDENT 267
+#define NTH 268
+#define HASH 269
+#define IMPORT_SYM 270
+#define PAGE_SYM 271
+#define MEDIA_SYM 272
+#define FONT_FACE_SYM 273
+#define CHARSET_SYM 274
+#define NAMESPACE_SYM 275
+#define TDEHTML_RULE_SYM 276
+#define TDEHTML_DECLS_SYM 277
+#define TDEHTML_VALUE_SYM 278
+#define IMPORTANT_SYM 279
+#define QEMS 280
+#define EMS 281
+#define EXS 282
+#define PXS 283
+#define CMS 284
+#define MMS 285
+#define INS 286
+#define PTS 287
+#define PCS 288
+#define DEGS 289
+#define RADS 290
+#define GRADS 291
+#define MSECS 292
+#define SECS 293
+#define HERZ 294
+#define KHERZ 295
+#define DIMEN 296
+#define PERCENTAGE 297
+#define FLOAT 298
+#define INTEGER 299
+#define URI 300
+#define FUNCTION 301
+#define NOTFUNCTION 302
+#define UNICODERANGE 303
 
 
 
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
-{
 
+#if ! defined (YYSTYPE) && ! defined (YYSTYPE_IS_DECLARED)
 
+typedef union YYSTYPE {
     CSSRuleImpl *rule;
     CSSSelector *selector;
     TQPtrList<CSSSelector> *selectorList;
@@ -112,14 +150,14 @@ typedef union YYSTYPE
     char tok;
     Value value;
     ValueList *valueList;
-
-
-
 } YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
+/* Line 1285 of yacc.c.  */
+
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
 #endif
+
 
 
 

@@ -21,10 +21,10 @@ img[align="right"] {
 table {
     white-space: normal;
     line-height: normal;
-    color: -tdehtml-text;
+    color: -khtml-text;
     font-size: medium;
     empty-cells: hide;
-    text-align: -tdehtml-auto;
+    text-align: -khtml-auto;
     font-weight: initial;
 }
 

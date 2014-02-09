@@ -11,7 +11,7 @@
 
 html {
 	display: block;
-	color: -tdehtml-text;
+	color: -khtml-text;
 }
 
 /*
@@ -99,7 +99,7 @@ q:after  {
 center {
 	display: block;
 	/* special centering to be able to emulate the html4/netscape behavior */
-	text-align: -tdehtml-center;
+	text-align: -khtml-center;
 }
 
 hr  {
@@ -107,7 +107,7 @@ hr  {
         margin: 12px auto;
         border-style: inset;
         border-width: 1px;
-        -tdehtml-flow-mode: -tdehtml-around-floats
+        -khtml-flow-mode: -khtml-around-floats
 }
 
 map {
@@ -171,7 +171,7 @@ table {
 	display: table;
 	border-collapse: separate;
 	border-spacing: 2px;
-        -tdehtml-flow-mode: -tdehtml-around-floats;
+        -khtml-flow-mode: -khtml-around-floats;
         box-sizing: border-box;
 }
 
@@ -181,11 +181,11 @@ table[align="center"] {
 }
 
 table[align="left"] {
-	float: -tdehtml-left;
+	float: -khtml-left;
 }
 
 table[align="right"] {
-	float: -tdehtml-right;
+	float: -khtml-right;
 }
 
 thead {
@@ -232,7 +232,7 @@ th {
 
 caption {
 	display: table-caption;
-	text-align: -tdehtml-center;
+	text-align: -khtml-center;
 }
 
 /*
@@ -243,19 +243,19 @@ ul, menu, dir {
         display: block;
         list-style-type: disc;
         margin: 1__qem 0 1em 0;
-        -tdehtml-padding-start: 40px
+        -khtml-padding-start: 40px
 }
 
 ol {
         display: block;
         list-style-type: decimal;
         margin: 1__qem 0 1em 0;
-        -tdehtml-padding-start: 40px
+        -khtml-padding-start: 40px
 }
 
 li {
         display: list-item;
-        -tdehtml-flow-mode: -tdehtml-around-floats;
+        -khtml-flow-mode: -khtml-around-floats;
 }
 
 
@@ -273,7 +273,7 @@ dd {
 }
 
 dl > dd {
-	-tdehtml-margin-start: 40px;
+	-khtml-margin-start: 40px;
 }
 
 dl {
@@ -329,7 +329,7 @@ fieldset {
         padding: 0.75em 0.625em;
 	margin: 1.0em 0;
         border: 2px groove threedface;
-        -tdehtml-flow-mode: -tdehtml-around-floats
+        -khtml-flow-mode: -khtml-around-floats
 }
 
 button {
@@ -346,7 +346,7 @@ button:active {
 }
 
 input, textarea {
-        text-align: -tdehtml-auto;
+        text-align: -khtml-auto;
 }
 
 input, textarea, select, button {
@@ -357,7 +357,7 @@ input, textarea, select, button {
 input { color: windowtext;
         font-family: sans-serif;
         font-size: small;
-        border: 2px -tdehtml-native;
+        border: 2px -khtml-native;
 }
 
 input[type="hidden"] {
@@ -396,7 +396,7 @@ select {
 textarea {
         color: windowtext;
         font-family: monospace;
-        border: 2px -tdehtml-native;
+        border: 2px -khtml-native;
 }
 
 /*

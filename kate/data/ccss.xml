@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 
-<language name="CleanCSS" version="1.01" kateversion="2.5" section="Markup" extensions="*.ccss" author="Massimiliano Torromeo" license="BSD">
+<language name="CleanCSS" version="1.02" kateversion="2.5" section="Markup" extensions="*.ccss" author="Massimiliano Torromeo" license="BSD">
 
 <highlighting>
 	<list name="properties">
@@ -171,7 +171,7 @@
 		<item> -o-text-overflow </item>
 
 		<!-- konq specific -->
-		<item> -tdehtml-background-size </item>
+		<item> -khtml-background-size </item>
 		<item> konq_bgpos_x </item>
 		<item> konq_bgpos_y </item>
 

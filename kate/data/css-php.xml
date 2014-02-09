@@ -21,7 +21,7 @@ Changelog:
 
 
 
-<language name="CSS/PHP" hidden="true" version="2.07" kateversion="2.5" section="Other" extensions="" indenter="cstyle" mimetype="" author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL">
+<language name="CSS/PHP" hidden="true" version="2.08" kateversion="2.5" section="Other" extensions="" indenter="cstyle" mimetype="" author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL">
 
 	<highlighting>
 		<list name="properties">
@@ -263,14 +263,14 @@ Changelog:
 			<!-- konq specific -->
 			<item> konq_bgpos_x </item>
 			<item> konq_bgpos_y </item>
-			<item> -tdehtml-background-size </item>
-			<item> -tdehtml-border-top-left-radius </item>
-			<item> -tdehtml-border-top-right-radius </item>
-			<item> -tdehtml-border-bottom-left-radius </item>
-			<item> -tdehtml-border-bottom-right-radius </item>
-			<item> -tdehtml-border-radius </item>
-			<item> -tdehtml-box-shadow </item>
-			<item> -tdehtml-opacity </item>
+			<item> -khtml-background-size </item>
+			<item> -khtml-border-top-left-radius </item>
+			<item> -khtml-border-top-right-radius </item>
+			<item> -khtml-border-bottom-left-radius </item>
+			<item> -khtml-border-bottom-right-radius </item>
+			<item> -khtml-border-radius </item>
+			<item> -khtml-box-shadow </item>
+			<item> -khtml-opacity </item>
 
 			<!-- Webkit rendering engine CSS property extensions -->
 			<item> -webkit-appearance </item>

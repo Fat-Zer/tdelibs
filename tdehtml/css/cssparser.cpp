@@ -184,7 +184,7 @@ CSSRuleImpl *CSSParser::parseRule( DOM::CSSStyleSheetImpl *sheet, const DOM::DOM
 {
     styleElement = sheet;
 
-    const char tdehtml_rule[] = "@-tdehtml-rule{";
+    const char tdehtml_rule[] = "@-khtml-rule{";
     int length = string.length() + 4 + strlen(tdehtml_rule);
     assert( !data );
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
@@ -212,7 +212,7 @@ bool CSSParser::parseValue( DOM::CSSStyleDeclarationImpl *declaration, int _id, 
 
     styleElement = declaration->stylesheet();
 
-    const char tdehtml_value[] = "@-tdehtml-value{";
+    const char tdehtml_value[] = "@-khtml-value{";
     int length = string.length() + 4 + strlen(tdehtml_value);
     assert( !data );
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
@@ -254,7 +254,7 @@ bool CSSParser::parseDeclaration( DOM::CSSStyleDeclarationImpl *declaration, con
 
     styleElement = declaration->stylesheet();
 
-    const char tdehtml_decls[] = "@-tdehtml-decls{";
+    const char tdehtml_decls[] = "@-khtml-decls{";
     int length = string.length() + 4 + strlen(tdehtml_decls);
     assert( !data );
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
@@ -572,7 +572,7 @@ bool CSSParser::parseValue( int propId, bool important )
         break;
 
     case CSS_PROP_DISPLAY:
-        // inline | block | list-item | run-in | inline-block | -tdehtml-ruler | table |
+        // inline | block | list-item | run-in | inline-block | -khtml-ruler | table |
         // inline-table | table-row-group | table-header-group | table-footer-group | table-row |
         // table-column-group | table-column | table-cell | table-caption | none | inherit
         if ((id >= CSS_VAL_INLINE && id <= CSS_VAL_TABLE_CAPTION) || id == CSS_VAL_NONE)
@@ -611,7 +611,7 @@ bool CSSParser::parseValue( int propId, bool important )
     case CSS_PROP_OUTLINE_STYLE:        // <border-style> | inherit
     case CSS_PROP_BORDER_TOP_STYLE:     //// <border-style> | inherit
     case CSS_PROP_BORDER_RIGHT_STYLE:   //   Defined as:    none | hidden | dotted | dashed |
-    case CSS_PROP_BORDER_BOTTOM_STYLE:  //   solid | double | groove | ridge | inset | outset | -tdehtml-native
+    case CSS_PROP_BORDER_BOTTOM_STYLE:  //   solid | double | groove | ridge | inset | outset | -khtml-native
     case CSS_PROP_BORDER_LEFT_STYLE:    ////
         if (id >= CSS_VAL__TDEHTML_NATIVE && id <= CSS_VAL_DOUBLE)
             valid_primitive = true;

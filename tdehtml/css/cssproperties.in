@@ -20,14 +20,14 @@ background-position
 background-position-x
 background-position-y
 # CSS3 Extensions
--tdehtml-background-clip
--tdehtml-background-origin
--tdehtml-background-size
+-khtml-background-clip
+-khtml-background-origin
+-khtml-background-size
 
 border-collapse
 border-spacing
--tdehtml-border-horizontal-spacing
--tdehtml-border-vertical-spacing
+-khtml-border-horizontal-spacing
+-khtml-border-vertical-spacing
 border-top-color
 border-right-color
 border-bottom-color
@@ -69,13 +69,13 @@ margin-top
 margin-right
 margin-bottom
 margin-left
--tdehtml-margin-start
--tdehtml-marquee
--tdehtml-marquee-direction
--tdehtml-marquee-increment
--tdehtml-marquee-repetition
--tdehtml-marquee-speed
--tdehtml-marquee-style
+-khtml-margin-start
+-khtml-marquee
+-khtml-marquee-direction
+-khtml-marquee-increment
+-khtml-marquee-repetition
+-khtml-marquee-speed
+-khtml-marquee-style
 max-height
 max-width
 min-height
@@ -93,7 +93,7 @@ padding-top
 padding-right
 padding-bottom
 padding-left
--tdehtml-padding-start
+-khtml-padding-start
 #page
 page-break-after
 page-break-before
@@ -144,5 +144,5 @@ scrollbar-darkshadow-color
 scrollbar-track-color
 scrollbar-arrow-color
 # tdehtml internals
--tdehtml-flow-mode
--tdehtml-user-input
+-khtml-flow-mode
+-khtml-user-input

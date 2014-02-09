@@ -172,10 +172,10 @@ void CSSSelector::extractPseudoType() const
         value = value.lower();
         switch (value[0]) {
             case '-':
-                if (value == "-tdehtml-replaced")
+                if (value == "-khtml-replaced")
                     _pseudoType = PseudoReplaced;
                 else
-                if (value == "-tdehtml-marker")
+                if (value == "-khtml-marker")
                     _pseudoType = PseudoMarker;
                 element = true;
                 break;

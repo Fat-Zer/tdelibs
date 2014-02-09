@@ -26,11 +26,11 @@
  *
  */
 
-// #define DEBUG
-// #define DEBUG_LAYOUT
-// #define BOX_DEBUG
-// #define FLOAT_DEBUG
-// #define PAGE_DEBUG
+//#define DEBUG
+//#define DEBUG_LAYOUT
+//#define BOX_DEBUG
+//#define FLOAT_DEBUG
+//#define PAGE_DEBUG
 
 #include <kdebug.h>
 #include "rendering/render_text.h"

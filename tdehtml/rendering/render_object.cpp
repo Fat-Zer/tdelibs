@@ -2077,7 +2077,7 @@ bool RenderObject::hasCounter(const TQString& counter) const
                 element()->id() == ID_DIR))
             return true;
     } else
-    if (counter == "-tdehtml-quotes" && isQuote()) {
+    if (counter == "-khtml-quotes" && isQuote()) {
         return (static_cast<const RenderQuote*>(this)->quoteCount() != 0);
     }
     return false;
@@ -2146,7 +2146,7 @@ CounterNode* RenderObject::getCounter(const TQString& counter, bool view, bool c
 //             kdDebug( 6040 ) << renderName() << " counter-reset: " << counter << " " << val << endl;
         }
     }
-    else if (counter == "-tdehtml-quotes" && isQuote()) {
+    else if (counter == "-khtml-quotes" && isQuote()) {
         i = new CounterNode(this);
         val = static_cast<RenderQuote*>(this)->quoteCount();
     }

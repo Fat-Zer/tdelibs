@@ -308,10 +308,9 @@ bool CSSStyleDeclarationImpl::setProperty(int id, const DOMString &value, bool i
 
     CSSParser parser( strictParsing );
     bool success = parser.parseValue( this, id, value, important, nonCSSHint );
-    if(!success) {
+    if(!success)
 	kdDebug( 6080 ) << "CSSStyleDeclarationImpl::setProperty invalid property: [" << getPropertyName(id).string()
 			<< "] value: [" << value.string() << "]"<< endl;
-    }
     else
         setChanged();
     return success;

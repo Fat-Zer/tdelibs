@@ -3964,7 +3964,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         }
         break;
     case CSS_PROP_TEXT_OVERFLOW: {
-        // This property is supported by WinIE, and so we leave off the "-tdehtml-" in order to
+        // This property is supported by WinIE, and so we leave off the "-khtml-" in order to
         // work with WinIE-specific pages that use the property.
         HANDLE_INHERIT_AND_INITIAL(textOverflow, TextOverflow)
         if (!primitiveValue || !primitiveValue->getIdent())
