@@ -572,22 +572,12 @@
     <Include>
       <And>
         <Category>Office</Category>
-        <Not><Category>X-TDE-Office-PIM</Category></Not>
         <Not><Category>X-TDE-More</Category></Not>
         <Not><Category>X-KDE-More</Category></Not>
         <Not><Category>KDE</Category></Not>
       </And>
     <Filename>ooo-draw.desktop</Filename>
     </Include>
-    <Menu>
-      <Name>Personal Information Management</Name>
-      <Directory>tde-office-pim.directory</Directory>
-      <Include>
-        <And>
-        <Category>X-TDE-Office-PIM</Category>
-        </And>
-      </Include>
-    </Menu>
     <Menu>
       <Name>More</Name>
       <Directory>tde-more.directory</Directory>
