@@ -73,7 +73,7 @@ class ManagerNotifier
 
   Since KDE 3.4 it's required to supply your application with a *.desktop
   file for each resource family you introduce. The ServiceType should be of
-  KResources/Manager.
+  TDEResources/Manager.
 */
 template<class T>
 class Manager : private ManagerNotifier

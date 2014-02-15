@@ -85,6 +85,6 @@ Name[zh_TW]=網路
 Name[zu]=Umsebenzi wokuxhumana okusakazekile
 X-TDE-Library=tdeabc_net
 Type=Service
-ServiceTypes=KResources/Plugin
+ServiceTypes=TDEResources/Plugin
 X-TDE-ResourceFamily=contact
 X-TDE-ResourceType=net

@@ -174,7 +174,7 @@ void ConfigPage::load()
 
   // KDE-3.3 compatibility code: get families from the plugins
   TQStringList compatFamilyNames;
-  const TDETrader::OfferList plugins = TDETrader::self()->query( "KResources/Plugin" );
+  const TDETrader::OfferList plugins = TDETrader::self()->query( "TDEResources/Plugin" );
   TDETrader::OfferList::ConstIterator it = plugins.begin();
   TDETrader::OfferList::ConstIterator end = plugins.end();
   for ( ; it != end; ++it ) {
@@ -183,7 +183,7 @@ void ConfigPage::load()
         compatFamilyNames.append( family );
   }
 
-  const TDETrader::OfferList managers = TDETrader::self()->query( "KResources/Manager" );
+  const TDETrader::OfferList managers = TDETrader::self()->query( "TDEResources/Manager" );
   TDETrader::OfferList::ConstIterator m_it;
   for( m_it = managers.begin(); m_it != managers.end(); ++m_it ) {
     TQString displayName = (*m_it)->property( "Name" ).toString();

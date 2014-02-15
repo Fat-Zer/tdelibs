@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-TDE-ServiceType=KResources/Manager
+X-TDE-ServiceType=TDEResources/Manager
 Comment=KResource Manager
 Comment[af]=KHulpbron bestuurder
 Comment[be]=Кіраўнік рэсурсаў KResource

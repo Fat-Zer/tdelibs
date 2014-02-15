@@ -24,12 +24,12 @@
 
 #include <tdecmodule.h>
 
-class TDERESOURCES_EXPORT KCMKResources : public TDECModule
+class TDERESOURCES_EXPORT KCMTDEResources : public TDECModule
 {
   Q_OBJECT
 
   public:
-    KCMKResources( TQWidget *parent, const char *name, const TQStringList& );
+    KCMTDEResources( TQWidget *parent, const char *name, const TQStringList& );
 
     void load();
     void save();

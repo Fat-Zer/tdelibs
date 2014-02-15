@@ -29,10 +29,10 @@
 
 #include "kcmtderesources.h"
 
-typedef KGenericFactory<KCMKResources, TQWidget> ResourcesFactory;
+typedef KGenericFactory<KCMTDEResources, TQWidget> ResourcesFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_tderesources, ResourcesFactory( "kcmtderesources" ) )
 
-KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQStringList& )
+KCMTDEResources::KCMTDEResources( TQWidget *parent, const char *name, const TQStringList& )
   : TDECModule( ResourcesFactory::instance(), parent, name )
 {
   TQVBoxLayout *layout = new TQVBoxLayout( this );
@@ -50,17 +50,17 @@ KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQString
   setAboutData(about);
 }
 
-void KCMKResources::load()
+void KCMTDEResources::load()
 {
   mConfigPage->load();
 }
 
-void KCMKResources::save()
+void KCMTDEResources::save()
 {
   mConfigPage->save();
 }
 
-void KCMKResources::defaults()
+void KCMTDEResources::defaults()
 {
   mConfigPage->defaults();
 }

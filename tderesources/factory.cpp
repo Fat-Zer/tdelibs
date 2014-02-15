@@ -58,7 +58,7 @@ Factory *Factory::self( const TQString& resourceFamily )
 Factory::Factory( const TQString& resourceFamily ) :
   mResourceFamily( resourceFamily )
 {
-  TDETrader::OfferList plugins = TDETrader::self()->query( "KResources/Plugin", TQString( "[X-TDE-ResourceFamily] == '%1'" )
+  TDETrader::OfferList plugins = TDETrader::self()->query( "TDEResources/Plugin", TQString( "[X-TDE-ResourceFamily] == '%1'" )
                                                 .arg( resourceFamily ) );
   TDETrader::OfferList::ConstIterator it;
   for ( it = plugins.begin(); it != plugins.end(); ++it ) {

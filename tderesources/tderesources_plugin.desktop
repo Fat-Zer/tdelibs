@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-TDE-ServiceType=KResources/Plugin
+X-TDE-ServiceType=TDEResources/Plugin
 Comment=KResource Framework Plugin
 Comment[af]=KHulpbron Raamwerk Inprop module
 Comment[az]=KResource Əlavəsi

@@ -49,7 +49,7 @@ ManagerImpl::ManagerImpl( ManagerNotifier *notifier, const TQString &family )
 
   // Register with DCOP
   if ( !kapp->dcopClient()->isRegistered() ) {
-    kapp->dcopClient()->registerAs( "KResourcesManager" );
+    kapp->dcopClient()->registerAs( "TDEResourcesManager" );
     kapp->dcopClient()->setDefaultObject( objId() );
   }
 
