@@ -186,7 +186,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 
     if (!isTipDialog)
     {
-	img = TQImage(locate("data", "kdewizard/pics/wizard_small.png"));
+	img = TQImage(locate("data", "tdewizard/pics/wizard_small.png"));
 	// colorize and check to figure the correct color
 	TDEIconEffect::colorize(img, mBlendedColor, 1.0);
 	QRgb colPixel( img.pixel(0,0) );
@@ -244,7 +244,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 
     mTipText->setWrapPolicy( TQTextEdit::AtWordOrDocumentBoundary );
     mTipText->mimeSourceFactory()->addFilePath(
-	TDEGlobal::dirs()->findResourceDir("data", "kdewizard/pics")+"kdewizard/pics/");
+	TDEGlobal::dirs()->findResourceDir("data", "tdewizard/pics")+"tdewizard/pics/");
     mTipText->setFrameStyle(TQFrame::NoFrame | TQFrame::Plain);
     mTipText->setHScrollBarMode(TQScrollView::AlwaysOff);
     mTipText->setLinkUnderline(false);
