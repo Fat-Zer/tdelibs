@@ -5,6 +5,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+
+// Input devices
+#include <linux/input.h>
+
+#define BITS_PER_LONG (sizeof(long) * 8)
+#define NUM_BITS(x) ((((x) - 1) / BITS_PER_LONG) + 1)
 
 void reply_Bool(DBusMessage* msg, DBusConnection* conn, int value) {
 	DBusMessage* reply;
@@ -177,7 +184,6 @@ void reply_CanSetBrightness(DBusMessage* msg, DBusConnection* conn) {
 	const char* member = dbus_message_get_member(msg);
 	char* rawpath;
 	char* safepath;
-	char path[256];
 
 	// read the arguments
 	if (!dbus_message_iter_init(msg, &args)) {
@@ -211,7 +217,6 @@ void reply_SetBrightness(DBusMessage* msg, DBusConnection* conn) {
 	char* rawpath;
 	char* safepath;
 	char* brightness;
-	char path[256];
 
 	// read the arguments
 	if (!dbus_message_iter_init(msg, &args)) {
@@ -266,7 +271,7 @@ void reply_CanSetPower(DBusMessage* msg, DBusConnection* conn, char* state) {
 			char *line = NULL;
 			size_t len = 0;
 			ssize_t read = getline(&line, &len, node);
-			if (line) {
+			if (read > 0 && line) {
 				method = strstr(line, state) != NULL;
 				free(line);
 			}
@@ -317,6 +322,98 @@ void reply_SetHibernationMethod(DBusMessage* msg, DBusConnection* conn) {
 	}
 }
 
+void reply_InputEventsGetSwitches(DBusMessage* msg, DBusConnection* conn, bool active) {
+	DBusMessage* reply;
+	DBusMessageIter args, arrayIter;
+	const char* member = dbus_message_get_member(msg);
+	dbus_uint32_t serial = 0;
+	char* rawpath;
+	char* safepath;
+	int fd, r;
+	unsigned long switches[NUM_BITS(EV_CNT)];
+
+	// read the arguments
+	if (!dbus_message_iter_init(msg, &args)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: no argument supplied\n", member);
+	}
+	else if (DBUS_TYPE_STRING != dbus_message_iter_get_arg_type(&args)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: argument not string\n", member);
+	}
+	else {
+		dbus_message_iter_get_basic(&args, &rawpath);
+	}
+
+	safepath = realpath(rawpath, NULL);
+
+	if (safepath &&
+		(strstr(safepath, "/dev/input/event") == safepath)
+		) {
+
+		fd = open(safepath, O_RDONLY);
+		if( active ) {
+			r = ioctl(fd, EVIOCGSW(sizeof(switches)), switches);
+		}
+		else {
+			r = ioctl(fd, EVIOCGBIT(EV_SW, EV_CNT), switches);
+		}
+		if( r > 0 ) {
+			dbus_uint32_t dSwitches[NUM_BITS(EV_CNT)];
+			dbus_uint32_t *dSwitchesP = dSwitches;
+			int i;
+
+			// create a reply from the message
+			reply = dbus_message_new_method_return(msg);
+
+			// add the arguments to the reply
+			for( i = 0; i < sizeof(switches)/sizeof(switches[0]); i++ ) {
+				dSwitches[i] = switches[i];
+			}
+			dbus_message_iter_init_append(reply, &args);
+			if (!dbus_message_iter_open_container(&args, DBUS_TYPE_ARRAY, "u", &arrayIter)) {
+				fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_open_container failed\n", member);
+				return;
+			}
+			if( !dbus_message_iter_append_fixed_array(&arrayIter, DBUS_TYPE_UINT32,
+					&dSwitchesP, sizeof(switches)/sizeof(switches[0])) ) {
+				fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_append_fixed_array failed\n", member);
+				return;
+			}
+			if (!dbus_message_iter_close_container(&args, &arrayIter)) {
+				fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_close_container failed\n", member);
+				return;
+			}
+		}
+		else {
+			// create a reply from the message
+			reply = dbus_message_new_error_printf(msg,
+				"org.freedesktop.DBus.Error.NotSupported",
+				"Event device \"%s\" not support EV_SW ioctl",
+				safepath);
+		}
+		close(fd);
+	}
+	else {
+		// create a reply from the message
+		reply = dbus_message_new_error_printf(msg,
+			"org.freedesktop.DBus.Error.InvalidArgs",
+			"Event device \"%s\" is invalid",
+			rawpath);
+	}
+
+	// send the reply && flush the connection
+	if (!dbus_connection_send(conn, reply, &serial)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_connection_send failed\n", member);
+		return;
+	}
+	dbus_connection_flush(conn);
+
+	// free the reply
+	dbus_message_unref(reply);
+
+	// free safepath
+	free(safepath);
+}
+
 void signal_NameAcquired(DBusMessage* msg) {
 	DBusMessageIter args;
 	char *name = NULL;
@@ -354,6 +451,19 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 	}
 	else if(strcmp("/org/trinitydesktop/hardwarecontrol", path) == 0) {
 		strncat(data,
+			"  <interface name=\"org.trinitydesktop.hardwarecontrol.Brightness\">\n"
+			"    <method name=\"CanSetBrightness\">\n"
+			"      <arg name=\"device\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"SetBrightness\">\n"
+			"      <arg name=\"device\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"brightness\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"  </interface>\n",
+			size-strlen(data));
+		strncat(data,
 			"  <interface name=\"org.trinitydesktop.hardwarecontrol.CPUGovernor\">\n"
 			"    <method name=\"CanSetCPUGovernor\">\n"
 			"      <arg name=\"cpu\" direction=\"in\" type=\"i\" />\n"
@@ -367,15 +477,14 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 			"  </interface>\n",
 			size-strlen(data));
 		strncat(data,
-			"  <interface name=\"org.trinitydesktop.hardwarecontrol.Brightness\">\n"
-			"    <method name=\"CanSetBrightness\">\n"
+			"  <interface name=\"org.trinitydesktop.hardwarecontrol.InputEvents\">\n"
+			"    <method name=\"GetProvidedSwitches\">\n"
 			"      <arg name=\"device\" direction=\"in\" type=\"s\" />\n"
-			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"au\" />\n"
 			"    </method>\n"
-			"    <method name=\"SetBrightness\">\n"
+			"    <method name=\"GetActiveSwitches\">\n"
 			"      <arg name=\"device\" direction=\"in\" type=\"s\" />\n"
-			"      <arg name=\"brightness\" direction=\"in\" type=\"s\" />\n"
-			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"au\" />\n"
 			"    </method>\n"
 			"  </interface>\n",
 			size-strlen(data));
@@ -437,6 +546,37 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 	// free the reply
 	dbus_message_unref(reply);
 	free((void*)data);
+}
+
+void reply_PropertiesGetAll(DBusMessage* msg, DBusConnection* conn) {
+	DBusMessage* reply;
+	DBusMessageIter args, arrayIter;
+	const char* member = dbus_message_get_member(msg);
+	dbus_uint32_t serial = 0;
+
+	// create a reply from the message
+	reply = dbus_message_new_method_return(msg);
+
+	// add the arguments to the reply
+	dbus_message_iter_init_append(reply, &args);
+	if (!dbus_message_iter_open_container(&args, DBUS_TYPE_ARRAY, "sv", &arrayIter)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_open_container failed\n", member);
+		return;
+	}
+	if (!dbus_message_iter_close_container(&args, &arrayIter)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_close_container failed\n", member);
+		return;
+	}
+
+	// send the reply && flush the connection
+	if (!dbus_connection_send(conn, reply, &serial)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_connection_send failed\n", member);
+		return;
+	}
+	dbus_connection_flush(conn);
+
+	// free the reply
+	dbus_message_unref(reply);
 }
 
 void error_UnknownMessage(DBusMessage* msg, DBusConnection* conn) {
@@ -555,11 +695,20 @@ void listen() {
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "SetHibernationMethod")) {
 			reply_SetHibernationMethod(msg, conn);
 		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.InputEvents", "GetProvidedSwitches")) {
+			reply_InputEventsGetSwitches(msg, conn, false);
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.InputEvents", "GetActiveSwitches")) {
+			reply_InputEventsGetSwitches(msg, conn, true);
+		}
 		else if (dbus_message_is_signal(msg, "org.freedesktop.DBus", "NameAcquired")) {
 			signal_NameAcquired(msg);
 		}
 		else if (dbus_message_is_method_call(msg, "org.freedesktop.DBus.Introspectable", "Introspect")) {
 			reply_Introspect(msg, conn);
+		}
+		else if (dbus_message_is_method_call(msg, "org.freedesktop.DBus.Properties", "GetAll")) {
+			reply_PropertiesGetAll(msg, conn);
 		}
 		else {
 			error_UnknownMessage(msg, conn);

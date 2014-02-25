@@ -97,11 +97,20 @@ unsigned int reverse_bits(register unsigned int x)
 	return((x >> 16) | (x << 16));
 }
 
-#define BIT_IS_SET(bits, n) (bits[n >> 3] & (1 << (n & 0x7)))
+#define BITS_PER_LONG (sizeof(long) * 8)
+#define NUM_BITS(x) ((((x) - 1) / BITS_PER_LONG) + 1)
+#define OFF(x)  ((x) % BITS_PER_LONG)
+#define BIT(x)  (1UL << OFF(x))
+#define LONG(x) ((x) / BITS_PER_LONG)
+#define BIT_IS_SET(array, bit)  ((array[LONG(bit)] >> OFF(bit)) & 1)
 
-#if defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_NETWORK_MANAGER_BACKEND)
+#if defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_NETWORK_MANAGER_BACKEND)
+#include <tqdbusconnection.h>
+#include <tqdbusproxy.h>
+#include <tqdbusmessage.h>
 #include <tqdbusvariant.h>
 #include <tqdbusdata.h>
+#include <tqdbusdatalist.h>
 // Convenience method for tdehwlib DBUS calls
 // FIXME
 // Should probably be part of dbus-1-tqt
@@ -3105,14 +3114,37 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		// Try to obtain as much specific information about this event device as possible
 		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
 		int r;
-		char switches[SW_CNT];
+		unsigned long switches[NUM_BITS(EV_CNT)];
 
 		// Figure out which switch types are supported, if any
 		TDESwitchType::TDESwitchType supportedSwitches = TDESwitchType::Null;
 		if (edevice->m_fd < 0) {
 			edevice->m_fd = open(edevice->deviceNode().ascii(), O_RDONLY);
 		}
-		r = ioctl(edevice->m_fd, EVIOCGBIT(EV_SW, sizeof(switches)), switches);
+		r = ioctl(edevice->m_fd, EVIOCGBIT(EV_SW, EV_CNT), switches);
+#ifdef WITH_TDEHWLIB_DAEMONS
+		if( r < 1 ) {
+			TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if (dbusConn.isConnected()) {
+				TQT_DBusProxy switchesProxy("org.trinitydesktop.hardwarecontrol",
+					"/org/trinitydesktop/hardwarecontrol",
+					"org.trinitydesktop.hardwarecontrol.InputEvents",
+					dbusConn);
+				if (switchesProxy.canSend()) {
+					TQValueList<TQT_DBusData> params;
+					params << TQT_DBusData::fromString(edevice->deviceNode().ascii());
+					TQT_DBusMessage reply = switchesProxy.sendWithReply("GetProvidedSwitches", params);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+						TQValueList<TQ_UINT32> list = reply[0].toList().toUInt32List();
+						TQValueList<TQ_UINT32>::const_iterator it = list.begin();
+						for (r = 0; it != list.end(); ++it, r++) {
+							switches[r] = (*it);
+						}
+					}
+				}
+			}
+		}
+#endif
 		if (r > 0) {
 			if (BIT_IS_SET(switches, SW_LID)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
@@ -3141,23 +3173,31 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::VideoOutInsert;
 			}
-#if 0	// Some old kernels don't provide these defines... [FIXME]
+#			ifdef SW_CAMERA_LENS_COVER
 			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::CameraLensCover;
 			}
+#			endif
+#			ifdef SW_KEYPAD_SLIDE
 			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::KeypadSlide;
 			}
+#			endif
+#			ifdef SW_FRONT_PROXIMITY
 			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::FrontProximity;
 			}
+#			endif
+#			ifdef SW_ROTATE_LOCK
 			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::RotateLock;
 			}
+#			endif
+#			ifdef SW_LINEIN_INSERT
 			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
 				supportedSwitches = supportedSwitches | TDESwitchType::LineInInsert;
 			}
-#endif
+#			endif
 			// Keep in sync with ACPI Event/Input identification routines above
 			if (edevice->systemPath().contains("PNP0C0D")) {
 				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
@@ -3174,6 +3214,29 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		// Figure out which switch types are active, if any
 		TDESwitchType::TDESwitchType activeSwitches = TDESwitchType::Null;
 		r = ioctl(edevice->m_fd, EVIOCGSW(sizeof(switches)), switches);
+#ifdef WITH_TDEHWLIB_DAEMONS
+		if( r < 1 ) {
+			TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if (dbusConn.isConnected()) {
+				TQT_DBusProxy switchesProxy("org.trinitydesktop.hardwarecontrol",
+					"/org/trinitydesktop/hardwarecontrol",
+					"org.trinitydesktop.hardwarecontrol.InputEvents",
+					dbusConn);
+				if (switchesProxy.canSend()) {
+					TQValueList<TQT_DBusData> params;
+					params << TQT_DBusData::fromString(edevice->deviceNode().ascii());
+					TQT_DBusMessage reply = switchesProxy.sendWithReply("GetActiveSwitches", params);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+						TQValueList<TQ_UINT32> list = reply[0].toList().toUInt32List();
+						TQValueList<TQ_UINT32>::const_iterator it = list.begin();
+						for (r = 0; it != list.end(); ++it, r++) {
+							switches[r] = (*it);
+						}
+					}
+				}
+			}
+		}
+#endif
 		if (r > 0) {
 			if (BIT_IS_SET(switches, SW_LID)) {
 				activeSwitches = activeSwitches | TDESwitchType::Lid;
@@ -3202,23 +3265,31 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
 				activeSwitches = activeSwitches | TDESwitchType::VideoOutInsert;
 			}
-#if 0	// Some old kernels don't provide these defines... [FIXME]
+#			ifdef SW_CAMERA_LENS_COVER
 			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
 				activeSwitches = activeSwitches | TDESwitchType::CameraLensCover;
 			}
+#			endif
+#			ifdef SW_KEYPAD_SLIDE
 			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
 				activeSwitches = activeSwitches | TDESwitchType::KeypadSlide;
 			}
+#			endif
+#			ifdef SW_FRONT_PROXIMITY
 			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
 				activeSwitches = activeSwitches | TDESwitchType::FrontProximity;
 			}
+#			endif
+#			ifdef SW_ROTATE_LOCK
 			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
 				activeSwitches = activeSwitches | TDESwitchType::RotateLock;
 			}
+#			endif
+#			ifdef SW_LINEIN_INSERT
 			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
 				activeSwitches = activeSwitches | TDESwitchType::LineInInsert;
 			}
-#endif
+#			endif
 		}
 		edevice->internalSetActiveSwitches(activeSwitches);
 
