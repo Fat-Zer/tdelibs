@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language version="1.07" kateversion="2.5" name="Mason" section="Scripts" extensions="*.html;" mimetype="">
+<language version="1.06" kateversion="2.1" name="Mason" section="Scripts" extensions="*.html;" mimetype="">
 <highlighting>
 	<list name="keywords">
 		<item> sub </item>
@@ -120,7 +120,7 @@
 			<RegExpr attribute="Decimal" context="#stay" String="[0-9]+" />
 			<AnyChar attribute="Data Type" context="Variable" String="$@%" />
 			<RegExpr attribute="Pattern" context="#stay" String="\s+\:" />
-			<AnyChar attribute="Symbol" context="#stay" String="!&amp;()+,-&lt;=&gt;?[]^{|}~"/>
+			<AnyChar attribute="Symbol" context="#stay" String="!&amp;()+,-&lt;=&gt;?[]^{|}~"/> 
 			<DetectChar attribute="Comment" context="Commentar 1" char="#" />
 		</context>
 
@@ -131,11 +131,11 @@
 			<RegExpr attribute="Decimal" context="#stay" String="[0-9]+" />
 			<AnyChar attribute="Data Type" context="Variable" String="$@%" />
 		</context>
-
+		
 		<context attribute="String" lineEndContext="#stay" name="UnparsedText">
 			<StringDetect attribute="Mason Tag" context="#pop" String="&lt;/%text&gt;" insensitive="FALSE" />
 		</context>
-
+		
 		<context attribute="Data Type" lineEndContext="#pop" name="Variable">
 			<Detect2Chars attribute="normal" context="#stay" char="-" char1="&gt;" />
 			<DetectChar attribute="String" context="String" char="&quot;" />

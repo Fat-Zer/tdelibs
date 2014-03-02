@@ -10,7 +10,7 @@ syntaxkate_DATA = language.dtd syntax.template \
     asm-dsp56k.xml asm-m68k.xml asn1.xml asp.xml asterisk.xml awk.xml bash.xml \
     bibtex.xml bmethod.xml ccss.xml cgis.xml cg.xml changelog.xml chicken.xml \
     cisco.xml clipper.xml clojure.xml cmake.xml coffee.xml coldfusion.xml \
-    commonlisp.xml component-pascal.xml context.xml cpp11.xml cpp.xml crk.xml \
+    commonlisp.xml component-pascal.xml context.xml cpp.xml crk.xml \
     css.xml css-php.xml cs.xml cue.xml curry.xml c.xml ddoc.xml debianchangelog.xml \
     debiancontrol.xml desktop.xml diff.xml djangotemplate.xml dosbat.xml dot.xml \
     doxygenlua.xml doxygen.xml dtd.xml d.xml eiffel.xml email.xml erlang.xml \
@@ -21,12 +21,12 @@ syntaxkate_DATA = language.dtd syntax.template \
     ini.xml jam.xml javadoc.xml javascript.xml javascript-php.xml java.xml json.xml \
     jsp.xml julia.xml kbasic.xml latex.xml ldif.xml less.xml lex.xml lilypond.xml \
     literate-curry.xml literate-haskell.xml logtalk.xml lpc.xml lua.xml m3u.xml \
-    m4.xml mab.xml makefile.xml mako.xml mason.xml matlab.xml maxima.xml \
+    m4.xml mab.xml makefile.xml mako.xml mason.xml mathematica.xml matlab.xml maxima.xml \
     mediawiki.xml mel.xml mergetagtext.xml mips.xml modelica.xml modelines.xml \
     modula-2.xml monobasic.xml mup.xml nasm.xml nemerle.xml nesc.xml noweb.xml \
     objectivecpp.xml objectivec.xml ocaml.xml octave.xml oors.xml opal.xml opencl.xml \
     pango.xml pascal.xml perl.xml pgn.xml php.xml picsrc.xml pig.xml pike.xml \
-    postscript.xml povray.xml ppd.xml progress.xml prolog.xml protobuf.xml \
+    postscript.xml povray.xml ppd.xml progress.xml prolog.xml protobuf.xml puppet.xml \
     purebasic.xml python.xml qmake.xml qml.xml qt4.xml rapidq.xml relaxngcompact.xml \
     relaxng.xml restructuredtext.xml rest.xml rexx.xml rhtml.xml rib.xml rpmspec.xml \
     rsiidl.xml ruby.xml r.xml sather.xml scala.xml scheme.xml sci.xml scss.xml \

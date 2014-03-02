@@ -29,7 +29,7 @@
 
 <!DOCTYPE language SYSTEM "language.dtd">
 
-<language name="Julia" section="Sources" version="0.3" kateversion="2.5" extensions="*.jl" casesensitive="1" priority="5" license="MIT">
+<language name="Julia" section="Sources" version="0.2-1" kateversion="2.2" extensions="*.jl" casesensitive="1" priority="5" license="MIT">
 
   <highlighting>
     <list name="block_begin">
@@ -148,11 +148,11 @@
 	<DetectSpaces />
 
         <!-- Blocks -->
-        <keyword context="#stay" attribute="Keyword" String="block_begin"
+        <keyword context="#stay" attribute="Keyword" String="block_begin" 
 beginRegion="block" />
-        <keyword context="#stay" attribute="Keyword" String="block_eb"
+        <keyword context="#stay" attribute="Keyword" String="block_eb" 
 endRegion="block" beginRegion="block" />
-        <keyword context="#stay" attribute="Keyword" String="block_end"
+        <keyword context="#stay" attribute="Keyword" String="block_end" 
 endRegion="block" />
         <StringDetect String="#BEGIN" context="region_marker" attribute="FoldingComment" beginRegion="user_region" />
         <StringDetect String="#END" context="region_marker" attribute="FoldingComment" endRegion="user_region" />
@@ -271,7 +271,6 @@ endRegion="block" />
       <itemData name="System" defStyleNum="dsBaseN"/>
       <itemData name="Keyword" defStyleNum="dsKeyword"/>
       <itemData name="Data Type" defStyleNum="dsDataType"/>
-      <itemData name="Comment" defStyleNum="dsComment"/>
       <itemData name="Comment" defStyleNum="dsComment"/>
       <itemData name="FoldingComment" defStyleNum="dsComment" />
     </itemDatas>

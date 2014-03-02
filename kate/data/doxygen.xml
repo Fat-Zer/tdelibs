@@ -29,8 +29,8 @@
  -->
 
 <language name="Doxygen"
-          version="1.36"
-          kateversion="2.5"
+          version="1.35-1"
+          kateversion="2.4"
           section="Markup"
           extensions="*.dox;*.doxygen"
           mimetype="text/x-doxygen"

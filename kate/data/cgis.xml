@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="CGiS" version="1.03" kateversion="2.5" section="Sources" extensions="*.cgis" mimetype="">
+<language name="CGiS" version="1.02" kateversion="2.4" section="Sources" extensions="*.cgis" mimetype="">
   <highlighting>
     <list name="keywords">
       <item> 1D </item>

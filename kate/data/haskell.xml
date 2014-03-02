@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="Haskell" version="2.3" kateversion="2.5" section="Sources" extensions="*.hs;*.chs" mimetype="text/x-haskell" author="Nicolas Wu (zenzike@gmail.com)" license="LGPL" indenter="haskell">
+<language name="Haskell" version="2.2" kateversion="2.3" section="Sources" extensions="*.hs;*.chs" mimetype="text/x-haskell" author="Nicolas Wu (zenzike@gmail.com)" license="LGPL" indenter="haskell">
   <highlighting>
   <list name="keywords">
     <item> case </item>
@@ -376,7 +376,7 @@
       <RegExpr attribute="Comment" context="comments" String="\{-[^#]?" />
       <RegExpr attribute="Comment" context="comment"  String="--[^\-!#\$%&amp;\*\+/&lt;=&gt;\?&#92;@\^\|~\.:].*$" />
     </context>
-
+    
     <context attribute="C2HS Directive" lineEndContext="#stay" name="c2hs directive">
       <Detect2Chars attribute="C2HS Directive" context="#pop" char="#" char1="}" />
       <keyword attribute="Keyword" context="#stay"          String="c2hs_keywords" />
@@ -437,7 +437,7 @@
 
     <itemData name="Function Infix"   defStyleNum="dsOthers"   spellChecking="false" />
     <itemData name="EnumFromTo"       defStyleNum="dsOthers"   spellChecking="false" />
-
+    
     <itemData name="C2HS Directive"   defStyleNum="dsString"   spellChecking="false" />
   </itemDatas>
   </highlighting>

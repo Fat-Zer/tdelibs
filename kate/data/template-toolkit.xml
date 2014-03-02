@@ -10,13 +10,13 @@
     then restart Кate/KDevelop/Quanta... whatever using katepart.
     That's it. You have Template Toolkit Syntax highliting.
     Enjoy!!!
-
+    
     -->
     <!--
     Changelog :)
     0.02 Added highliting for interpolated variables
         -->
-<language version="0.04" kateversion="2.5"
+<language version="0.03-1" kateversion="2.4"
           author="Красимир Беров (k.berov@gmail.com)" license="Artistic"
           name="TT2" section="Markup" extensions="*.tt*;" casesensitive="TRUE">
 <highlighting>
@@ -97,7 +97,7 @@
         <item>reverse</item>
         <item>join</item>
         <item>grep</item>
-
+        
         <item>unshift</item>
         <item>push</item>
         <item>shift</item>
@@ -137,7 +137,7 @@
         <item>stderr</item>
         <item>null</item>
         <item>latex</item>
-    </list>
+    </list>    
     <list name="operators">
         <item> = </item>
         <item> != </item>
@@ -190,7 +190,7 @@
             <RegExpr attribute="Variable" context="#stay" String="&var1;" />
             <RegExpr attribute="Variable" context="#stay" String="&varwithbraces;" />
         </context>
-
+        
         <context name="tt2source" attribute="TT2 Text" lineEndContext="#stay">
             <StringDetect attribute="Keyword" context="#pop" String="%]" />
             <DetectChar attribute="Comment" context="tt2_onelinecomment" char="#" />
@@ -207,7 +207,7 @@
             <Int attribute="Decimal" context="#stay" />
             <AnyChar attribute="Other" context="#stay" String=";()}{:,[]" />
             <keyword attribute="Other" context="#stay" String="Others" />
-
+            
             <RegExpr attribute="Control Structures" context="#stay" String="\bELSIF\b" insensitive="FALSE" beginRegion="iffi1" endRegion="iffi1"/>
             <RegExpr attribute="Control Structures" context="#stay" String="\bELSE\b" insensitive="FALSE" beginRegion="iffi1" endRegion="iffi1"/>
             <RegExpr attribute="Control Structures" context="#stay" String="\bIF\b" insensitive="FALSE" beginRegion="iffi1"/>
@@ -216,7 +216,7 @@
             <RegExpr attribute="Control Structures" context="#stay" String="\bFOREACH\b" insensitive="FALSE" beginRegion="foreachblock"/>
             <RegExpr attribute="Control Structures" context="#stay" String="\bEND\b" insensitive="FALSE" endRegion="foreachblock"/>
 
-
+            
             <keyword attribute="Keyword" context="#stay" String="keywords" />
             <keyword attribute="Control Structures" context="#stay" String="control structures" />
             <keyword attribute="Function" context="#stay" String="functions" />
@@ -256,19 +256,19 @@
             <DetectChar attribute="Types" context="types1" char="'" />
             <DetectChar attribute="Types" context="types2" char="&quot;" />
         </context>
-
+        
         <context name="types1" attribute="Types" lineEndContext="#stay">
             <StringDetect attribute="Keyword" context="tt2source" String="[%" />
             <StringDetect attribute="Keyword" context="tt2source" String="[%" />
             <DetectChar attribute="Types" context="#pop#pop" char="'" />
         </context>
-
+        
         <context name="types2" attribute="Types" lineEndContext="#stay">
             <StringDetect attribute="Keyword" context="tt2source" String="[%" />
             <StringDetect attribute="Keyword" context="tt2source" String="[%" />
             <DetectChar attribute="Types" context="#pop#pop" char="&quot;" />
         </context>
-
+        
         <context name="scripts" attribute="Normal Text" lineEndContext="#stay">
             <Detect2Chars attribute="Comment" context="scripts_onelinecomment" char="/" char1="/" />
             <Detect2Chars attribute="Comment" context="twolinecomment" char="/" char1="*" />
@@ -277,7 +277,7 @@
             <keyword attribute="Function" context="#stay" String="functions" />
             <StringDetect attribute="Keyword" context="tt2source" String="[%"/>
             <RegExpr attribute="HTML Tag" context="#pop" String="&lt;\s*\/\s*script\s*&gt;" insensitive="TRUE" />
-
+            
             <DetectChar attribute="String" context="doublequotestring" char="&quot;" />
             <DetectChar attribute="String" context="singlequotestring" char="&#39;" />
             <HlCOct attribute="Octal" context="#stay" />
@@ -295,9 +295,9 @@
         <context name="twolinecomment" attribute="Comment" lineEndContext="#stay">
             <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment" />
         </context>
-
+        
     </contexts>
-
+            
     <itemDatas>
         <itemData name="Normal Text" defStyleNum="dsNormal" />
         <itemData name="TT2 Text" defStyleNum="dsNormal" />

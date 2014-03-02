@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 
-<language name="fstab" version="1.01" kateversion="2.5" section="Configuration" extensions="fstab;mtab" author="Diego Iastrubni (elcuco@kde.org)" license="Public Domain" >
+<language name="fstab" version="1.00" kateversion="2.4" section="Configuration" extensions="fstab;mtab" author="Diego Iastrubni (elcuco@kde.org)" license="Public Domain" >
 	<highlighting>
 		<list name="valid_fs">
 			<item> ext2 </item>

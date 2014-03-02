@@ -9,7 +9,7 @@
 
 
 
-<language name="JavaScript/PHP" hidden="true" version="1.23" kateversion="2.5" section="Other" extensions=""
+<language name="JavaScript/PHP" hidden="true" version="1.22" kateversion="2.4" section="Other" extensions=""
           mimetype="" indenter="cstyle"
           author="Anders Lund (anders@alweb.dk), Joseph Wenninger (jowenn@kde.org), Whitehawk Stormchaser (zerokode@gmx.net)" license="">
   <highlighting>
@@ -109,17 +109,14 @@
         <AnyChar attribute="Symbol" String=":!%&amp;+,-/.*&lt;=&gt;?|~^&#59;" />
       </context>
 
-      <context attribute="Normal Text" lineEndContext="#stay" fallthrough="true" fallthroughContext="#pop" name="Object Member">
+      <context attribute="Normal Text" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop" name="Object Member">
 <IncludeRules context="FindPHP" />
         <DetectChar char="." />
         <!--DetectIdentifier-->
         <RegExpr attribute="Objects" context="Object Member" String="[a-zA-Z_$][\w$]*(?=\s*\.)" />
         <!--DetectIdentifier-->
         <RegExpr attribute="Object Member" String="[a-zA-Z_$][\w$]*" />
-        <!-- NoRegExp without DetectSpaces. TODO: code reuse without detecting spaces as object member? -->
-        <Detect2Chars context="#pop" lookAhead="true" char="/" char1="/" />
-        <Detect2Chars context="#pop" lookAhead="true" char="/" char1="*" />
-        <DetectChar context="#pop" char="/" />
+        <IncludeRules context="NoRegExp" />
       </context>
 
       <context attribute="Normal Text" lineEndContext="#stay" fallthrough="true" fallthroughContext="#pop" name="NoRegExp">

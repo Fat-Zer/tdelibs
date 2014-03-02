@@ -11,7 +11,7 @@
 
 ]>
 
-<language name="VHDL" version="1.11" kateversion="2.5" section="Hardware" extensions="*.vhdl;*.vhd" mimetype="text/x-vhdl" author="Rocky Scaletta (rocky@purdue.edu), Stefan Endrullis (stefan@endrullis.de), Florent Ouchet (outchy@users.sourceforge.net), Chris Higgs (chiggs.99@gmail.com), Jan Michel (jan@mueschelsoft.de)">
+<language name="VHDL" version="1.10" kateversion="2.3" section="Hardware" extensions="*.vhdl;*.vhd" mimetype="text/x-vhdl" author="Rocky Scaletta (rocky@purdue.edu), Stefan Endrullis (stefan@endrullis.de), Florent Ouchet (outchy@users.sourceforge.net), Chris Higgs (chiggs.99@gmail.com), Jan Michel (jan@mueschelsoft.de)">
   <highlighting>
     <list name="keywordsToplevel">
       <item> file </item>

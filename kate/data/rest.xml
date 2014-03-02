@@ -6,7 +6,7 @@
         <!ENTITY SimpleReferenceNameChars "\w-_\.:\+">
 ]>
 <!-- Copyright Matt Williams <matt@milliams.com> June 2010 -->
-<language name="reStructuredText" extensions="*.rst" section="Markup" mimetype="text/x-rst" version="1.03" kateversion="2.5" casesensitive="1">
+<language name="reStructuredText" extensions="*.rst" section="Markup" mimetype="text/x-rst" version="1.02" kateversion="2.4" casesensitive="1">
 	
 	<highlighting>
 		

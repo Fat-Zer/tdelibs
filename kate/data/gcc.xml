@@ -13,8 +13,8 @@
   -->
 <language
     name="GCCExtensions"
-    version="0.4"
-    kateversion="2.5"
+    version="0.3"
+    kateversion="2.4"
     section="Sources"
     extensions="*.c++;*.cxx;*.cpp;*.cc;*.C;*.h;*.hh;*.H;*.h++;*.hxx;*.hpp;*.hcc;"
     mimetype="text/x-c++src;text/x-c++hdr;text/x-chdr;text/x-csrc"
@@ -130,6 +130,7 @@
     <item> __atomic_fetch_nand </item>
     <item> __atomic_test_and_set </item>
     <item> __atomic_clear </item>
+    <item> __atomic_signal_fence </item>
     <item> __atomic_thread_fence </item>
     <item> __atomic_always_lock_free </item>
     <item> __atomic_is_lock_free </item>
