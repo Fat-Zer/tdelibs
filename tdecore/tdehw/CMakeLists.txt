@@ -36,6 +36,10 @@ if( WITH_DEVKITPOWER )
   add_definitions( -DWITH_DEVKITPOWER )
 endif( )
 
+if( WITH_LOGINDPOWER )
+  add_definitions( -DWITH_LOGINDPOWER )
+endif( )
+
 if( WITH_UPOWER )
   add_definitions( -DWITH_UPOWER )
 endif( )
