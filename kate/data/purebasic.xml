@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="PureBasic" version="3.92" kateversion="2.5" section="Sources" extensions="*.pb" mimetype="text/x-purebasic" author="Sven Langenkamp (ace@kylixforum.de)" license="LGPL">
+<language name="PureBasic" version="3.91" kateversion="2.3" section="Sources" extensions="*.pb" mimetype="text/x-purebasic" author="Sven Langenkamp (ace@kylixforum.de)" license="LGPL">
   <highlighting>
     <list name="keywords">
       <item> For </item>

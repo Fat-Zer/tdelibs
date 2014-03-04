@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="nesC" author="Shakthi Kannan" license="GPLv2" version="1.01" kateversion="2.5" section="Sources" extensions="*.nc" mimetype="text/x-ncsrc" priority="5">
+<language name="nesC" author="Shakthi Kannan" license="GPLv2" version="1.00-1" kateversion="2.1" section="Sources" extensions="*.nc" mimetype="text/x-ncsrc" priority="5">
   <highlighting>
     <list name="keywords">
       <item> break </item>
@@ -41,7 +41,6 @@
       <item> call </item>
       <item> signal </item>
       <item> post </item>
-
     </list>
     <list name="types">
       <item> auto </item>
@@ -122,8 +121,6 @@
         <RegExpr attribute="Function" context="#pop" String="\b[_\w][_\w\d]*(?=[\s]*)"/>
       </context>
 
-
-
       <context attribute="Comment" lineEndContext="#pop" name="Commentar 1">
 	      <IncludeRules context="##Alerts"/>
       </context>
@@ -131,11 +128,6 @@
 	      <Detect2Chars attribute="Comment" context="#pop" char="*" char1="/" endRegion="Comment"/>
 	      <keyword attribute="Decimal" context="#stay" String="attention"/>
       </context>
-
-
-
-
-
 
       <context attribute="Preprocessor" lineEndContext="#pop" name="Preprocessor">
         <LineContinue attribute="Preprocessor" context="#stay"/>

@@ -221,6 +221,24 @@ bool TDERootSystemDevice::canSuspend() {
 		}
 	}
 
+#ifdef WITH_LOGINDPOWER
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can suspend?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.login1",
+						"/org/freedesktop/login1",
+						"org.freedesktop.login1.Manager",
+						"CanSuspend");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return (reply[0].toString() == "yes");
+			}
+		}
+	}
+#endif // WITH_LOGINDPOWER
+
 #ifdef WITH_UPOWER
 	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
@@ -322,6 +340,24 @@ bool TDERootSystemDevice::canHibernate() {
 		}
 	}
 
+#ifdef WITH_LOGINDPOWER
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can hibernate?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.login1",
+						"/org/freedesktop/login1",
+						"org.freedesktop.login1.Manager",
+						"CanHibernate");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return (reply[0].toString() == "yes");
+			}
+		}
+	}
+#endif // WITH_LOGINDPOWER
+
 #ifdef WITH_UPOWER
 	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
@@ -410,41 +446,53 @@ bool TDERootSystemDevice::canPowerOff() {
 	config->reparseConfiguration(); // config may have changed in the KControl module
 
 	config->setGroup("General" );
-	bool maysd = false;
-#ifdef WITH_CONSOLEKIT
-	if (config->readBoolEntry( "offerShutdown", true )) {
+	if (!config->readBoolEntry( "offerShutdown", true )) {
+		return FALSE;
+	}
+
+#ifdef WITH_LOGINDPOWER
+	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
-			TQT_DBusProxy consoleKitManager("org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager", "org.freedesktop.ConsoleKit.Manager", dbusConn);
-			if (consoleKitManager.canSend()) {
-				// can power off?
-				TQValueList<TQT_DBusData> params;
-				TQT_DBusMessage reply = consoleKitManager.sendWithReply("CanStop", params);
-				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-					maysd = reply[0].toBool();
-				}
-				else {
-					maysd = false;
-				}
+			// can power off?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.login1",
+						"/org/freedesktop/login1",
+						"org.freedesktop.login1.Manager",
+						"CanPowerOff");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return (reply[0].toString() == "yes");
 			}
-			else {
-				maysd = false;
-			}
-		}
-		else {
-			maysd = false;
 		}
 	}
-#else // WITH_CONSOLEKIT
-	// FIXME
-	// Can we power down this system?
-	// This should probably be checked via DCOP and therefore interface with TDM
-	if (config->readBoolEntry( "offerShutdown", true )/* && DM().canShutdown()*/) {	// FIXME
-		maysd = true;
+#endif // WITH_LOGINDPOWER
+
+#ifdef WITH_CONSOLEKIT
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can power off?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.ConsoleKit",
+						"/org/freedesktop/ConsoleKit/Manager",
+						"org.freedesktop.ConsoleKit.Manager",
+						"CanStop");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
 	}
 #endif // WITH_CONSOLEKIT
 
-	return maysd;
+	// FIXME
+	// Can we power down this system?
+	// This should probably be checked via DCOP and therefore interface with TDM
+	// if ( DM().canShutdown() ) {
+	// 	return TRUE;
+	// }
+	return TRUE;
 }
 
 bool TDERootSystemDevice::canReboot() {
@@ -452,41 +500,53 @@ bool TDERootSystemDevice::canReboot() {
 	config->reparseConfiguration(); // config may have changed in the KControl module
 
 	config->setGroup("General" );
-	bool mayrb = false;
-#ifdef WITH_CONSOLEKIT
-	if (config->readBoolEntry( "offerShutdown", true )) {
+	if (!config->readBoolEntry( "offerShutdown", true )) {
+		return FALSE;
+	}
+
+#ifdef WITH_LOGINDPOWER
+	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
-			TQT_DBusProxy consoleKitManager("org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager", "org.freedesktop.ConsoleKit.Manager", dbusConn);
-			if (consoleKitManager.canSend()) {
-				// can reboot?
-				TQValueList<TQT_DBusData> params;
-				TQT_DBusMessage reply = consoleKitManager.sendWithReply("CanRestart", params);
-				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-					mayrb = reply[0].toBool();
-				}
-				else {
-					mayrb = false;
-				}
+			// can reboot?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.login1",
+						"/org/freedesktop/login1",
+						"org.freedesktop.login1.Manager",
+						"CanReboot");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return (reply[0].toString() == "yes");
 			}
-			else {
-				mayrb = false;
-			}
-		}
-		else {
-			mayrb = false;
 		}
 	}
-#else // WITH_CONSOLEKIT
-	// FIXME
-	// Can we power down this system?
-	// This should probably be checked via DCOP and therefore interface with TDM
-	if (config->readBoolEntry( "offerShutdown", true )/* && DM().canShutdown()*/) {	// FIXME
-		mayrb = true;
+#endif // WITH_LOGINDPOWER
+
+#ifdef WITH_CONSOLEKIT
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can reboot?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.ConsoleKit",
+						"/org/freedesktop/ConsoleKit/Manager",
+						"org.freedesktop.ConsoleKit.Manager",
+						"CanRestart");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
 	}
 #endif // WITH_CONSOLEKIT
 
-	return mayrb;
+	// FIXME
+	// Can we power down this system?
+	// This should probably be checked via DCOP and therefore interface with TDM
+	// if ( DM().canShutdown() ) {
+	// 	return TRUE;
+	// }
+	return TRUE;
 }
 
 void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm) {
@@ -574,6 +634,37 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			file.close();
 			return true;
 		}
+
+#ifdef WITH_LOGINDPOWER
+		{
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				if (ps == TDESystemPowerState::Suspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.login1",
+								"/org/freedesktop/login1",
+								"org.freedesktop.login1.Manager",
+								"Suspend");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::Hibernate) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.login1",
+								"/org/freedesktop/login1",
+								"org.freedesktop.login1.Manager",
+								"Hibernate");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+			}
+		}
+#endif // WITH_LOGINDPOWER
 
 #ifdef WITH_UPOWER
 		{
@@ -726,11 +817,31 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		return false;
 	}
 	else if (ps == TDESystemPowerState::PowerOff) {
-#ifdef WITH_CONSOLEKIT
 		TDEConfig *config = TDEGlobal::config();
 		config->reparseConfiguration(); // config may have changed in the KControl module
 		config->setGroup("General" );
-		if (config->readBoolEntry( "offerShutdown", true )) {
+		if (!config->readBoolEntry( "offerShutdown", true )) {
+			return false;
+		}
+#ifdef WITH_LOGINDPOWER
+		{
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+							"org.trinitydesktop.login1",
+							"/org/freedesktop/login1",
+							"org.freedesktop.login1.Manager",
+							"PowerOff");
+				TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					return true;
+				}
+			}
+		}
+#endif // WITH_LOGINDPOWER
+#ifdef WITH_CONSOLEKIT
+		{
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -739,17 +850,13 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 							"/org/freedesktop/ConsoleKit/Manager",
 							"org.freedesktop.ConsoleKit.Manager",
 							"Stop");
-				dbusConn.sendWithReply(msg);
-				return true;
-			}
-			else {
-				return false;
+				TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					return true;
+				}
 			}
 		}
-		else {
-			return false;
-		}
-#else // WITH_CONSOLEKIT
+#endif // WITH_CONSOLEKIT
 		// Power down the system using a DCOP command
 		// Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
 		TQByteArray data;
@@ -759,14 +866,33 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			return true;
 		}
 		return false;
-#endif // WITH_CONSOLEKIT
 	}
 	else if (ps == TDESystemPowerState::Reboot) {
-#ifdef WITH_CONSOLEKIT
 		TDEConfig *config = TDEGlobal::config();
 		config->reparseConfiguration(); // config may have changed in the KControl module
 		config->setGroup("General" );
-		if (config->readBoolEntry( "offerShutdown", true )) {
+		if (!config->readBoolEntry( "offerShutdown", true )) {
+			return false;
+		}
+#ifdef WITH_LOGINDPOWER
+		{
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+							"org.trinitydesktop.login1",
+							"/org/freedesktop/login1",
+							"org.freedesktop.login1.Manager",
+							"Reboot");
+				TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					return true;
+				}
+			}
+		}
+#endif // WITH_LOGINDPOWER
+#ifdef WITH_CONSOLEKIT
+		{
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -775,17 +901,13 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 							"/org/freedesktop/ConsoleKit/Manager",
 							"org.freedesktop.ConsoleKit.Manager",
 							"Restart");
-				dbusConn.sendWithReply(msg);
-				return true;
-			}
-			else {
-				return false;
+				TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					return true;
+				}
 			}
 		}
-		else {
-			return false;
-		}
-#else // WITH_CONSOLEKIT
+#endif // WITH_CONSOLEKIT
 		// Power down the system using a DCOP command
 		// Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
 		TQByteArray data;
@@ -795,7 +917,6 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			return true;
 		}
 		return false;
-#endif // WITH_CONSOLEKIT
 	}
 	else if (ps == TDESystemPowerState::Active) {
 		// Ummm...we're already active...

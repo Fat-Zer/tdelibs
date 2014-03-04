@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="Varnish Configuration Language" version="0.4" kateversion="2.5" section="Configuration" extensions="*.vcl;" mimetype="" author="Xavier Guerrin (xavier@tuxfamily.org)" license="WTFPL">
+<language name="Varnish Configuration Language" version="0.3" kateversion="2.4" section="Configuration" extensions="*.vcl;" mimetype="" author="Xavier Guerrin (xavier@tuxfamily.org)" license="WTFPL">
   <highlighting>
     <list name="vclStandardSubs">
       <item>vcl_recv</item>
@@ -271,10 +271,10 @@
         <StringDetect attribute="Director Property" context="backend_declaration" String=".backend" />
         <DetectChar attribute="Region Marker" context="#pop" char="}" endRegion="director_backend_block" />
       </context>
-      <context name="acl_declaration" attribute="Normal Text" lineEndContext="#stay">
+      <context name="acl_declaration" attribute="Normal Text" lineEndContext="#stay"> 
         <DetectChar attribute="Region Marker" context="acl_definition" char="{" beginRegion="acl_block" />
       </context>
-      <context name="acl_definition" attribute="Normal Text" lineEndContext="#stay">
+      <context name="acl_definition" attribute="Normal Text" lineEndContext="#stay"> 
         <IncludeRules context="minimal_code" />
         <DetectChar attribute="Logical Operator" context="#stay" char="!" />
         <DetectChar attribute="Logical Operator" context="#stay" char="/" />

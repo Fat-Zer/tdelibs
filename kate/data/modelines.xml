@@ -10,8 +10,8 @@
   Homepage: http://kde-files.org/content/show.php?content=90660
   -->
 <language name="Modelines"
-          version="1.01"
-          kateversion="2.5"
+          version="1.0-1"
+          kateversion="2.4"
           section="Other"
           extensions=""
           mimetype=""
@@ -46,6 +46,7 @@
     <item> indent-pasted-text </item>
     <item> keep-extra-spaces </item>
     <item> line-numbers </item>
+    <!-- Since TDE 14 -->
     <item> newline-at-eof </item>
     <item> overwrite-mode </item>
     <item> persistent-selection </item>
