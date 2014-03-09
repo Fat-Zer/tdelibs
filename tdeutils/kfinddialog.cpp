@@ -149,8 +149,9 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
     m_replace->setMaxCount(10);
     m_replace->setDuplicatesEnabled(false);
     m_backRef = new TQCheckBox(i18n("Use p&laceholders"), m_replaceGrp);
+    m_backRef->setEnabled(m_regExp->isChecked());
     m_backRefItem = new TQPushButton(i18n("Insert Place&holder"), m_replaceGrp);
-    m_backRefItem->setEnabled(false);
+    m_backRefItem->setEnabled(m_regExp->isChecked() && m_backRef->isChecked());
 
     m_replaceLayout->addWidget(m_replaceLabel, 0, 0);
     m_replaceLayout->addMultiCellWidget(m_replace, 1, 1, 0, 1);
@@ -193,8 +194,8 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
 
     // signals and slots connections
     connect(m_selectedText, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotSelectedTextToggled(bool)));
-    connect(m_regExp, TQT_SIGNAL(toggled(bool)), m_regExpItem, TQT_SLOT(setEnabled(bool)));
-    connect(m_backRef, TQT_SIGNAL(toggled(bool)), m_backRefItem, TQT_SLOT(setEnabled(bool)));
+    connect(m_regExp, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotRegexCheckBoxToggled(bool)));
+    connect(m_backRef, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotPlaceholdersCheckBoxToggled(bool)));
     connect(m_regExpItem, TQT_SIGNAL(clicked()), this, TQT_SLOT(showPatterns()));
     connect(m_backRefItem, TQT_SIGNAL(clicked()), this, TQT_SLOT(showPlaceholders()));
 
@@ -276,9 +277,21 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
             "Ask before replacing each match found.") );
 }
 
-void KFindDialog::textSearchChanged( const TQString & text)
+void KFindDialog::textSearchChanged(const TQString & text)
 {
     enableButtonOK( !text.isEmpty() );
+}
+
+void KFindDialog::slotRegexCheckBoxToggled(bool checked)
+{
+    m_regExpItem->setEnabled(checked);    
+    m_backRef->setEnabled(checked);
+    m_backRefItem->setEnabled(checked && m_backRef->isChecked());
+}
+
+void KFindDialog::slotPlaceholdersCheckBoxToggled(bool checked)
+{
+    m_backRefItem->setEnabled(checked && m_regExp->isChecked());
 }
 
 void KFindDialog::showEvent( TQShowEvent *e )

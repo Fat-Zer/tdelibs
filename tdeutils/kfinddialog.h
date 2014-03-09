@@ -250,7 +250,9 @@ protected slots:
     void slotSelectedTextToggled(bool);
     void showPatterns();
     void showPlaceholders();
-    void textSearchChanged( const TQString &);
+    void textSearchChanged(const TQString &);
+    void slotRegexCheckBoxToggled(bool checked);
+    void slotPlaceholdersCheckBoxToggled(bool checked);
 
 protected:
     virtual void showEvent ( TQShowEvent * );
