@@ -442,11 +442,9 @@ bool TDERootSystemDevice::canHibernate() {
 }
 
 bool TDERootSystemDevice::canPowerOff() {
-	TDEConfig *config = TDEGlobal::config();
-	config->reparseConfiguration(); // config may have changed in the KControl module
-
-	config->setGroup("General" );
-	if (!config->readBoolEntry( "offerShutdown", true )) {
+	TDEConfig config("ksmserverrc", true);
+	config.setGroup("General" );
+	if (!config.readBoolEntry( "offerShutdown", true )) {
 		return FALSE;
 	}
 
@@ -496,11 +494,9 @@ bool TDERootSystemDevice::canPowerOff() {
 }
 
 bool TDERootSystemDevice::canReboot() {
-	TDEConfig *config = TDEGlobal::config();
-	config->reparseConfiguration(); // config may have changed in the KControl module
-
-	config->setGroup("General" );
-	if (!config->readBoolEntry( "offerShutdown", true )) {
+	TDEConfig config("ksmserverrc", true);
+	config.setGroup("General" );
+	if (!config.readBoolEntry( "offerShutdown", true )) {
 		return FALSE;
 	}
 
@@ -817,10 +813,9 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		return false;
 	}
 	else if (ps == TDESystemPowerState::PowerOff) {
-		TDEConfig *config = TDEGlobal::config();
-		config->reparseConfiguration(); // config may have changed in the KControl module
-		config->setGroup("General" );
-		if (!config->readBoolEntry( "offerShutdown", true )) {
+		TDEConfig config("ksmserverrc", true);
+		config.setGroup("General" );
+		if (!config.readBoolEntry( "offerShutdown", true )) {
 			return false;
 		}
 #ifdef WITH_LOGINDPOWER
@@ -868,10 +863,9 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		return false;
 	}
 	else if (ps == TDESystemPowerState::Reboot) {
-		TDEConfig *config = TDEGlobal::config();
-		config->reparseConfiguration(); // config may have changed in the KControl module
-		config->setGroup("General" );
-		if (!config->readBoolEntry( "offerShutdown", true )) {
+		TDEConfig config("ksmserverrc", true);
+		config.setGroup("General" );
+		if (!config.readBoolEntry( "offerShutdown", true )) {
 			return false;
 		}
 #ifdef WITH_LOGINDPOWER
