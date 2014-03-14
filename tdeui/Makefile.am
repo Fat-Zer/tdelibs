@@ -34,7 +34,7 @@ libtdespell_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 6:0:2 -no-undefined
 libtdespell_la_SOURCES = dummy.cpp
 
 picsdir = $(kde_datadir)/tdeui/pics
-pics_DATA = aboutkde.png ktip-bulb.png ktip-background.png
+pics_DATA = abouttde.png ktip-bulb.png ktip-background.png
 
 include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		kcolordialog.h tdeselect.h \

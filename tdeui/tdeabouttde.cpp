@@ -89,6 +89,6 @@ TDEAboutKDE::TDEAboutKDE( TQWidget *parent, const char *name, bool modal )
   addTextPage( i18n("&Report Bugs/Request Enhancements"), text2, true );
   addTextPage( i18n("&Join the Trinity Team"), text3, true );
   addTextPage( i18n("&Support Trinity"), text4, true );
-  setImage( locate( "data", TQString::fromLatin1("tdeui/pics/aboutkde.png")) );
+  setImage( locate( "data", TQString::fromLatin1("tdeui/pics/abouttde.png")) );
   setImageBackgroundColor( white );
 }

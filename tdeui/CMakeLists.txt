@@ -83,7 +83,7 @@ install( FILES
 ##### other data ################################
 
 install( FILES
-    aboutkde.png ktip-bulb.png ktip-background.png
+    abouttde.png ktip-bulb.png ktip-background.png
   DESTINATION ${DATA_INSTALL_DIR}/tdeui/pics )
 
 install( FILES
