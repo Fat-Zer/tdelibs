@@ -196,7 +196,7 @@ private slots:
     void slotCanResume (TDEIO::Job *job, TDEIO::filesize_t offset);
 
     // TDEIO::LocalURLJob
-    void slotLocalURL(TDEIO::Job *, const KURL&, bool);
+    void slotLocalURL(TDEIO::LocalURLJob *, const KURL&, bool);
 };
 
 }

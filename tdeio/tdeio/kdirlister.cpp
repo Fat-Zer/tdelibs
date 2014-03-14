@@ -1953,7 +1953,7 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
           d->openURL_url[localURLJob] = _url;
           d->openURL_keep[localURLJob] = _keep;
           d->openURL_reload[localURLJob] = _reload;
-          connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotOpenURLGotLocalURL(TDEIO::Job*, const KURL&, bool)));
+          connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::LocalURLJob*, const KURL&, bool)), this, TQT_SLOT(slotOpenURLGotLocalURL(TDEIO::LocalURLJob*, const KURL&, bool)));
           connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
       }
       return true;
@@ -1963,13 +1963,14 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
   }
 }
 
-void KDirLister::slotOpenURLGotLocalURL(TDEIO::Job *job, const KURL& url, bool isLocal) {
+void KDirLister::slotOpenURLGotLocalURL(TDEIO::LocalURLJob *job, const KURL& url, bool isLocal) {
   KURL realURL = d->openURL_url[job];
   if (isLocal) {
       realURL = url;
       realURL.setInternalReferenceURL(d->openURL_url[job].url());
       d->m_referenceURLMap[d->openURL_url[job].url()] = url.path();
   }
+  job->slaveDone();
   s_pCache->listDir( this, realURL, d->openURL_keep[job], d->openURL_reload[job] );
   d->openURL_url.remove(job);
   d->openURL_keep.remove(job);

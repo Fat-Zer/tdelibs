@@ -1891,7 +1891,7 @@ namespace TDEIO {
 	 * @param url the local url
 	 * @param isLocal true if the returned URL is local, false if not
          */
-        void localURL( TDEIO::Job *job, const KURL &url, bool isLocal );
+        void localURL( TDEIO::LocalURLJob *job, const KURL &url, bool isLocal );
 
     protected slots:
         void slotLocalURL( const KURL &url, bool isLocal );

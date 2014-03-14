@@ -364,8 +364,8 @@ void ForwardingSlaveBase::connectTransferJob(TDEIO::TransferJob *job)
 void ForwardingSlaveBase::connectLocalURLJob(TDEIO::LocalURLJob *job)
 {
     connectJob(job);
-    connect( job, TQT_SIGNAL( localURL(TDEIO::Job *, const KURL&, bool) ),
-             this, TQT_SLOT( slotLocalURL(TDEIO::Job *, const KURL&, bool) ) );
+    connect( job, TQT_SIGNAL( localURL(TDEIO::LocalURLJob *, const KURL&, bool) ),
+             this, TQT_SLOT( slotLocalURL(TDEIO::LocalURLJob *, const KURL&, bool) ) );
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -464,7 +464,7 @@ void ForwardingSlaveBase::slotCanResume (TDEIO::Job* /*job*/, TDEIO::filesize_t 
     canResume(offset);
 }
 
-void ForwardingSlaveBase::slotLocalURL(TDEIO::Job *, const KURL& url, bool)
+void ForwardingSlaveBase::slotLocalURL(TDEIO::LocalURLJob *, const KURL& url, bool)
 {
     SlaveBase::localURL(url);
 }

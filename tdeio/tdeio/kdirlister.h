@@ -29,7 +29,7 @@
 
 #include <kurl.h>
 
-namespace TDEIO { class Job; class ListJob; }
+namespace TDEIO { class Job; class LocalURLJob; class ListJob; }
 
 /**
  * The dir lister deals with the kiojob used to list and update a directory
@@ -609,7 +609,7 @@ private slots:
   void slotTotalSize( TDEIO::Job *, TDEIO::filesize_t );
   void slotProcessedSize( TDEIO::Job *, TDEIO::filesize_t );
   void slotSpeed( TDEIO::Job *, unsigned long );
-  void slotOpenURLGotLocalURL( TDEIO::Job *, const KURL&, bool );
+  void slotOpenURLGotLocalURL( TDEIO::LocalURLJob*, const KURL&, bool );
   void slotLocalURLKIODestroyed( );
 
 private:
