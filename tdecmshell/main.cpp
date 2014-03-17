@@ -231,22 +231,25 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 
         int maxLen=0;
 
-        for( KService::List::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
+        for (KService::List::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
         {
             int len = (*it)->desktopEntryName().length();
             if (len > maxLen)
                 maxLen = len;
         }
 
-        for( KService::List::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
+        TQStringList module_list;
+        for (KService::List::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
         {
-            TQString entry("%1 - %2");
+            module_list.append(TQString("%1 - %2")
+                .arg((*it)->desktopEntryName().leftJustify(maxLen, ' '))
+                .arg(!(*it)->comment().isEmpty() ? (*it)->comment() : i18n("No description available")));
+        }
+        module_list.sort();
 
-            entry = entry.arg((*it)->desktopEntryName().leftJustify(maxLen, ' '))
-                         .arg(!(*it)->comment().isEmpty() ? (*it)->comment() 
-                                 : i18n("No description available"));
-
-            cout << static_cast<const char *>(entry.local8Bit()) << endl;
+        for (TQStringList::Iterator it=module_list.begin(); it!=module_list.end(); ++it)
+        {
+            cout << static_cast<const char *>((*it).local8Bit()) << endl;
         }
         return 0;
     }
