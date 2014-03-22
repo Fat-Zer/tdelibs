@@ -227,9 +227,6 @@ void KMMainView::initActions()
 	tact->setChecked(KMManager::self()->isFilterEnabled());
 	connect(tact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotToggleFilter(bool)));
 
-	new TDEAction( i18n( "%1 &Handbook" ).arg( "TDEPrint" ), "contents", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_help" );
-	new TDEAction( i18n( "%1 &Web Site" ).arg( "TDEPrint" ), "network", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_web" );
-
 	TDEActionMenu	*mact = new TDEActionMenu(i18n("Pri&nter Tools"), "package_utilities", m_actions, "printer_tool");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(), TQT_SIGNAL(activated(int)), TQT_SLOT(slotToolSelected(int)));
@@ -315,11 +312,6 @@ void KMMainView::initActions()
 	m_menubar->insertButton( "view_remove", 4, true, i18n( "View" ) );
 	m_menubar->getButton( 4 )->setPopup( menu, true );
 	//m_menubar->setMinimumHeight( m_menubar->heightForWidth( 1000 ) );
-	menu = new TQPopupMenu( this );
-	m_actions->action( "invoke_help" )->plug( menu );
-	m_actions->action( "invoke_web" )->plug( menu );
-	m_menubar->insertButton( "help", 5, true, i18n( "Documentation" ) );
-	m_menubar->getButton( 5 )->setPopup( menu, true );
 
 	loadPluginActions();
 	slotPrinterSelected(TQString::null);
@@ -900,21 +892,6 @@ void KMMainView::reset( const TQString& msg, bool useDelay, bool holdTimer )
 		createMessageWindow( msg, ( useDelay ? 500 : 0 ) );
 	m_first = true;
 	m_manager->checkUpdatePossible();
-}
-
-void KMMainView::slotHelp()
-{
-	TQString s = TQT_TQOBJECT_CONST(sender())->name();
-	if ( s == "invoke_help" )
-		kapp->invokeHelp( TQString::null, "tdeprint" );
-	else if ( s == "invoke_web" )
-	{
-		TQStringList args;
-		args << "exec" << "http://printing.kde.org";
-		kapp->tdeinitExec( "kfmclient", args );
-	}
-	else
-		kdDebug( 500 ) << "Unknown help invokator: " << s << endl;
 }
 
 #include "kmmainview.moc"

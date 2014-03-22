@@ -84,7 +84,6 @@ public slots:
 	void slotRefresh();
 	void slotToolSelected(int);
 	void slotToggleFilter(bool);
-	void slotHelp();
 
 protected slots:
 	void slotPrinterSelected(const TQString&);

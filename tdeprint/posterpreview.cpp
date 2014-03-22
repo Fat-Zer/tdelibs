@@ -113,8 +113,7 @@ void PosterPreview::drawContents( TQPainter *painter )
 		if ( m_rows <= 0 || m_cols <= 0 || m_pw <= 0 || m_ph <= 0 )
 		{
 			TQString txt = i18n( "Poster preview not available. Either the <b>poster</b> "
-				          "executable is not properly installed, or you don't have "
-						  "the required version; available at http://printing.kde.org/downloads/." );
+				          "executable is not properly installed, or you don't have the required version" );
 			TQSimpleRichText richtext( ( m_buffer.isEmpty() ? txt : m_buffer.prepend( "<pre>" ).append( "</pre>" ) ), p->font() );
 			richtext.adjustSize();
 			int x = ( width()-richtext.widthUsed() )/2, y = ( height()-richtext.height() )/2;
