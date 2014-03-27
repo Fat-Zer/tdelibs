@@ -50,6 +50,7 @@ KElfPlugin::KElfPlugin(TQObject *parent, const char *name,
 
     : KFilePlugin(parent, name, args)
 {
+    // Executables
     KFileMimeTypeInfo* info = addMimeTypeInfo( "application/x-executable" );
 
     KFileMimeTypeInfo::GroupInfo* group = 0L;
@@ -70,6 +71,30 @@ KElfPlugin::KElfPlugin(TQObject *parent, const char *name,
     item = addItemInfo(group, "Version", i18n("Version"), TQVariant::String);
     item = addItemInfo(group, "DateTime", i18n("Compilation Date/Time"), TQVariant::String);
     item = addItemInfo(group, "SystemIcon", i18n("Requested Icon"), TQVariant::String);
+    item = addItemInfo(group, "SCMModule", i18n("SCM Module"), TQVariant::String);
+    item = addItemInfo(group, "SCMRevision", i18n("SCM Revision"), TQVariant::String);
+    item = addItemInfo(group, "Notes", i18n("Comments"), TQVariant::String);
+
+    item = addItemInfo(group2, "EmbeddedIcon", i18n("Icon Name(s)"), TQVariant::String);
+
+    // Shared libraries
+    info = addMimeTypeInfo( "application/x-sharedlib" );
+
+    group = addGroupInfo(info, "Technical", i18n("Embedded Metadata"));
+    group2 = addGroupInfo(info, "Icon", i18n("Embedded Icon(s)"));
+
+    item = addItemInfo(group, "Name", i18n("Internal Name"), TQVariant::String);
+    item = addItemInfo(group, "Description", i18n("Description"), TQVariant::String);
+    item = addItemInfo(group, "License", i18n("License"), TQVariant::String);
+    item = addItemInfo(group, "Copyright", i18n("Copyright"), TQVariant::String);
+    item = addItemInfo(group, "Authors", i18n("Author(s)"), TQVariant::String);
+    item = addItemInfo(group, "Product", i18n("Product"), TQVariant::String);
+    item = addItemInfo(group, "Organization", i18n("Organization"), TQVariant::String);
+    item = addItemInfo(group, "Version", i18n("Version"), TQVariant::String);
+    item = addItemInfo(group, "DateTime", i18n("Compilation Date/Time"), TQVariant::String);
+    item = addItemInfo(group, "SystemIcon", i18n("Requested Icon"), TQVariant::String);
+    item = addItemInfo(group, "SCMModule", i18n("SCM Module"), TQVariant::String);
+    item = addItemInfo(group, "SCMRevision", i18n("SCM Revision"), TQVariant::String);
     item = addItemInfo(group, "Notes", i18n("Comments"), TQVariant::String);
 
     item = addItemInfo(group2, "EmbeddedIcon", i18n("Icon Name(s)"), TQVariant::String);
@@ -100,6 +125,8 @@ bool KElfPlugin::readInfo( KFileMetaInfo& info, uint what)
 	appendItem(group, "Version", elf_get_resource(handle, ".metadata_version"));
 	appendItem(group, "DateTime", elf_get_resource(handle, ".metadata_datetime"));
 	appendItem(group, "SystemIcon", elf_get_resource(handle, ".metadata_sysicon"));
+	appendItem(group, "SCMModule", elf_get_resource(handle, ".metadata_scmmodule"));
+	appendItem(group, "SCMRevision", elf_get_resource(handle, ".metadata_scmrevision"));
 	appendItem(group, "Notes", elf_get_resource(handle, ".metadata_notes"));
 
 	TQString iconListing;
