@@ -61,7 +61,7 @@ install( FILES
     tcpslavebase.h forwardingslavebase.h observer.h
     chmodjob.h kmdbase.h authinfo.h ioslave_defaults.h
     http_slave_defaults.h previewjob.h thumbcreator.h
-    metainfojob.h davjob.h renamedlg.h skipdlg.h
+    metainfojob.h davjob.h renamedlg.h skipdlg.h tdelficon.h
     ${CMAKE_CURRENT_BINARY_DIR}/uiserver_stub.h
   DESTINATION ${INCLUDE_INSTALL_DIR}/tdeio )
 

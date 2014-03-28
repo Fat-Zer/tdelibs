@@ -1,3 +1,5 @@
+#include <tdelibs_export.h>
+
 #include <alloca.h>
 #include <stdint.h>
 #include <cstdlib>
@@ -49,6 +51,6 @@ extern "C" {
   // END HACK
 }
 
-int get_iconlist(libr_file *file_handle, iconlist *icons);
-iconentry *get_nexticon(iconlist *icons, iconentry *last_entry);
-TQString elf_get_resource(libr_file *handle, char *section_name);
+TDEIO_EXPORT int get_iconlist(libr_file *file_handle, iconlist *icons);
+TDEIO_EXPORT iconentry *get_nexticon(iconlist *icons, iconentry *last_entry);
+TDEIO_EXPORT TQString elf_get_resource(libr_file *handle, char *section_name);

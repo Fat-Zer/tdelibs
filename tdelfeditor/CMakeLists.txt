@@ -44,11 +44,12 @@ if( EXISTS "${CMAKE_SOURCE_DIR}/.tdescmrevision" )
 endif( EXISTS "${CMAKE_SOURCE_DIR}/.tdescmrevision" )
 
 tde_curdatetime( _datetime )
-set( ELF_EMBEDDING_METADATA "\"\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
-separate_arguments( ELF_EMBEDDING_METADATA )
 
 if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
   if( NOT "${TDE_SCM_MODULE_REVISION}" STREQUAL "" )
+    get_target_property( _version DCOP-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"DCOP-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libDCOP_metadata ALL
@@ -59,6 +60,9 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       COMMENT "Storing SCM metadata in dcop/libDCOP.so"
     )
 
+    get_target_property( _version tdecore-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdecore-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdecore_metadata ALL
@@ -69,6 +73,9 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       COMMENT "Storing SCM metadata in tdecore/libtdecore.so"
     )
 
+    get_target_property( _version tdeio-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeio-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeio_metadata ALL
@@ -79,6 +86,9 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       COMMENT "Storing SCM metadata in tdeui/libtdeio.so"
     )
 
+    get_target_property( _version tdeui-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeui-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeui_metadata ALL
@@ -89,6 +99,9 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       COMMENT "Storing SCM metadata in tdeui/libtdeui.so"
     )
 
+    get_target_property( _version tdeutils-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeutils-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeutils_metadata ALL
@@ -99,6 +112,9 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       COMMENT "Storing SCM metadata in tdeutils/libtdeutils.so"
     )
 
+    get_target_property( _version tdeprint-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeprint-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeprint_metadata ALL
@@ -109,6 +125,9 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       COMMENT "Storing SCM metadata in tdeprint/libtdeprint.so"
     )
 
+    get_target_property( _version tdehtml-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdehtml-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdehtml_metadata ALL
@@ -118,5 +137,5 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
       DEPENDS tdehtml-shared
       COMMENT "Storing SCM metadata in tdehtml/libtdehtml.so"
     )
-  endif( NOT "${TDE_SCM_MODULE_REVISION}" STREQUAL "" )
-endif( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
+  endif( )
+endif( )
