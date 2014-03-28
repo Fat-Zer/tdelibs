@@ -187,7 +187,7 @@ int handle_arguments(int argc, char **argv, eMode *mode)
 	
 	opterr = 0;  /* Prevent automatic getopt() error message */
 
-	while ((c = getopt_long(argc, argv, elficon_options.short_options, elficon_options.long_options, &index)) != EOF)
+	while ((c = getopt_long((argc>3)?3:argc, argv, elficon_options.short_options, elficon_options.long_options, &index)) != EOF)
 	{
 		switch(c)
 		{
@@ -234,8 +234,10 @@ int handle_arguments(int argc, char **argv, eMode *mode)
 				goto print_icon_usage;
 		}
 		index++;
-		if(argc != required_params)
+		if(argc != required_params) {
+			fprintf(stderr, _("%s: was given %d arguments, needed %d\n"), argv[PARAM_PROGNAME], argc, required_params);
 			goto print_icon_usage;
+		}
 	}
 	return TRUE;
 print_icon_usage:
