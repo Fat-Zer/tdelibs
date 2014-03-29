@@ -58,7 +58,7 @@ class KBugReportPrivate {
 public:
     KComboBox *appcombo;
     TQString lastError;
-    TQString kde_version;
+    TQString tde_version;
     TQString appname;
     TQString os;
     TQPushButton *submitBugButton;
@@ -179,10 +179,11 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const TDEAboutData *abou
       m_strVersion = m_aboutData->version();
   else
       m_strVersion = i18n("no version set (programmer error!)");
-  d->kde_version = TQString::fromLatin1( TDE_VERSION_STRING );
-  d->kde_version += ", " + TQString::fromLatin1( KDE_DISTRIBUTION_TEXT );
+  d->tde_version = TQString::fromLatin1( TDE_VERSION_STRING );
+  if (TQString::fromLatin1( KDE_DISTRIBUTION_TEXT ) != "")
+      d->tde_version += ", " + TQString::fromLatin1( KDE_DISTRIBUTION_TEXT );
   if ( !d->submitBugButton )
-      m_strVersion += " " + d->kde_version;
+      m_strVersion += " " + d->tde_version;
   m_version = new TQLabel( m_strVersion, parent );
   //glay->addWidget( m_version, row, 1 );
   glay->addMultiCellWidget( m_version, row, row, 1, 2 );
@@ -287,7 +288,7 @@ void KBugReport::updateURL()
     url.addQueryItem( "product", "TDE 3.5" );
     url.addQueryItem( "op_sys", d->os );
     url.addQueryItem( "cf_kde_compiler", KDE_COMPILER_VERSION );
-    url.addQueryItem( "cf_kde_version", d->kde_version );
+    url.addQueryItem( "cf_tde_version", d->tde_version );
     url.addQueryItem( "cf_kde_appversion", m_strVersion );
     url.addQueryItem( "cf_kde_package", d->appcombo->currentText() );
     url.addQueryItem( "cf_kde_kbugreport", "1" );
@@ -308,7 +309,7 @@ void KBugReport::appChanged(int i)
         m_strVersion = i18n("unknown program name", "unknown");
 
     if ( !d->submitBugButton )
-        m_strVersion += d->kde_version;
+        m_strVersion += d->tde_version;
 
     m_version->setText(m_strVersion);
     if ( d->submitBugButton )
@@ -538,6 +539,18 @@ bool KBugReport::sendBugReport()
   }
   outputfile.unlink();
   return true;
+}
+
+TQString KBugReport::compilerVersion() {
+	return KDE_COMPILER_VERSION;
+}
+
+TQString KBugReport::operatingSystem() {
+	return d->os;
+}
+
+TQString KBugReport::tdeVersion() {
+	return d->tde_version;
 }
 
 void KBugReport::virtual_hook( int id, void* data )
