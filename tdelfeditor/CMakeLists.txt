@@ -43,110 +43,110 @@ if( EXISTS "${CMAKE_SOURCE_DIR}/.tdescmrevision" )
   file( STRINGS "${CMAKE_SOURCE_DIR}/.tdescmrevision" TDE_SCM_MODULE_REVISION )
 endif( EXISTS "${CMAKE_SOURCE_DIR}/.tdescmrevision" )
 
-tde_curdatetime( _datetime )
+tde_curdatetime( scm_embed_metadata_datetime )
 
 if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
   if( NOT "${TDE_SCM_MODULE_REVISION}" STREQUAL "" )
-    get_target_property( _version DCOP-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"DCOP-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    get_target_property( scm_embed_metadata_version DCOP-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"DCOP-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libDCOP_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/dcop/libDCOP.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/dcop/libDCOP.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/dcop/libDCOP.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/dcop/libDCOP.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/dcop/libDCOP.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/dcop/libDCOP.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS DCOP-shared
       COMMENT "Storing SCM metadata in dcop/libDCOP.so"
     )
 
-    get_target_property( _version tdecore-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"tdecore-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    get_target_property( scm_embed_metadata_version tdecore-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdecore-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdecore_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS tdecore-shared
       COMMENT "Storing SCM metadata in tdecore/libtdecore.so"
     )
 
-    #get_target_property( _version tdeio-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"tdeio-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    #get_target_property( scm_embed_metadata_version tdeio-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeio-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeio_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS tdeio-shared
       COMMENT "Storing SCM metadata in tdeui/libtdeio.so"
     )
 
-    #get_target_property( _version tdeui-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"tdeui-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    #get_target_property( scm_embed_metadata_version tdeui-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeui-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeui_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS tdeui-shared
       COMMENT "Storing SCM metadata in tdeui/libtdeui.so"
     )
 
-    #get_target_property( _version tdeutils-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"tdeutils-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    #get_target_property( scm_embed_metadata_version tdeutils-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeutils-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeutils_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS tdeutils-shared
       COMMENT "Storing SCM metadata in tdeutils/libtdeutils.so"
     )
 
-    #get_target_property( _version tdeprint-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"tdeprint-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    #get_target_property( scm_embed_metadata_version tdeprint-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdeprint-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdeprint_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS tdeprint-shared
       COMMENT "Storing SCM metadata in tdeprint/libtdeprint.so"
     )
 
-    #get_target_property( _version tdehtml-shared VERSION )
-    set( ELF_EMBEDDING_METADATA "\"tdehtml-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${_version}\" \"${_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
+    #get_target_property( scm_embed_metadata_version tdehtml-shared VERSION )
+    set( ELF_EMBEDDING_METADATA "\"tdehtml-shared\" \"\" \"\" \"\" \"\" \"Trinity Desktop Environment\" \"\" \"${scm_embed_metadata_version}\" \"${scm_embed_metadata_datetime}\" \"x-sharedlib\" \"${TDE_SCM_MODULE_NAME}\" \"${TDE_SCM_MODULE_REVISION}\" \"\"" )
     separate_arguments( ELF_EMBEDDING_METADATA )
     add_custom_target(
       # embed name and metadata
       update_libtdehtml_metadata ALL
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so.${_version} ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so.${_version} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
+      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
       DEPENDS tdehtml-shared
       COMMENT "Storing SCM metadata in tdehtml/libtdehtml.so"
