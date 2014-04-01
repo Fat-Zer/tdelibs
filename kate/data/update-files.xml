@@ -31,13 +31,12 @@
 <Definition name="Cisco" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cisco.xml" version="1.10"/>
 <Definition name="Clipper" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/clipper.xml" version="1.05"/>
 <Definition name="Clojure" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/clojure.xml" version="2-1"/>
-<Definition name="CMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cmake.xml" version="1.26-1"/>
+<Definition name="CMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cmake.xml" version="1.29-1"/>
 <Definition name="CoffeeScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coffee.xml" version="1.4"/>
 <Definition name="ColdFusion" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coldfusion.xml" version="1.04"/>
 <Definition name="Common Lisp" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/commonlisp.xml" version="1.05-1"/>
 <Definition name="Component-Pascal" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/component-pascal.xml" version="1.05"/>
 <Definition name="ConTeXt" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/context.xml" version="1.1"/>
-<Definition name="C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cpp.xml" version="2.0-1"/>
 <Definition name="Crack" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/crk.xml" version="1.1"/>
 <Definition name="CSS/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css-php.xml" version="2.08"/>
 <Definition name="CSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css.xml" version="2.08"/>
@@ -90,6 +89,7 @@
 <Definition name="ILERPG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ilerpg.xml" version="1.05-1"/>
 <Definition name="Inform" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/inform.xml" version="1.23-1"/>
 <Definition name="INI Files" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ini.xml" version="1.1"/>
+<Definition name="ISO C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/isocpp.xml" version="2.1-1"/>
 <Definition name="Jam" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/jam.xml" version="0.3"/>
 <Definition name="Javadoc" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javadoc.xml" version="1.04"/>
 <Definition name="JavaScript/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javascript-php.xml" version="1.22"/>
@@ -157,7 +157,7 @@
 <Definition name="Python" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/python.xml" version="2.22"/>
 <Definition name="QMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qmake.xml" version="1.2"/>
 <Definition name="QML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qml.xml" version="1.4"/>
-<Definition name="C++11/Qt4" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qt4.xml" version="1.2"/>
+<Definition name="C++/Qt4" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qt4.xml" version="1.5-1"/>
 <Definition name="RapidQ" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rapidq.xml" version="1.01"/>
 <Definition name="RelaxNG-Compact" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/relaxngcompact.xml" version="0.2"/>
 <Definition name="RELAX NG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/relaxng.xml" version="0.8"/>

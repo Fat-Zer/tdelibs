@@ -9,16 +9,16 @@
     <!ENTITY convspec "diouxXeEfFgGaAcsP&#37;">
 ]>
 <language
-    name="C++"
+    name="ISO C++"
     section="Sources"
-    version="2.0-1"
+    version="2.1-1"
     kateversion="2.4"
     indenter="cstyle"
     mimetype="text/x-c++src;text/x-c++hdr;text/x-chdr"
     extensions="*.c++;*.cxx;*.cpp;*.cc;*.C;*.h;*.hh;*.H;*.h++;*.hxx;*.hpp;*.hcc;*.moc"
     author="Alex Turbov (i.zaufi@gmail.com)"
     license="LGPL"
-    priority="9"
+    priority="6"
   >
   <!--
     Complete list of changes by Alex Turbov (I.zaufi@gmail.com)
@@ -397,7 +397,7 @@
         <LineContinue attribute="String" context="#stay" />
         <HlCStringChar attribute="String Char" context="#stay" />
         <IncludeRules context="Universal Char" />
-        <RegExpr attribute="String Char" context="#stay" String="%[^&quot;&convspec;]*[&convspec;]" />
+        <RegExpr attribute="String Char" context="#stay" String="%[^&quot;&convspec;\s]*[&convspec;]" />
         <DetectChar attribute="String" context="UDLStringSuffix" char="&quot;" />
       </context>
 
@@ -417,7 +417,7 @@
 
       <context name="RawString" attribute="String" lineEndContext="#stay" dynamic="true">
         <LineContinue attribute="String" context="#stay" />
-        <RegExpr attribute="String Char" context="#stay" String="%[^&quot;&convspec;]*[&convspec;]" />
+        <RegExpr attribute="String Char" context="#stay" String="%[^&quot;&convspec;\s]*[&convspec;]" />
         <RegExpr attribute="String" context="#pop" String="\)%2&quot;" dynamic="true"/>
       </context>
 
