@@ -30,7 +30,7 @@ install( FILES
     asm-dsp56k.xml asm-m68k.xml asn1.xml asp.xml asterisk.xml awk.xml bash.xml
     bibtex.xml bmethod.xml ccss.xml cgis.xml cg.xml changelog.xml chicken.xml
     cisco.xml clipper.xml clojure.xml cmake.xml coffee.xml coldfusion.xml
-    commonlisp.xml component-pascal.xml context.xml cpp.xml crk.xml
+    commonlisp.xml component-pascal.xml context.xml crk.xml
     css.xml cs.xml cue.xml curry.xml c.xml ddoc.xml debianchangelog.xml
     debiancontrol.xml desktop.xml diff.xml djangotemplate.xml dosbat.xml dot.xml
     doxygenlua.xml doxygen.xml dtd.xml d.xml eiffel.xml email.xml erlang.xml
@@ -38,7 +38,7 @@ install( FILES
     fsharp.xml fstab.xml gap.xml gcc.xml gdb.xml gdl.xml gettext.xml git-rebase.xml
     glosstex.xml glsl.xml gnuassembler.xml gnuplot.xml go.xml grammar.xml haml.xml
     haskell.xml html.xml idconsole.xml idl.xml ilerpg.xml inform.xml
-    ini.xml jam.xml javadoc.xml javascript.xml java.xml json.xml
+    ini.xml isocpp.xml jam.xml javadoc.xml javascript.xml java.xml json.xml
     jsp.xml julia.xml kbasic.xml latex.xml ldif.xml less.xml lex.xml lilypond.xml
     literate-curry.xml literate-haskell.xml logtalk.xml lpc.xml lua.xml m3u.xml
     m4.xml mab.xml makefile.xml mako.xml mason.xml mathematica.xml matlab.xml maxima.xml
