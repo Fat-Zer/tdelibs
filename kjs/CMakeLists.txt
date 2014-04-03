@@ -21,6 +21,7 @@ include_directories(
 link_directories(
   ${TDECORE_LIBRARY_DIRS}
   ${LIBPCRE_LIBDIR}
+  ${XRENDER_LIBRARY_DIRS}
 )
 
 
