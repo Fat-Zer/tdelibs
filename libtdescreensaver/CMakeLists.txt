@@ -21,7 +21,6 @@ list( REMOVE_ITEM CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined" )
 
 link_directories(
   ${TDECORE_LIBRARY_DIRS}
-  ${XRENDER_LIBRARY_DIRS}
 )
 
 
