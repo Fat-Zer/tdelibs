@@ -42,7 +42,7 @@
 
 #include "config.h"
 #ifdef Q_WS_X11
-#include <netwm.h> 
+#include <netwm.h>
 #endif
 
 const int KDialog::mMarginSize = 11;
@@ -401,7 +401,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 {
 	// Signal that we do not want any window controls to be shown at all
 	Atom kde_wm_system_modal_notification;
-	kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+	kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_TDE_WM_MODAL_SYS_NOTIFICATION", False);
 	XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 
 	TQVBoxLayout* vbox = new TQVBoxLayout( this );
