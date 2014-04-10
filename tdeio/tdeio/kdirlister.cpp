@@ -1970,7 +1970,6 @@ void KDirLister::slotOpenURLGotLocalURL(TDEIO::LocalURLJob *job, const KURL& url
       realURL.setInternalReferenceURL(d->openURL_url[job].url());
       d->m_referenceURLMap[d->openURL_url[job].url()] = url.path();
   }
-  job->slaveDone();
   s_pCache->listDir( this, realURL, d->openURL_keep[job], d->openURL_reload[job] );
   d->openURL_url.remove(job);
   d->openURL_keep.remove(job);
