@@ -334,4 +334,8 @@ TQString TDEGenericDevice::friendlyName() {
 	return m_friendlyName;
 }
 
+TQString TDEGenericDevice::detailedFriendlyName() {
+	return friendlyName();
+}
+
 #include "tdegenericdevice.moc"

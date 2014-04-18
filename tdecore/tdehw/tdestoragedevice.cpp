@@ -538,6 +538,10 @@ TQString TDEStorageDevice::friendlyName() {
 	return friendlyDeviceType();
 }
 
+TQString TDEStorageDevice::detailedFriendlyName() {
+	return TQString("%1 [%2]").arg(friendlyName()).arg(deviceNode());
+}
+
 TQString TDEStorageDevice::friendlyDeviceType() {
 	TQString ret = i18n("Hard Disk Drive");
 

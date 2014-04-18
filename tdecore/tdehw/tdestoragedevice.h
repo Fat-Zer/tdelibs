@@ -252,6 +252,13 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString friendlyName();
 
 		/**
+		* @return a TQString with a detailed friendly name
+		*
+		* This method overrides TDEGenericDevice::detailedFriendlyName()
+		*/
+		TQString detailedFriendlyName();
+
+		/**
 		*  @return a TQString containing the friendly type name
 		*
 		* This method overrides TDEGenericDevice::friendlyDeviceType()

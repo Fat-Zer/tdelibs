@@ -78,6 +78,14 @@ class TDECORE_EXPORT TDEGenericDevice : public TQObject
 		virtual TQString friendlyName();
 
 		/**
+		* @return a TQString with a detailed friendly name
+		*
+		* In most cases this will return exactly the same string as friendlyName(), however
+		* for certain devices (e.g. disks) this method will provide additional information
+		*/
+		virtual TQString detailedFriendlyName();
+
+		/**
 		* @return a TQString with the device bus name, if any
 		*/
 		TQString deviceBus();
