@@ -34,6 +34,8 @@
 #include "tdescreensaver.h"
 #include "tdescreensaver_vroot.h"
 
+bool argb_visual = FALSE;
+
 extern "C"
 {
     extern const char *kss_applicationName;
@@ -98,7 +100,12 @@ KDE_EXPORT int main(int argc, char *argv[])
 
     TDECmdLineArgs::addCmdLineOptions(options);
 
+#ifdef HAVE_XCOMPOSITE
+    TDEApplication app(TDEApplication::openX11RGBADisplay());
+    argb_visual = app.isX11CompositionAvailable();
+#else
     TDEApplication app;
+#endif
 
     TDECrash::setCrashHandler( crashHandler );
     TDEGlobal::locale()->insertCatalogue("klock");
