@@ -82,8 +82,8 @@
 <Definition name="KDev-PG[-Qt] Grammar" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/grammar.xml" version="0.24-1"/>
 <Definition name="Haml" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/haml.xml" version="1.1"/>
 <Definition name="Haskell" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/haskell.xml" version="2.2"/>
-<Definition name="PHP (HTML)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/html-php.xml" version="1.99"/>
-<Definition name="HTML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/html.xml" version="1.99"/>
+<Definition name="PHP (HTML)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/html-php.xml" version="2.0"/>
+<Definition name="HTML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/html.xml" version="2.0"/>
 <Definition name="Quake Script" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/idconsole.xml" version="1.02"/>
 <Definition name="IDL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/idl.xml" version="1.07"/>
 <Definition name="ILERPG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ilerpg.xml" version="1.05-1"/>
