@@ -37,7 +37,7 @@
 
 using namespace TDEIO;
 
-TQString HelpProtocol::langLookup(const TQString& fname)
+TQString HelpProtocol::langLookup(const TQString &fname)
 {
     TQStringList search;
 
@@ -88,23 +88,17 @@ TQString HelpProtocol::langLookup(const TQString& fname)
 }
 
 
-TQString HelpProtocol::lookupFile(const TQString &fname,
-                                 const TQString &query, bool &redirect)
+TQString HelpProtocol::lookupFile(const TQString &fname, const TQString &query, bool &redirect)
 {
     redirect = false;
-
-    TQString path, result;
-
-    path = fname;
-
-    result = langLookup(path);
+    TQString result = langLookup(fname);
     if (result.isEmpty())
     {
-        result = langLookup(path+"/index.html");
+        result = langLookup(fname+"/index.html");
         if (!result.isEmpty())
         {
-            KURL red( "help:/" );
-            red.setPath( path + "/index.html" );
+            KURL red("help:/");
+            red.setPath( fname+"/index.html" );
             red.setQuery( query );
             redirection(red);
             kdDebug( 7119 ) << "redirect to " << red.url() << endl;
@@ -112,11 +106,11 @@ TQString HelpProtocol::lookupFile(const TQString &fname,
         }
         else
         {
-            const TQString helpNotFound = "khelpcenter/helpnotfound/index.html";
-            if (!langLookup(helpNotFound).isEmpty())
+            const TQString helpNotFound("khelpcenter/helpnotfound/index.html");
+            result = langLookup(helpNotFound);
+            if (!result.isEmpty())
             {
-                KURL red;
-                red.setProtocol("help");
+                KURL red("help:/");
                 red.setPath(helpNotFound);
                 red.setQuery(query);
                 redirection(red);
@@ -125,7 +119,7 @@ TQString HelpProtocol::lookupFile(const TQString &fname,
             }
             else
             {
-                unicodeError( i18n("There is no documentation available for %1." ).arg(path) );
+                unicodeError(i18n("Sorry, there is no documentation available at all for %1." ).arg(fname));
                 finished();
                 return TQString::null;
             }
