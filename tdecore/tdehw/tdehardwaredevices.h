@@ -23,6 +23,7 @@
 #include <tqobject.h>
 #include <tqptrlist.h>
 #include <tqmap.h>
+#include <tqdict.h>
 #include <tqstring.h>
 #include <tqstringlist.h>
 
@@ -75,6 +76,7 @@ class TQSocketNotifier;
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
+typedef TQDict<TDECPUDevice> TDECPUDeviceCache;
 
 class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 {
@@ -140,6 +142,12 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*/
 		TDEStorageDevice* findDiskByUID(TQString uid);
 
+		/**
+		*  Return the CPU device with system path @arg syspath, or 0 if no device exists for that path
+		*  @return TDEGenericDevice
+		*/
+		TDECPUDevice* findCPUBySystemPath(TQString syspath, bool inCache);
+			
 		/**
 		*  Look up the device in the system PCI database
 		*  @param vendorid a TQString containing the vendor ID in hexadecimal
@@ -222,6 +230,15 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void setTriggerlessHardwareUpdatesEnabled(bool enable);
 
 		/**
+		*  Enable or disable automatic state updates of battery hardware devices.
+		*  When enabled, your application will use
+		*  additional CPU resources to continually poll triggerless hardware devices.
+		*  Automatic updates are disabled by default.
+		*  @param enable a bool specifiying whether or not automatic updates should be enabled
+		*/
+		void setBatteryUpdatesEnabled(bool enable);
+		
+		/**
 		*  Convert a byte count to human readable form
 		*  @param bytes a double containing the number of bytes
 		*  @return a TQString containing the human readable byte count
@@ -246,6 +263,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void processHotPluggedHardware();
 		void processModifiedMounts();
 		void processModifiedCPUs();
+		void processBatteryDevices();
 		void processStatelessDevices();
 		void processEventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* edevice);
 
@@ -280,6 +298,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		int m_procMountsFd;
 		KSimpleDirWatch* m_cpuWatch;
 		TQTimer* m_cpuWatchTimer;
+		TQTimer* m_batteryWatchTimer;
 		TQTimer* m_deviceWatchTimer;
 
 		TQSocketNotifier* m_devScanNotifier;
@@ -292,6 +311,8 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TDEDeviceIDMap* usb_id_map;
 		TDEDeviceIDMap* pnp_id_map;
 		TDEDeviceIDMap* dpy_id_map;
+		
+		TDECPUDeviceCache m_cpuByPathCache;
 
 	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;
