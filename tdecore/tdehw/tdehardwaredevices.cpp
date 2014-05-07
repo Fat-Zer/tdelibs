@@ -688,7 +688,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile scalinggovernorfile(nodename);
 				if (scalinggovernorfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &scalinggovernorfile );
-					scalinggovernor = stream.read();
+					scalinggovernor = stream.readLine();
 					scalinggovernorfile.close();
 				}
 				nodename = cpufreq_dir.path();
@@ -696,7 +696,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile scalingdriverfile(nodename);
 				if (scalingdriverfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &scalingdriverfile );
-					scalingdriver = stream.read();
+					scalingdriver = stream.readLine();
 					scalingdriverfile.close();
 				}
 				nodename = cpufreq_dir.path();
@@ -704,7 +704,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile minfrequencyfile(nodename);
 				if (minfrequencyfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &minfrequencyfile );
-					minfrequency = stream.read().toDouble()/1000.0;
+					minfrequency = stream.readLine().toDouble()/1000.0;
 					minfrequencyfile.close();
 				}
 				nodename = cpufreq_dir.path();
@@ -712,7 +712,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile maxfrequencyfile(nodename);
 				if (maxfrequencyfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &maxfrequencyfile );
-					maxfrequency = stream.read().toDouble()/1000.0;
+					maxfrequency = stream.readLine().toDouble()/1000.0;
 					maxfrequencyfile.close();
 				}
 				nodename = cpufreq_dir.path();
@@ -720,7 +720,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile trlatencyfile(nodename);
 				if (trlatencyfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &trlatencyfile );
-					trlatency = stream.read().toDouble()/1000.0;
+					trlatency = stream.readLine().toDouble()/1000.0;
 					trlatencyfile.close();
 				}
 				nodename = cpufreq_dir.path();
@@ -728,7 +728,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile availfreqsfile(nodename);
 				if (availfreqsfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &availfreqsfile );
-					frequencylist = TQStringList::split(" ", stream.read());
+					frequencylist = TQStringList::split(" ", stream.readLine());
 					availfreqsfile.close();
 				}
 				nodename = cpufreq_dir.path();
@@ -736,7 +736,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQFile availgvrnsfile(nodename);
 				if (availgvrnsfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &availgvrnsfile );
-					governorlist = TQStringList::split(" ", stream.read());
+					governorlist = TQStringList::split(" ", stream.readLine());
 					availgvrnsfile.close();
 				}
 			}
@@ -757,7 +757,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 			TQFile tiedcpusfile(nodename);
 			if (tiedcpusfile.open(IO_ReadOnly)) {
 				TQTextStream stream( &tiedcpusfile );
-				affectedcpulist = TQStringList::split(" ", stream.read());
+				affectedcpulist = TQStringList::split(" ", stream.readLine());
 				tiedcpusfile.close();
 			}
 
@@ -769,7 +769,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				if (cpufreqfile.open(IO_ReadOnly)) {
 					TQTextStream stream( &cpufreqfile );
 					if (cdevice) {
-						cdevice->internalSetFrequency(stream.read().toDouble()/1000.0);
+						cdevice->internalSetFrequency(stream.readLine().toDouble()/1000.0);
 					}
 					cpufreqfile.close();
 					have_frequency = true;
