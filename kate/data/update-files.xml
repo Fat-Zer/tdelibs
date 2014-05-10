@@ -7,7 +7,7 @@
 <Definition name="AHDL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ahdl.xml" version="1.04"/>
 <Definition name="AutoHotKey" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ahk.xml" version="1.0"/>
 <Definition name="Alerts_indent" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/alert_indent.xml" version="1.09-1"/>
-<Definition name="Alerts" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/alert.xml" version="1.09-1"/>
+<Definition name="Alerts" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/alert.xml" version="1.09-2"/>
 <Definition name="AMPLE" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ample.xml" version="0.2"/>
 <Definition name="ANSI C89" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ansic89.xml" version="1.10-1"/>
 <Definition name="Ansys" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ansys.xml" version="1.2"/>
