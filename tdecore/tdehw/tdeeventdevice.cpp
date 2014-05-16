@@ -23,6 +23,7 @@
 #include <linux/input.h>
 
 #include <tqsocketnotifier.h>
+#include <tqtimer.h>
 
 #include "tdelocale.h"
 
@@ -30,14 +31,35 @@
 
 #include "config.h"
 
+#define BITS_PER_LONG (sizeof(long) * 8)
+#define NUM_BITS(x) ((((x) - 1) / BITS_PER_LONG) + 1)
+#define OFF(x)  ((x) % BITS_PER_LONG)
+#define BIT(x)  (1UL << OFF(x))
+#define LONG(x) ((x) / BITS_PER_LONG)
+#define BIT_IS_SET(array, bit)  ((array[LONG(bit)] >> OFF(bit)) & 1)
+
+#if defined(WITH_TDEHWLIB_DAEMONS)
+#include <tqdbusconnection.h>
+#include <tqdbusproxy.h>
+#include <tqdbusmessage.h>
+#include <tqdbusvariant.h>
+#include <tqdbusdata.h>
+#include <tqdbusdatalist.h>
+#endif
+
 TDEEventDevice::TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_fd = -1;
-	m_fdMonitorActive = false;
+	m_watchTimer = 0;
+	m_monitorActive = false;
 }
 
 TDEEventDevice::~TDEEventDevice() {
 	if (m_fd >= 0) {
 		close(m_fd);
+	}
+	if (m_watchTimer) {
+		m_watchTimer->stop();
+		delete m_watchTimer;
 	}
 }
 
@@ -50,7 +72,109 @@ void TDEEventDevice::internalSetEventType(TDEEventDeviceType::TDEEventDeviceType
 }
 
 TDESwitchType::TDESwitchType TDEEventDevice::providedSwitches() {
+	if (!m_monitorActive) {
+		internalReadProvidedSwitches();
+	}
 	return m_providedSwitches;
+}
+
+void TDEEventDevice::internalReadProvidedSwitches() {
+	unsigned long switches[NUM_BITS(EV_CNT)];
+	int r = 0;
+
+	// Figure out which switch types are supported, if any
+	TDESwitchType::TDESwitchType supportedSwitches = TDESwitchType::Null;
+	if (m_fd >= 0) {
+		r = ioctl(m_fd, EVIOCGBIT(EV_SW, EV_CNT), switches);
+	}
+#ifdef WITH_TDEHWLIB_DAEMONS
+	if( r < 1 ) {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy switchesProxy("org.trinitydesktop.hardwarecontrol",
+				"/org/trinitydesktop/hardwarecontrol",
+				"org.trinitydesktop.hardwarecontrol.InputEvents",
+				dbusConn);
+			if (switchesProxy.canSend()) {
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(deviceNode().ascii());
+				TQT_DBusMessage reply = switchesProxy.sendWithReply("GetProvidedSwitches", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					TQValueList<TQ_UINT32> list = reply[0].toList().toUInt32List();
+					TQValueList<TQ_UINT32>::const_iterator it = list.begin();
+					for (r = 0; it != list.end(); ++it, r++) {
+						switches[r] = (*it);
+					}
+				}
+			}
+		}
+	}
+#endif
+	if (r > 0) {
+		if (BIT_IS_SET(switches, SW_LID)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::Lid;
+		}
+		if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::TabletMode;
+		}
+		if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::RFKill;
+		}
+		if (BIT_IS_SET(switches, SW_RADIO)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::Radio;
+		}
+		if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::MicrophoneInsert;
+		}
+		if (BIT_IS_SET(switches, SW_DOCK)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::Dock;
+		}
+		if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::LineOutInsert;
+		}
+		if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::JackPhysicalInsert;
+		}
+		if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::VideoOutInsert;
+		}
+#		ifdef SW_CAMERA_LENS_COVER
+		if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::CameraLensCover;
+		}
+#		endif
+#		ifdef SW_KEYPAD_SLIDE
+		if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::KeypadSlide;
+		}
+#		endif
+#		ifdef SW_FRONT_PROXIMITY
+		if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::FrontProximity;
+		}
+#		endif
+#		ifdef SW_ROTATE_LOCK
+		if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::RotateLock;
+		}
+#		endif
+#		ifdef SW_LINEIN_INSERT
+		if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
+			supportedSwitches = supportedSwitches | TDESwitchType::LineInInsert;
+		}
+#		endif
+		// Keep in sync with ACPI Event/Input identification routines above
+		if (systemPath().contains("PNP0C0D")) {
+			supportedSwitches = supportedSwitches | TDESwitchType::Lid;
+		}
+		if (systemPath().contains("PNP0C0E") || systemPath().contains("/LNXSLPBN")) {
+			supportedSwitches = supportedSwitches | TDESwitchType::SleepButton;
+		}
+		if (systemPath().contains("PNP0C0C") || systemPath().contains("/LNXPWRBN")) {
+			supportedSwitches = supportedSwitches | TDESwitchType::PowerButton;
+		}
+	}
+	m_providedSwitches = supportedSwitches;
 }
 
 void TDEEventDevice::internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl) {
@@ -58,7 +182,98 @@ void TDEEventDevice::internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl
 }
 
 TDESwitchType::TDESwitchType TDEEventDevice::activeSwitches() {
+	if (!m_monitorActive) {
+		internalReadActiveSwitches();
+	}
 	return m_switchActive;
+}
+
+void TDEEventDevice::internalReadActiveSwitches() {
+	unsigned long switches[NUM_BITS(EV_CNT)];
+	int r = 0;
+
+	TDESwitchType::TDESwitchType activeSwitches = TDESwitchType::Null;
+	if (m_fd >= 0) {
+		r = ioctl(m_fd, EVIOCGSW(sizeof(switches)), switches);
+	}
+#ifdef WITH_TDEHWLIB_DAEMONS
+	if( r < 1 ) {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy switchesProxy("org.trinitydesktop.hardwarecontrol",
+				"/org/trinitydesktop/hardwarecontrol",
+				"org.trinitydesktop.hardwarecontrol.InputEvents",
+				dbusConn);
+			if (switchesProxy.canSend()) {
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(deviceNode().ascii());
+				TQT_DBusMessage reply = switchesProxy.sendWithReply("GetActiveSwitches", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					TQValueList<TQ_UINT32> list = reply[0].toList().toUInt32List();
+					TQValueList<TQ_UINT32>::const_iterator it = list.begin();
+					for (r = 0; it != list.end(); ++it, r++) {
+						switches[r] = (*it);
+					}
+				}
+			}
+		}
+	}
+#endif
+	if (r > 0) {
+		if (BIT_IS_SET(switches, SW_LID)) {
+			activeSwitches = activeSwitches | TDESwitchType::Lid;
+		}
+		if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
+			activeSwitches = activeSwitches | TDESwitchType::TabletMode;
+		}
+		if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
+			activeSwitches = activeSwitches | TDESwitchType::RFKill;
+		}
+		if (BIT_IS_SET(switches, SW_RADIO)) {
+			activeSwitches = activeSwitches | TDESwitchType::Radio;
+		}
+		if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
+			activeSwitches = activeSwitches | TDESwitchType::MicrophoneInsert;
+		}
+		if (BIT_IS_SET(switches, SW_DOCK)) {
+			activeSwitches = activeSwitches | TDESwitchType::Dock;
+		}
+		if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
+			activeSwitches = activeSwitches | TDESwitchType::LineOutInsert;
+		}
+		if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
+			activeSwitches = activeSwitches | TDESwitchType::JackPhysicalInsert;
+		}
+		if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
+			activeSwitches = activeSwitches | TDESwitchType::VideoOutInsert;
+		}
+#		ifdef SW_CAMERA_LENS_COVER
+		if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
+			activeSwitches = activeSwitches | TDESwitchType::CameraLensCover;
+		}
+#		endif
+#		ifdef SW_KEYPAD_SLIDE
+		if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
+			activeSwitches = activeSwitches | TDESwitchType::KeypadSlide;
+		}
+#		endif
+#		ifdef SW_FRONT_PROXIMITY
+		if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
+			activeSwitches = activeSwitches | TDESwitchType::FrontProximity;
+		}
+#		endif
+#		ifdef SW_ROTATE_LOCK
+		if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
+			activeSwitches = activeSwitches | TDESwitchType::RotateLock;
+		}
+#		endif
+#		ifdef SW_LINEIN_INSERT
+		if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
+			activeSwitches = activeSwitches | TDESwitchType::LineInInsert;
+		}
+#		endif
+	}
+	m_switchActive = activeSwitches;
 }
 
 void TDEEventDevice::internalSetActiveSwitches(TDESwitchType::TDESwitchType sl) {
@@ -124,17 +339,22 @@ TQStringList TDEEventDevice::friendlySwitchList(TDESwitchType::TDESwitchType swi
 	return ret;
 }
 
-void TDEEventDevice::internalStartFdMonitoring(TDEHardwareDevices* hwmanager) {
-	if (!m_fdMonitorActive) {
+void TDEEventDevice::internalStartMonitoring(TDEHardwareDevices* hwmanager) {
+	if (!m_monitorActive) {
 		// For security and performance reasons, only monitor known ACPI buttons
 		if (eventType() != TDEEventDeviceType::Unknown) {
 			if (m_fd >= 0) {
 				m_eventNotifier = new TQSocketNotifier(m_fd, TQSocketNotifier::Read, this);
 				connect( m_eventNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(eventReceived()) );
+				m_monitorActive = true;
 			}
+		}
+		if (m_monitorActive == true) {
+			// get initial state of switches
+			internalReadProvidedSwitches();
+			internalReadActiveSwitches();
 			connect( this, TQT_SIGNAL(keyPressed(unsigned int, TDEEventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, TDEEventDevice*)) );
 		}
-		m_fdMonitorActive = true;
 	}
 }
 
@@ -146,7 +366,33 @@ void TDEEventDevice::eventReceived() {
 		if ((ev.type == EV_KEY) && (ev.value == 1)) {	// Only detect keypress events (value == 1)
 			emit keyPressed(ev.code, this);
 		}
+		if (ev.type == EV_SW) {
+			emit switchChanged();
+		}
 	}
+}
+
+void TDEEventDevice::processActiveSwitches() {
+	TDESwitchType::TDESwitchType previousSwitches = m_switchActive;
+	internalReadActiveSwitches();
+
+	if (previousSwitches != m_switchActive) {
+		emit switchChanged();
+	}
+}
+
+void TDEEventDevice::connectNotify( const char* signal ) {
+	if( !m_monitorActive && qstrcmp( signal, TQT_SIGNAL(switchChanged())) == 0 ) {
+		m_watchTimer = new TQTimer(this);
+		connect( m_watchTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(processActiveSwitches()) );
+		m_watchTimer->start( 2500, FALSE );
+		m_monitorActive = true;
+
+		// get initial state of switches
+		internalReadProvidedSwitches();
+		internalReadActiveSwitches();
+	}
+	TQObject::connectNotify( signal );
 }
 
 #include "tdeeventdevice.moc"

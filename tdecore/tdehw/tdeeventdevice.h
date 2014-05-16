@@ -122,10 +122,20 @@ class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 		void internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et);
 
 		/**
+		* @internal
+		*/
+		void internalReadProvidedSwitches();
+
+		/**
 		* @param sl a TDESwitchType::TDESwitchType with all switches provided by this device
 		* @internal
 		*/
 		void internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl);
+
+		/**
+		* @internal
+		*/
+		void internalReadActiveSwitches();
 
 		/**
 		* @param sl a TDESwitchType::TDESwitchType with all active switches provided by this device
@@ -137,10 +147,12 @@ class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 		* @param hwmanager the master hardware manager
 		* @internal
 		*/
-		void internalStartFdMonitoring(TDEHardwareDevices* hwmanager);
+		void internalStartMonitoring(TDEHardwareDevices* hwmanager);
 
 	protected slots:
 		void eventReceived();
+		void processActiveSwitches();
+		virtual void connectNotify( const char* signal );
 
 	signals:
 		/**
@@ -150,13 +162,16 @@ class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 		*/
 		void keyPressed(unsigned int keycode, TDEEventDevice* device);
 
+		void switchChanged();
+
 	private:
 		TDEEventDeviceType::TDEEventDeviceType m_eventType;
 		TDESwitchType::TDESwitchType m_providedSwitches;
 		TDESwitchType::TDESwitchType m_switchActive;
 
 		int m_fd;
-		bool m_fdMonitorActive;
+		bool m_monitorActive;
+		TQTimer* m_watchTimer;
 		TQSocketNotifier* m_eventNotifier;
 
 	friend class TDEHardwareDevices;

@@ -115,20 +115,9 @@ unsigned int reverse_bits(register unsigned int x)
 	return((x >> 16) | (x << 16));
 }
 
-#define BITS_PER_LONG (sizeof(long) * 8)
-#define NUM_BITS(x) ((((x) - 1) / BITS_PER_LONG) + 1)
-#define OFF(x)  ((x) % BITS_PER_LONG)
-#define BIT(x)  (1UL << OFF(x))
-#define LONG(x) ((x) / BITS_PER_LONG)
-#define BIT_IS_SET(array, bit)  ((array[LONG(bit)] >> OFF(bit)) & 1)
-
 #if defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_NETWORK_MANAGER_BACKEND)
-#include <tqdbusconnection.h>
-#include <tqdbusproxy.h>
-#include <tqdbusmessage.h>
 #include <tqdbusvariant.h>
 #include <tqdbusdata.h>
-#include <tqdbusdatalist.h>
 // Convenience method for tdehwlib DBUS calls
 // FIXME
 // Should probably be part of dbus-1-tqt
@@ -3281,187 +3270,14 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	if (device->type() == TDEGenericDeviceType::Event) {
 		// Try to obtain as much specific information about this event device as possible
 		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
-		int r;
-		unsigned long switches[NUM_BITS(EV_CNT)];
 
-		// Figure out which switch types are supported, if any
-		TDESwitchType::TDESwitchType supportedSwitches = TDESwitchType::Null;
-		if (edevice->m_fd < 0) {
+		// Try to open input event device
+		if (edevice->m_fd < 0 && access (edevice->deviceNode().ascii(), R_OK) == 0) {
 			edevice->m_fd = open(edevice->deviceNode().ascii(), O_RDONLY);
 		}
-		r = ioctl(edevice->m_fd, EVIOCGBIT(EV_SW, EV_CNT), switches);
-#ifdef WITH_TDEHWLIB_DAEMONS
-		if( r < 1 ) {
-			TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
-			if (dbusConn.isConnected()) {
-				TQT_DBusProxy switchesProxy("org.trinitydesktop.hardwarecontrol",
-					"/org/trinitydesktop/hardwarecontrol",
-					"org.trinitydesktop.hardwarecontrol.InputEvents",
-					dbusConn);
-				if (switchesProxy.canSend()) {
-					TQValueList<TQT_DBusData> params;
-					params << TQT_DBusData::fromString(edevice->deviceNode().ascii());
-					TQT_DBusMessage reply = switchesProxy.sendWithReply("GetProvidedSwitches", params);
-					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-						TQValueList<TQ_UINT32> list = reply[0].toList().toUInt32List();
-						TQValueList<TQ_UINT32>::const_iterator it = list.begin();
-						for (r = 0; it != list.end(); ++it, r++) {
-							switches[r] = (*it);
-						}
-					}
-				}
-			}
-		}
-#endif
-		if (r > 0) {
-			if (BIT_IS_SET(switches, SW_LID)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
-			}
-			if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::TabletMode;
-			}
-			if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::RFKill;
-			}
-			if (BIT_IS_SET(switches, SW_RADIO)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Radio;
-			}
-			if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::MicrophoneInsert;
-			}
-			if (BIT_IS_SET(switches, SW_DOCK)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Dock;
-			}
-			if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::LineOutInsert;
-			}
-			if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::JackPhysicalInsert;
-			}
-			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::VideoOutInsert;
-			}
-#			ifdef SW_CAMERA_LENS_COVER
-			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::CameraLensCover;
-			}
-#			endif
-#			ifdef SW_KEYPAD_SLIDE
-			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::KeypadSlide;
-			}
-#			endif
-#			ifdef SW_FRONT_PROXIMITY
-			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::FrontProximity;
-			}
-#			endif
-#			ifdef SW_ROTATE_LOCK
-			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::RotateLock;
-			}
-#			endif
-#			ifdef SW_LINEIN_INSERT
-			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::LineInInsert;
-			}
-#			endif
-			// Keep in sync with ACPI Event/Input identification routines above
-			if (edevice->systemPath().contains("PNP0C0D")) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
-			}
-			if (edevice->systemPath().contains("PNP0C0E") || edevice->systemPath().contains("/LNXSLPBN")) {
-				supportedSwitches = supportedSwitches | TDESwitchType::SleepButton;
-			}
-			if (edevice->systemPath().contains("PNP0C0C") || edevice->systemPath().contains("/LNXPWRBN")) {
-				supportedSwitches = supportedSwitches | TDESwitchType::PowerButton;
-			}
-		}
-		edevice->internalSetProvidedSwitches(supportedSwitches);
 
-		// Figure out which switch types are active, if any
-		TDESwitchType::TDESwitchType activeSwitches = TDESwitchType::Null;
-		r = ioctl(edevice->m_fd, EVIOCGSW(sizeof(switches)), switches);
-#ifdef WITH_TDEHWLIB_DAEMONS
-		if( r < 1 ) {
-			TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
-			if (dbusConn.isConnected()) {
-				TQT_DBusProxy switchesProxy("org.trinitydesktop.hardwarecontrol",
-					"/org/trinitydesktop/hardwarecontrol",
-					"org.trinitydesktop.hardwarecontrol.InputEvents",
-					dbusConn);
-				if (switchesProxy.canSend()) {
-					TQValueList<TQT_DBusData> params;
-					params << TQT_DBusData::fromString(edevice->deviceNode().ascii());
-					TQT_DBusMessage reply = switchesProxy.sendWithReply("GetActiveSwitches", params);
-					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-						TQValueList<TQ_UINT32> list = reply[0].toList().toUInt32List();
-						TQValueList<TQ_UINT32>::const_iterator it = list.begin();
-						for (r = 0; it != list.end(); ++it, r++) {
-							switches[r] = (*it);
-						}
-					}
-				}
-			}
-		}
-#endif
-		if (r > 0) {
-			if (BIT_IS_SET(switches, SW_LID)) {
-				activeSwitches = activeSwitches | TDESwitchType::Lid;
-			}
-			if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
-				activeSwitches = activeSwitches | TDESwitchType::TabletMode;
-			}
-			if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
-				activeSwitches = activeSwitches | TDESwitchType::RFKill;
-			}
-			if (BIT_IS_SET(switches, SW_RADIO)) {
-				activeSwitches = activeSwitches | TDESwitchType::Radio;
-			}
-			if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::MicrophoneInsert;
-			}
-			if (BIT_IS_SET(switches, SW_DOCK)) {
-				activeSwitches = activeSwitches | TDESwitchType::Dock;
-			}
-			if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::LineOutInsert;
-			}
-			if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::JackPhysicalInsert;
-			}
-			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::VideoOutInsert;
-			}
-#			ifdef SW_CAMERA_LENS_COVER
-			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
-				activeSwitches = activeSwitches | TDESwitchType::CameraLensCover;
-			}
-#			endif
-#			ifdef SW_KEYPAD_SLIDE
-			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
-				activeSwitches = activeSwitches | TDESwitchType::KeypadSlide;
-			}
-#			endif
-#			ifdef SW_FRONT_PROXIMITY
-			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
-				activeSwitches = activeSwitches | TDESwitchType::FrontProximity;
-			}
-#			endif
-#			ifdef SW_ROTATE_LOCK
-			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
-				activeSwitches = activeSwitches | TDESwitchType::RotateLock;
-			}
-#			endif
-#			ifdef SW_LINEIN_INSERT
-			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::LineInInsert;
-			}
-#			endif
-		}
-		edevice->internalSetActiveSwitches(activeSwitches);
-
-		edevice->internalStartFdMonitoring(this);
+		// Start monitoring of input event device
+		edevice->internalStartMonitoring(this);
 	}
 
 	// Root devices are still special
