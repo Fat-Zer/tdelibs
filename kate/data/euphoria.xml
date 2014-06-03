@@ -27,9 +27,9 @@
 
 -->
 
-<!-- Store this in /usr/share/apps/katepart/syntax -->
+<!-- Store this in ~/.trinity/share/apps/katepart/syntax, -->
 
-<language name="Euphoria" version="2.08-1" kateversion="2.4" section="Scripts" extensions="*.e;*.ex;*.exw;*.exu" mimetype="text/x-euphoria" author="Irv Mullins (irvm@ellijay.com)" license="LGPL">
+<language name="Euphoria" version="2.08-2" kateversion="2.4" section="Scripts" extensions="*.e;*.ex;*.exw;*.exu" mimetype="text/x-euphoria" author="Irv Mullins (irvm@ellijay.com)" license="LGPL">
   <highlighting>
     <list name="keywords">
       <item> abort </item>

@@ -16,12 +16,12 @@
     You should have received a copy of the GNU General Public License
     along with the maxima.xml. If not, see <http://www.gnu.org/licenses/>.
 
-    Usage: place maxima.xml in $TDEDIR/share/apps/katepart/syntax.
+    Usage: place maxima.xml in ~/.trinity/share/apps/katepart/syntax/.
 -->
 
 <!DOCTYPE language SYSTEM "language.dtd">
 
-<language name="Maxima" version="0.16-1" kateversion="2.0" section="Scientific" extensions="*.mac;*.MAC;*.dem;*.DEM" casesensitive="1" author="Alexey Beshenov &lt;al@beshenov.ru>" license="LGPL">
+<language name="Maxima" version="0.16-2" kateversion="2.0" section="Scientific" extensions="*.mac;*.MAC;*.dem;*.DEM" casesensitive="1" author="Alexey Beshenov &lt;al@beshenov.ru>" license="LGPL">
     <highlighting>
 
         <list name="MaximaKeyword">

@@ -10,7 +10,7 @@
 
 
 
-<language name="PHP (HTML)" version="2.0" kateversion="2.4" section="Scripts" extensions="*.php;*.php3;*.wml;*.phtml;*.phtm;*.inc" mimetype="text/x-php4-src;text/x-php3-src;text/vnd.wap.wml;application/x-php"  author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL" priority="10">
+<language name="PHP (HTML)" version="2.1" kateversion="2.4" section="Scripts" extensions="*.php;*.php3;*.wml;*.phtml;*.phtm;*.inc" mimetype="text/x-php4-src;text/x-php3-src;text/vnd.wap.wml;application/x-php"  author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL" priority="10">
 
 <highlighting>
 <contexts>
@@ -199,7 +199,7 @@
 <IncludeRules context="FindPHP" />
     <RegExpr attribute="Element" context="El Close 2" String="&lt;/script\b" insensitive="TRUE" endRegion="script" />
     <RegExpr attribute="Comment" context="JS comment close" String="//(?=.*&lt;/script\b)" insensitive="TRUE" />
-    <IncludeRules context="##JavaScript/PHP" includeAttrib="true"/>
+    <IncludeRules context="Normal##JavaScript" includeAttrib="true"/>
   </context>
 
   <context name="JS comment close" attribute="Comment" lineEndContext="#pop">

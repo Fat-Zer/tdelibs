@@ -105,7 +105,7 @@ to make the rules more expressive. -->
     <!ENTITY bs         "\">
 ]>
 <language name="Prolog" section="Sources"
-	  version="1.1-1" kateversion="2.3"
+	  version="1.1-2" kateversion="2.3"
 	  mimetype="text/x-prolog"
 	  extensions="*.prolog;*.dcg;*.pro"
 	  author="Torsten Eichstädt (torsten.eichstaedt@web.de)"
@@ -196,7 +196,7 @@ AL GUSTO (simple changes):
   The simplified syntax below should highlight 99.999% of ISO-Prolog texts
 correctly, as well as many non-ISO Prolog texts.
   Else modify this file.  Save with new name in your HOME directory to
-.kde/share/apps/katepart/syntax/prolog-xy.xml You may read the NOTE at the end
+.trinity/share/apps/katepart/syntax/prolog.xml You may read the NOTE at the end
 of this file.  WARNING: Be careful, though: the highlighting works according to
 it's program code, not neccessarily it's documentation...
 
@@ -1106,7 +1106,7 @@ TODO sorted by priority
 	(don't use a space between the two - [author: dashes/minus]
 	That's just because XML comments don't allow that:-(
 
-    To use your syntax file, copy it to .kde/share/apps/katepart/syntax/ in
+    To use your syntax file, copy it to .trinity/share/apps/katepart/syntax/ in
     your home directory. You have to open a new instance of kwrite/kate to use
     the new syntax file.
 -->
