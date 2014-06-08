@@ -738,7 +738,7 @@ void KCertPart::slotImport() {
 		cfg.writeEntry("Password", "");
 		cfg.sync();
 		if (!_silentImport)
-			KMessageBox::information(_frame, i18n("Certificate has been successfully imported into TDE.\nYou can manage your certificate settings from the TDE Control Center."), i18n("Certificate Import"));
+			KMessageBox::information(_frame, i18n("Certificate has been successfully imported into TDE.\nYou can manage your certificate settings from the Trinity Control Center."), i18n("Certificate Import"));
 	} else if (_ca) {
 		TDEConfig cfg("ksslcalist", true, false);
 		if (cfg.hasGroup(_ca->getSubject())) {
@@ -756,7 +756,7 @@ void KCertPart::slotImport() {
 			_signers->regenerate();
 
 		if (!_silentImport)
-			KMessageBox::information(_frame, i18n("Certificate has been successfully imported into TDE.\nYou can manage your certificate settings from the TDE Control Center."), i18n("Certificate Import"));
+			KMessageBox::information(_frame, i18n("Certificate has been successfully imported into TDE.\nYou can manage your certificate settings from the Trinity Control Center."), i18n("Certificate Import"));
 	}
 }
 
@@ -870,7 +870,7 @@ _silentImport = false;
 _p12 = p12Save;
 _ca = caSave;
 _curName = curNameSave;
-KMessageBox::information(_frame, i18n("Certificates have been successfully imported into TDE.\nYou can manage your certificate settings from the TDE Control Center."), i18n("Certificate Import"));
+KMessageBox::information(_frame, i18n("Certificates have been successfully imported into TDE.\nYou can manage your certificate settings from the Trinity Control Center."), i18n("Certificate Import"));
 }
 
 
