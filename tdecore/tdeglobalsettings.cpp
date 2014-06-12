@@ -62,6 +62,10 @@ TQString* TDEGlobalSettings::s_desktopPath = 0;
 TQString* TDEGlobalSettings::s_autostartPath = 0;
 TQString* TDEGlobalSettings::s_trashPath = 0;
 TQString* TDEGlobalSettings::s_documentPath = 0;
+TQString* TDEGlobalSettings::s_videosPath = 0;
+TQString* TDEGlobalSettings::s_musicPath = 0;
+TQString* TDEGlobalSettings::s_downloadPath = 0;
+TQString* TDEGlobalSettings::s_picturesPath = 0;
 TQFont *TDEGlobalSettings::_generalFont = 0;
 TQFont *TDEGlobalSettings::_fixedFont = 0;
 TQFont *TDEGlobalSettings::_toolBarFont = 0;
@@ -83,7 +87,7 @@ TDEGlobalSettings::KMouseSettings *TDEGlobalSettings::s_mouseSettings = 0;
 
 // helper function for reading xdg user dirs: it is required in order to take 
 // care of locale stuff
-void readXdgUserDirs(TQString *desktop, TQString *documents)
+void readXdgUserDirs(TQString *desktop, TQString *documents, TQString *videos, TQString *music, TQString *download, TQString *pictures)
 {
 	TQFile f( TQDir::homeDirPath() + "/.config/user-dirs.dirs" );
 
@@ -101,6 +105,14 @@ void readXdgUserDirs(TQString *desktop, TQString *documents)
 			*desktop = line.remove("XDG_DESKTOP_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 		else if (line.startsWith("XDG_DOCUMENTS_DIR="))
 			*documents = line.remove("XDG_DOCUMENTS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+		else if (line.startsWith("XDG_MUSIC_DIR="))
+			*videos = line.remove("XDG_MUSIC_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+		else if (line.startsWith("XDG_DOWNLOAD_DIR="))
+			*download = line.remove("XDG_DOWNLOAD_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+		else if (line.startsWith("XDG_VIDEOS_DIR="))
+			*music = line.remove("XDG_VIDEOS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+		else if (line.startsWith("XDG_PICTURES_DIR="))
+			*pictures = line.remove("XDG_PICTURES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 
 		line = s.readLine();
 	}
@@ -515,29 +527,44 @@ void TDEGlobalSettings::initStatic() // should be called initPaths(). Don't put 
     s_autostartPath = new TQString();
     s_trashPath = new TQString();
     s_documentPath = new TQString();
+    s_videosPath = new TQString();
+    s_musicPath = new TQString();
+    s_downloadPath = new TQString();
+    s_picturesPath = new TQString();
+
 
     TDEConfigGroup g( TDEGlobal::config(), "Paths" );
 
-	// Read desktop and documents path using XDG_USER_DIRS
-	readXdgUserDirs(s_desktopPath, s_documentPath);
+    // Read desktop and documents path using XDG_USER_DIRS
+    readXdgUserDirs(s_desktopPath, s_documentPath, s_musicPath, s_videosPath, s_downloadPath, s_picturesPath);
 	
     if (s_desktopPath->isEmpty() == true) {
       *s_desktopPath = TQDir::homeDirPath() + "/Desktop/";
     }
+
     *s_desktopPath = TQDir::cleanDirPath( *s_desktopPath );
     if ( !s_desktopPath->endsWith("/") )
       s_desktopPath->append('/');
 
-    if (s_documentPath->isEmpty() == true) {
-#ifdef Q_WS_WIN
-      *s_documentPath = getWin32ShellFoldersPath("Personal");
-#else
-      *s_documentPath = TQDir::homeDirPath() + "/Documents/";
-#endif
-    }
     *s_documentPath = TQDir::cleanDirPath( *s_documentPath );
     if ( !s_documentPath->endsWith("/"))
       s_documentPath->append('/');
+
+    *s_musicPath = TQDir::cleanDirPath( *s_musicPath );
+    if ( !s_musicPath->endsWith("/"))
+      s_musicPath->append('/');
+
+    *s_videosPath = TQDir::cleanDirPath( *s_videosPath );
+    if ( !s_videosPath->endsWith("/"))
+      s_videosPath->append('/');
+
+    *s_downloadPath = TQDir::cleanDirPath( *s_downloadPath );
+    if ( !s_downloadPath->endsWith("/"))
+      s_downloadPath->append('/');
+
+    *s_picturesPath = TQDir::cleanDirPath( *s_picturesPath );
+    if ( !s_picturesPath->endsWith("/"))
+      s_picturesPath->append('/');
 
     // Trash Path - TODO remove in KDE4 (tdeio_trash can't use it for interoperability reasons)
     *s_trashPath = *s_desktopPath + i18n("Trash") + "/";
@@ -603,6 +630,14 @@ void TDEGlobalSettings::rereadPathSettings()
     s_desktopPath = 0L;
     delete s_documentPath;
     s_documentPath = 0L;
+    delete s_videosPath;
+    s_videosPath = 0L;
+    delete s_picturesPath;
+    s_picturesPath = 0L;
+    delete s_downloadPath;
+    s_downloadPath = 0L;
+    delete s_musicPath;
+    s_musicPath = 0L;
 }
 
 TDEGlobalSettings::KMouseSettings & TDEGlobalSettings::mouseSettings()

@@ -253,6 +253,29 @@ class TDECORE_EXPORT TDEGlobalSettings
      */
     static TQString documentPath() { initStatic(); return *s_documentPath; }
 
+    /**
+     * The path where documents are stored of the current user.
+     * @return the path of the videos directory
+     */
+    static TQString videosPath() { initStatic(); return *s_videosPath; }
+
+    /**
+     * The path where documents are stored of the current user.
+     * @return the path of the music directory
+     */
+    static TQString musicPath() { initStatic(); return *s_musicPath; }
+
+    /**
+     * The path where documents are stored of the current user.
+     * @return the path of the downloads directory
+     */
+    static TQString downloadPath() { initStatic(); return *s_downloadPath; }
+
+    /**
+     * The path where documents are stored of the current user.
+     * @return the path of the pictures directory
+     */
+    static TQString picturesPath() { initStatic(); return *s_picturesPath; }
 
     /**
      * The default color to use when highlighting toolbar buttons.
@@ -560,6 +583,10 @@ private:
     static TQString* s_autostartPath;
     static TQString* s_trashPath;
     static TQString* s_documentPath;
+    static TQString* s_picturesPath;
+    static TQString* s_downloadPath;
+    static TQString* s_musicPath;
+    static TQString* s_videosPath;
     static TQFont *_generalFont;
     static TQFont *_fixedFont;
     static TQFont *_toolBarFont;
