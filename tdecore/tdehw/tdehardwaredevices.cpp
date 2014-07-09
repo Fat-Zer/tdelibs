@@ -2025,6 +2025,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "sas_host")
 			|| (devicesubsystem == "sas_port")
 			|| (devicesubsystem == "sas_device")
+			|| (devicesubsystem == "sas_expander")
 			|| (devicesubsystem == "sas_generic")
 			|| (devicesubsystem == "sas_phy")
 			|| (devicesubsystem == "sas_end_device")
@@ -2041,15 +2042,20 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Peripheral);
 		}
 		if ((devicesubsystem == "infiniband_cm")
-			|| (devicesubsystem == "infiniband_mad")) {
+			|| (devicesubsystem == "infiniband_mad")
+			|| (devicesubsystem == "infiniband_verbs")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "infiniband_srp") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::SCSI);
 		}
 		if ((devicesubsystem == "enclosure")
 			|| (devicesubsystem == "clocksource")
 			|| (devicesubsystem == "amba")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
-		if (devicesubsystem == "ipmi_si") {
+		if ((devicesubsystem == "ipmi")
+			|| (devicesubsystem == "ipmi_si")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mainboard);
 		}
 		if (devicesubsystem == "misc") {
