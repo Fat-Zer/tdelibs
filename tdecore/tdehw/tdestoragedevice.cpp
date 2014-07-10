@@ -671,18 +671,9 @@ TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
 
 unsigned long long TDEStorageDevice::deviceSize() {
 	TQString bsnodename = systemPath();
-	bsnodename.append("/queue/physical_block_size");
-	TQFile bsfile( bsnodename );
-	TQString blocksize;
-	if ( bsfile.open( IO_ReadOnly ) ) {
-		TQTextStream stream( &bsfile );
-		blocksize = stream.readLine();
-		bsfile.close();
-	}
-	else {
-		// Drat, I can't get a guaranteed block size.  Assume a block size of 512, as everything I have read indicates that /sys/block/<dev>/size is given in terms of a 512 byte block...
-		blocksize = "512";
-	}
+	// While at first glance it would seem that checking /queue/physical_block_size would be needed to get an accurate device size, in reality Linux
+	// appears to only ever report the device size in 512 byte units.  This does not appear to be documented anywhere!
+	TQString blocksize = "512";
 
 	TQString dsnodename = systemPath();
 	dsnodename.append("/size");
