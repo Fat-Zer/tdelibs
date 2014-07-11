@@ -413,7 +413,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );
 	m_gridlayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
+	TQHBoxLayout* centerbox = new TQHBoxLayout( KDialog::spacingHint() );
 
 	m_statusLabel = new TQLabel( i18n("Pondering what to do next").append("..."), frame );
 	TQFont fnt = m_statusLabel->font();
