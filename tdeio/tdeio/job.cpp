@@ -829,6 +829,7 @@ void LocalURLJob::slotLocalURL(const KURL &url, bool isLocal)
 {
      kdDebug(7007) << "LocalURLJob::slotLocalURL(" << url << ")" << endl;
      emit localURL(this, url, isLocal);
+     deleteLater();
 }
 
 void LocalURLJob::slotFinished()
