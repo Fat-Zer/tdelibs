@@ -738,6 +738,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   TQString filename = TQString::null;
   bool isTrash = false;
   bool isDevice = false;
+  bool isMediaNode = false;
   m_bFromTemplate = false;
 
   // And those only to 'multiple' mode
@@ -761,13 +762,19 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     TQString path;
     if ( !m_bFromTemplate ) {
       isTrash = ( properties->kurl().protocol().find( "trash", 0, false)==0 );
-      if ( properties->kurl().protocol().find("device", 0, false)==0)
-            isDevice = true;
+      if ( properties->kurl().protocol().find("device", 0, false)==0) {
+        isDevice = true;
+      }
+      if (d->mimeType.startsWith("media/")) {
+        isMediaNode = true;
+      }
       // Extract the full name, but without file: for local files
-      if ( isReallyLocal )
+      if ( isReallyLocal ) {
         path = properties->kurl().path();
-      else
+      }
+      else {
         path = properties->kurl().prettyURL();
+      }
     } else {
       path = properties->currentDir().path(1) + properties->defaultName();
       directory = properties->currentDir().prettyURL();
@@ -857,7 +864,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     directory += ')';
   }
 
-  if ( !isDevice && !isTrash && (bDesktopFile || S_ISDIR(mode)) && !d->bMultiple /*not implemented for multiple*/ )
+  if ( !isDevice && !isMediaNode && !isTrash && (bDesktopFile || S_ISDIR(mode)) && !d->bMultiple /*not implemented for multiple*/ )
   {
     TDEIconButton *iconButton = new TDEIconButton( d->m_frame );
     int bsize = 66 + 2 * iconButton->style().pixelMetric(TQStyle::PM_ButtonMargin);
@@ -867,17 +874,20 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     // This works for everything except Device icons on unmounted devices
     // So we have to really open .desktop files
     TQString iconStr = KMimeType::findByURL( url, mode )->icon( url, isLocal );
-    if ( bDesktopFile && isLocal )
-    {
+    if ( bDesktopFile && isLocal ) {
       KDesktopFile config( url.path(), true );
       config.setDesktopGroup();
       iconStr = config.readEntry( "Icon" );
-      if ( config.hasDeviceType() )
+      if ( config.hasDeviceType() ) {
 	iconButton->setIconType( TDEIcon::Desktop, TDEIcon::Device );
-      else
+      }
+      else {
 	iconButton->setIconType( TDEIcon::Desktop, TDEIcon::Application );
-    } else
+      }
+    }
+    else {
       iconButton->setIconType( TDEIcon::Desktop, TDEIcon::Place );
+    }
     iconButton->setIcon(iconStr);
     iconArea = iconButton;
     connect( iconButton, TQT_SIGNAL( iconChanged(TQString) ),
@@ -886,12 +896,19 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     TQLabel *iconLabel = new TQLabel( d->m_frame );
     int bsize = 66 + 2 * iconLabel->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconLabel->setFixedSize(bsize, bsize);
-    iconLabel->setPixmap( TDEGlobal::iconLoader()->loadIcon( iconStr, TDEIcon::Desktop, 48) );
+    if (isMediaNode) {
+      // Display the correct device icon
+      iconLabel->setPixmap( TDEGlobal::iconLoader()->loadIcon( item->iconName(), TDEIcon::Desktop, 48) );
+    }
+    else {
+      // Display the generic folder icon
+      iconLabel->setPixmap( TDEGlobal::iconLoader()->loadIcon( iconStr, TDEIcon::Desktop, 48) );
+    }
     iconArea = iconLabel;
   }
   grid->addWidget(iconArea, curRow, 0, Qt::AlignLeft);
 
-  if (d->bMultiple || isTrash || isDevice || hasRoot)
+  if (d->bMultiple || isTrash || isDevice || isMediaNode || hasRoot)
   {
     TQLabel *lab = new TQLabel(d->m_frame );
     if ( d->bMultiple )
@@ -929,7 +946,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   ++curRow;
 
   TQLabel *l;
-  if ( !mimeComment.isEmpty() && !isDevice && !isTrash)
+  if ( !mimeComment.isEmpty() && !isDevice && !isMediaNode && !isTrash)
   {
     l = new TQLabel(i18n("Type:"), d->m_frame );
 
