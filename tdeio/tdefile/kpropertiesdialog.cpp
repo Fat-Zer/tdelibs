@@ -2925,6 +2925,8 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
                       i18n("Device:") ); // new style (combobox)
   layout->addWidget(label, 0, 0);
 
+// RAJA FIXME
+// Disable the OK button if no device is selected!
   device = new TQComboBox( true, d->m_frame, "ComboBox_device" );
   device->insertStringList( devices );
   layout->addWidget(device, 0, 1);
@@ -3032,6 +3034,8 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
 
   connect( device, TQT_SIGNAL( textChanged( const TQString & ) ),
            this, TQT_SLOT( slotDeviceChanged() ) );
+
+  processLockouts();
 }
 
 KDevicePropsPlugin::~KDevicePropsPlugin()
@@ -3043,6 +3047,18 @@ KDevicePropsPlugin::~KDevicePropsPlugin()
 // {
 //   return i18n ("De&vice");
 // }
+
+void KDevicePropsPlugin::processLockouts()
+{
+  if (device->currentText().stripWhiteSpace() != "")
+  {
+    properties->enableButtonOK(true);
+  }
+  else
+  {
+    properties->enableButtonOK(false);
+  }
+}
 
 void KDevicePropsPlugin::updateInfo()
 {
@@ -3061,6 +3077,8 @@ void KDevicePropsPlugin::updateInfo()
 
     job->readDF( mountpoint->text() );
   }
+
+  processLockouts();
 }
 
 void KDevicePropsPlugin::slotActivated( int index )

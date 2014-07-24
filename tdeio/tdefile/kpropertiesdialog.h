@@ -740,6 +740,7 @@ private slots:
 
 private:
   void updateInfo();
+  void processLockouts();
 
 private:
   TQComboBox* device;
