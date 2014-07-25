@@ -2998,7 +2998,7 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   TQString unmountedStr = config.readEntry( "UnmountIcon" );
 
   TQString fsType = config.readEntry("FSType");
-  fileSystem->setText( (fsType.stripWhiteSpace() != "") ? i18n(config.readEntry("FSType").local8Bit()) : "" );
+  fileSystem->setText( (fsType.stripWhiteSpace() != "") ? i18n(fsType.local8Bit()) : "" );
 
   device->setEditText( deviceStr );
   if ( !deviceStr.isEmpty() ) {
