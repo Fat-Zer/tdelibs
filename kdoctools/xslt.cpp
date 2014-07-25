@@ -183,12 +183,12 @@ void fillInstance(TDEInstance &ins, const TQString &srcdir) {
     TQString catalogs;
 
     if ( srcdir.isEmpty() ) {
-        catalogs += ins.dirs()->findResource("data", "ksgmltools2/customization/catalog");
+        catalogs += ins.dirs()->findResource("data", "ksgmltools2/customization/catalog.xml");
         catalogs += ':';
-        catalogs += ins.dirs()->findResource("data", "ksgmltools2/docbook/xml-dtd-4.2/docbook.cat");
+        catalogs += ins.dirs()->findResource("data", "ksgmltools2/docbook/xml-dtd-4.2/catalog.xml");
         ins.dirs()->addResourceType("dtd", TDEStandardDirs::kde_default("data") + "ksgmltools2");
     } else {
-        catalogs += srcdir +"/customization/catalog:" + srcdir + "/docbook/xml-dtd-4.2/docbook.cat";
+        catalogs += srcdir +"/customization/catalog.xml:" + srcdir + "/docbook/xml-dtd-4.2/catalog.xml";
         ins.dirs()->addResourceDir("dtd", srcdir);
     }
 

@@ -153,11 +153,11 @@ int main(int argc, char **argv) {
 	}
 
         TQString catalogs;
-        catalogs += locate( "dtd", "customization/catalog" );
+        catalogs += locate( "dtd", "customization/catalog.xml" );
         catalogs += " ";
-        catalogs += locate( "dtd", "docbook/xml-dtd-4.1.2/docbook.cat" );
+        catalogs += locate( "dtd", "docbook/xml-dtd-4.1.2/catalog.xml" );
 
-        setenv( "SGML_CATALOG_FILES", TQFile::encodeName( catalogs ).data(), 1);
+        setenv( "XML_CATALOG_FILES", TQFile::encodeName( catalogs ).data(), 1);
         TQString exe;
 #if defined( XMLLINT )
         exe = XMLLINT;
@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
         if ( ::access( TQFile::encodeName( exe ), X_OK )==0 ) {
             chdir( TQFile::encodeName( file.dirPath( true ) ) );
             TQString cmd = exe;
-            cmd += " --catalogs --valid --noout ";
+            cmd += " --valid --noout ";
             cmd += TDEProcess::quote(file.fileName());
             cmd += " 2>&1";
             FILE *xmllint = popen( TQFile::encodeName( cmd ), "r");
