@@ -23,7 +23,7 @@
 <Definition name="Bash" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/bash.xml" version="2.17-1"/>
 <Definition name="BibTeX" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/bibtex.xml" version="1.17"/>
 <Definition name="B-Method" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/bmethod.xml" version="0.2"/>
-<Definition name="CleanCSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ccss.xml" version="1.0"/>
+<Definition name="CleanCSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ccss.xml" version="1.1"/>
 <Definition name="CGiS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cgis.xml" version="1.02"/>
 <Definition name="Cg" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cg.xml" version="1.11"/>
 <Definition name="ChangeLog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/changelog.xml" version="1.04"/>
@@ -31,21 +31,21 @@
 <Definition name="Cisco" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cisco.xml" version="1.10"/>
 <Definition name="Clipper" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/clipper.xml" version="1.05"/>
 <Definition name="Clojure" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/clojure.xml" version="2-1"/>
-<Definition name="CMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cmake.xml" version="1.29-1"/>
-<Definition name="CoffeeScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coffee.xml" version="1.5"/>
+<Definition name="CMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cmake.xml" version="1.30-1"/>
+<Definition name="CoffeeScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coffee.xml" version="1.4"/>
 <Definition name="ColdFusion" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/coldfusion.xml" version="1.04"/>
 <Definition name="Common Lisp" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/commonlisp.xml" version="1.05-1"/>
 <Definition name="Component-Pascal" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/component-pascal.xml" version="1.05"/>
 <Definition name="ConTeXt" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/context.xml" version="1.1"/>
 <Definition name="Crack" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/crk.xml" version="1.1"/>
-<Definition name="CSS/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css-php.xml" version="2.08"/>
-<Definition name="CSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css.xml" version="2.08"/>
+<Definition name="CSS/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css-php.xml" version="2.09"/>
+<Definition name="CSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css.xml" version="2.09"/>
 <Definition name="C#" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cs.xml" version="1.15"/>
 <Definition name="CUE Sheet" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cue.xml" version="0.91"/>
 <Definition name="Curry" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/curry.xml" version="0.3"/>
 <Definition name="C" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/c.xml" version="1.45"/>
 <Definition name="Ddoc" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ddoc.xml" version="1.15"/>
-<Definition name="Debian Changelog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/debianchangelog.xml" version="0.68"/>
+<Definition name="Debian Changelog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/debianchangelog.xml" version="0.69"/>
 <Definition name="Debian Control" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/debiancontrol.xml" version="0.84"/>
 <Definition name=".desktop" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/desktop.xml" version="1.05-1"/>
 <Definition name="Diff" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/diff.xml" version="1.11"/>
@@ -53,7 +53,7 @@
 <Definition name="MS-DOS Batch" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/dosbat.xml" version="0.30"/>
 <Definition name="dot" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/dot.xml" version="1.1"/>
 <Definition name="DoxygenLua" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/doxygenlua.xml" version="1.01"/>
-<Definition name="Doxygen" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/doxygen.xml" version="1.35-1"/>
+<Definition name="Doxygen" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/doxygen.xml" version="1.36-1"/>
 <Definition name="DTD" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/dtd.xml" version="1.02"/>
 <Definition name="D" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/d.xml" version="1.62-1"/>
 <Definition name="Eiffel" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/eiffel.xml" version="1.02"/>
@@ -69,7 +69,7 @@
 <Definition name="FSharp" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/fsharp.xml" version="0.0.1"/>
 <Definition name="fstab" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/fstab.xml" version="1.00"/>
 <Definition name="GAP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gap.xml" version="0.2-1"/>
-<Definition name="GCCExtensions" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gcc.xml" version="0.3"/>
+<Definition name="GCCExtensions" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gcc.xml" version="0.4"/>
 <Definition name="GDB Backtrace" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gdb.xml" version="1.0-1"/>
 <Definition name="GDL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gdl.xml" version="1.01"/>
 <Definition name="GNU Gettext" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gettext.xml" version="2.00-1"/>
@@ -78,7 +78,7 @@
 <Definition name="GLSL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/glsl.xml" version="1.03"/>
 <Definition name="GNU Assembler" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gnuassembler.xml" version="1.10-1"/>
 <Definition name="Gnuplot" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/gnuplot.xml" version="0.1"/>
-<Definition name="Go" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/go.xml" version="1.04-1"/>
+<Definition name="Go" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/go.xml" version="1.05-1"/>
 <Definition name="KDev-PG[-Qt] Grammar" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/grammar.xml" version="0.24-1"/>
 <Definition name="Haml" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/haml.xml" version="1.1"/>
 <Definition name="Haskell" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/haskell.xml" version="2.2"/>
@@ -89,11 +89,11 @@
 <Definition name="ILERPG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ilerpg.xml" version="1.05-1"/>
 <Definition name="Inform" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/inform.xml" version="1.23-1"/>
 <Definition name="INI Files" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ini.xml" version="1.1"/>
-<Definition name="ISO C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/isocpp.xml" version="2.1-1"/>
+<Definition name="ISO C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/isocpp.xml" version="2.4-1"/>
 <Definition name="Jam" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/jam.xml" version="0.3"/>
 <Definition name="Javadoc" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javadoc.xml" version="1.04"/>
-<Definition name="JavaScript/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javascript-php.xml" version="1.23"/>
-<Definition name="JavaScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javascript.xml" version="1.23"/>
+<Definition name="JavaScript/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javascript-php.xml" version="1.22"/>
+<Definition name="JavaScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javascript.xml" version="1.22"/>
 <Definition name="Java" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/java.xml" version="1.21"/>
 <Definition name="JSON" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/json.xml" version="1.3"/>
 <Definition name="JSP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/jsp.xml" version="1.02"/>
@@ -112,8 +112,8 @@
 <Definition name="M3U" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/m3u.xml" version="1.10-1"/>
 <Definition name="GNU M4" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/m4.xml" version="1.1-1"/>
 <Definition name="MAB-DB" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mab.xml" version="1.03"/>
-<Definition name="Makefile" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/makefile.xml" version="2.0"/>
-<Definition name="Mako" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mako.xml" version="1.1"/>
+<Definition name="Makefile" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/makefile.xml" version="2.1"/>
+<Definition name="Mako" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mako.xml" version="1.0"/>
 <Definition name="Mason" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mason.xml" version="1.06"/>
 <Definition name="Mathematica" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mathematica.xml" version="8.0.4"/>
 <Definition name="Matlab" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/matlab.xml" version="1.31-1"/>
@@ -123,7 +123,7 @@
 <Definition name="mergetag text" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mergetagtext.xml" version="0.1"/>
 <Definition name="MIPS Assembler" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mips.xml" version="1.03"/>
 <Definition name="Modelica" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/modelica.xml" version="3.2-1"/>
-<Definition name="Modelines" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/modelines.xml" version="1.0-1"/>
+<Definition name="Modelines" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/modelines.xml" version="1.2-1"/>
 <Definition name="Modula-2" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/modula-2.xml" version="1.03"/>
 <Definition name="MonoBasic" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/monobasic.xml" version="1.01"/>
 <Definition name="Music Publisher" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/mup.xml" version="1.06"/>
@@ -140,9 +140,9 @@
 <Definition name="OpenCL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/opencl.xml" version="1.44"/>
 <Definition name="Pango" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pango.xml" version="0.1"/>
 <Definition name="Pascal" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pascal.xml" version="1.23"/>
-<Definition name="Perl" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/perl.xml" version="1.29-1"/>
+<Definition name="Perl" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/perl.xml" version="1.29-2"/>
 <Definition name="PGN" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pgn.xml" version="2.01-1"/>
-<Definition name="PHP/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/php.xml" version="1.45"/>
+<Definition name="PHP/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/php.xml" version="1.44"/>
 <Definition name="PicAsm" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/picsrc.xml" version="1.07"/>
 <Definition name="Pig" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pig.xml" version="3.0"/>
 <Definition name="Pike" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pike.xml" version="1.07"/>
@@ -150,21 +150,21 @@
 <Definition name="POV-Ray" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/povray.xml" version="1.2.1"/>
 <Definition name="PostScript Printer Description" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ppd.xml" version="0.1"/>
 <Definition name="progress" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/progress.xml" version="1.10"/>
-<Definition name="Prolog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/prolog.xml" version="1.1-2"/>
+<Definition name="Prolog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/prolog.xml" version="1.2-1"/>
 <Definition name="Protobuf" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/protobuf.xml" version="2.40"/>
 <Definition name="Puppet" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/puppet.xml" version="1.18"/>
 <Definition name="PureBasic" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/purebasic.xml" version="3.91"/>
 <Definition name="Python" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/python.xml" version="2.22"/>
 <Definition name="QMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qmake.xml" version="1.2"/>
 <Definition name="QML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qml.xml" version="1.4"/>
-<Definition name="C++/Qt4" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qt4.xml" version="1.5-1"/>
+<Definition name="C++/Qt4" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qt4.xml" version="1.9-1"/>
 <Definition name="RapidQ" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rapidq.xml" version="1.01"/>
 <Definition name="RelaxNG-Compact" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/relaxngcompact.xml" version="0.2"/>
 <Definition name="RELAX NG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/relaxng.xml" version="0.8"/>
 <Definition name="Restructured Text" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/restructuredtext.xml" version="1.0"/>
-<Definition name="reStructuredText" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rest.xml" version="1.02"/>
+<Definition name="reStructuredText" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rest.xml" version="1.4"/>
 <Definition name="REXX" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rexx.xml" version="1.01"/>
-<Definition name="Ruby/Rails/RHTML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rhtml.xml" version="1.02"/>
+<Definition name="Ruby/Rails/RHTML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rhtml.xml" version="1.01"/>
 <Definition name="RenderMan RIB" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rib.xml" version="1.00"/>
 <Definition name="RPM Spec" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rpmspec.xml" version="2.03"/>
 <Definition name="RSI IDL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rsiidl.xml" version="1.04"/>
@@ -174,7 +174,7 @@
 <Definition name="Scala" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/scala.xml" version="1.0"/>
 <Definition name="Scheme" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/scheme.xml" version="1.13-1"/>
 <Definition name="scilab" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sci.xml" version="1.03"/>
-<Definition name="SCSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/scss.xml" version="2.04"/>
+<Definition name="SCSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/scss.xml" version="2.05"/>
 <Definition name="sed" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sed.xml" version="1.0"/>
 <Definition name="SGML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sgml.xml" version="1.02"/>
 <Definition name="Sieve" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sieve.xml" version="1.05"/>
