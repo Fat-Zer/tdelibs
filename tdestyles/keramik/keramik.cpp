@@ -113,7 +113,7 @@ namespace
 	const int itemVMargin     = 0;
 	const int arrowHMargin    = 6;
 	const int rightBorder     = 12;
-	const char* kdeToolbarWidget = "kde toolbar widget";
+	const char* kdeToolbarWidget = "tde toolbar widget";
 
 	const int smallButMaxW    = 27;
 	const int smallButMaxH    = 20;
@@ -482,7 +482,7 @@ static void renderToolbarEntryBackground(TQPainter* paint,
 static void renderToolbarWidgetBackground(TQPainter* painter, const TQStyleControlElementData &ceData, const TQStyle::ControlElementFlags elementFlags, const TQWidget* widget)
 {
 	// Draw a gradient background for custom widgets in the toolbar
-	// that have specified a "kde toolbar widget" name, or
+	// that have specified a "tde toolbar widget" name, or
 	// are caught as toolbar widgets otherwise
 
 	// Find the top-level toolbar of this widget, since it may be nested in other
@@ -2917,7 +2917,7 @@ bool KeramikStyle::objectEventHandler( const TQStyleControlElementData &ceData, 
 				object->parent() && !qstrcmp(object->name(), kdeToolbarWidget) )
 		{
 			// Draw a gradient background for custom widgets in the toolbar
-			// that have specified a "kde toolbar widget" name.
+			// that have specified a "tde toolbar widget" name.
 			renderToolbarWidgetBackground(0, ceData, elementFlags, TQT_TQWIDGET(object));
 	
 			return false;	// Now draw the contents

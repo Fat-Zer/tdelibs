@@ -87,7 +87,7 @@ public:
    * transferred to the action and the label is deleted when the action is
    * deleted. So you shouldn't hold any pointers to the label.
    *
-   * It's important that the label's name is set to "kde toolbar widget" in
+   * It's important that the label's name is set to "tde toolbar widget" in
    * its constructor, otherwise it is not correctly rendered in some kde
    * styles.
    *

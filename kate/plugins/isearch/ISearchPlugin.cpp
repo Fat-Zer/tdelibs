@@ -73,7 +73,7 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 		this, TQT_SLOT(slotSearchBackwardAction()),
 		actionCollection(), "edit_isearch_reverse" );
 
-	m_label = new TQLabel( i18n("I-Search:"), 0L, "kde toolbar widget" );
+	m_label = new TQLabel( i18n("I-Search:"), 0L, "tde toolbar widget" );
 	KWidgetAction* labelAction = new KWidgetAction(
 		m_label,
 		i18n("I-Search:"), 0, 0, 0,

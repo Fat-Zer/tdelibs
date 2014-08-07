@@ -261,7 +261,7 @@ void PlastikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
 		installObjectEventHandler(ceData, elementFlags, ptr, this);
 	} else if (::tqqt_cast<TQPopupMenu*>(widget)) {
 		widget->setBackgroundMode( NoBackground );
-	} else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
+	} else if ( !qstrcmp(widget->name(), "tde toolbar widget") ) {
 		installObjectEventHandler(ceData, elementFlags, ptr, this);
 	}
 	
@@ -301,7 +301,7 @@ void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
 		removeObjectEventHandler(ceData, elementFlags, ptr, this);
 	} else if (::tqqt_cast<TQPopupMenu*>(widget)) {
 		widget->setBackgroundMode( PaletteBackground );
-	} else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
+	} else if ( !qstrcmp(widget->name(), "tde toolbar widget") ) {
 		removeObjectEventHandler(ceData, elementFlags, ptr, this);
 	}
 	
@@ -3510,7 +3510,7 @@ bool PlastikStyle::objectEventHandler( const TQStyleControlElementData &ceData, 
 		animationTimer->start( 50, false );
 		}
 	}
-	if ( !qstrcmp(obj->name(), "kde toolbar widget") )
+	if ( !qstrcmp(obj->name(), "tde toolbar widget") )
 	{
 		TQWidget* lb = TQT_TQWIDGET(obj);
 		if (lb->backgroundMode() == TQt::PaletteButton)

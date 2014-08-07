@@ -38,7 +38,7 @@ TDEToolBarLabelAction::TDEToolBarLabelAction(const TQString &text,
 					 const char *slot,
 					 TDEActionCollection *parent,
 					 const char *name)
-  : KWidgetAction(new TQLabel(text, 0, "kde toolbar widget"), text, cut,
+  : KWidgetAction(new TQLabel(text, 0, "tde toolbar widget"), text, cut,
 		  receiver, slot, parent, name), 
     d(new TDEToolBarLabelActionPrivate)
 {
@@ -52,7 +52,7 @@ TDEToolBarLabelAction::TDEToolBarLabelAction(TQWidget* buddy,
 					 const char *slot,
  					 TDEActionCollection *parent, 
 					 const char *name)
-  : KWidgetAction(new TQLabel(buddy, text, 0, "kde toolbar widget"), text, 
+  : KWidgetAction(new TQLabel(buddy, text, 0, "tde toolbar widget"), text, 
 		  cut, receiver, slot, parent, name),
     d(new TDEToolBarLabelActionPrivate)
 {
@@ -68,7 +68,7 @@ TDEToolBarLabelAction::TDEToolBarLabelAction(TQLabel* label,
   : KWidgetAction(label, label->text(), cut, receiver, slot, parent, name),
     d(new TDEToolBarLabelActionPrivate)
 {
-  Q_ASSERT(TQString::fromLatin1("kde toolbar widget") == label->name());
+  Q_ASSERT(TQString::fromLatin1("tde toolbar widget") == label->name());
   init();
 }
 

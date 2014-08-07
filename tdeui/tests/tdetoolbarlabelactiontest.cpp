@@ -40,10 +40,10 @@ public:
 
     KSqueezedTextLabel* accel = new KSqueezedTextLabel
       ("&Really long, long, long and boring text goes here", main, 
-       "kde toolbar widget");
+       "tde toolbar widget");
     new KSqueezedTextLabel
       ("Really long, long, long and boring text goes here", main, 
-       "kde toolbar widget");
+       "tde toolbar widget");
 
 
     // first constructor
@@ -67,7 +67,7 @@ public:
      // third constructor
     TQLabel* customLabel =  new KSqueezedTextLabel
       ("&Really long, long, long and boring text goes here", this, 
-        "kde toolbar widget");
+        "tde toolbar widget");
 
     TDEToolBarLabelAction* label3 = new TDEToolBarLabelAction(customLabel, 0, 0, 0,
  							  actionCollection(),

@@ -452,7 +452,7 @@ void TDEListViewSearchLineWidget::createWidgets()
 
     d->clearButton->show();
 
-    TQLabel *label = new TQLabel(i18n("S&earch:"), this, "kde toolbar widget");
+    TQLabel *label = new TQLabel(i18n("S&earch:"), this, "tde toolbar widget");
 
     d->searchLine = createSearchLine(d->listView);
     d->searchLine->show();

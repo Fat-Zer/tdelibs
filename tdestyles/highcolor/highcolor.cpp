@@ -96,7 +96,7 @@ static const int itemHMargin     = 3;
 static const int itemVMargin     = 0;
 static const int arrowHMargin    = 6;
 static const int rightBorder     = 12;
-static const char* kdeToolbarWidget = "kde toolbar widget";
+static const char* kdeToolbarWidget = "tde toolbar widget";
 
 // ---------------------------------------------------------------------------
 
@@ -2023,7 +2023,7 @@ bool HighColorStyle::objectEventHandler( const TQStyleControlElementData &ceData
 		if ( object->parent() && !qstrcmp( object->name(), kdeToolbarWidget ) )
 		{
 			// Draw a gradient background for custom widgets in the toolbar
-			// that have specified a "kde toolbar widget" name.
+			// that have specified a "tde toolbar widget" name.
 			// FIXME
 			// This currently requires direct widget access
 			// Is there any way to do this without it?

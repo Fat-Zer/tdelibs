@@ -506,7 +506,7 @@ bool KThemeStyle::objectEventHandler( const TQStyleControlElementData &ceData, C
                 w->setPalette(pal);
             }
         }
-        if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits(TQLABEL_OBJECT_NAME_STRING))
+        if (!qstrcmp(object->name(), "tde toolbar widget") && object->inherits(TQLABEL_OBJECT_NAME_STRING))
         {
             TQWidget* lb = TQT_TQWIDGET(object);
             if (lb->backgroundMode() == TQt::PaletteButton)
@@ -526,7 +526,7 @@ void KThemeStyle::polish( const TQStyleControlElementData &ceData, ControlElemen
         if (::tqqt_cast<TQStatusBar*>(w))
             w->setPaletteBackgroundColor(TQApplication::palette().color(TQPalette::Normal, TQColorGroup::Background));
 
-        if (::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "kde toolbar widget"))
+        if (::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "tde toolbar widget"))
             installObjectEventHandler(ceData, elementFlags, ptr, this);
 
         if (w->backgroundPixmap() && !w->isTopLevel() && 
@@ -644,7 +644,7 @@ void KThemeStyle::unPolish( const TQStyleControlElementData &ceData, ControlElem
         }
 
         //Toolbar labels should nornally be PaletteButton
-        if ( ::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "kde toolbar widget"))
+        if ( ::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "tde toolbar widget"))
             w->setBackgroundMode( TQWidget::PaletteButton );
 
         //The same for menu bars, popup menus
