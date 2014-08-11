@@ -360,7 +360,7 @@ void KeramikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
 			listbox->setBackgroundMode( NoBackground );
 			installObjectEventHandler(ceData, elementFlags, ptr, this);
 	
-		} else if (widget->inherits("QToolBarExtensionWidget")) {
+		} else if (widget->inherits(TQTOOLBAREXTENSIONWIDGET_OBJECT_NAME_STRING)) {
 			installObjectEventHandler(ceData, elementFlags, ptr, this);
 			//widget->setBackgroundMode( NoBackground );
 		}
@@ -405,7 +405,7 @@ void KeramikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
 			listbox->setBackgroundMode( PaletteBackground );
 			removeObjectEventHandler(ceData, elementFlags, ptr, this);
 			widget->clearMask();
-		} else if (widget->inherits("QToolBarExtensionWidget")) {
+		} else if (widget->inherits(TQTOOLBAREXTENSIONWIDGET_OBJECT_NAME_STRING)) {
 			removeObjectEventHandler(ceData, elementFlags, ptr, this);
 		}
 		else if ( !qstrcmp( widget->name(), kdeToolbarWidget ) ) {
@@ -2258,7 +2258,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 		case CC_ToolButton: {
 			bool onToolbar = ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING);
 			bool onExtender = !onToolbar &&
-				ceData.parentWidgetData.widgetObjectTypes.contains( "QToolBarExtensionWidget") &&
+				ceData.parentWidgetData.widgetObjectTypes.contains( TQTOOLBAREXTENSIONWIDGET_OBJECT_NAME_STRING) &&
 				widget && widget->parentWidget()->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 
 			bool onControlButtons = false;

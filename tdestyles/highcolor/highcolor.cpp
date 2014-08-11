@@ -197,7 +197,7 @@ void HighColorStyle::polish(const TQStyleControlElementData &ceData, ControlElem
 			installObjectEventHandler(ceData, elementFlags, ptr, this);
 		} else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 			widget->setBackgroundMode(TQWidget::NoBackground);
-		} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
+		} else if (type == HighColor && widget->inherits(TQTOOLBAREXTENSIONWIDGET_OBJECT_NAME_STRING)) {
 			installObjectEventHandler(ceData, elementFlags, ptr, this);
 		} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
 			widget->setBackgroundMode( NoBackground );	// We paint the whole background.
@@ -222,7 +222,7 @@ void HighColorStyle::unPolish(const TQStyleControlElementData &ceData, ControlEl
 		}
 		else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 			widget->setBackgroundMode(TQWidget::PaletteBackground);
-		} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
+		} else if (type == HighColor && widget->inherits(TQTOOLBAREXTENSIONWIDGET_OBJECT_NAME_STRING)) {
 			removeObjectEventHandler(ceData, elementFlags, ptr, this);
 		} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
 			removeObjectEventHandler(ceData, elementFlags, ptr, this);
@@ -1692,7 +1692,7 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 									parent->orientation() == Qt::Vertical,
 									r.x(), r.y(), pr.width()-2, pr.height()-2);
 					}
-					else if (ceData.parentWidgetData.widgetObjectTypes.contains("QToolBarExtensionWidget"))
+					else if (ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAREXTENSIONWIDGET_OBJECT_NAME_STRING))
 					{
 						TQWidget* parent = (TQWidget*)widget->parent();
 						TQToolBar* toolbar = (TQToolBar*)parent->parent();
