@@ -1,10 +1,9 @@
-
 /*
- * text styles TDE 3.5.13.2
+ * text styles TDE 14.0.0
  */
 
 img {margin: 0px; padding: 0px}
-body {margin: 0px; padding: 0px; background-color: #418ade; background-image: url(back.png); -khtml-background-size: 100%; color: #111111; height="100%"; width="100%" }
+body {margin: 0px; padding: 0px; background-color: #003070; background-image: url(back.png); -khtml-background-size: 100%; color: #111111; height="100%"; width="100%" }
 
 
 .bar_text a {color: #008;}
