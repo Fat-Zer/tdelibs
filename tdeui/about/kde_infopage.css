@@ -1,10 +1,12 @@
 
 /*
- * text styles
+ * text styles TDE 3.5.13.2
  */
 
 img {margin: 0px; padding: 0px}
-body {margin: 0px; padding: 0px; background-color: #418ade;}
+body {margin: 0px; padding: 0px; background-color: #418ade; background-image: url(back.png); -khtml-background-size: 100%; color: #111111; height="100%"; width="100%" }
+
+
 .bar_text a {color: #008;}
 
 #subtext {
@@ -23,8 +25,6 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
  */
 
 #header {
-  background-image: url(top-middle.png);
-  width: 100%;
   height: 131px;
 }
 
@@ -37,34 +37,45 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
   z-index: 1;
 }
 
+#headerCenter {
+  background-image: url(top-middle.png);
+  width: 100%;
+  position:absolute;
+  right:430px;
+  top:0px;
+   height: 131px;
+}
+
 #headerR {
   position: absolute;
+  top:0px;
   right: 0px;
 }
+
 
 /* title and tagline are part of the header diff */
 #title {
   position: absolute;
-  top: 63px;
-  right: 100px;
+  top: 53px;
+  left: 140px;
   margin-top: -1em;
-  text-align: right;
+  text-align: left;
   font-size: xx-large;
   font-weight: bold;
-  text-shadow: #fff 0px 0px 5px;
-  color: #444;
+  text-shadow: #000000 1px 1px 5px;
+  color: #fff;
   z-index: 5;
 }
 
 #tagline {
   position: absolute;
-  top: 70px;
-  right: 100px;
-  text-align: right;
-  font-size: large;
+  top: 60px;
+  left: 140px;
+  text-align: left;
+  font-size: small;
   font-weight: bold;
-  text-shadow: #fff 0px 0px 5px;
-  color: #444;
+  text-shadow: #000000 1px 1px 1px;
+  color: #fff;
   z-index: 5;
 }
 
@@ -73,19 +84,94 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
  */
 
 #bar {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  
+}
+
+#barT {
   width: 100%;
-  background-color: #5babe5;
-  padding-top: 0.5ex;
-  border-bottom: 1px solid black;
-  padding-bottom: 0.5ex;
+  height: 22px;
+}
+
+#barTL {
+  width: 25px;
+  height: 22px;
+  float: left;
+  background-image: url(box-top-left.png);
+}
+
+#barTR {
+  width: 25px;
+  height: 22px;
+  float: right;
+  background-image: url(box-top-right.png);
+}
+
+#barTC {
+  height: 22px;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-image: url(box-top-middle.png);
+  -khtml-background-size: 100%;
+}
+
+#barL {
+  background-image: url(box-middle-left.png);
+  background-repeat: repeat-y;
+  background-position: left;
+  padding-left: 25px;
+}
+
+#barR {
+  background-image: url(box-middle-right.png);
+  background-repeat: repeat-y;
+  background-position: right;
+  padding-right: 25px;
+}
+
+#barB {
+  width: 100%;
+  height: 22px;
+}
+
+#barBL {
+  width: 25px;
+  height: 22px;
+  float: left;
+  background-image: url(box-bottom-left.png);
+}
+
+#barBR {
+  width: 25px;
+  height: 22px;
+  float: right;
+  background-image: url(box-bottom-right.png);
+}
+
+#barBC {
+  height: 22px;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-image: url(box-bottom-middle.png);
+  -khtml-background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 #barCenter {
+  background-image: url(box-center.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  -khtml-background-size: 100%;
   text-align: center;
   color: #282828;
   font-weight: bold;
   font-size: small;
 }
+
 
 #barCenter a.selected, #barCenter a.selected:hover {
   color: #282828;
@@ -116,8 +202,9 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
 }
 
 #barCenter li:not(:first-child):before { /* Aren't css3 selectors great? */
-  content: " · ";
+  content: " \0387  ";
 }
+
 
 /*
  * the main box
@@ -155,19 +242,21 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
   margin-left: 25px;
   margin-right: 25px;
   background-image: url(box-top-middle.png);
-  background-repeat: repeat-x;
+  -khtml-background-size: 100%;
 }
 
 #boxL {
   background-image: url(box-middle-left.png);
   background-repeat: repeat-y;
   background-position: left;
-  padding-left: 20px;
+  padding-left: 25px;
 }
 
 #boxCenter {
-  background-color: #dfe7f3;
+  background-image: url(box-center.png);
   background-position: center;
+  background-repeat: no-repeat;
+  -khtml-background-size: 100%;
   text-align: left;
 }
 
@@ -175,7 +264,7 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
   background-image: url(box-middle-right.png);
   background-repeat: repeat-y;
   background-position: right;
-  padding-right: 20px;
+  padding-right: 25px;
 }
 
 #boxB {
@@ -202,7 +291,8 @@ body {margin: 0px; padding: 0px; background-color: #418ade;}
   margin-left: 25px;
   margin-right: 25px;
   background-image: url(box-bottom-middle.png);
-  background-repeat: repeat-x;
+  -khtml-background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 /*
