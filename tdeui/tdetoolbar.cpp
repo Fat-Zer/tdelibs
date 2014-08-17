@@ -859,9 +859,8 @@ void TDEToolBar::setIconText(IconText icontext, bool update)
     TQMainWindow *mw = mainWindow();
     if ( mw ) {
         mw->setUpdatesEnabled( false );
-//         mw->setToolBarsMovable( !mw->toolBarsMovable() );	// Old way
-//         mw->setToolBarsMovable( !mw->toolBarsMovable() );
-        mw->setCentralWidget(mw->centralWidget());	// This is a faster hack
+        mw->setToolBarsMovable( !mw->toolBarsMovable() );
+        mw->setToolBarsMovable( !mw->toolBarsMovable() );
         mw->setUpdatesEnabled( true );
     }
 }
@@ -897,9 +896,8 @@ void TDEToolBar::setIconSize(int size, bool update)
     if ( mainWindow() ) {
         TQMainWindow *mw = mainWindow();
         mw->setUpdatesEnabled( false );
-//         mw->setToolBarsMovable( !mw->toolBarsMovable() );	// Old way
-//         mw->setToolBarsMovable( !mw->toolBarsMovable() );
-        mw->setCentralWidget(mw->centralWidget());	// This is a faster hack
+        mw->setToolBarsMovable( !mw->toolBarsMovable() );
+        mw->setToolBarsMovable( !mw->toolBarsMovable() );
         mw->setUpdatesEnabled( true );
     }
 }
