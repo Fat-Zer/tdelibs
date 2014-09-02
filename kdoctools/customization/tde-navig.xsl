@@ -48,12 +48,12 @@
           </div>
             <div style="position: absolute;
                         top: 25px; 
-                        right: 100px; 
-                        text-align: right; 
+                        left: 140px; 
+                        text-align: left; 
                         font-size: xx-large; 
                         font-weight: bold; 
-                        text-shadow: #fff 0px 0px 5px; 
-                        color: #444">
+                        text-shadow: #000000 1px 1px 5px;
+                        color: #fff">
               <xsl:apply-templates select="." mode="title.markup"/>
             </div>
           </div>
@@ -200,9 +200,9 @@
         <div class="bannerBottomLeft">
           <img src="{$tde.common}bottom-left.png" style="margin: 0px;" alt=""/>
         </div>
-<div id="comments" style="position:relative; top: 5px; left: 1em; height:85px; width: 50%; color: #cfe1f6">
+<div id="comments" style="position:relative; top: 5px; left: 1em; height:85px; width: 50%; color: #000000">
 	<p>Would you like to comment or contribute an update to this page?<br/>
-        Send feedback to the <a href="mailto:trinity-devel@lists.pearsoncomputing.net" style="background:transparent; color:#cfe1f6; text-decoration: underline;">TDE Development Team</a></p>
+        Send feedback to the <a href="mailto:trinity-devel@lists.pearsoncomputing.net" style="background:transparent; color:#000000; text-decoration: underline;">TDE Development Team</a></p>
 	</div>
 
       </div>
