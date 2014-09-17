@@ -14,15 +14,15 @@
 <public publicId="-//GNU//DOCUMENT GNU General Public License V2//KO"
        uri="common/gpl-translated" />
 <public publicId="-//GNU//DOCUMENT GNU General Public License V2 (HTML)//KO"
-       "common/gpl-translated.html" />
+       uri="common/gpl-translated.html" />
 <public publicId="-//GNU//DOCUMENT GNU Lesser General Public License V2.1//KO"
        uri="common/lgpl-translated" />
 <public publicId="-//GNU//DOCUMENT GNU Lesser General Public License V2.1 (HTML)//KO"
-       "common/lgpl-translated.html" />
+       uri="common/lgpl-translated.html" />
 <public publicId="-//GNU//DOCUMENT GNU Free Documentation License V1.1//KO"
        uri="common/fdl-translated" />
 <public publicId="-//GNU//DOCUMENT GNU Free Documentation License V1.1 (HTML)//KO"
-       "common/fdl-translated.html" />
+       uri="common/fdl-translated.html" />
 <public publicId="-//KDE//DOCUMENT GPL Licence Declaration//KO"
        uri="entities/underGPL.docbook" />
 <public publicId="-//KDE//DOCUMENT FDL Licence Declaration//KO"
