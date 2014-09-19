@@ -211,7 +211,7 @@
         <DetectIdentifier/>
         <DetectSpaces/>
       </context>
-    <context name="FindPHP">
+    <context name="FindPHP" attribute="Normal Text" lineEndContext="#stay">
 <RegExpr context="##PHP/PHP" String="&lt;\?(?:=|php)?" lookAhead="true" />
 </context>
 </contexts>
