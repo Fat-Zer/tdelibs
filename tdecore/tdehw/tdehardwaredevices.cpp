@@ -1971,6 +1971,18 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else if (devicesubsystem == "spi") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
+		else if (devicesubsystem == "watchdog") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		else if (devicesubsystem == "node") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		else if (devicesubsystem == "memory") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		else if (devicesubsystem == "clockevents") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME
 			// Figure out a way to differentiate between ThermalControl (fans and coolers) and ThermalSensor types
@@ -2061,6 +2073,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (devicesubsystem == "misc") {
 			if (devicedriver.startsWith("tpm_")) {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Cryptography);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 			}
 		}
 		if (devicesubsystem == "leds") {

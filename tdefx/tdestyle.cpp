@@ -2139,7 +2139,7 @@ void TransparencyHandler::bottomShadow(TQImage& dst)
 			}
 		}
 
-		strip_data = shadow_strip[++line];
+		strip_data = shadow_strip[line++];
 	}
 }
 
