@@ -24,6 +24,7 @@
 #include "value.h"
 #include "internal.h"
 #include <limits.h>
+#include <typeinfo>
 
 #ifndef MAX
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
@@ -121,7 +122,7 @@ void* Collector::allocate(size_t s)
 
     if (heap.usedBlocks == heap.numBlocks) {
       static const size_t maxNumBlocks = ULONG_MAX / sizeof(CollectorBlock*) / GROWTH_FACTOR;
-      if (heap.numBlocks > maxNumBlocks)
+      if ((size_t)heap.numBlocks > maxNumBlocks)
           return 0L;
       heap.numBlocks = MAX(MIN_ARRAY_SIZE, heap.numBlocks * GROWTH_FACTOR);
       heap.blocks = (CollectorBlock **)realloc(heap.blocks, heap.numBlocks * sizeof(CollectorBlock *));
@@ -222,6 +223,10 @@ bool Collector::collect()
       if (!(imp->_flags & ValueImp::VI_DESTRUCTED)) {
 	if (!imp->refcount && imp->_flags == (ValueImp::VI_GCALLOWED | ValueImp::VI_CREATED)) {
 	  //fprintf( stderr, "[kjs-collector] Collector::deleting ValueImp %p (%s)\n", (void*)imp, typeid(*imp).name());
+
+	  // prevent double free
+	  imp->_flags |= ValueImp::VI_DESTRUCTED;
+
 	  // emulate destructing part of 'operator delete()'
 	  imp->~ValueImp();
 	  curBlock->usedCells--;
