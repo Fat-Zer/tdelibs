@@ -289,6 +289,12 @@ protected:
 class KResolverWorkerFactoryBase
 {
 public:
+  // default constructor
+  KResolverWorkerFactoryBase();
+
+  // virtual destructor
+  virtual ~KResolverWorkerFactoryBase();
+
   virtual KResolverWorkerBase* create() const = 0;
 
   /**

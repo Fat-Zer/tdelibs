@@ -140,6 +140,14 @@ void KResolverWorkerBase::releaseResolver()
   th->releaseResolver();
 }
 
+KResolverWorkerFactoryBase::KResolverWorkerFactoryBase()
+{
+}
+
+KResolverWorkerFactoryBase::~KResolverWorkerFactoryBase()
+{
+}
+
 void KResolverWorkerFactoryBase::registerNewWorker(KResolverWorkerFactoryBase* factory)
 {
   KResolverManager::manager()->registerNewWorker(factory);
