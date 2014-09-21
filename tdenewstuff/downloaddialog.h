@@ -21,7 +21,7 @@
 #define KNEWSTUFF_DOWNLOADDIALOG_H
 
 #include <kdialogbase.h>
-#include <knewstuff/provider.h>
+#include <tdenewstuff/provider.h>
 
 namespace TDEIO
 {

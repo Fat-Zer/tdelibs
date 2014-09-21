@@ -352,9 +352,9 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
   if ( providersUrl.isEmpty() ) {
     // TODO: Replace the default by the real one.
     TQString server = cfg->readEntry( "MasterServer",
-                                     "http://korganizer.kde.org" );
+                                     "https://www.trinitydesktop.org" );
   
-    providersUrl = server + "/knewstuff/" + type + "/providers.xml";
+    providersUrl = server + "/ocs/" + type + "/providers.xml";
   }
 
   kdDebug() << "ProviderLoader::load(): providersUrl: " << providersUrl << endl;

@@ -32,19 +32,19 @@ install( FILES
     downloaddialog.h engine.h entry.h knewstuffgeneric.h
     knewstuff.h providerdialog.h provider.h uploaddialog.h
     knewstuffbutton.h knewstuffsecure.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/knewstuff )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdenewstuff )
 
 
 ##### other data ################################
 
-install( FILES types DESTINATION ${DATA_INSTALL_DIR}/knewstuff )
+install( FILES types DESTINATION ${DATA_INSTALL_DIR}/tdenewstuff )
 install( FILES tdehotnewstuffrc DESTINATION ${CONFIG_INSTALL_DIR} )
 tde_install_icons( )
 
 
-##### knewstuff #################################
+##### tdenewstuff ###############################
 
-set( target knewstuff )
+set( target tdenewstuff )
 
 set( ${target}_SRCS
   engine.cpp entry.cpp downloaddialog.cpp uploaddialog.cpp
@@ -70,6 +70,6 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK knewstuff-shared
+  LINK tdenewstuff-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

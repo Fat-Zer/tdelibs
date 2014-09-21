@@ -259,7 +259,7 @@ AC_SUBST(LIB_TDEHTML, '$(top_builddir)/tdehtml/libtdehtml.la')
 AC_SUBST(LIB_TDEPRINT, '$(top_builddir)/tdeprint/libtdeprint.la')
 AC_SUBST(LIB_TDEPARTS, '$(top_builddir)/tdeparts/libtdeparts.la')
 AC_SUBST(LIB_KIMGIO, '$(top_builddir)/kimgio/libkimgio.la')
-AC_SUBST(LIB_KNEWSTUFF, '$(top_builddir)/knewstuff/libknewstuff.la')
+AC_SUBST(LIB_TDENEWSTUFF, '$(top_builddir)/tdenewstuff/libtdenewstuff.la')
 AC_SUBST(LIB_TDEUNITTEST, '$(top_builddir)/tdeunittest/libtdeunittest.la')
 case $host in 
 	*cygwin*) lib_kded='$(top_builddir)/kded/libtdeinit_kded.la' ;;

@@ -33,9 +33,9 @@
 #include <tdeapplication.h>
 #include <kiconloader.h>
 
-#include <knewstuff/entry.h>
-#include <knewstuff/knewstuffgeneric.h>
-#include <knewstuff/engine.h>
+#include <tdenewstuff/entry.h>
+#include <tdenewstuff/knewstuffgeneric.h>
+#include <tdenewstuff/engine.h>
 
 #include <tqlayout.h>
 #include <tqpushbutton.h>
@@ -530,6 +530,13 @@ void DownloadDialog::slotInstall()
 {
   Entry *e = getEntry();
   if(!e) return;
+
+  TQPushButton *de, *in;
+  in = *(m_buttons[d->m_page]->at(0));
+  de = *(m_buttons[d->m_page]->at(1));
+
+  if(in) in->setEnabled(false);
+  if(de) de->setEnabled(false);
 
   d->m_lvtmp_r->setEnabled( false );
   d->m_lvtmp_l->setEnabled( false );
