@@ -1,6 +1,7 @@
 /*
     This file is part of KOrganizer.
     Copyright (c) 2002 Cornelius Schumacher <schumacher@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -76,11 +77,11 @@ KURL Provider::downloadUrlVariant( TQString variant ) const
 
 // BCI part ends here
 
-Provider::Provider() : mNoUpload( false )
+Provider::Provider( TQString type, TQWidget* parent ) : mNoUpload( false ), mParent( parent ), mLoaded( false ), mContentType( type )
 {
 }
 
-Provider::Provider( const TQDomElement &e ) : mNoUpload( false )
+Provider::Provider( const TQDomElement &e, TQString type, TQWidget* parent ) : mNoUpload( false ), mParent( parent ), mLoaded( false ), mContentType( type )
 {
   parseDomElement( e );
 }
@@ -101,6 +102,10 @@ Provider::~Provider()
     }
 }
 
+bool Provider::loaded()
+{
+  return mLoaded;
+}
 
 void Provider::setName( const TQString &name )
 {
@@ -167,29 +172,51 @@ bool Provider::noUpload() const
   return mNoUpload;
 }
 
-
 void Provider::parseDomElement( const TQDomElement &element )
 {
+  bool contentAvailable = false;
+
   if ( element.tagName() != "provider" ) return;
-
-  setDownloadUrl( KURL( element.attribute("downloadurl") ) );
-  setUploadUrl( KURL( element.attribute("uploadurl") ) );
-  setNoUploadUrl( KURL( element.attribute("nouploadurl") ) );
-
-  d_prov(this)->mDownloadUrlLatest = KURL( element.attribute("downloadurl-latest") );
-  d_prov(this)->mDownloadUrlScore = KURL( element.attribute("downloadurl-score") );
-  d_prov(this)->mDownloadUrlDownloads = KURL( element.attribute("downloadurl-downloads") );
-
-  KURL iconurl( element.attribute("icon") );
-  if(!iconurl.isValid()) iconurl.setPath( element.attribute("icon") );
-  setIcon( iconurl );
 
   TQDomNode n;
   for ( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
     TQDomElement p = n.toElement();
-    
+
+    if ( p.tagName() == "location" ) mBaseURL = p.text();
+    if ( p.tagName() == "icon" ) {
+      KURL iconurl( p.text() );
+      if(!iconurl.isValid()) iconurl.setPath( p.text() );
+      setIcon( iconurl );
+    }
+
     if ( p.tagName() == "noupload" ) setNoUpload( true );
-    if ( p.tagName() == "title" ) setName( p.text().stripWhiteSpace() );
+    if ( p.tagName() == "name" ) setName( p.text().stripWhiteSpace() );
+
+    if ( p.tagName() == "services" ) {
+      TQDomNode n2;
+      for ( n2 = p.firstChild(); !n2.isNull(); n2 = n2.nextSibling() ) {
+        TQDomElement p = n2.toElement();
+
+        if ( p.tagName() == "content" ) contentAvailable = true;
+      }
+    }
+  }
+
+  if (!mBaseURL.endsWith("/")) {
+    mBaseURL.append("/");
+  }
+
+  if (contentAvailable) {
+    // Load content type list
+    KURL contentTypeUrl( mBaseURL + "content/categories" );
+
+    kdDebug() << "Provider::parseDomElement(): contentTypeUrl: " << contentTypeUrl << endl;
+
+    TDEIO::TransferJob *job = TDEIO::get( KURL( contentTypeUrl ), false, false );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             TQT_SLOT( slotJobResult( TDEIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotJobData( TDEIO::Job *, const TQByteArray & ) ) );
   }
 }
 
@@ -205,6 +232,101 @@ TQDomElement Provider::createDomElement( TQDomDocument &doc, TQDomElement &paren
   return entry;
 }
 
+void Provider::slotJobData( TDEIO::Job *, const TQByteArray &data )
+{
+  kdDebug() << "ProviderLoader::slotJobData()" << endl;
+
+  if ( data.size() == 0 ) return;
+
+  TQCString str( data, data.size() + 1 );
+
+  mJobData.append( TQString::fromUtf8( str ) );
+}
+
+void Provider::slotJobResult( TDEIO::Job *job )
+{
+  if ( job->error() ) {
+    if (mParent) {
+      job->showErrorDialog( mParent );
+    }
+    return;
+  }
+
+  kdDebug() << "--CONTENT-START--" << endl << mJobData << "--CONT_END--"
+            << endl;
+
+  TQDomDocument doc;
+  if ( !doc.setContent( mJobData ) ) {
+    if (mParent) {
+      KMessageBox::error( mParent, i18n("Error parsing category list.") );
+    }
+    return;
+  }
+
+  TQDomElement categories = doc.documentElement();
+
+  if ( categories.isNull() ) {
+    kdDebug() << "No document in Content.xml." << endl;
+  }
+
+  TQStringList desiredCategoryList;
+  TQString desiredCategories;
+
+  TQDomNode n;
+  for ( n = categories.firstChild(); !n.isNull(); n = n.nextSibling() ) {
+    TQDomElement p = n.toElement();
+
+    if ( p.tagName() == "data" ) {
+      TQDomNode n2;
+      for ( n2 = p.firstChild(); !n2.isNull(); n2 = n2.nextSibling() ) {
+        TQDomElement p = n2.toElement();
+
+        if ( p.tagName() == "category" ) {
+          TQDomNode n3;
+          TQString id;
+          TQString name;
+          for ( n3 = p.firstChild(); !n3.isNull(); n3 = n3.nextSibling() ) {
+            TQDomElement p = n3.toElement();
+
+            if ( p.tagName() == "id" ) {
+              id = p.text();
+            }
+
+            if ( p.tagName() == "name" ) {
+              name = p.text();
+            }
+          }
+
+          if (mContentType == "") {
+            desiredCategoryList.append(id);
+          }
+          else {
+            if (name.lower().contains(mContentType.lower())) {
+              desiredCategoryList.append(id);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  desiredCategories = desiredCategoryList.join("x");
+
+  // int maxEntries = 10;
+  int maxEntries = 50;
+
+  setDownloadUrl( KURL( mBaseURL ) );
+  setUploadUrl( KURL( mBaseURL ) );
+  setNoUploadUrl( KURL( mBaseURL ) );
+
+  d_prov(this)->mDownloadUrlLatest = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=new&page=1&pagesize=" + TQString("%1").arg(maxEntries) );
+  d_prov(this)->mDownloadUrlScore = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=high&page=1&pagesize=" + TQString("%1").arg(maxEntries) );
+  d_prov(this)->mDownloadUrlDownloads = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=down&page=1&pagesize=" + TQString("%1").arg(maxEntries) );
+
+  mLoaded = true;
+  emit providerLoaded();
+}
+
 
 ProviderLoader::ProviderLoader( TQWidget *parentWidget ) :
   TQObject( parentWidget )
@@ -218,9 +340,10 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
 
   mProviders.clear();
   mJobData = "";
+  mContentType = type;
 
   TDEConfig *cfg = TDEGlobal::config();
-  cfg->setGroup("KNewStuff");
+  cfg->setGroup("TDENewStuff");
 
   TQString providersUrl = providersList;
   if( providersUrl.isEmpty() )
@@ -282,9 +405,24 @@ void ProviderLoader::slotJobResult( TDEIO::Job *job )
     TQDomElement p = n.toElement();
  
     if ( p.tagName() == "provider" ) {
-      mProviders.append( new Provider( p ) );
+      Provider* prov = new Provider( p, mContentType, TQT_TQWIDGET(parent()) );
+      mProviders.append( prov );
+      connect( prov, TQT_SIGNAL( providerLoaded() ), this, TQT_SLOT( providerLoaded() ) );
     }
   }
-  
-  emit providersLoaded( &mProviders );
+}
+
+void ProviderLoader::providerLoaded() {
+  Provider* prov = NULL;
+  bool allLoaded = true;
+  for ( prov = mProviders.first(); prov; prov = mProviders.next() ) {
+    if (!prov->loaded()) {
+      allLoaded = false;
+      break;
+    }
+  }
+
+  if (allLoaded) {
+    emit providersLoaded( &mProviders );
+  }
 }

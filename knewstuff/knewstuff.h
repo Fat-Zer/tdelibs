@@ -43,7 +43,7 @@ KDE_EXPORT TDEAction* standardAction(const TQString& what,
 /**
  * @short This class provides the functionality to download and upload "new stuff".
  *
- * Applications have to subclass KNewStuff, implement the pure virtual functions
+ * Applications have to subclass TDENewStuff, implement the pure virtual functions
  * and link to against libknewstuff.
  *
  * By calling download() the download process is started which means that a list
@@ -66,7 +66,7 @@ KDE_EXPORT TDEAction* standardAction(const TQString& what,
  *
  * @since 3.3
  */
-class KDE_EXPORT KNewStuff
+class KDE_EXPORT TDENewStuff
 {
   public:
     /**
@@ -74,10 +74,10 @@ class KDE_EXPORT KNewStuff
 
       @param type type of data to be handled, should be something like
                   korganizer/calendar, kword/template, kdesktop/wallpaper
-      @param parentWidget parent widget of dialogs opened by the KNewStuff
+      @param parentWidget parent widget of dialogs opened by the TDENewStuff
                           engine
     */
-    KNewStuff( const TQString &type, TQWidget *parentWidget = 0 );
+    TDENewStuff( const TQString &type, TQWidget *parentWidget = 0 );
     
     /**
       Constructor.
@@ -85,11 +85,11 @@ class KDE_EXPORT KNewStuff
       @param type type of data to be handled, should be something like
                   korganizer/calendar, kword/template, kdesktop/wallpaper
       @param providerList the URL of the provider list
-      @param parentWidget parent widget of dialogs opened by the KNewStuff
+      @param parentWidget parent widget of dialogs opened by the TDENewStuff
                           engine
     */
-    KNewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
-    virtual ~KNewStuff();
+    TDENewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
+    virtual ~TDENewStuff();
 
     /**
       Return type of data.
@@ -118,7 +118,7 @@ class KDE_EXPORT KNewStuff
 
     /**
       Install file to application. The given fileName points to the file
-      downloaded by the KNewStuff engine. This is a temporary file by default.
+      downloaded by the TDENewStuff engine. This is a temporary file by default.
       The application can do whatever is needed to handle the information
       contained in the file.
 

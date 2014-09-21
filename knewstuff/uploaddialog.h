@@ -34,11 +34,11 @@ class Engine;
 class Entry;
 
 /**
- * @short KNewStuff file upload dialog.
+ * @short TDENewStuff file upload dialog.
  *
  * Using this dialog, data can easily be uploaded to the Hotstuff servers.
- * It should however not be used on its own, instead a KNewStuff (or
- * KNewStuffGeneric) object invokes it.
+ * It should however not be used on its own, instead a TDENewStuff (or
+ * TDENewStuffGeneric) object invokes it.
  *
  * @author Cornelius Schumacher (schumacher@kde.org)
  * \par Maintainer:
@@ -51,7 +51,7 @@ class UploadDialog : public KDialogBase
     /**
       Constructor.
 
-      @param engine a KNewStuff engine object to be used for uploads
+      @param engine a TDENewStuff engine object to be used for uploads
       @param parent the parent window
     */
     UploadDialog( Engine *engine, TQWidget *parent );

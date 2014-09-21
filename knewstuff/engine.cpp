@@ -1,6 +1,7 @@
 /*
     This file is part of KOrganizer.
     Copyright (c) 2002 Cornelius Schumacher <schumacher@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -42,10 +43,10 @@ using namespace KNS;
 struct Engine::Private
 {
     bool mIgnoreInstallResult;
-    KNewStuff *mNewStuff;
+    TDENewStuff *mNewStuff;
 };
 
-Engine::Engine( KNewStuff *newStuff, const TQString &type,
+Engine::Engine( TDENewStuff *newStuff, const TQString &type,
                 TQWidget *parentWidget ) :
   mParentWidget( parentWidget ), mDownloadDialog( 0 ),
   mUploadDialog( 0 ), mProviderDialog( 0 ), mUploadProvider( 0 ),
@@ -56,7 +57,7 @@ Engine::Engine( KNewStuff *newStuff, const TQString &type,
   mProviderLoader = new ProviderLoader( mParentWidget );
 }
 
-Engine::Engine( KNewStuff *newStuff, const TQString &type,
+Engine::Engine( TDENewStuff *newStuff, const TQString &type,
                 const TQString &providerList, TQWidget *parentWidget ) :
                 mParentWidget( parentWidget ),
 		mDownloadDialog( 0 ), mUploadDialog( 0 ),

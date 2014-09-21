@@ -1,6 +1,7 @@
 /*
     This file is part of KOrganizer.
     Copyright (c) 2002 Cornelius Schumacher <schumacher@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -33,35 +34,41 @@ namespace TDEIO { class Job; }
 namespace KNS {
 
 /**
- * @short KNewStuff provider container.
+ * @short TDENewStuff provider container.
  *
  * This class provides accessors for the provider object.
- * as used by KNewStuff.
+ * as used by TDENewStuff.
  * It should probably not be used directly by the application.
  *
  * @author Cornelius Schumacher (schumacher@kde.org)
  * \par Maintainer:
  * Josef Spillner (spillner@kde.org)
  */
-class KDE_EXPORT Provider
+class KDE_EXPORT Provider : public TQObject
 {
+    Q_OBJECT
   public:
     typedef TQPtrList<Provider> List;
 
     /**
      * Constructor.
      */
-    Provider();
+    Provider( TQString type = TQString::null, TQWidget* parent = 0 );
 
     /**
      * Constructor with XML feed.
      */
-    Provider( const TQDomElement & );
+    Provider( const TQDomElement &, TQString type = TQString::null, TQWidget* parent = 0 );
 
     /**
      * Destructor.
      */
-    ~Provider();
+    virtual ~Provider();
+
+    /**
+     * @return provider load status
+     */
+    bool loaded();
 
     /**
      * Sets the common name of the provider.
@@ -154,6 +161,13 @@ class KDE_EXPORT Provider
 
     TQDomElement createDomElement( TQDomDocument &, TQDomElement &parent );
 
+  protected slots:
+    void slotJobData( TDEIO::Job *, const TQByteArray & );
+    void slotJobResult( TDEIO::Job * );
+
+  signals:
+    void providerLoaded();
+
   private:
     TQString mName;
     KURL mDownloadUrl;
@@ -161,10 +175,15 @@ class KDE_EXPORT Provider
     KURL mNoUploadUrl;
     KURL mIcon;
     bool mNoUpload;
+    TQString mJobData;
+    TQString mBaseURL;
+    TQWidget* mParent;
+    bool mLoaded;
+    TQString mContentType;
 };
 
 /**
- * KNewStuff provider loader.
+ * TDENewStuff provider loader.
  * This class sets up a list of all possible providers by querying
  * the main provider database for this specific application.
  * It should probably not be used directly by the application.
@@ -200,11 +219,13 @@ class KDE_EXPORT ProviderLoader : public TQObject
   protected slots:
     void slotJobData( TDEIO::Job *, const TQByteArray & );
     void slotJobResult( TDEIO::Job * );
+    void providerLoaded();
 
   private:
     TQWidget *mParentWidget;
 
     TQString mJobData;
+    TQString mContentType;
 
     Provider::List mProviders;
 };

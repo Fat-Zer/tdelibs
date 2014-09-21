@@ -35,7 +35,7 @@ static const TDECmdLineOptions op[] =
 
 int main(int argc, char **argv)
 {
-	TDEAboutData about("tdehotnewstuff", "KHotNewStuff", "0.2");
+	TDEAboutData about("tdehotnewstuff", "TDEHotNewStuff", "0.2");
 	TDECmdLineArgs *args;
 
 	TDECmdLineArgs::init(argc, argv, &about);

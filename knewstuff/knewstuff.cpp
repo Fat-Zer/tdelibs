@@ -39,48 +39,48 @@ TDEAction* KNS::standardAction(const TQString& what,
                        0, recvr, slot, parent, name);
 }
 
-KNewStuff::KNewStuff( const TQString &type, TQWidget *parentWidget )
+TDENewStuff::TDENewStuff( const TQString &type, TQWidget *parentWidget )
 {
     mEngine = new Engine( this, type, parentWidget );
 }
 
-KNewStuff::KNewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget )
+TDENewStuff::TDENewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget )
 {
   mEngine = new Engine( this, type, providerList, parentWidget );
 }
 
-TQString KNewStuff::type() const
+TQString TDENewStuff::type() const
 {
   return mEngine->type();
 }
 
-TQWidget *KNewStuff::parentWidget() const
+TQWidget *TDENewStuff::parentWidget() const
 {
   return mEngine->parentWidget();
 }
 
-KNewStuff::~KNewStuff()
+TDENewStuff::~TDENewStuff()
 {
   delete mEngine;
 }
 
-void KNewStuff::download()
+void TDENewStuff::download()
 {
   mEngine->download();
 }
 
-TQString KNewStuff::downloadDestination( Entry * )
+TQString TDENewStuff::downloadDestination( Entry * )
 {
   return TDEGlobal::dirs()->saveLocation( "tmp" ) +
          TDEApplication::randomString( 10 );
 }
 
-void KNewStuff::upload()
+void TDENewStuff::upload()
 {
   mEngine->upload();
 }
 
-void KNewStuff::upload( const TQString &fileName, const TQString previewName )
+void TDENewStuff::upload( const TQString &fileName, const TQString previewName )
 {
   mEngine->upload(fileName, previewName);
 }

@@ -37,22 +37,22 @@
 
 using namespace std;
 
-KNewStuffGeneric::KNewStuffGeneric( const TQString &type, TQWidget *parent )
-  : KNewStuff( type, parent )
+TDENewStuffGeneric::TDENewStuffGeneric( const TQString &type, TQWidget *parent )
+  : TDENewStuff( type, parent )
 {
   mConfig = TDEGlobal::config();
 }
 
-KNewStuffGeneric::~KNewStuffGeneric()
+TDENewStuffGeneric::~TDENewStuffGeneric()
 {
 }
 
-bool KNewStuffGeneric::install( const TQString &fileName )
+bool TDENewStuffGeneric::install( const TQString &fileName )
 {
-  kdDebug() << "KNewStuffGeneric::install(): " << fileName << endl;
+  kdDebug() << "TDENewStuffGeneric::install(): " << fileName << endl;
   TQStringList list, list2;
 
-  mConfig->setGroup("KNewStuff");
+  mConfig->setGroup("TDENewStuff");
 
   TQString uncompress = mConfig->readEntry( "Uncompress" );
   if ( !uncompress.isEmpty() ) {
@@ -80,16 +80,16 @@ bool KNewStuffGeneric::install( const TQString &fileName )
   return true;
 }
 
-bool KNewStuffGeneric::createUploadFile( const TQString & /*fileName*/ )
+bool TDENewStuffGeneric::createUploadFile( const TQString & /*fileName*/ )
 {
   return false;
 }
 
-TQString KNewStuffGeneric::destinationPath( KNS::Entry *entry )
+TQString TDENewStuffGeneric::destinationPath( KNS::Entry *entry )
 {
   TQString path, file, target, ext;
 
-  mConfig->setGroup("KNewStuff");
+  mConfig->setGroup("TDENewStuff");
 
   if ( entry )
   {
@@ -117,7 +117,7 @@ TQString KNewStuffGeneric::destinationPath( KNS::Entry *entry )
   if ( res.isEmpty() && path.isEmpty() )
   {
     if ( !entry ) return TQString::null;
-    else return KNewStuff::downloadDestination( entry );
+    else return TDENewStuff::downloadDestination( entry );
   }
 
   if ( !path.isEmpty() )
@@ -130,7 +130,7 @@ TQString KNewStuffGeneric::destinationPath( KNS::Entry *entry )
   return file;
 }
 
-TQString KNewStuffGeneric::downloadDestination( KNS::Entry *entry )
+TQString TDENewStuffGeneric::downloadDestination( KNS::Entry *entry )
 {
   TQString file = destinationPath(entry);
 

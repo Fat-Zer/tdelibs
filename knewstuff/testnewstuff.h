@@ -30,10 +30,10 @@
 
 #include "knewstuff.h"
 
-class TestNewStuff : public KNewStuff
+class TestNewStuff : public TDENewStuff
 {
   public:
-    TestNewStuff() : KNewStuff( "korganizer/calendar" ) {}
+    TestNewStuff() : TDENewStuff( "korganizer/calendar" ) {}
     
     bool install( const TQString &fileName );
     
@@ -52,7 +52,7 @@ class MyWidget : public TQWidget
     void download();
 
   private:
-    KNewStuff *mNewStuff;
+    TDENewStuff *mNewStuff;
 };
 
 #endif

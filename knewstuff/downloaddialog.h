@@ -1,5 +1,5 @@
 /*
-    This file is part of KNewStuff.
+    This file is part of TDENewStuff.
     Copyright (c) 2003 Josef Spillner <spillner@kde.org>
 
     This library is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@ namespace TDEIO
 class TDEListView;
 class TQTextBrowser;
 class TQFrame;
-class KNewStuffGeneric;
+class TDENewStuffGeneric;
 
 namespace KNS
 {
@@ -47,7 +47,7 @@ class Engine;
  * It provides an easy-to-use convenience method named open() which does all
  * the work, unless a more complex operation is needed.
  * \code
- * KNewStuff::DownloadDialog::open("kdesktop/wallpapers");
+ * TDENewStuff::DownloadDialog::open("kdesktop/wallpapers");
  * \endcode
  *
  * @author Josef Spillner (spillner@kde.org)
@@ -213,7 +213,10 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
   private slots:
     void slotResult(TDEIO::Job *job);
     void slotData(TDEIO::Job *job, const TQByteArray &a);
+    void slotJobData( TDEIO::Job *, const TQByteArray & );
+    void slotJobResult( TDEIO::Job * );
     void slotInstall();
+    void slotInstallPhase2();
     void slotDetails();
     void slotInstalled(TDEIO::Job *job);
     void slotTab();
@@ -238,7 +241,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     TQListViewItem *m_entryitem;
     TQPtrList<Entry> m_entries;
     Entry *m_entry;
-    KNewStuffGeneric *m_s;
+    TDENewStuffGeneric *m_s;
     int m_curtab;
     TQMap<TQWidget*, TQValueList<TDEListView*>* > m_map;
     TQMap<TQWidget*, Provider*> m_providers;
@@ -247,6 +250,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     TQMap<TDEIO::Job*, Provider*> m_jobs;
     TQMap<TDEIO::Job*, TQString> m_data;
     TQString m_filter;
+    TQString mJobData;
     Engine *m_engine;
     Private *d;
 };

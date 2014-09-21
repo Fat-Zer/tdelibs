@@ -1,6 +1,7 @@
 /*
     This file is part of KOrganizer.
     Copyright (c) 2002 Cornelius Schumacher <schumacher@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -31,10 +32,10 @@
 namespace KNS {
 
 /**
- * @short KNewStuff data entry container.
+ * @short TDENewStuff data entry container.
  *
  * This class provides accessor methods to the data objects
- * as used by KNewStuff.
+ * as used by TDENewStuff.
  * It should probably not be used directly by the application.
  *
  * @author Cornelius Schumacher (schumacher@kde.org)

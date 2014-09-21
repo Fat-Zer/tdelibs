@@ -41,7 +41,7 @@ using namespace std;
 
 GhnsWidget::GhnsWidget()
 {
-  mWallpapers = new KNewStuffGeneric( "kdesktop/wallpaper", this );
+  mWallpapers = new TDENewStuffGeneric( "kdesktop/wallpaper", this );
 
   TQBoxLayout *topLayout = new TQVBoxLayout( this );
   topLayout->setMargin( KDialog::marginHint() );

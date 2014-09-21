@@ -47,7 +47,7 @@ class ProviderDialog : public KDialogBase
     /**
       Constructor.
 
-      @param engine a KNewStuff engine object
+      @param engine a TDENewStuff engine object
       @param parent the parent window
     */
     ProviderDialog( Engine *engine, TQWidget *parent );

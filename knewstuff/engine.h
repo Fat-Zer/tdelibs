@@ -1,6 +1,7 @@
 /*
     This file is part of KOrganizer.
     Copyright (c) 2002 Cornelius Schumacher <schumacher@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -29,7 +30,7 @@
 
 namespace TDEIO { class Job; }
 
-class KNewStuff;
+class TDENewStuff;
 
 namespace KNS {
 
@@ -38,7 +39,7 @@ class UploadDialog;
 class ProviderDialog;
 
 /**
- * @short Central class combining all possible KNewStuff operations.
+ * @short Central class combining all possible TDENewStuff operations.
  *
  * In most cases, Engine objects are built and used internally.
  * Using this class explicitely does however give fine-grained control about the
@@ -56,20 +57,20 @@ class KDE_EXPORT Engine : public TQObject
     /**
       Constructor.
 
-      @param newStuff a KNewStuff object
+      @param newStuff a TDENewStuff object
       @param type the Hotstuff data type such as "korganizer/calendar"
       @param parentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const TQString &type, TQWidget *parentWidget = 0 );
+    Engine( TDENewStuff *newStuff, const TQString &type, TQWidget *parentWidget = 0 );
     /**
       Constructor.
 
-      @param newStuff a KNewStuff object
+      @param newStuff a TDENewStuff object
       @param type the Hotstuff data type such as "korganizer/calendar"
       @param providerList the URL of the provider list
       @param parentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
+    Engine( TDENewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
 
     /**
       Destructor.
@@ -130,7 +131,7 @@ class KDE_EXPORT Engine : public TQObject
     /**
     Ignores the return value of the install method. Used internally to
     avoid showing of the success/failure dialog when installation is done
-    in another place, like in @ref KNewStuffSecure
+    in another place, like in @ref TDENewStuffSecure
      */
     void ignoreInstallResult(bool ignore);   
 

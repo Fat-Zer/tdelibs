@@ -107,7 +107,7 @@ void MyWidget::upload()
 
 int main(int argc,char **argv)
 {
-  TDEAboutData aboutData("knewstufftest","KNewStuff Test","0.1");
+  TDEAboutData aboutData("knewstufftest","TDENewStuff Test","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
   TDEApplication app;

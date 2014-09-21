@@ -137,7 +137,7 @@ void UploadDialog::slotOk()
 
   if ( mPayloadUrl.isValid() ) {
     TDEConfig *conf = kapp->config();
-    conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
+    conf->setGroup( TQString("TDENewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
     conf->writeEntry("name", mNameEdit->text());
     conf->writeEntry("author", mAuthorEdit->text());
     conf->writeEntry("email", mEmailEdit->text());
@@ -165,7 +165,7 @@ void UploadDialog::setPayloadFile( const TQString &payloadFile )
   mPayloadUrl = payloadFile;
 
   TDEConfig *conf = kapp->config();
-  conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
+  conf->setGroup( TQString("TDENewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
   TQString name = conf->readEntry("name");
   TQString author = conf->readEntry("author");
   TQString email = conf->readEntry("email");

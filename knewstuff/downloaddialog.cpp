@@ -1,6 +1,7 @@
 /*
-    This file is part of KNewStuff.
+    This file is part of TDENewStuff.
     Copyright (c) 2003 Josef Spillner <spillner@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -43,6 +44,8 @@
 #include <tqtextbrowser.h>
 #include <tqtabwidget.h>
 #include <tqtimer.h> // hack
+
+#define OPENDESKTOP_REDIRECT_URL "opendesktop.org/content/download.php?content="
 
 using namespace KNS;
 
@@ -217,7 +220,6 @@ void DownloadDialog::addProvider(Provider *p)
   TQFrame *frame;
   TQTabWidget *ctl;
   TQWidget *w_d, *w_r, *w_l;
-  TQWidget *w2;
   TQTextBrowser *rt;
   TQString tmp;
   int ret;
@@ -250,7 +252,6 @@ void DownloadDialog::addProvider(Provider *p)
   frame = addPage(p->name(), p->name(), pix);
   m_frame = frame;
 
-  w2 = new TQWidget(frame);
   w_d = new TQWidget(frame);
   w_r = new TQWidget(frame);
   w_l = new TQWidget(frame);
@@ -335,10 +336,11 @@ void DownloadDialog::slotResult(TDEIO::Job *job)
 {
   TQDomDocument dom;
   TQDomElement knewstuff;
+  TQDomElement content;
 
   kdDebug() << "got data: " << m_data[job] << endl;
 
-  kapp->config()->setGroup("KNewStuffStatus");
+  kapp->config()->setGroup("TDENewStuffStatus");
 
   dom.setContent(m_data[job]);
   knewstuff = dom.documentElement();
@@ -347,9 +349,19 @@ void DownloadDialog::slotResult(TDEIO::Job *job)
   {
     TQDomElement stuff = pn.toElement();
 
+    if(stuff.tagName() == "data")
+    {
+      content = pn.toElement();
+    }
+  }
+
+  for(TQDomNode pn = content.firstChild(); !pn.isNull(); pn = pn.nextSibling())
+  {
+    TQDomElement stuff = pn.toElement();
+
     kdDebug() << "element: " << stuff.tagName() << endl;
 
-    if(stuff.tagName() == "stuff")
+    if(stuff.tagName() == "content")
     {
       Entry *entry = new Entry(stuff);
       kdDebug() << "TYPE::" << entry->type() << " FILTER::" << m_filter << endl;
@@ -394,7 +406,7 @@ int DownloadDialog::installStatus(Entry *entry)
 
   TQString lang = TDEGlobal::locale()->language();
 
-  kapp->config()->setGroup("KNewStuffStatus");
+  kapp->config()->setGroup("TDENewStuffStatus");
   datestring = kapp->config()->readEntry(entry->name(lang));
   if(datestring.isNull()) installed = 0;
   else
@@ -522,10 +534,39 @@ void DownloadDialog::slotInstall()
   d->m_lvtmp_r->setEnabled( false );
   d->m_lvtmp_l->setEnabled( false );
   d->m_lvtmp_d->setEnabled( false );
+
+  kdDebug() << "download entry now" << endl;
+
+  // OpenDesktop.org broke the basic functionality of TDEHNS by forcing
+  // downloads though an advertising display page.  This in turn forces
+  // the user to download and manually install the wallpaper, which
+  // is relatively complex and negates much of the benefit of TDEHNS.
+  // Therefore, if the download URL contains OPENDESKTOP_REDIRECT_URL
+  // then download the raw HTML page and extract the real download URL for use below.
+  // In the future we may want to figure out how to display unobtrusive ads
+  // during the download process, but OpenDesktop.org would need to add back
+  // in the direct download ability for this to even be considered.
+  if (e->payload().url().contains(OPENDESKTOP_REDIRECT_URL)) {
+    TDEIO::TransferJob *job = TDEIO::get( KURL( e->payload() ), false, false );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             TQT_SLOT( slotJobResult( TDEIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotJobData( TDEIO::Job *, const TQByteArray & ) ) );
+  }
+  else {
+    slotInstallPhase2();
+  }
+}
+
+void DownloadDialog::slotInstallPhase2()
+{
+  Entry *e = getEntry();
+  if(!e) return;
+
   m_entryitem = currentEntryItem();
   m_entryname = m_entryitem->text(0);
 
-  kdDebug() << "download entry now" << endl;
+  kdDebug() << "download entry now (phase 2)" << endl;
 
   if(m_engine)
   {
@@ -534,7 +575,7 @@ void DownloadDialog::slotInstall()
   }
   else
   {
-    m_s = new KNewStuffGeneric(e->type(), this);
+    m_s = new TDENewStuffGeneric(e->type(), this);
     m_entry = e;
     KURL source = e->payload();
     KURL dest = KURL(m_s->downloadDestination(e));
@@ -544,9 +585,42 @@ void DownloadDialog::slotInstall()
   }
 }
 
+void DownloadDialog::slotJobData( TDEIO::Job *, const TQByteArray &data )
+{
+  kdDebug() << "DownloadDialog::slotJobData()" << endl;
+
+  if ( data.size() == 0 ) return;
+
+  TQCString str( data, data.size() + 1 );
+
+  mJobData.append( TQString::fromUtf8( str ) );
+}
+
+void DownloadDialog::slotJobResult( TDEIO::Job *job )
+{
+  if ( job->error() ) {
+    job->showErrorDialog( this );
+    return;
+  }
+
+  Entry *e = getEntry();
+  if(!e) return;
+
+  // See previous note regarding OpenDesktop.org
+  if (e->payload().url().contains(OPENDESKTOP_REDIRECT_URL)) {
+    TQString realURL = mJobData.mid(mJobData.find("<a href=\"/CONTENT/content-files/"));
+    realURL = realURL.mid(0, realURL.find("Click here</a>")-2);
+    realURL = realURL.mid(realURL.find("/CONTENT/content-files"));
+    realURL = e->payload().protocol() + "://opendesktop.org" + realURL;
+    e->setPayload(realURL);
+  }
+
+  slotInstallPhase2();
+}
+
 void DownloadDialog::install(Entry *e)
 {
-  kapp->config()->setGroup("KNewStuffStatus");
+  kapp->config()->setGroup("TDENewStuffStatus");
   kapp->config()->writeEntry(m_entryname, TQString(e->releaseDate().toString(Qt::ISODate)));
   kapp->config()->sync();
 

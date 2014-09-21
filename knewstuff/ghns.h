@@ -41,7 +41,7 @@ class GhnsWidget : public TQWidget
     void downloadWallpapers();
 
   private:
-    KNewStuff *mWallpapers;
+    TDENewStuff *mWallpapers;
 };
 
 #endif

@@ -1,6 +1,7 @@
 /*
     This file is part of KOrganizer.
     Copyright (c) 2002 Cornelius Schumacher <schumacher@kde.org>
+    Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -297,46 +298,57 @@ TQStringList Entry::langs()
   return mLangs;
 }
 
+// FIXME
+// It appears that OCS has removed the ability to retrieve author EMail;
+// further confirmation is needed before removing EMail-related code
 void Entry::parseDomElement( const TQDomElement &element )
 {
-  if ( element.tagName() != "stuff" ) return;
+  if ( element.tagName() != "content" ) return;
   mType = element.attribute("type");
 
   TQDomNode n;
+  TQString lang;
+  for( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
+    TQDomElement e = n.toElement();
+    if ( e.tagName() == "language" )
+    {
+      lang = e.text();
+    }
+  }
+  if (lang == "") {
+    lang = TQString::null;
+  }
+
   for( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
     TQDomElement e = n.toElement();
     if ( e.tagName() == "name" )
     {
-      TQString lang = e.attribute( "lang" );
       setName( e.text().stripWhiteSpace(), lang );
-      if(lang.isNull()) setName( e.text().stripWhiteSpace() ); /* primary key - no i18n */
+      setName( e.text().stripWhiteSpace() ); /* primary key - no i18n */
     }
-    if ( e.tagName() == "author" ) {
+    if ( e.tagName() == "personid" ) {
       setAuthor( e.text().stripWhiteSpace() );
-      TQString email = e.attribute( "email" );
-      setAuthorEmail( email );
+//       TQString email = e.attribute( "email" );
+//       setAuthorEmail( email );
     }
-    if ( e.tagName() == "email" ) setAuthorEmail( e.text().stripWhiteSpace() ); /* kde-look; change on server! */
+//     if ( e.tagName() == "email" ) setAuthorEmail( e.text().stripWhiteSpace() ); /* kde-look; change on server! */
     if ( e.tagName() == "licence" ) setLicence( e.text().stripWhiteSpace() );
-    if ( e.tagName() == "summary" ) {
-      TQString lang = e.attribute( "lang" );
+    if ( e.tagName() == "description" ) {
       setSummary( e.text().stripWhiteSpace(), lang );
     }
     if ( e.tagName() == "version" ) setVersion( e.text().stripWhiteSpace() );
-    if ( e.tagName() == "release" ) setRelease( e.text().toInt() );
-    if ( e.tagName() == "releasedate" ) {
+//     if ( e.tagName() == "release" ) setRelease( e.text().toInt() );
+    if ( e.tagName() == "created" ) {
       TQDate date = TQT_TQDATE_OBJECT(TQDate::fromString( e.text().stripWhiteSpace(), Qt::ISODate ));
       setReleaseDate( date );
     }
-    if ( e.tagName() == "preview" ) {
-      TQString lang = e.attribute( "lang" );
+    if ( e.tagName() == "smallpreviewpic1" ) {
       setPreview( KURL( e.text().stripWhiteSpace() ), lang );
     }
-    if ( e.tagName() == "payload" ) {
-      TQString lang = e.attribute( "lang" );
+    if ( e.tagName() == "downloadlink1" ) {
       setPayload( KURL( e.text().stripWhiteSpace() ), lang );
     }
-    if ( e.tagName() == "rating" ) setRating( e.text().toInt() );
+    if ( e.tagName() == "score" ) setRating( e.text().toInt() );
     if ( e.tagName() == "downloads" ) setDownloads( e.text().toInt() );
   }
 }
@@ -344,32 +356,27 @@ void Entry::parseDomElement( const TQDomElement &element )
 TQDomElement Entry::createDomElement( TQDomDocument &doc,
                                               TQDomElement &parent )
 {
-  TQDomElement entry = doc.createElement( "stuff" );
+  TQDomElement entry = doc.createElement( "content" );
   entry.setAttribute("type", mType);
   parent.appendChild( entry );
 
+  addElement( doc, entry, "language", langs().first() );
+
   addElement( doc, entry, "name", name() );
-  addElement( doc, entry, "author", author() );
-  addElement( doc, entry, "email", authorEmail() );
+  addElement( doc, entry, "personid", author() );
+//   addElement( doc, entry, "email", authorEmail() );
   addElement( doc, entry, "licence", license() );
   addElement( doc, entry, "version", version() );
-  addElement( doc, entry, "release", TQString::number( release() ) );
-  addElement( doc, entry, "rating", TQString::number( rating() ) );
+//   addElement( doc, entry, "release", TQString::number( release() ) );
+  addElement( doc, entry, "score", TQString::number( rating() ) );
   addElement( doc, entry, "downloads", TQString::number( downloads() ) );
 
-  addElement( doc, entry, "releasedate",
+  addElement( doc, entry, "created",
               releaseDate().toString( Qt::ISODate ) );
 
-  TQStringList ls = langs();
-  TQStringList::ConstIterator it;
-  for( it = ls.begin(); it != ls.end(); ++it ) {
-    TQDomElement e = addElement( doc, entry, "summary", summary( *it ) );
-    e.setAttribute( "lang", *it );
-    e = addElement( doc, entry, "preview", preview( *it ).url() );
-    e.setAttribute( "lang", *it );
-    e = addElement( doc, entry, "payload", payload( *it ).url() );
-    e.setAttribute( "lang", *it );
-  }
+  addElement( doc, entry, "description", summary() );
+  addElement( doc, entry, "preview", preview().url() );
+  addElement( doc, entry, "payload", payload().url() );
 
   return entry;
 }

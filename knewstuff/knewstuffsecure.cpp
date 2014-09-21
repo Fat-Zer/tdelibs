@@ -33,20 +33,20 @@
 
 using namespace KNS;
 
-KNewStuffSecure::KNewStuffSecure(const TQString &type,  TQWidget *parentWidget)
- : KNewStuff(type, parentWidget)
+TDENewStuffSecure::TDENewStuffSecure(const TQString &type,  TQWidget *parentWidget)
+ : TDENewStuff(type, parentWidget)
 {
   m_tempDir = 0L;
   connect(engine(), TQT_SIGNAL(uploadFinished(bool)), TQT_SLOT(slotUploadFinished(bool)));
 }
 
 
-KNewStuffSecure::~KNewStuffSecure()
+TDENewStuffSecure::~TDENewStuffSecure()
 {
   removeTempDirectory();
 }
 
-bool KNewStuffSecure::install(const TQString &fileName)
+bool TDENewStuffSecure::install(const TQString &fileName)
 {
   bool ok = true;
 
@@ -84,7 +84,7 @@ bool KNewStuffSecure::install(const TQString &fileName)
   return ok;
 }
 
-void KNewStuffSecure::slotValidated(int result)
+void TDENewStuffSecure::slotValidated(int result)
 {
    TQString errorString;
    TQString signatureStr;
@@ -145,8 +145,8 @@ void KNewStuffSecure::slotValidated(int result)
   } else
   {
     TDEConfig *cfg = TDEGlobal::config();
-    cfg->deleteGroup("KNewStuffStatus");
-    cfg->setGroup("KNewStuffStatus");
+    cfg->deleteGroup("TDENewStuffStatus");
+    cfg->setGroup("TDENewStuffStatus");
     for (TQMap<TQString, TQString>::ConstIterator it = m_installedResources.constBegin(); it != m_installedResources.constEnd(); ++it)
     {
       cfg->writeEntry(it.key(), it.data());
@@ -157,21 +157,21 @@ void KNewStuffSecure::slotValidated(int result)
   disconnect(Security::ref(), TQT_SIGNAL(validityResult(int)), this, TQT_SLOT(slotValidated(int)));
 }
 
-void KNewStuffSecure::downloadResource()
+void TDENewStuffSecure::downloadResource()
 {
   TDEConfig *cfg = TDEGlobal::config();
-  m_installedResources = cfg->entryMap("KNewStuffStatus");
+  m_installedResources = cfg->entryMap("TDENewStuffStatus");
   engine()->ignoreInstallResult(true);
-  KNewStuff::download();
+  TDENewStuff::download();
 }
 
-bool KNewStuffSecure::createUploadFile(const TQString &fileName)
+bool TDENewStuffSecure::createUploadFile(const TQString &fileName)
 {
   Q_UNUSED(fileName);
   return true; 
 }
 
-void KNewStuffSecure::uploadResource(const TQString& fileName)
+void TDENewStuffSecure::uploadResource(const TQString& fileName)
 {
   connect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
   removeTempDirectory();
@@ -183,7 +183,7 @@ void KNewStuffSecure::uploadResource(const TQString& fileName)
   Security::ref()->signFile(m_signedFileName);
 }
 
-void KNewStuffSecure::slotFileSigned(int result)
+void TDENewStuffSecure::slotFileSigned(int result)
 {
   if (result == 0)
   {
@@ -216,18 +216,18 @@ void KNewStuffSecure::slotFileSigned(int result)
     }
     tar.close();
     TDEIO::NetAccess::file_move(KURL::fromPathOrURL(m_signedFileName + ".signed"), KURL::fromPathOrURL(m_signedFileName), -1, true);
-    KNewStuff::upload(m_signedFileName, TQString::null);
+    TDENewStuff::upload(m_signedFileName, TQString::null);
     disconnect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
   }
 }
 
-void KNewStuffSecure::slotUploadFinished(bool result)
+void TDENewStuffSecure::slotUploadFinished(bool result)
 {
   Q_UNUSED(result);
   removeTempDirectory();
 }
 
-void KNewStuffSecure::removeTempDirectory()
+void TDENewStuffSecure::removeTempDirectory()
 {
   if (m_tempDir)
   {

@@ -31,13 +31,13 @@ tarball (which is installabale by @ref installResource()) and call the
 @ref uploadResource() method with this tarball as the argument.
 Signing and verification is done by the gpg application, so the user must
 have it installed, otherwise this class does not give any extra security compared
-to the standard KNewStuff class.
+to the standard TDENewStuff class.
 
 @since 3.4
 
 @author Andras Mantia <amantia@kde.org>
 */
-class KDE_EXPORT KNewStuffSecure : public  TQObject, public KNewStuff
+class KDE_EXPORT TDENewStuffSecure : public  TQObject, public TDENewStuff
 {
   Q_OBJECT
 
@@ -46,14 +46,14 @@ public:
 
       @param type type of data to be handled, should be something like
              korganizer/calendar, kword/template, kdesktop/wallpaper
-      @param parentWidget parent widget of dialogs opened by the KNewStuff
+      @param parentWidget parent widget of dialogs opened by the TDENewStuff
               engine
      */
-    KNewStuffSecure(const TQString &type,  TQWidget *parentWidget=0);
-    virtual ~KNewStuffSecure();
+    TDENewStuffSecure(const TQString &type,  TQWidget *parentWidget=0);
+    virtual ~TDENewStuffSecure();
 
     /** Installs the downloaded resource. Do not call or reimplement directly. 
-        It's reimplemented from KNewStuff for internal reasons. 
+        It's reimplemented from TDENewStuff for internal reasons. 
     */
     bool install( const TQString &fileName );
     
