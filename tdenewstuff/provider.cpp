@@ -313,15 +313,16 @@ void Provider::slotJobResult( TDEIO::Job *job )
   desiredCategories = desiredCategoryList.join("x");
 
   // int maxEntries = 10;
-  int maxEntries = 50;
+  //int maxEntries = 50;
+  int maxEntries = 100;
 
   setDownloadUrl( KURL( mBaseURL ) );
   setUploadUrl( KURL( mBaseURL ) );
   setNoUploadUrl( KURL( mBaseURL ) );
 
-  d_prov(this)->mDownloadUrlLatest = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=new&page=1&pagesize=" + TQString("%1").arg(maxEntries) );
-  d_prov(this)->mDownloadUrlScore = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=high&page=1&pagesize=" + TQString("%1").arg(maxEntries) );
-  d_prov(this)->mDownloadUrlDownloads = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=down&page=1&pagesize=" + TQString("%1").arg(maxEntries) );
+  d_prov(this)->mDownloadUrlLatest = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=new&page=0&pagesize=" + TQString("%1").arg(maxEntries) );
+  d_prov(this)->mDownloadUrlScore = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=high&page=0&pagesize=" + TQString("%1").arg(maxEntries) );
+  d_prov(this)->mDownloadUrlDownloads = KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=down&page=0&pagesize=" + TQString("%1").arg(maxEntries) );
 
   mLoaded = true;
   emit providerLoaded();

@@ -53,6 +53,8 @@ struct DownloadDialog::Private
 {
     TQString m_providerlist;
     TQWidget *m_page;
+    TQFrame *m_loadingFrame;
+    TQLabel *m_loadingLabel;
     TDEListView *m_lvtmp_r, *m_lvtmp_d, *m_lvtmp_l;
     TQPtrList<Entry> m_installlist;
     TQMap<TDEIO::Job*, Provider*> m_variantjobs;
@@ -145,6 +147,14 @@ void DownloadDialog::init(Engine *engine)
   m_engine = engine;
   d->m_page = NULL;
 
+  // Provide graphical feedback to the user while the intial provider load is taking place
+  d->m_loadingFrame = addPage(i18n("Welcome"), i18n("Welcome"), TQPixmap(TQString("")));
+  d->m_loadingLabel = new TQLabel(d->m_loadingFrame);
+  d->m_loadingLabel->setText(i18n("Loading data providers..."));
+  TQVBoxLayout *box = new TQVBoxLayout(d->m_loadingFrame);
+  box->add(d->m_loadingLabel);
+  box->addItem(new TQSpacerItem(0, 0, TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+
   connect(this, TQT_SIGNAL(aboutToShowPage(TQWidget*)), TQT_SLOT(slotPage(TQWidget*)));
 
   if(!engine)
@@ -199,6 +209,8 @@ void DownloadDialog::clear()
 
 void DownloadDialog::slotProviders(Provider::List *list)
 {
+  d->m_loadingLabel->setText(i18n("Loading data listings..."));
+
   Provider *p;
   /*TQFrame *frame;*/
 
@@ -225,12 +237,6 @@ void DownloadDialog::addProvider(Provider *p)
   int ret;
   TQPixmap pix;
 
-  if(m_map.count() == 0)
-  {
-    frame = addPage(i18n("Welcome"), i18n("Welcome"), TQPixmap(TQString("")));
-    delete frame;
-  }
-
   kdDebug() << "addProvider()/begin" << endl;
 
   ret = true;
@@ -249,6 +255,10 @@ void DownloadDialog::addProvider(Provider *p)
     }
   }
   if(!ret) pix = TDEGlobal::iconLoader()->loadIcon("knewstuff", TDEIcon::Panel);
+  if (d->m_loadingFrame) {
+    delete d->m_loadingFrame;
+    d->m_loadingFrame = NULL;
+  }
   frame = addPage(p->name(), p->name(), pix);
   m_frame = frame;
 
@@ -383,6 +393,17 @@ void DownloadDialog::slotResult(TDEIO::Job *job)
       if((!m_filter.isEmpty()) && (d->m_variantjobs[job]))
       {
         Provider *p = d->m_variantjobs[job];
+
+        /*bool jobsActive = false;
+        TQMap<TDEIO::Job*, Provider*>::Iterator it;
+        for ( it = d->m_variantjobs.begin(); it != d->m_variantjobs.end(); ++it ) {
+          if (it.data() == p) {
+            if (it.key() != job) {
+              jobsActive = true;
+            }
+          }
+        }*/
+
         if(d->m_newproviders[p])
         {
           addProvider(p);
@@ -393,8 +414,14 @@ void DownloadDialog::slotResult(TDEIO::Job *job)
 
       /*if(m_jobs[job]) addEntry(entry);
       else*/
-      if(d->m_variantjobs[job]) addEntry(entry, d->m_variants[job]);
+      if(d->m_variantjobs[job]) {
+        addEntry(entry, d->m_variants[job]);
+      }
     }
+  }
+
+  if(d->m_variantjobs[job]) {
+    d->m_variantjobs.remove(job);
   }
 }
 
@@ -615,11 +642,14 @@ void DownloadDialog::slotJobResult( TDEIO::Job *job )
 
   // See previous note regarding OpenDesktop.org
   if (e->payload().url().contains(OPENDESKTOP_REDIRECT_URL)) {
-    TQString realURL = mJobData.mid(mJobData.find("<a href=\"/CONTENT/content-files/"));
-    realURL = realURL.mid(0, realURL.find("Click here</a>")-2);
-    realURL = realURL.mid(realURL.find("/CONTENT/content-files"));
-    realURL = e->payload().protocol() + "://opendesktop.org" + realURL;
-    e->setPayload(realURL);
+    int pos = mJobData.find("<a href=\"/CONTENT/content-files/");
+    if (pos >= 0) {
+      TQString realURL = mJobData.mid(pos);
+      realURL = realURL.mid(0, realURL.find("\">"));
+      realURL = realURL.mid(strlen("<a href=\""));
+      realURL = e->payload().protocol() + "://opendesktop.org" + realURL;
+      e->setPayload(realURL);
+    }
   }
 
   slotInstallPhase2();
@@ -634,7 +664,7 @@ void DownloadDialog::install(Entry *e)
   TQPixmap pix = TDEGlobal::iconLoader()->loadIcon("ok", TDEIcon::Small);
 
   TQString lang = TDEGlobal::locale()->language();
-  
+
   if(m_entryitem)
   {
     m_entryitem->setPixmap(0, pix);
@@ -663,6 +693,13 @@ void DownloadDialog::install(Entry *e)
 
 void DownloadDialog::slotInstalled(TDEIO::Job *job)
 {
+  TQPushButton *de, *in;
+  in = *(m_buttons[d->m_page]->at(0));
+  de = *(m_buttons[d->m_page]->at(1));
+
+  if(in) in->setEnabled(true);
+  if(de) de->setEnabled(true);
+
   bool ret = job && (job->error() == 0);
   if(ret)
   {
@@ -891,7 +928,7 @@ void DownloadDialog::loadProvider(Provider *p)
     TQString url = it.key();
     TQStringList urlvariants = it.data();
 
-    TDEIO::TransferJob *variantjob = TDEIO::get(url);
+    TDEIO::TransferJob *variantjob = TDEIO::get(url, false, false);
     d->m_newproviders[p] = p;
     d->m_variantjobs[variantjob] = p;
     d->m_variants[variantjob] = urlvariants;
