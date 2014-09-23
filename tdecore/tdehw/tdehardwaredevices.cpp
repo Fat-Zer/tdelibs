@@ -1977,6 +1977,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else if (devicesubsystem == "node") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
+		else if (devicesubsystem == "regulator") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
 		else if (devicesubsystem == "memory") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
