@@ -2,6 +2,7 @@
    Copyright (C) 2000 Reginald Stadlbauer <reggie@kde.org>
    Copyright (C) 2000,2003 Charles Samuels <charles@kde.org>
    Copyright (C) 2000 Peter Putzer
+   Copyright (C) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -94,6 +95,7 @@ public:
       tabRename(true),
       sortColumn(0),
       selectionDirection(0),
+      selectionRegion(0),
       tooltipColumn (0),
       selectionMode (Single),
       contextMenuKey (TDEGlobalSettings::contextMenuKey()),
@@ -103,7 +105,8 @@ public:
       paintCurrent (0),
       paintBelow (0),
       painting (false),
-      shadeSortColumn(TDEGlobalSettings::shadeSortColumn())
+      shadeSortColumn(TDEGlobalSettings::shadeSortColumn()),
+      initialFileManagerItem(0)
   {
       renameable.append(0);
       connect(editor, TQT_SIGNAL(done(TQListViewItem*,int)), listview, TQT_SLOT(doneEditing(TQListViewItem*,int)));
@@ -156,6 +159,7 @@ public:
 
   //+1 means downwards (y increases, -1 means upwards, 0 means not selected), aleXXX
   int selectionDirection;
+  int selectionRegion;
   int tooltipColumn;
 
   SelectionModeExt selectionMode;
@@ -175,6 +179,8 @@ public:
   bool shadeSortColumn:1;
 
   TQColor alternateBackground;
+
+  TQListViewItem *initialFileManagerItem;
 };
 
 
@@ -1545,332 +1551,478 @@ bool TDEListView::automaticSelection() const
 
 void TDEListView::fileManagerKeyPressEvent (TQKeyEvent* e)
 {
-   //don't care whether it's on the keypad or not
-    int e_state=(e->state() & ~Keypad);
+	//don't care whether it's on the keypad or not
+	int e_state=(e->state() & ~Keypad);
 
-    int oldSelectionDirection(d->selectionDirection);
+	// Handle non-control keypresses
+	if ((e->key()!=Key_Shift) && (e->key()!=Key_Control)
+		&& (e->key()!=Key_Meta) && (e->key()!=Key_Alt)) {
+			if ((e_state==ShiftButton) && (!d->wasShiftEvent) && (!d->selectedBySimpleMove)) {
+				selectAll(false);
+				d->selectionRegion = 0;
+				d->initialFileManagerItem = NULL;
+			}
+			d->selectionDirection=0;
+			d->wasShiftEvent = (e_state == ShiftButton);
+	}
 
-    if ((e->key()!=Key_Shift) && (e->key()!=Key_Control)
-        && (e->key()!=Key_Meta) && (e->key()!=Key_Alt))
-    {
-       if ((e_state==ShiftButton) && (!d->wasShiftEvent) && (!d->selectedBySimpleMove))
-          selectAll(false);
-       d->selectionDirection=0;
-       d->wasShiftEvent = (e_state == ShiftButton);
-    };
+	//d->wasShiftEvent = (e_state == ShiftButton);
 
-    //d->wasShiftEvent = (e_state == ShiftButton);
+	TQListViewItem* item = currentItem();
+	if (!item) {
+		return;
+	}
+	
+	TQListViewItem* repaintItem1 = item;
+	TQListViewItem* repaintItem2 = 0L;
+	TQListViewItem* visItem = 0L;
+	
+	TQListViewItem* nextItem = 0L;
+	int items = 0;
 
+	bool shiftOrCtrl((e_state==ControlButton) || (e_state==ShiftButton));
+	int selectedItems(0);
+	for (TQListViewItem *tmpItem=firstChild(); tmpItem; tmpItem=tmpItem->nextSibling()) {
+		if (tmpItem->isSelected()) selectedItems++;
+	}
 
-    TQListViewItem* item = currentItem();
-    if (!item) return;
+	if (((!selectedItems) || ((selectedItems==1) && (d->selectedUsingMouse)))
+			&& (e_state==Qt::NoButton)
+			&& ((e->key()==Key_Down)
+			|| (e->key()==Key_Up)
+			|| (e->key()==Key_Next)
+			|| (e->key()==Key_Prior)
+			|| (e->key()==Key_Home)
+			|| (e->key()==Key_End))) {
+		d->selectedBySimpleMove=true;
+		d->selectedUsingMouse=false;
+	}
+	else if (selectedItems>1) {
+		d->selectedBySimpleMove=false;
+	}
 
-    TQListViewItem* repaintItem1 = item;
-    TQListViewItem* repaintItem2 = 0L;
-    TQListViewItem* visItem = 0L;
+	bool emitSelectionChanged(false);
 
-    TQListViewItem* nextItem = 0L;
-    int items = 0;
+	switch (e->key()) {
+		case Key_Escape:
+			selectAll(false);
+			emitSelectionChanged=true;
+			break;
+	
+		case Key_Space:
+			//toggle selection of current item
+			if (d->selectedBySimpleMove) {
+				d->selectedBySimpleMove=false;
+			}
+			item->setSelected(!item->isSelected());
+			emitSelectionChanged=true;
+			break;
+	
+		case Key_Insert:
+			//toggle selection of current item and move to the next item
+			if (d->selectedBySimpleMove) {
+				d->selectedBySimpleMove=false;
+				if (!item->isSelected()) item->setSelected(true);
+			}
+			else {
+				item->setSelected(!item->isSelected());
+			}
+			
+			nextItem=item->itemBelow();
+			
+			if (nextItem) {
+				repaintItem2=nextItem;
+				visItem=nextItem;
+				setCurrentItem(nextItem);
+			}
+			d->selectionDirection=1;
+			emitSelectionChanged=true;
+			break;
 
-    bool shiftOrCtrl((e_state==ControlButton) || (e_state==ShiftButton));
-    int selectedItems(0);
-    for (TQListViewItem *tmpItem=firstChild(); tmpItem; tmpItem=tmpItem->nextSibling())
-       if (tmpItem->isSelected()) selectedItems++;
+		case Key_Down:
+			nextItem=item->itemBelow();
+			if (shiftOrCtrl) {
+				d->selectionDirection=1;
+				d->selectedBySimpleMove=false;
+				if (!d->initialFileManagerItem) {
+					d->initialFileManagerItem = item;
+					item->setSelected(true);
+					if (nextItem) {
+						nextItem->setSelected(true);
+					}
+					emitSelectionChanged=true;
+					d->selectionRegion=1;
+				}
+				else {
+					if (item == d->initialFileManagerItem) {
+						item->setSelected(true);
+						if (nextItem) {
+							nextItem->setSelected(true);
+						}
+						emitSelectionChanged=true;
+						d->selectionRegion=1;
+					}
+					else {
+						if (d->selectionRegion == 1) {
+							if (nextItem) {
+								nextItem->setSelected(true);
+							}
+							emitSelectionChanged=true;
+						}
+						else if (d->selectionRegion == -1) {
+							item->setSelected(false);
+							emitSelectionChanged=true;
+						}
+					}
+				}
+			}
+			else if ((d->selectedBySimpleMove) && (nextItem)) {
+				item->setSelected(false);
+				emitSelectionChanged=true;
+			}
+			
+			if (nextItem) {
+				if (d->selectedBySimpleMove) {
+					nextItem->setSelected(true);
+				}
+				repaintItem2=nextItem;
+				visItem=nextItem;
+				setCurrentItem(nextItem);
+			}
+			break;
+	
+		case Key_Up:
+			nextItem=item->itemAbove();
+			if (shiftOrCtrl) {
+				d->selectionDirection=-1;
+				d->selectedBySimpleMove=false;
+				if (!d->initialFileManagerItem) {
+					d->initialFileManagerItem = item;
+					item->setSelected(true);
+					if (nextItem) {
+						nextItem->setSelected(true);
+					}
+					emitSelectionChanged=true;
+					d->selectionRegion=-1;
+				}
+				else {
+					if (item == d->initialFileManagerItem) {
+						item->setSelected(true);
+						if (nextItem) {
+							nextItem->setSelected(true);
+						}
+						emitSelectionChanged=true;
+						d->selectionRegion=-1;
+					}
+					else {
+						if (d->selectionRegion == -1) {
+							if (nextItem) {
+								nextItem->setSelected(true);
+							}
+							emitSelectionChanged=true;
+						}
+						else if (d->selectionRegion == 1) {
+							item->setSelected(false);
+							emitSelectionChanged=true;
+						}
+					}
+				}
+			}
+			else if ((d->selectedBySimpleMove) && (nextItem)) {
+				item->setSelected(false);
+				emitSelectionChanged=true;
+			}
+			
+			if (nextItem) {
+				if (d->selectedBySimpleMove) {
+					nextItem->setSelected(true);
+				}
+				repaintItem2=nextItem;
+				visItem=nextItem;
+				setCurrentItem(nextItem);
+			}
+			break;
 
-    if (((!selectedItems) || ((selectedItems==1) && (d->selectedUsingMouse)))
-        && (e_state==Qt::NoButton)
-        && ((e->key()==Key_Down)
-        || (e->key()==Key_Up)
-        || (e->key()==Key_Next)
-        || (e->key()==Key_Prior)
-        || (e->key()==Key_Home)
-        || (e->key()==Key_End)))
-    {
-       d->selectedBySimpleMove=true;
-       d->selectedUsingMouse=false;
-    }
-    else if (selectedItems>1)
-       d->selectedBySimpleMove=false;
+		case Key_End:
+			// move to the last item and toggle selection of all items in-between
+			nextItem=item;
+			if (d->selectedBySimpleMove) {
+				item->setSelected(false);
+			}
+			if (shiftOrCtrl) {
+				d->selectedBySimpleMove=false;
+			}
+			
+			while (nextItem) {
+				if (shiftOrCtrl) {
+					if (!d->initialFileManagerItem) {
+						d->initialFileManagerItem = nextItem;
+						nextItem->setSelected(true);
+						emitSelectionChanged=true;
+						d->selectionRegion=1;
+					}
+					else {
+						if (nextItem == d->initialFileManagerItem) {
+							nextItem->setSelected(true);
+							emitSelectionChanged=true;
+							d->selectionRegion=1;
+						}
+						else {
+							if (d->selectionRegion == 1) {
+								nextItem->setSelected(true);
+								emitSelectionChanged=true;
+							}
+							else if (d->selectionRegion == -1) {
+								nextItem->setSelected(false);
+								emitSelectionChanged=true;
+							}
+						}
+					}
+				}
+				if (!nextItem->itemBelow()) {
+					if (d->selectedBySimpleMove) {
+						nextItem->setSelected(true);
+					}
+					repaintItem2=nextItem;
+					visItem=nextItem;
+					setCurrentItem(nextItem);
+				}
+				nextItem=nextItem->itemBelow();
+			}
+			emitSelectionChanged=true;
+			break;
 
-    bool emitSelectionChanged(false);
+		case Key_Home:
+			// move to the first item and toggle selection of all items in-between
+			nextItem=item;
+			if (d->selectedBySimpleMove) {
+				item->setSelected(false);
+			}
+			if (shiftOrCtrl) {
+				d->selectedBySimpleMove=false;
+			}
+			
+			while (nextItem) {
+				if (shiftOrCtrl) {
+					if (!d->initialFileManagerItem) {
+						d->initialFileManagerItem = nextItem;
+						nextItem->setSelected(true);
+						emitSelectionChanged=true;
+						d->selectionRegion=-1;
+					}
+					else {
+						if (nextItem == d->initialFileManagerItem) {
+							nextItem->setSelected(true);
+							emitSelectionChanged=true;
+							d->selectionRegion=-1;
+						}
+						else {
+							if (d->selectionRegion == -1) {
+								nextItem->setSelected(true);
+								emitSelectionChanged=true;
+							}
+							else if (d->selectionRegion == 1) {
+								nextItem->setSelected(false);
+								emitSelectionChanged=true;
+							}
+						}
+					}
+				}
+				if (!nextItem->itemAbove()) {
+					if (d->selectedBySimpleMove) {
+						nextItem->setSelected(true);
+					}
+					repaintItem2=nextItem;
+					visItem=nextItem;
+					setCurrentItem(nextItem);
+				}
+				nextItem=nextItem->itemAbove();
+			}
+			emitSelectionChanged=true;
+			break;
+			
+		case Key_Next:
+			items=visibleHeight()/item->height();
+			nextItem=item;
+			if (d->selectedBySimpleMove) {
+				item->setSelected(false);
+			}
+			if (shiftOrCtrl) {
+				d->selectedBySimpleMove=false;
+				d->selectionDirection=1;
+			}
+			
+			for (int i=0; i<items; i++) {
+				if (shiftOrCtrl) {
+					if (!d->initialFileManagerItem) {
+						d->initialFileManagerItem = nextItem;
+						nextItem->setSelected(true);
+						emitSelectionChanged=true;
+						d->selectionRegion=1;
+					}
+					else {
+						if (nextItem == d->initialFileManagerItem) {
+							nextItem->setSelected(true);
+							emitSelectionChanged=true;
+							d->selectionRegion=1;
+						}
+						else {
+							if (d->selectionRegion == 1) {
+								nextItem->setSelected(true);
+								emitSelectionChanged=true;
+							}
+							else if (d->selectionRegion == -1) {
+								if (i==items-1) {
+									nextItem->setSelected(true);
+								}
+								else {
+									nextItem->setSelected(false);
+								}
+								emitSelectionChanged=true;
+							}
+						}
+					}
+				}
+				// last item
+				if ((i==items-1) || (!nextItem->itemBelow())) {
+					if (d->selectedBySimpleMove) {
+						nextItem->setSelected(true);
+					}
+					ensureItemVisible(nextItem);
+					setCurrentItem(nextItem);
+					update();
+					if ((shiftOrCtrl) || (d->selectedBySimpleMove)) {
+						emit selectionChanged();
+					}
+					return;
+				}
+				nextItem=nextItem->itemBelow();
+			}
+			break;
 
-    switch (e->key())
-    {
-    case Key_Escape:
-       selectAll(false);
-       emitSelectionChanged=true;
-       break;
+		case Key_Prior:
+			items=visibleHeight()/item->height();
+			nextItem=item;
+			if (d->selectedBySimpleMove) {
+				item->setSelected(false);
+			}
+			if (shiftOrCtrl) {
+				d->selectionDirection=-1;
+				d->selectedBySimpleMove=false;
+			}
+			
+			for (int i=0; i<items; i++) {
+				if (shiftOrCtrl) {
+					if (!d->initialFileManagerItem) {
+						d->initialFileManagerItem = nextItem;
+						nextItem->setSelected(true);
+						emitSelectionChanged=true;
+						d->selectionRegion=-1;
+					}
+					else {
+						if (nextItem == d->initialFileManagerItem) {
+							nextItem->setSelected(true);
+							emitSelectionChanged=true;
+							d->selectionRegion=-1;
+						}
+						else {
+							if (d->selectionRegion == -1) {
+								nextItem->setSelected(true);
+								emitSelectionChanged=true;
+							}
+							else if (d->selectionRegion == 1) {
+								if (i==items-1) {
+									nextItem->setSelected(true);
+								}
+								else {
+									nextItem->setSelected(false);
+								}
+								emitSelectionChanged=true;
+							}
+						}
+					}
+				}
+				// last item
+				if ((i==items-1) || (!nextItem->itemAbove())) {
+					if (d->selectedBySimpleMove) {
+						nextItem->setSelected(true);
+					}
+					ensureItemVisible(nextItem);
+					setCurrentItem(nextItem);
+					update();
+					if ((shiftOrCtrl) || (d->selectedBySimpleMove)) {
+						emit selectionChanged();
+					}
+					return;
+				}
+				nextItem=nextItem->itemAbove();
+			}
+			break;
+	
+		case Key_Minus:
+			if ( item->isOpen() ) {
+				setOpen( item, false );
+			}
+			break;
+		case Key_Plus:
+			if (  !item->isOpen() && (item->isExpandable() || item->childCount()) ) {
+				setOpen( item, true );
+			}
+			break;
+		default:
+			bool realKey = ((e->key()!=Key_Shift) && (e->key()!=Key_Control)
+					&& (e->key()!=Key_Meta) && (e->key()!=Key_Alt));
+		
+			bool selectCurrentItem = (d->selectedBySimpleMove) && (item->isSelected());
+			if (realKey && selectCurrentItem) {
+				item->setSelected(false);
+			}
+			//this is mainly for the "goto filename beginning with pressed char" feature (aleXXX)
+			TQListView::SelectionMode oldSelectionMode = selectionMode();
+			setSelectionMode (TQListView::Multi);
+			TQListView::keyPressEvent (e);
+			setSelectionMode (oldSelectionMode);
+			if (realKey && selectCurrentItem) {
+				currentItem()->setSelected(true);
+				emitSelectionChanged=true;
+			}
+			repaintItem2=currentItem();
+			if (realKey) {
+				visItem=currentItem();
+			}
+			break;
+	}
 
-    case Key_Space:
-       //toggle selection of current item
-       if (d->selectedBySimpleMove)
-          d->selectedBySimpleMove=false;
-       item->setSelected(!item->isSelected());
-       emitSelectionChanged=true;
-       break;
+	if (visItem) {
+		ensureItemVisible(visItem);
+	}
 
-    case Key_Insert:
-       //toggle selection of current item and move to the next item
-       if (d->selectedBySimpleMove)
-       {
-          d->selectedBySimpleMove=false;
-          if (!item->isSelected()) item->setSelected(true);
-       }
-       else
-       {
-          item->setSelected(!item->isSelected());
-       };
+	TQRect ir;
+	if (repaintItem1) {
+		ir = ir.unite( itemRect(repaintItem1) );
+	}
+	if (repaintItem2) {
+		ir = ir.unite( itemRect(repaintItem2) );
+	}
 
-       nextItem=item->itemBelow();
+	if ( !ir.isEmpty() ) {
+		// rectangle to be repainted
+		if ( ir.x() < 0 ) {
+			ir.moveBy( -ir.x(), 0 );
+		}
+		viewport()->repaint( ir, false );
+	}
+	/*if (repaintItem1) {
+		repaintItem1->repaint();
+	}
+	if (repaintItem2) {
+		repaintItem2->repaint();
+	}*/
 
-       if (nextItem)
-       {
-          repaintItem2=nextItem;
-          visItem=nextItem;
-          setCurrentItem(nextItem);
-       };
-       d->selectionDirection=1;
-       emitSelectionChanged=true;
-       break;
-
-    case Key_Down:
-       nextItem=item->itemBelow();
-       //toggle selection of current item and move to the next item
-       if (shiftOrCtrl)
-       {
-          d->selectionDirection=1;
-          if (d->selectedBySimpleMove)
-             d->selectedBySimpleMove=false;
-          else
-          {
-             if (oldSelectionDirection!=-1)
-             {
-                item->setSelected(!item->isSelected());
-                emitSelectionChanged=true;
-             };
-          };
-       }
-       else if ((d->selectedBySimpleMove) && (nextItem))
-       {
-          item->setSelected(false);
-          emitSelectionChanged=true;
-       };
-
-       if (nextItem)
-       {
-          if (d->selectedBySimpleMove)
-             nextItem->setSelected(true);
-          repaintItem2=nextItem;
-          visItem=nextItem;
-          setCurrentItem(nextItem);
-       };
-       break;
-
-    case Key_Up:
-       nextItem=item->itemAbove();
-       d->selectionDirection=-1;
-       //move to the prev. item and toggle selection of this one
-       // => No, can't select the last item, with this. For symmetry, let's
-       // toggle selection and THEN move up, just like we do in down (David)
-       if (shiftOrCtrl)
-       {
-          if (d->selectedBySimpleMove)
-             d->selectedBySimpleMove=false;
-          else
-          {
-             if (oldSelectionDirection!=1)
-             {
-                item->setSelected(!item->isSelected());
-                emitSelectionChanged=true;
-             };
-          }
-       }
-       else if ((d->selectedBySimpleMove) && (nextItem))
-       {
-          item->setSelected(false);
-          emitSelectionChanged=true;
-       };
-
-       if (nextItem)
-       {
-          if (d->selectedBySimpleMove)
-             nextItem->setSelected(true);
-          repaintItem2=nextItem;
-          visItem=nextItem;
-          setCurrentItem(nextItem);
-       };
-       break;
-
-    case Key_End:
-       //move to the last item and toggle selection of all items inbetween
-       nextItem=item;
-       if (d->selectedBySimpleMove)
-          item->setSelected(false);
-       if (shiftOrCtrl)
-          d->selectedBySimpleMove=false;
-
-       while(nextItem)
-       {
-          if (shiftOrCtrl)
-             nextItem->setSelected(!nextItem->isSelected());
-          if (!nextItem->itemBelow())
-          {
-             if (d->selectedBySimpleMove)
-                nextItem->setSelected(true);
-             repaintItem2=nextItem;
-             visItem=nextItem;
-             setCurrentItem(nextItem);
-          }
-          nextItem=nextItem->itemBelow();
-       }
-       emitSelectionChanged=true;
-       break;
-
-    case Key_Home:
-       // move to the first item and toggle selection of all items inbetween
-       nextItem = firstChild();
-       visItem = nextItem;
-       repaintItem2 = visItem;
-       if (d->selectedBySimpleMove)
-          item->setSelected(false);
-       if (shiftOrCtrl)
-       {
-          d->selectedBySimpleMove=false;
-
-          while ( nextItem != item )
-          {
-             nextItem->setSelected( !nextItem->isSelected() );
-             nextItem = nextItem->itemBelow();
-          }
-          item->setSelected( !item->isSelected() );
-       }
-       setCurrentItem( firstChild() );
-       emitSelectionChanged=true;
-       break;
-
-    case Key_Next:
-       items=visibleHeight()/item->height();
-       nextItem=item;
-       if (d->selectedBySimpleMove)
-          item->setSelected(false);
-       if (shiftOrCtrl)
-       {
-          d->selectedBySimpleMove=false;
-          d->selectionDirection=1;
-       };
-
-       for (int i=0; i<items; i++)
-       {
-          if (shiftOrCtrl)
-             nextItem->setSelected(!nextItem->isSelected());
-          //the end
-          if ((i==items-1) || (!nextItem->itemBelow()))
-
-          {
-             if (shiftOrCtrl)
-                nextItem->setSelected(!nextItem->isSelected());
-             if (d->selectedBySimpleMove)
-                nextItem->setSelected(true);
-             ensureItemVisible(nextItem);
-             setCurrentItem(nextItem);
-             update();
-             if ((shiftOrCtrl) || (d->selectedBySimpleMove))
-             {
-                emit selectionChanged();
-             }
-             return;
-          }
-          nextItem=nextItem->itemBelow();
-       }
-       break;
-
-    case Key_Prior:
-       items=visibleHeight()/item->height();
-       nextItem=item;
-       if (d->selectedBySimpleMove)
-          item->setSelected(false);
-       if (shiftOrCtrl)
-       {
-          d->selectionDirection=-1;
-          d->selectedBySimpleMove=false;
-       };
-
-       for (int i=0; i<items; i++)
-       {
-          if ((nextItem!=item) &&(shiftOrCtrl))
-             nextItem->setSelected(!nextItem->isSelected());
-          //the end
-          if ((i==items-1) || (!nextItem->itemAbove()))
-
-          {
-             if (d->selectedBySimpleMove)
-                nextItem->setSelected(true);
-             ensureItemVisible(nextItem);
-             setCurrentItem(nextItem);
-             update();
-             if ((shiftOrCtrl) || (d->selectedBySimpleMove))
-             {
-                emit selectionChanged();
-             }
-             return;
-          }
-          nextItem=nextItem->itemAbove();
-       }
-       break;
-
-    case Key_Minus:
-       if ( item->isOpen() )
-          setOpen( item, false );
-       break;
-    case Key_Plus:
-       if (  !item->isOpen() && (item->isExpandable() || item->childCount()) )
-          setOpen( item, true );
-       break;
-    default:
-       bool realKey = ((e->key()!=Key_Shift) && (e->key()!=Key_Control)
-                        && (e->key()!=Key_Meta) && (e->key()!=Key_Alt));
-
-       bool selectCurrentItem = (d->selectedBySimpleMove) && (item->isSelected());
-       if (realKey && selectCurrentItem)
-          item->setSelected(false);
-       //this is mainly for the "goto filename beginning with pressed char" feature (aleXXX)
-       TQListView::SelectionMode oldSelectionMode = selectionMode();
-       setSelectionMode (TQListView::Multi);
-       TQListView::keyPressEvent (e);
-       setSelectionMode (oldSelectionMode);
-       if (realKey && selectCurrentItem)
-       {
-          currentItem()->setSelected(true);
-          emitSelectionChanged=true;
-       }
-       repaintItem2=currentItem();
-       if (realKey)
-          visItem=currentItem();
-       break;
-    }
-
-    if (visItem)
-       ensureItemVisible(visItem);
-
-    TQRect ir;
-    if (repaintItem1)
-       ir = ir.unite( itemRect(repaintItem1) );
-    if (repaintItem2)
-       ir = ir.unite( itemRect(repaintItem2) );
-
-    if ( !ir.isEmpty() )
-    {                 // rectangle to be repainted
-       if ( ir.x() < 0 )
-          ir.moveBy( -ir.x(), 0 );
-       viewport()->repaint( ir, false );
-    }
-    /*if (repaintItem1)
-       repaintItem1->repaint();
-    if (repaintItem2)
-       repaintItem2->repaint();*/
-    update();
-    if (emitSelectionChanged)
-       emit selectionChanged();
+	update();
+	if (emitSelectionChanged) {
+		emit selectionChanged();
+	}
 }
 
 void TDEListView::setSelectionModeExt (SelectionModeExt mode)
