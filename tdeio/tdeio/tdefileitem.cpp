@@ -57,7 +57,12 @@
 
 class KFileItem::KFileItemPrivate {
 	public:
+		KFileItemPrivate() : commentCached(false) {}
+
+	public:
 		TQString iconName;
+		TQString comment;
+		bool commentCached;
 };
 
 KFileItem::KFileItem( const TDEIO::UDSEntry& _entry, const KURL& _url,
@@ -255,8 +260,9 @@ void KFileItem::readUDSEntry( bool _urlIsDirectory )
         break;
 
       case TDEIO::UDS_ICON_NAME:
-        if ( !d )
+        if ( !d ) {
           d = new KFileItemPrivate();
+        }
         d->iconName = (*it).m_str;
         break;
 
@@ -296,6 +302,11 @@ void KFileItem::refresh()
 
 void KFileItem::refreshMimeType()
 {
+  if ( d ) {
+    d->iconName = TQString::null;
+    d->comment = TQString::null;
+    d->commentCached = false;
+  }
   m_pMimeType = 0L;
   init( false ); // Will determine the mimetype
 }
@@ -543,6 +554,16 @@ TQString KFileItem::mimetype() const
   return that->determineMimeType()->name();
 }
 
+TQString KFileItem::mimetypeFast() const
+{
+  if (isMimeTypeKnown()) {
+    return mimetype();
+  }
+  else {
+    return m_pMimeType->name();
+  }
+}
+
 KMimeType::Ptr KFileItem::determineMimeType()
 {
   if ( !m_pMimeType || !m_bMimeTypeKnown )
@@ -568,17 +589,28 @@ bool KFileItem::isMimeTypeKnown() const
 
 TQString KFileItem::mimeComment()
 {
- KMimeType::Ptr mType = determineMimeType();
+	if (d && (d->commentCached)) return d->comment;
 
- bool isLocalURL;
- KURL url = mostLocalURL(isLocalURL);
+	KMimeType::Ptr mType = determineMimeType();
+	
+	bool isLocalURL;
+	KURL url = mostLocalURL(isLocalURL);
+	
+	TQString comment = mType->comment( url, isLocalURL );
+	//kdDebug() << "finding comment for " << url.url() << " : " << m_pMimeType->name() << endl;
+	if ( !d ) {
+		d = new KFileItemPrivate();
+	}
+	if (!comment.isEmpty()) {
+        	d->comment = comment;
+        	d->commentCached = true;
+	}
+	else {
+		d->comment = mType->name();
+		d->commentCached = true;
+	}
 
- TQString comment = mType->comment( url, isLocalURL );
- //kdDebug() << "finding comment for " << url.url() << " : " << m_pMimeType->name() << endl;
-  if (!comment.isEmpty())
-    return comment;
-  else
-    return mType->name();
+	return d->comment;
 }
 
 TQString KFileItem::iconName()
@@ -589,7 +621,11 @@ TQString KFileItem::iconName()
   KURL url = mostLocalURL(isLocalURL);
 
   //kdDebug() << "finding icon for " << url.url() << " : " << m_pMimeType->name() << endl;
-  return determineMimeType()->icon(url, isLocalURL);
+  if ( !d ) {
+    d = new KFileItemPrivate();
+  }
+  d->iconName = determineMimeType()->icon(url, isLocalURL);
+  return d->iconName;
 }
 
 int KFileItem::overlays() const
@@ -855,12 +891,18 @@ TQString KFileItem::getStatusBarInfo()
 
   if ( m_bLink )
   {
-      TQString comment = determineMimeType()->comment( m_url, m_bIsLocalURL );
+      if ( !d ) {
+        d = new KFileItemPrivate();
+      }
+      if (!d->commentCached) {
+        d->comment = determineMimeType()->comment( m_url, m_bIsLocalURL );
+        d->commentCached = true;
+      }
       TQString tmp;
-      if ( comment.isEmpty() )
+      if ( d->comment.isEmpty() )
         tmp = i18n ( "Symbolic Link" );
       else
-        tmp = i18n("%1 (Link)").arg(comment);
+        tmp = i18n("%1 (Link)").arg(d->comment);
       text += "->";
       text += linkDest();
       text += "  ";
@@ -1031,8 +1073,9 @@ void KFileItem::assign( const KFileItem & item )
     determineMimeType();
 
     if ( item.d ) {
-        if ( !d )
+        if ( !d ) {
             d = new KFileItemPrivate;
+        }
         d->iconName = item.d->iconName;
     } else {
         delete d;
@@ -1061,8 +1104,11 @@ void KFileItem::setUDSEntry( const TDEIO::UDSEntry& _entry, const KURL& _url,
   m_guessedMimeType = TQString::null;
   m_metaInfo = KFileMetaInfo();
 
-  if ( d )
+  if ( d ) {
     d->iconName = TQString::null;
+    d->comment = TQString::null;
+    d->commentCached = false;
+  }
 
   readUDSEntry( _urlIsDirectory );
   init( _determineMimeTypeOnDemand );

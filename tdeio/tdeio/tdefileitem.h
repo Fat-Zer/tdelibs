@@ -328,6 +328,14 @@ public:
 
   /**
    * Returns the mimetype of the file item.
+   * If @p _determineMimeTypeOnDemand was used in the constructor, this will return
+   * the mimetype as fast as possible at the expense of accuracy.
+   * @return the fast mime type of the file
+   */
+  TQString mimetypeFast() const;
+
+  /**
+   * Returns the mimetype of the file item.
    * If _determineMimeTypeOnDemand was used in the constructor, this will determine
    * the mimetype first.
    * @return the mime type
