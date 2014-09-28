@@ -621,11 +621,7 @@ TQString KFileItem::iconName()
   KURL url = mostLocalURL(isLocalURL);
 
   //kdDebug() << "finding icon for " << url.url() << " : " << m_pMimeType->name() << endl;
-  if ( !d ) {
-    d = new KFileItemPrivate();
-  }
-  d->iconName = determineMimeType()->icon(url, isLocalURL);
-  return d->iconName;
+  return determineMimeType()->icon(url, isLocalURL);
 }
 
 int KFileItem::overlays() const
