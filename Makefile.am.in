@@ -36,7 +36,7 @@ $(top_srcdir)/acinclude.m4: $(top_srcdir)/libltdl/ltdl.m4
 AUTOMAKE_OPTIONS = foreign 1.6.1
 
 potdir = $(kde_includes)
-pot_DATA = kde.pot
+pot_DATA = tde.pot
 
 messages:
 	cd tdeabc/scripts && perl ./makeaddressee
@@ -55,12 +55,12 @@ messages:
 	find $$dirs -maxdepth 1 -name "*.h" -print >> files ;\
 	echo ./tdecore/tde-config.cpp.in >> files ;\
 	$(EXTRACTRC) `find $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_tdednssd.kcfg > rc.cpp; \
-	: > kde.pot ;\
+	: > tde.pot ;\
 	$(XGETTEXT) -ktranslate -x qt-messages.pot rc.cpp `cat files` && cat messages.po qt-messages.pot > $(podir)/tdelibs.pot
-	$(XGETTEXT) common_texts.cpp -o kde.pot
+	$(XGETTEXT) common_texts.cpp -o tde.pot
 	rm -f dirs
 
-EXTRA_DIST = admin kde.pot \
+EXTRA_DIST = admin tde.pot \
 	COMPILING COMPILING.html COPYING.BSD DEBUG \
 	KDE2PORTING.html NAMING common_texts.cpp tdelibs.lsm kdoc.rules \
 	qt-messages.pot configure.in.in configure.in.mid configure.in.bot

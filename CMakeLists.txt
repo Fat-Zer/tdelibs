@@ -1002,7 +1002,7 @@ set( CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined" )
 ##### headers ###################################
 
 install( FILES
-    kde.pot
+    tde.pot
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
