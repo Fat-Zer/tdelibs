@@ -330,20 +330,15 @@ bool TDEServerSocket::init( unsigned short int _port )
   return true;
 }
 
-// RAJA FIXME DEBUG ONLY
-extern char *__progname;
-
 bool TDEServerSocket::bindAndListen()
 {
   if (d == NULL || d->ks == NULL)
     return false;
 
-printf("[RAJA DEBUG 640.0] In TDEServerSocket::bindAndListen [%s]\n\r", __progname); fflush(stdout);
 
   int ret = d->ks->listen( SOMAXCONN );
   if (ret < 0)
     {
-printf("[RAJA DEBUG 640.1] Error listening on socket [%d]\n\r", ret); fflush(stdout);
         kdWarning(170) << "Error listening on socket: " << ret << "\n";
 	delete d->ks;
 	d->ks = NULL;
