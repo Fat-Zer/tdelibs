@@ -182,11 +182,11 @@ int main( int argc, char ** argv )
 
   kdDebug() << "setLanguage C\n";
   TDEGlobal::locale()->setLanguage(TQString::fromLatin1("C"));
-  kdDebug() << "C: " << i18n("yes") << " " << i18n(TQACCEL_OBJECT_NAME_STRING, "Space") << endl;
+  kdDebug() << "C: " << i18n("yes") << " " << i18n("TQAccel", "Space") << endl;
 
   kdDebug() << "setLanguage de\n";
   TDEGlobal::locale()->setLanguage(TQString::fromLatin1("de"));
-  kdDebug() << "de: " << i18n("yes") << " " << i18n(TQACCEL_OBJECT_NAME_STRING, "Space") << endl;
+  kdDebug() << "de: " << i18n("yes") << " " << i18n("TQAccel", "Space") << endl;
 
 
   Test m;

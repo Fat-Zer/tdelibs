@@ -530,7 +530,7 @@ TQString Sym::toString( bool bUserSpace ) const
 	s = XKeysymToString( m_sym );
 #endif
 	capitalizeKeyname( s );
-	return bUserSpace ? i18n(TQACCEL_OBJECT_NAME_STRING, s.latin1()) : s;
+	return bUserSpace ? i18n("TQAccel", s.latin1()) : s;
 }
 
 TQString Sym::toStringInternal() const { return toString( false ); }
