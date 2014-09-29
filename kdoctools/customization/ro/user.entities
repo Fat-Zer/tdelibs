@@ -30,7 +30,6 @@
 <!ENTITY FAQ                    '<acronym>R.I.F.</acronym>'>
 <!ENTITY kcontrol               '<application>Centrul de Control &tde;</application>'>
 <!ENTITY kcontrolcenter         '<application>Centrul de Control &tde;</application>'>
-<!ENTITY kinfocenter            '<application>Centrul de Informaţii &tde;</application>'>
 <!ENTITY khelpcenter            '<application>Centrul de Ajutor &tde;</application>'>
 <!ENTITY ex                     "exemplu">                                               <!-- English: &eg; -->
 <!ENTITY eg                     "de exemplu">                                            <!-- English: &eg; -->

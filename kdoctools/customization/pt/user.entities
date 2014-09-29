@@ -37,7 +37,6 @@
 </inlinemediaobject>
    </guiicon> icon'>
 <!ENTITY kmenu  "menu <guimenu>TDE</guimenu>">
-<!ENTITY kinfocenter "<application>Centro de Informação do TDE</application>" >
 <!ENTITY ksystemlog "<application>KSystemLog</application>" >
 <!ENTITY kleopatra "<application>Kleopatra</application>" >
 <!ENTITY qt "<trademark>Qt</trademark>" >

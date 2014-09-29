@@ -149,7 +149,6 @@
 <!ENTITY HP-UX	'<trademark class="registered">HP-UX</trademark>'>
 <!ENTITY HTML 	'<acronym>HTML</acronym>'>
 <!ENTITY HTTP	"<acronym>HTTP</acronym>">
-<!ENTITY infocenter     "<application>KInfoCenter</application>">
 <!ENTITY IRIX	'<trademark class="registered">IRIX</trademark>'>
 <!ENTITY Java	"<trademark>Java</trademark>">
 <!ENTITY Jini	"<trademark>Jini</trademark>">
@@ -227,7 +226,6 @@
 <!ENTITY tdeiconedit	"<application>TDEIconEdit</application>">
 <!ENTITY kig	"<application>Kig</application>">
 <!ENTITY kikbd	"<application>kikbd</application>">
-<!ENTITY kinfocenter    "<application>KInfoCenter</application>">
 <!ENTITY kit	"<application>Kit</application>">
 <!ENTITY kitchensync        "<application>KitchenSync</application>">
 <!ENTITY kiten	"<application>Kiten</application>">
