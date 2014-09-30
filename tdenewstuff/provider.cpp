@@ -351,15 +351,13 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
   	providersUrl = cfg->readEntry( "ProvidersUrl" );
 
   if ( providersUrl.isEmpty() ) {
-    // TODO: Replace the default by the real one.
     TQString server = cfg->readEntry( "MasterServer",
                                      "https://www.trinitydesktop.org" );
-  
-    providersUrl = server + "/ocs/" + type + "/providers.xml";
+    providersUrl = server + "/ocs/providers.xml";
   }
 
   kdDebug() << "ProviderLoader::load(): providersUrl: " << providersUrl << endl;
-  
+
   TDEIO::TransferJob *job = TDEIO::get( KURL( providersUrl ), false, false );
   connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
            TQT_SLOT( slotJobResult( TDEIO::Job * ) ) );
