@@ -127,14 +127,6 @@ public:
   bool mergeConfig( const TQString & configFile );
 
   /**
-   * Merge an existing parse table with the data from the
-   * given buffer.
-   *
-   * @return @p true on success.
-   */
-  bool mergeBufConfig(char *);
-
-  /**
    * Enable/Disable follow-links.
    *
    * (Default is disabled.)

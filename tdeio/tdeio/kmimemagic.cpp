@@ -2175,23 +2175,6 @@ KMimeMagic::mergeConfig(const TQString & _configfile)
 	return true;
 }
 
-bool
-KMimeMagic::mergeBufConfig(char * _configbuf)
-{
-	int result;
-
-	if (conf) {
-		result = buff_apprentice(_configbuf);
-		if (result == -1)
-			return false;
-#ifdef MIME_MAGIC_DEBUG_TABLE
-		test_table();
-#endif
-		return true;
-	}
-	return false;
-}
-
 void
 KMimeMagic::setFollowLinks( bool _enable )
 {
