@@ -25,8 +25,6 @@
 #include <tqstring.h>
 #include "tdelibs_export.h"
 
-#undef NDEBUG
-
 class TQWidget;
 class TQDateTime;
 class TQDate;
