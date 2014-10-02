@@ -556,27 +556,32 @@ TQString KFileItem::mimetype() const
 
 TQString KFileItem::mimetypeFast() const
 {
-  if (isMimeTypeKnown()) {
-    return mimetype();
-  }
-  else {
-    return m_pMimeType->name();
-  }
+	if (isMimeTypeKnown()) {
+		return mimetype();
+	}
+	else {
+		return m_pMimeType->name();
+	}
+}
+
+KMimeType::Ptr KFileItem::mimeTypePtrFast()
+{
+	return m_pMimeType;
 }
 
 KMimeType::Ptr KFileItem::determineMimeType()
 {
-  if ( !m_pMimeType || !m_bMimeTypeKnown )
-  {
-    bool isLocalURL;
-    KURL url = mostLocalURL(isLocalURL);
+	if ( !m_pMimeType || !m_bMimeTypeKnown )
+	{
+		bool isLocalURL;
+		KURL url = mostLocalURL(isLocalURL);
 
-    m_pMimeType = KMimeType::findByURL( url, m_fileMode, isLocalURL );
-    //kdDebug() << "finding mimetype for " << url.url() << " : " << m_pMimeType->name() << endl;
-    m_bMimeTypeKnown = true;
-  }
+		m_pMimeType = KMimeType::findByURL( url, m_fileMode, isLocalURL );
+		//kdDebug() << "finding mimetype for " << url.url() << " : " << m_pMimeType->name() << endl;
+		m_bMimeTypeKnown = true;
+	}
 
-  return m_pMimeType;
+	return m_pMimeType;
 }
 
 bool KFileItem::isMimeTypeKnown() const

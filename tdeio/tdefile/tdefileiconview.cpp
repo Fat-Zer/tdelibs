@@ -611,7 +611,7 @@ void KFileIconView::slotPreviewResult( TDEIO::Job *job )
 void KFileIconView::gotPreview( const KFileItem *item, const TQPixmap& pix )
 {
     KFileIconViewItem *it = viewItem( item );
-    if ( it )
+    if ( it ) {
         if( item->overlays() & TDEIcon::HiddenOverlay )
         {
             TQPixmap p( pix );
@@ -619,8 +619,10 @@ void KFileIconView::gotPreview( const KFileItem *item, const TQPixmap& pix )
             TDEIconEffect::semiTransparent( p );
             it->setPixmap( p );
         }
-        else
+        else {
             it->setPixmap( pix );
+        }
+    }
 }
 
 bool KFileIconView::canPreview( const KFileItem *item ) const

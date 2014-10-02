@@ -2243,6 +2243,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		// Last ditch attempt at classification
 		// Likely inaccurate and sweeping
 		if ((devicesubsystem == "usb")
+			|| (devicesubsystem == "usbmisc")
 			|| (devicesubsystem == "usb_device")
 			|| (devicesubsystem == "usbmon")) {
 				// Get USB interface class for further classification

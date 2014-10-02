@@ -360,13 +360,13 @@ void KFileDetailView::slotSortingChanged( int col )
 
     switch( col ) {
         case COL_NAME:
-            sortSpec = (sort & ~TQDir::SortByMask | TQDir::Name);
+            sortSpec = ((sort & ~TQDir::SortByMask) | TQDir::Name);
             break;
         case COL_SIZE:
-            sortSpec = (sort & ~TQDir::SortByMask | TQDir::Size);
+            sortSpec = ((sort & ~TQDir::SortByMask) | TQDir::Size);
             break;
         case COL_DATE:
-            sortSpec = (sort & ~TQDir::SortByMask | TQDir::Time);
+            sortSpec = ((sort & ~TQDir::SortByMask) | TQDir::Time);
             break;
 
         // the following columns have no equivalent in TQDir, so we set it
