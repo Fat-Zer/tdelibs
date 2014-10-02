@@ -652,7 +652,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 	time1 = time2;
 #endif
 
-	TDECPUDevice* firstCPU;
+	TDECPUDevice* firstCPU = NULL;
 	
 	// Read in other information from cpufreq, if available
 	for (processorNumber=0; processorNumber<processorCount; processorNumber++) {
@@ -668,10 +668,10 @@ void TDEHardwareDevices::processModifiedCPUs() {
 		TQStringList governorlist;
 		if (cpufreq_dir.exists()) {
 			TQString nodename;
-			if(processorNumber == 0) {
+			if ((processorNumber == 0) || (!firstCPU)) {
 				// Remember the first CPU options so that we can reuse it later.
 				firstCPU = cdevice;
-				
+
 				nodename = cpufreq_dir.path();
 				nodename.append("/scaling_governor");
 				TQFile scalinggovernorfile(nodename);
