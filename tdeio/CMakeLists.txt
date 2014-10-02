@@ -36,8 +36,6 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES magic DESTINATION ${MIME_INSTALL_DIR} )
-
 install( FILES
     application.desktop kurifilterplugin.desktop
     kcomprfilter.desktop kscan.desktop kdatatool.desktop

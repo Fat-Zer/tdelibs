@@ -43,7 +43,7 @@ class KMimeMagic; // see below (read this one first)
  * It contains the mimetype and the encoding of
  * the file or buffer read.
  */
-class TDEIO_EXPORT_DEPRECATED KMimeMagicResult
+class TDEIO_EXPORT KMimeMagicResult
 {
 public:
   KMimeMagicResult() { m_iAccuracy = 100; }
@@ -98,7 +98,7 @@ protected:
  *
  * The result is contained in the class KMimeMagicResult.
  */
-class TDEIO_EXPORT_DEPRECATED KMimeMagic
+class TDEIO_EXPORT KMimeMagic
 {
 public:
   /**
