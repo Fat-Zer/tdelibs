@@ -2345,7 +2345,7 @@ bool DocumentImpl::isURLAllowed(const TQString& url) const
         return false;
 
     // Prohibit non-file URLs if we are asked to.
-    if (!thisPart || thisPart->onlyLocalReferences() && newURL.protocol() != "file" && newURL.protocol() != "data")
+    if (!thisPart || (thisPart->onlyLocalReferences() && (newURL.protocol() != "file") && (newURL.protocol() != "data")))
         return false;
 
     // do we allow this suburl ?

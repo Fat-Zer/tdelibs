@@ -358,6 +358,9 @@ int RenderFlow::rightmostPosition(bool includeOverflowInterior, bool includeSelf
         relativePositionOffset(right, y);
     }
 
+#ifdef DEBUG_LAYOUT
+    kdDebug(6040) << renderName() << "(RenderFlow)::rightmostPosition(" << includeOverflowInterior << "," << includeSelf << ") Rightmost position: " << right << endl;
+#endif
     return right;
 }
 

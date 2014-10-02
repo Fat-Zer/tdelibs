@@ -23,8 +23,8 @@
  *
  */
 
-//#define DEBUG_LAYOUT
-//#define BIDI_DEBUG
+// #define DEBUG_LAYOUT
+// #define BIDI_DEBUG
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -295,7 +295,7 @@ void InlineTextBox::paintDecoration( TQPainter *pt, const Font *f, int _tx, int 
         pt->setPen(linethrough);
         f->drawDecoration(pt, _tx, _ty, baseline(), width, height(), Font::LINE_THROUGH);
     }
-    // NO! Do NOT add BLINK! It is the most annouing feature of Netscape, and IE has a reason not to
+    // NO! Do NOT add BLINK! It is the most annoying feature of Netscape, and IE has a reason not to
     // support it. Lars
 }
 
@@ -1305,7 +1305,9 @@ unsigned int RenderText::width(unsigned int from, unsigned int len, const Font *
 
     int w = f->width(str->s, str->l, from, len );
 
-    //kdDebug( 6040 ) << "RenderText::width(" << from << ", " << len << ") = " << w << endl;
+#ifdef DEBUG_LAYOUT
+    kdDebug( 6040 ) << "RenderText::width(" << from << ", " << len << ") = " << w << endl;
+#endif
     return w;
 }
 
@@ -1315,16 +1317,19 @@ short RenderText::width() const
     int minx = 100000000;
     int maxx = 0;
     // slooow
-    for(unsigned int si = 0; si < m_lines.count(); si++) {
+    for (unsigned int si = 0; si < m_lines.count(); si++) {
         InlineTextBox* s = m_lines[si];
-        if(s->m_x < minx)
+        if (s->m_x < minx)
             minx = s->m_x;
-        if(s->m_x + s->m_width > maxx)
+        if (s->m_x + s->m_width > maxx)
             maxx = s->m_x + s->m_width;
     }
 
     w = kMax(0, maxx-minx);
 
+#ifdef DEBUG_LAYOUT
+    kdDebug( 6040 ) << "RenderText::width() = " << w << endl;
+#endif
     return w;
 }
 
@@ -1486,7 +1491,7 @@ static TQString quoteAndEscapeNonPrintables(const TQString &s)
 
 static void writeTextRun(TQTextStream &ts, const RenderText &o, const InlineTextBox &run)
 {
-    ts << "text run at (" << run.m_x << "," << run.m_y << ") width " << run.m_width << ": "
+    ts << "text run at (" << run.m_x << "," << run.m_y << ") width " << run.width() << ": "
        << quoteAndEscapeNonPrintables(o.data().string().mid(run.m_start, run.m_len));
 }
 

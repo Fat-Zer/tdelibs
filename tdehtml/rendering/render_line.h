@@ -84,7 +84,15 @@ public:
 
     RootInlineBox* root();
 
-    void setWidth(short w) { m_width = w; }
+    void setWidth(short w) {
+        if (w < 0) {
+            m_width = SHRT_MAX;
+            kdDebug( 6040 ) << " InlineBox::setWidth() invalid negative width " << w << " specified!" << endl;
+        }
+        else {
+            m_width = w;
+        }
+    }
     short width() const { return m_width; }
 
     void setXPos(short x) { m_x = x; }

@@ -74,7 +74,15 @@ private:
     void* operator new(size_t sz) throw();
 
 public:
-    void setSpaceAdd(int add) { m_width -= m_toAdd; m_toAdd = add; m_width += m_toAdd; }
+    void setSpaceAdd(int add) {
+        if (add < 0) {
+            m_toAdd = 0;
+            kdDebug( 6040 ) << " InlineTextBox::setSpaceAdd() invalid negative value " << add << " specified!" << endl;
+        }
+        else {
+            m_width -= m_toAdd; m_toAdd = add; m_width += m_toAdd;
+        }
+ }
     int spaceAdd() { return m_toAdd; }
 
     virtual bool isInlineTextBox() const { return true; }

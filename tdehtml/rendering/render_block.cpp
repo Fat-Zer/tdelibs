@@ -230,11 +230,9 @@ void RenderBlock::updateFirstLetter()
             while ( length < oldText->l && (oldText->s+length)->isSpace() )
                 length++;
             begin = length;
-            while ( length < oldText->l &&
-                    ( (oldText->s+length)->isPunct()) || (oldText->s+length)->isSpace() )
+            while ( (length < oldText->l && ( (oldText->s+length)->isPunct())) || (oldText->s+length)->isSpace() )
                 length++;
-            if ( length < oldText->l &&
-                    !( (oldText->s+length)->isSpace() || (oldText->s+length)->isPunct() ))
+            if ( length < oldText->l && !( (oldText->s+length)->isSpace() || (oldText->s+length)->isPunct() ))
                 length++;
             while ( length < oldText->l && (oldText->s+length)->isMark() )
                 length++;
@@ -1466,6 +1464,10 @@ void RenderBlock::layoutBlockChildren( bool relayoutChildren )
         m_overflowHeight = kMax(effY + child->effectiveHeight(), m_overflowHeight);
         m_overflowTop = kMin(effY, m_overflowTop);
 
+#ifdef PAGE_DEBUG
+        kdDebug(6040) << renderName() << "(RenderBlock)::layoutBlockChildren(" << relayoutChildren << ") effX: " << effX << " effY: " << effY << " child: " << child << " child->effectiveWidth(): " << child->effectiveWidth() << " child->effectiveHeight(): " << child->effectiveHeight() << endl;
+#endif
+
         // Insert our compact into the block margin if we have one.
         insertCompactIfNeeded(child, compactInfo);
 
@@ -2168,6 +2170,9 @@ int RenderBlock::rightmostPosition(bool includeOverflowInterior, bool includeSel
         }
     }
 
+#ifdef PAGE_DEBUG
+    kdDebug(6040) << renderName() << "(RenderBlock)::rightmostPosition(" << includeOverflowInterior << "," << includeSelf << ") Rightmost position: " << right << " overflow width: " << m_overflowWidth << endl;
+#endif
     return right;
 }
 
@@ -2184,6 +2189,9 @@ int RenderBlock::rightmostAbsolutePosition() const
         int rp = r->xPos() + r->rightmostPosition(false);
         right = kMax(right, rp);
     }
+#ifdef PAGE_DEBUG
+    kdDebug(6040) << renderName() << " Rightmost absolute position: " << right << endl;
+#endif
     return right;
 }
 

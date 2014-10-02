@@ -27,6 +27,8 @@
 #ifndef _DOM_DocumentImpl_h_
 #define _DOM_DocumentImpl_h_
 
+#include <stdint.h>
+
 #include "xml/dom_elementimpl.h"
 #include "xml/dom_textimpl.h"
 #include "xml/dom2_traversalimpl.h"
@@ -617,7 +619,7 @@ protected:
                 TQString name = cs ? n.string() : n.string().upper();
                 TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
                 if (!ids.find( qn )) {
-                    ids.insert( qn, (void*)id );
+                    ids.insert( qn, (void*)(intptr_t)id );
                 }
             }
             expandIfNeeded();

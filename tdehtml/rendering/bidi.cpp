@@ -35,8 +35,9 @@
 #include "tqfontmetrics.h"
 
 #define BIDI_DEBUG 0
-//#define DEBUG_LINEBREAKS
-//#define PAGE_DEBUG
+// #define DEBUG_LINEBREAKS
+// #define DEBUG_LAYOUT
+// #define PAGE_DEBUG
 
 namespace tdehtml {
 
@@ -701,8 +702,12 @@ void RenderBlock::computeHorizontalPositionsForLine(InlineFlowBox* lineBox, Bidi
         if (r->obj->isPositioned())
             continue; // Positioned objects are only participating to figure out their
                       // correct static x position.  They have no effect on the width.
-        if (r->obj->isText())
+        if (r->obj->isText()) {
             r->box->setWidth(static_cast<RenderText *>(r->obj)->width(r->start, r->stop-r->start, m_firstLine));
+#ifdef DEBUG_LAYOUT
+            kdDebug( 6040 ) << renderName() << " computeHorizontalPositionsForLine() set text box width: " << r->box->width() << endl;
+#endif
+        }
         else if (!r->obj->isInlineFlow()) {
             r->obj->calcWidth();
             r->box->setWidth(r->obj->width());
@@ -776,6 +781,10 @@ void RenderBlock::computeHorizontalPositionsForLine(InlineFlowBox* lineBox, Bidi
         m_overflowWidth = rightPos; // FIXME: Work for rtl overflow also.
     if (x < 0)
         m_overflowLeft = kMin(m_overflowLeft, x);
+
+#ifdef DEBUG_LAYOUT
+    kdDebug( 6040 ) << renderName() << " computeHorizontalPositionsForLine() m_overflowWidth: " << m_overflowWidth << " m_overflowLeft: " << m_overflowLeft << endl;
+#endif
 }
 
 void RenderBlock::computeVerticalPositionsForLine(InlineFlowBox* lineBox)
@@ -865,6 +874,9 @@ bool RenderBlock::clearLineOfPageBreaks(InlineFlowBox* lineBox)
         }
         if (doPageBreak) {
             int pTop = pageTopAfter(lineBox->yPos());
+#ifdef PAGE_DEBUG
+            int oldYPos = lineBox->yPos();
+#endif
 
             m_height = pTop;
             lineBox->setAfterPageBreak(true);
@@ -1254,8 +1266,8 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
     }
 
 #if BIDI_DEBUG > 0
-    kdDebug(6041) << "reached end of line current=" << current.obj << "/" << current.pos
-		  << ", eor=" << eor.obj << "/" << eor.pos << endl;
+    kdDebug(6041) << "reached end of line current=" << bidi.current.obj << "/" << bidi.current.pos
+		  << ", eor=" << bidi.eor.obj << "/" << bidi.eor.pos << endl;
 #endif
     if ( !emptyRun && bidi.sor != bidi.current ) {
 	    bidi.eor = bidi.last;
@@ -1286,9 +1298,7 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 #if BIDI_DEBUG > 0
     kdDebug(6041) << "lineLow = " << (uint)levelLow << ", lineHigh = " << (uint)levelHigh << endl;
     kdDebug(6041) << "logical order is:" << endl;
-    TQPtrListIterator<BidiRun> it2(runs);
-    BidiRun *r2;
-    for ( ; (r2 = it2.current()); ++it2 )
+    for (BidiRun* r2 = sFirstBidiRun; r2; r2 = r2->nextRun)
         kdDebug(6041) << "    " << r2 << "  start=" << r2->start << "  stop=" << r2->stop << "  level=" << (uint)r2->level << endl;
 #endif
 
@@ -1318,7 +1328,7 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 
 #if BIDI_DEBUG > 0
     kdDebug(6041) << "visual order is:" << endl;
-    for (BidiRun* curr = sFirstRun; curr; curr = curr->nextRun)
+    for (BidiRun* curr = sFirstBidiRun; curr; curr = curr->nextRun)
         kdDebug(6041) << "    " << curr << endl;
 #endif
 }

@@ -1385,11 +1385,11 @@ void HTMLTokenizer::write( const TokenizerString &str, bool appendData )
         else if ( startTag )
         {
             startTag = false;
-            bool endTag = false;
+            // bool endTag = false;
 
             switch(cc) {
             case '/':
-                endTag = true;
+                // endTag = true;
                 break;
             case '!':
             {
@@ -1440,11 +1440,14 @@ void HTMLTokenizer::write( const TokenizerString &str, bool appendData )
             // immediately before an endtag should be ignored.
             // ### Gecko and MSIE though only ignores LF immediately after
             // starttags and only for PRE elements -- asj (28/06-2005)
-            if ( pending )
-                if (!select)
+            if ( pending ) {
+                if (!select) {
                     addPending();
-                else
+                }
+                else {
                     pending = NonePending;
+                }
+            }
 
             // Cancel unused discards
             discard = NoneDiscard;
