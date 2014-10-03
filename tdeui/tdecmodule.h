@@ -178,6 +178,15 @@ public:
   virtual TQString quickHelp() const;
 
   /**
+   * If a specific handbook section is relevant to the currently displayed content
+   * (for example tabbed control center modules) this method returns the relevant section name
+   *
+   * @note this string must match the handbook HTML section name exactly
+   * @returns a TQString containing the relevant handbook section name or TQString::null if no specific section is relevant
+   */
+  virtual TQString handbookSection() const;
+
+  /**
    * This is generally only called for the KBugReport.
    * If you override you should  have it return a pointer to a constant.
    *
@@ -185,7 +194,7 @@ public:
    * @returns the TDEAboutData for this module
    */
   virtual const TDEAboutData *aboutData() const;
-  
+
   /**
    * This sets the TDEAboutData returned by aboutData()
    * @since 3.3

@@ -208,6 +208,10 @@ TQString TDECModule::quickHelp() const
     return d->_quickHelp;
 }
 
+TQString TDECModule::handbookSection() const
+{
+    return TQString::null;
+}
 
 const TQPtrList<TDEConfigDialogManager>& TDECModule::configs() const
 {
