@@ -20,6 +20,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
+#define KSOCK_INTERNAL_C_COMPILATION 1
+
 #include <config.h>
 
 #include <sys/types.h>
@@ -312,7 +314,7 @@ bool TDEServerSocket::init( const char *_path )
   d->ks = ks;
 
   if (d->bind)
-    return bindAndListen();
+    return bindAndListen(false);
   return true;
 }
 
@@ -326,11 +328,11 @@ bool TDEServerSocket::init( unsigned short int _port )
   d->ks = ks;
 
   if (d->bind)
-    return bindAndListen();
+    return bindAndListen(false);
   return true;
 }
 
-bool TDEServerSocket::bindAndListen()
+bool TDEServerSocket::bindAndListen(bool suppressFailureMessages)
 {
   if (d == NULL || d->ks == NULL)
     return false;
@@ -339,7 +341,10 @@ bool TDEServerSocket::bindAndListen()
   int ret = d->ks->listen( SOMAXCONN );
   if (ret < 0)
     {
-        kdWarning(170) << "Error listening on socket: " << ret << "\n";
+	if (!suppressFailureMessages)
+	    {
+		kdWarning(170) << "Error listening on socket for port " << d->ks->port() << ": " << ret << "\n";
+	    }
 	delete d->ks;
 	d->ks = NULL;
 	sock = -1;
@@ -430,6 +435,12 @@ TDEServerSocket::~TDEServerSocket()
     }
   // deleting d->ks closes the socket
   //  ::close( sock );
+}
+
+// DEPRECATED
+bool TDEServerSocket::bindAndListen()
+{
+  return bindAndListen(false);
 }
 
 #include "ksock.moc"

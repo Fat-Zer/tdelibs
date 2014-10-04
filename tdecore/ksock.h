@@ -282,9 +282,12 @@ public:
      * Binds the socket and start listening. This should only be called
      * once when the constructor was called with _bind false.
      * On error the socket will be closed.
+     * @param suppressFailureMessages suppress warning messages generated if the socket cannot be opened.
      * @return true on success. false on error.
+     * @warning If suppressFailureMessages is TRUE future debugging may be made more difficult.  Only set it
+     * if your application expects to bind to unavailable ports, e.g. while scanning for open ports in a range.
      */
-    bool bindAndListen();
+    bool bindAndListen(bool suppressFailureMessages = false);
 
     /**
      * Returns the file descriptor associated with the socket.
@@ -339,6 +342,11 @@ protected:
     int sock;
 
 private:
+    // DEPRECATED
+#ifdef KSOCK_INTERNAL_C_COMPILATION
+    KDE_EXPORT bool bindAndListen();
+#endif // KSOCK_INTERNAL_C_COMPILATION
+
     TDEServerSocket(const TDEServerSocket&);
     TDEServerSocket& operator=(const TDEServerSocket&);
 
