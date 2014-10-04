@@ -1377,6 +1377,7 @@ bool KeramikStyle::isFormWidget(const TQStyleControlElementData &ceData, const C
 	
 		return true;
 	}
+	return false;
 }
 
 void KeramikStyle::drawControl( TQ_ControlElement element,
