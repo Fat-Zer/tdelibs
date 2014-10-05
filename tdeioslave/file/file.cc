@@ -1455,6 +1455,9 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
                                 dev.data()
                                 point.data()
                                 tmp );
+#elif defined(__OpenBSD__)
+              buffer.sprintf( "%s %s %s -t %s %s %s 2>%s", "tdesu", mountProg.latin1(), readonly.data(),
+                              fstype.data(), dev.data(), point.data(), tmp );
 #else
               buffer.sprintf( "%s %s -t %s %s %s 2>%s", mountProg.latin1(), readonly.data(),
                               fstype.data(), dev.data(), point.data(), tmp );
@@ -1614,7 +1617,11 @@ void FileProtocol::unmount( const TQString& _point )
         error( TDEIO::ERR_COULD_NOT_UNMOUNT, i18n("Could not find program \"umount\""));
         return;
     }
+#ifdef __OpenBSD__
+    buffer.sprintf( "%s %s %s 2>%s", "tdesu", umountProg.latin1(), TQFile::encodeName(TDEProcess::quote(_point)).data(), tmp );
+#else
     buffer.sprintf( "%s %s 2>%s", umountProg.latin1(), TQFile::encodeName(TDEProcess::quote(_point)).data(), tmp );
+#endif
     system( buffer.data() );
 #endif /* HAVE_VOLMGT */
 
