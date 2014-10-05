@@ -475,10 +475,15 @@ set( kde_socklen_t socklen_t )
 
 ##### check for libdl ###########################
 
-find_library( HAVE_LIBDL dl )
-if( NOT HAVE_LIBDL-NOTFOUND )
-  set( DL_LIBRARIES dl )
-endif( NOT HAVE_LIBDL-NOTFOUND )
+set( DL_LIBRARIES dl )
+check_library_exists( ${DL_LIBRARIES} dlopen /lib HAVE_LIBDL )
+if( NOT HAVE_LIBDL )
+  unset( DL_LIBRARIES )
+  check_function_exists( dlopen HAVE_DLOPEN )
+  if( HAVE_DLOPEN )
+    set( HAVE_LIBDL 1 )
+  endif( HAVE_DLOPEN )
+endif( NOT HAVE_LIBDL )
 
 
 ##### check for utempter ########################
