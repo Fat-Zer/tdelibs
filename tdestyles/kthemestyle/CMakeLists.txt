@@ -36,6 +36,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK tdefx-shared tdecore-shared dl
+  LINK tdefx-shared tdecore-shared ${DL_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/styles
 )

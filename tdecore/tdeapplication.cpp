@@ -177,7 +177,9 @@ typedef void* IceIOErrorHandler;
 
 #if defined Q_WS_X11
 #include <sys/ioctl.h>
+#ifdef __linux__
 #include <linux/vt.h>
+#endif
 extern "C" {
 extern int getfd(const char *fnam);
 }

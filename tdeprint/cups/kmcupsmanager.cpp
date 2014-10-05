@@ -101,11 +101,20 @@ TQString KMCupsManager::driverDbCreationProgram()
 TQString KMCupsManager::driverDirectory()
 {
 	TQString	d = cupsInstallDir();
-	if (d.isEmpty())
+	if (d.isEmpty()) {
+#ifdef __OpenBSD__
+		d = "/usr/local";
+#else
 		d = "/usr";
+#endif
+	}
 	d.append("/share/cups/model");
 	// raw foomatic support
+#ifdef __OpenBSD__
+	d.append(":/usr/local/share/foomatic/db/source");
+#else
 	d.append(":/usr/share/foomatic/db/source");
+#endif
 	return d;
 }
 
@@ -138,7 +147,7 @@ bool KMCupsManager::createPrinter(KMPrinter *p)
 		req.setOperation(CUPS_ADD_CLASS);
 		TQStringList	members = p->members(), uris;
 		TQString		s;
-                s = TQString::fromLocal8Bit("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
+		s = TQString::fromLocal8Bit("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 		for (TQStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
 			uris.append(s+(*it));
 		req.addURI(IPP_TAG_PRINTER,"member-uris",uris);
@@ -627,7 +636,11 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 {
 	TQStringList	comps = TQStringList::split('/', drname, false);
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
+#ifdef __OpenBSD__
+	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/local/bin:/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+#else
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+#endif
 	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -937,10 +950,15 @@ void KMCupsManager::exportDriver()
 	    !m_currentprinter->isClass(true) && !m_currentprinter->isSpecial())
 	{
 		TQString	path = cupsInstallDir();
-		if (path.isEmpty())
+		if (path.isEmpty()) {
+#ifdef __OpenBSD__
+			path = "/usr/local/share/cups";
+#else
 			path = "/usr/share/cups";
-		else
+#endif
+		} else {
 			path += "/share/cups";
+		}
 		CupsAddSmb::exportDest(m_currentprinter->printerName(), path);
 	}
 }

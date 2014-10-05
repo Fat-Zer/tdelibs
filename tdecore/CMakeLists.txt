@@ -131,7 +131,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   EMBED tdecorenetwork-static tdehw-static
   LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES}
     ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM ${GAMIN_LIBRARIES}
-    ${LIBBFD_LIBRARIES}
+    ${LIBBFD_LIBRARIES} util
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

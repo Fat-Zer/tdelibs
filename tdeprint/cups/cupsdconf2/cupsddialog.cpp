@@ -44,6 +44,7 @@
 #include <tdeio/passdlg.h>
 #include <kguiitem.h>
 #include <kprocess.h>
+#include <tqprocess.h>
 
 #include <stdlib.h>
 #include <signal.h>
@@ -70,6 +71,18 @@ extern "C"
 
 int getServerPid()
 {
+#if defined(__OpenBSD__)
+	TQProcess *proc = new TQProcess();
+	proc->addArgument("pgrep");
+	proc->addArgument("cupsd");
+	proc->start();
+	while (proc->isRunning()); //Wait for process to exit
+	TQString pidString = proc->readLineStdout();
+	bool ok;
+	int pid = pidString.toInt(&ok);
+	if (ok) return pid;
+	return (-1);
+#else
 	TQDir	dir("/proc",TQString::null,TQDir::Name,TQDir::Dirs);
 	for (uint i=0;i<dir.count();i++)
 	{
@@ -88,6 +101,7 @@ int getServerPid()
 		}
 	}
 	return (-1);
+#endif
 }
 
 const char* getPassword(const char*)

@@ -48,6 +48,7 @@ extern TQMutex getXXbyYYmutex;
 #endif
 
 /* some systems have the functions, but don't declare them */
+#ifndef __OpenBSD__
 #if defined(HAVE_GETSERVBYNAME_R) && !HAVE_DECL_GETSERVBYNAME_R
 extern "C" {
   struct servent;
@@ -68,6 +69,7 @@ extern "C" {
 				char *buf, size_t buflen,
 				struct protoent** result);
 }
+#endif
 #endif
 
 /* decide whether res_init is thread-safe or not */

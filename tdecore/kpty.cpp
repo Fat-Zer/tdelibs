@@ -305,6 +305,17 @@ bool KPty::open()
   if (d->masterFd >= 0)
     return true;
 
+#if defined(__OpenBSD__)
+  char cpty[16];
+
+  if (openpty(&d->masterFd, &d->slaveFd, cpty, NULL, &d->winSize) == 0) {
+    d->ttyName = cpty;
+  } else {
+    kdWarning(175) << "Can't open slave pseudo teletype" << endl;
+    return false;
+  }
+#else
+
   TQCString ptyName;
 
   // Find a master pty that we can open ////////////////////////////////
@@ -379,6 +390,7 @@ bool KPty::open()
 
   kdWarning(175) << "KPty::open(): " << "Can't open a pseudo teletype" << endl;
   return false;
+#endif
 
  gotpty:
   return  _attachPty(d->masterFd);
@@ -568,8 +580,10 @@ int KPty::slaveFd() const
 // private
 bool KPty::chownpty(bool grant)
 {
+#if !defined(__OpenBSD__)
   TDEProcess proc;
   proc << locate("exe", BASE_CHOWN) << (grant?"--grant":"--revoke") << TQString::number(d->masterFd);
   return proc.start(TDEProcess::Block) && proc.normalExit() && !proc.exitStatus();
+#endif
 }
 
