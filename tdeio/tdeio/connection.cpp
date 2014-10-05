@@ -43,7 +43,11 @@
 #include <kdebug.h>
 #include <tqsocketnotifier.h>
 
+#if defined(__OpenBSD__)
+#define __progname getprogname()
+#else
 extern char *__progname;
+#endif
 
 using namespace TDEIO;
 
