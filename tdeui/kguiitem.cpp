@@ -155,7 +155,7 @@ TQIconSet KGuiItem::iconSet( TDEIcon::Group group, int size, TDEInstance* instan
     {
         if( !d->m_iconName.isEmpty())
         {
-// some caching here would(?) come handy
+            // some caching here would(?) come handy
             return instance->iconLoader()->loadIconSet( d->m_iconName, group, size, true, false );
         }
         else
@@ -164,7 +164,9 @@ TQIconSet KGuiItem::iconSet( TDEIcon::Group group, int size, TDEInstance* instan
         }
     }
     else
+    {
         return TQIconSet();
+    }
 }
 
 TQString KGuiItem::iconName() const

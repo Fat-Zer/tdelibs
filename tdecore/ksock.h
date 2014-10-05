@@ -342,10 +342,10 @@ protected:
     int sock;
 
 private:
-    // DEPRECATED
-#ifdef KSOCK_INTERNAL_C_COMPILATION
+    // HACK
+#ifdef TDESOCKET_BINARY_COMPAT_HACK
     KDE_EXPORT bool bindAndListen();
-#endif // KSOCK_INTERNAL_C_COMPILATION
+#endif // TDESOCKET_BINARY_COMPAT_HACK
 
     TDEServerSocket(const TDEServerSocket&);
     TDEServerSocket& operator=(const TDEServerSocket&);

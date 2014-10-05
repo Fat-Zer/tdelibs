@@ -66,6 +66,7 @@ public:
     bool autoSaveWindowSize:1;
     bool care_about_geometry:1;
     bool shuttingDown:1;
+    bool newStyleRefCounting:1;
     TQString autoSaveGroup;
     TDEAccel * tdeaccel;
     TDEMainWindowInterface *m_interface;
@@ -245,7 +246,7 @@ void TDEMainWindow::initTDEMainWindow(const char *name, int cflags)
     d->shuttingDown = false;
     if ((d->care_about_geometry = being_first)) {
         being_first = false;
-        if ( kapp->geometryArgument().isNull() ) // if there is no geometry, it doesn't mater
+        if ( kapp->geometryArgument().isNull() ) // if there is no geometry, it doesn't matter
             d->care_about_geometry = false;
         else
             parseGeometry(false);
@@ -256,6 +257,14 @@ void TDEMainWindow::initTDEMainWindow(const char *name, int cflags)
         d->m_interface = 0;
     else
         d->m_interface = new TDEMainWindowInterface(this);
+
+    if ( cflags & NewRefCountMode ) {
+        d->newStyleRefCounting = true;
+        kapp->ref();
+    }
+    else {
+        d->newStyleRefCounting = false;
+    }
 
     if (!kapp->authorize("movable_toolbars"))
         setDockWindowsMovable(false);

@@ -151,7 +151,8 @@ public:
      */
     enum CreationFlags
     {
-        NoDCOPObject = 1
+        NoDCOPObject = 1,
+        NewRefCountMode = 2
     };
 
     /**

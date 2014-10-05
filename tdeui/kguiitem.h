@@ -46,7 +46,7 @@ public:
     // It gives the wrong impression that you just change the text.
     KGuiItem( const TQString &text, 
               const TQString &iconName  = TQString::null,
-              const TQString &toolTip   = TQString::null, 
+              const TQString &toolTip   = TQString::null,
               const TQString &whatsThis = TQString::null );
 
     KGuiItem( const TQString &text, const TQIconSet &iconSet, 

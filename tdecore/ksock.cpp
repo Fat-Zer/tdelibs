@@ -20,8 +20,6 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#define KSOCK_INTERNAL_C_COMPILATION 1
-
 #include <config.h>
 
 #include <sys/types.h>
@@ -42,7 +40,12 @@ extern "C" {
 
 #define KSOCK_NO_BROKEN
 #include "kdebug.h"
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
+#define TDESOCKET_BINARY_COMPAT_HACK 1
 #include "ksock.h"
+#undef TDESOCKET_BINARY_COMPAT_HACK
 #include "kextsock.h"
 #include "ksockaddr.h"
 
