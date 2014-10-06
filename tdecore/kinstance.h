@@ -18,6 +18,9 @@
 #ifndef _KINSTANCE_H
 #define _KINSTANCE_H
 
+#include <tqstring.h>
+#include "tdelibs_export.h"
+
 class TDEStandardDirs;
 class TDEAboutData;
 class TDEConfig;
@@ -27,11 +30,10 @@ class TQFont;
 class TDEInstancePrivate;
 class KMimeSourceFactory;
 class TDESharedConfig;
+#ifdef __TDE_HAVE_TDEHWLIB
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
-
-#include <tqstring.h>
-#include "tdelibs_export.h"
+#endif
 
 
 /**
@@ -110,6 +112,7 @@ class TDECORE_EXPORT TDEInstance
      */
     TDEIconLoader	       *iconLoader() const;
 
+#ifdef __TDE_HAVE_TDEHWLIB
     /**
      *  Returns a TDEHardwareDevices object.
      * @return the hardwaredevices object.
@@ -121,6 +124,7 @@ class TDECORE_EXPORT TDEInstance
      * @return the networkmanager object.
      */
     TDEGlobalNetworkManager  *networkManager() const;
+#endif
 
     /**
      * Re-allocate the global iconloader.
@@ -168,8 +172,10 @@ private:
     mutable TDEConfig             *_config;
     mutable TDEIconLoader         *_iconLoader;
 
+#ifdef __TDE_HAVE_TDEHWLIB
     mutable TDEHardwareDevices  *_hardwaredevices;
     mutable TDEGlobalNetworkManager  *_networkmanager;
+#endif
     mutable void                *_placeholder;
 
     TQCString                     _name;

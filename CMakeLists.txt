@@ -85,7 +85,8 @@ OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for tdeio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
-option( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_ALL_OPTIONS} )
+option( WITH_TDEHWLIB "Enable TDE hwlib globally" ON )
+option( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_TDEHWLIB} )
 option( WITH_HAL "Enable HAL support" OFF )
 option( WITH_DEVKITPOWER "Enable DeviceKit Power support" OFF )
 option( WITH_LOGINDPOWER "Enable Logind/Systemd Power support" OFF )
@@ -505,6 +506,10 @@ endif( TDESU_BACKEND-NOTFOUND )
 set( LTDL_OBJDIR \".\" )
 set( KDELIBSUFF "${LIB_SUFFIX}" )
 set( kde_socklen_t socklen_t )
+
+if( WITH_TDEHWLIB )
+  set( __TDE_HAVE_TDEHWLIB 1 )
+endif( WITH_TDEHWLIB )
 
 
 ##### check for libdl ###########################
