@@ -150,7 +150,6 @@ struct config_rec {
 	int accuracy;
 
 	magic_t magic;
-	TQStringList databases;
 
 	KMimeMagicUtimeConf * utimeConf;
 };
@@ -159,9 +158,7 @@ struct config_rec {
  * apprentice - load configuration from the magic file.
  */
 int KMimeMagic::apprentice( const TQString& magicfile ) {
-	conf->databases.clear();
-	conf->databases.append(magicfile);
-	return magic_load(conf->magic, conf->databases[0].latin1());
+	return magic_load(conf->magic, magicfile.latin1());
 }
 
 /*
@@ -242,9 +239,7 @@ KMimeMagic::~KMimeMagic() {
 }
 
 bool KMimeMagic::mergeConfig(const TQString & _configfile) {
-	conf->databases.append(_configfile);
-	TQString merged_databases = conf->databases.join(":");
-	if (magic_load(conf->magic, merged_databases.latin1()) == 0) {
+	if (magic_load(conf->magic, _configfile.latin1()) == 0) {
 		return true;
 	}
 	else {
