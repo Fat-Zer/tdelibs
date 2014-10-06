@@ -389,7 +389,7 @@
 #cmakedefine HAVE_MEMORY_H 1
 
 /* Define if you want MIT-SHM support */
-#undef HAVE_MITSHM
+#cmakedefine HAVE_MITSHM @HAVE_MITSHM@
 
 /* Define if you have mkdtemp */
 #cmakedefine HAVE_MKDTEMP 1
@@ -822,13 +822,13 @@
 
 /* Define to the name of the environment variable that determines the dynamic
    library search path. */
-#undef LTDL_SHLIBPATH_VAR
+#cmakedefine LTDL_SHLIBPATH_VAR "@LTDL_SHLIBPATH_VAR@"
 
 /* Define to the extension used for shared libraries, say, ".so". */
 #undef LTDL_SHLIB_EXT
 
 /* Define to the system default library search path. */
-#undef LTDL_SYSSEARCHPATH
+#cmakedefine LTDL_SYSSEARCHPATH "@LTDL_SYSSEARCHPATH@"
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
@@ -927,10 +927,10 @@
 #endif
 
 /* where rgb.txt is in */
-#undef X11_RGBFILE
+#cmakedefine X11_RGBFILE "@X11_RGBFILE@"
 
 /* Defines the executable of xmllint */
-#undef XMLLINT
+#cmakedefine XMLLINT "@XMLLINT@"
 
 /* Defined if your system has XRandR support */
 #cmakedefine XRANDR_SUPPORT 1
@@ -1189,10 +1189,10 @@ int snprintf(char *str, size_t n, char const *fmt, ...);
 #undef __KDE_HAVE_GCC_VISIBILITY
 
 /* path to su */
-#define __PATH_SU "@__PATH_SU@"
+#cmakedefine __PATH_SU "@__PATH_SU@"
 
 /* path to sudo */
-#define __PATH_SUDO "@__PATH_SUDO@"
+#cmakedefine __PATH_SUDO "@__PATH_SUDO@"
 
 
 #if defined(__SVR4) && !defined(__svr4__)
