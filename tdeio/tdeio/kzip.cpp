@@ -1051,6 +1051,21 @@ bool KZip::closeArchive()
     return true;
 }
 
+bool KZip::writeDir(const TQString& name, const TQString& user, const TQString& group)
+{
+    // Zip files have no explicit directories, they are implicitly created during extraction time
+    // when file entries have paths in them.
+    // However, to support empty directories, we must create a dummy file entry which ends with '/'.
+    TQString dirName = name;
+    if (!name.endsWith("/")) {
+        dirName = dirName.append('/');
+    }
+
+    mode_t perm = 040755;
+    time_t the_time = time(0);
+    return writeFile(dirName, user, group, 0, perm, the_time, the_time, the_time, 0);
+}
+
 // Doesn't need to be reimplemented anymore. Remove for KDE-4.0
 bool KZip::writeFile( const TQString& name, const TQString& user, const TQString& group, uint size, const char* data )
 {
