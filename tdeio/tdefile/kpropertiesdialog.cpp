@@ -1764,7 +1764,6 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
    */
   int i, maxEntries = 1000;
   struct passwd *user;
-  struct group *ge;
 
   /* File owner: For root, offer a KLineEdit with autocompletion.
    * For a user, who can never chown() a file, offer a TQLabel.
@@ -1800,27 +1799,31 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     strUser = user->pw_name;
 
 #ifdef Q_OS_UNIX
-  setgrent();
-  for (i=0; ((ge = getgrent()) != 0L) && (i < maxEntries); i++)
-  {
-    if (IamRoot)
-      groupList += TQString::fromLatin1(ge->gr_name);
-    else
-    {
-      /* pick the groups to which the user belongs */
-      char ** members = ge->gr_mem;
-      char * member;
-      while ((member = *members) != 0L) {
-        if (strUser == member) {
-          groupList += TQString::fromLocal8Bit(ge->gr_name);
-          break;
-        }
-        ++members;
-      }
-    }
+  gid_t *groups = NULL;
+  int ng = 1;
+  struct group *mygroup;
+  gid_t *newgroups = NULL;
+
+  groups = (gid_t *) malloc(ng * sizeof(gid_t));
+
+  if (getgrouplist(strUser, user->pw_gid, groups, &ng) == -1) {
+	  newgroups = (gid_t *) malloc(ng * sizeof(gid_t));
+	  if (newgroups != NULL) {
+	          free(groups);
+		  groups = newgroups;
+		  getgrouplist(strUser, user->pw_gid, groups, &ng);
+	  } else ng = 1;
   }
-  endgrent();
-#endif //Q_OS_UNIX
+
+  for (i = 0; i < ng; i++) {
+	  mygroup = getgrgid(groups[i]);
+	  if (mygroup != NULL) groupList += TQString::fromLocal8Bit(mygroup->gr_name);
+  }
+
+  free(groups);
+
+#else //Q_OS_UNIX
+  struct group *ge;
 
   /* add the effective Group to the list .. */
   ge = getgrgid (getegid());
@@ -1831,6 +1834,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     if (groupList.find(name) == groupList.end())
       groupList += name;
   }
+#endif //Q_OS_UNIX
 
   bool isMyGroup = groupList.contains(strGroup);
 
@@ -2081,6 +2085,7 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
   }
 
   // Draw Checkboxes
+  bool allDisable = true;
   TQCheckBox *cba[3][4];
   for (int row = 0; row < 3 ; ++row) {
     for (int col = 0; col < 4; ++col) {
@@ -2091,6 +2096,9 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
       if ( aPartialPermissions & fperm[row][col] )
       {
         cb->setTristate();
+        if( d->canChangePermissions ) {
+          allDisable = false;
+        }
         cb->setNoChange();
       }
       else if (d->cbRecursive && d->cbRecursive->isChecked())
@@ -2152,6 +2160,10 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
 
   }
 #endif
+  if ( allDisable ) {
+    dlg.enableButtonOK( false );
+  }
+
   if (dlg.exec() != KDialogBase::Accepted)
     return;
 

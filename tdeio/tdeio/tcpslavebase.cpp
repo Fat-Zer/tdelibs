@@ -1095,7 +1095,13 @@ int TCPSlaveBase::verifyCertificate()
       TDEConfig *config = new TDEConfig("tdeioslaverc");
       config->setGroup("Notification Messages");
 
-      if (!config->readBoolEntry("WarnOnEnterSSLMode", true)) {
+      bool dialogBoxStatus = false;
+      if( config->hasKey("WarnOnEnterSSLMode") ) {
+          dialogBoxStatus = true;
+      }
+      bool keyStatus = config->readBoolEntry("WarnOnEnterSSLMode", true);
+      dialogBoxStatus = dialogBoxStatus && keyStatus;
+      if (!keyStatus) {
           config->deleteEntry("WarnOnEnterSSLMode");
           config->sync();
           d->kssl->settings()->setWarnOnEnter(false);
@@ -1121,6 +1127,10 @@ int TCPSlaveBase::verifyCertificate()
           d->dcc->call("tdeio_uiserver", "UIServer",
                        "showSSLInfoDialog(TQString,TDEIO::MetaData,int)",
                        data, ignoretype, ignore);
+      }
+      //Laurent: If we disable message box we can't click on KMessageBox::No
+      if(dialogBoxStatus) {
+          break;
       }
       } while (result != KMessageBox::No);
    }
