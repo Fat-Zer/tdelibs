@@ -40,16 +40,6 @@
 	#include <tqdbusconnection.h>
 #endif // defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UPOWER) || defined(WITH_DEVKITPOWER) || defined(WITH_HAL) || defined(WITH_CONSOLEKIT)
 
-bool isNetworkFileSystem(TQString fileSystemType) {
-	if ((fileSystemType.startsWith("nfs"))
-		|| (fileSystemType == "cifs")
-		) {
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
 TDERootSystemDevice::TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_hibernationSpace = -1;
 }
@@ -126,12 +116,6 @@ bool TDERootSystemDevice::canSetHibernationMethod() {
 }
 
 bool TDERootSystemDevice::canStandby() {
-	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
-	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
-		return FALSE;
-	}
-
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
@@ -165,12 +149,6 @@ bool TDERootSystemDevice::canStandby() {
 }
 
 bool TDERootSystemDevice::canFreeze() {
-	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
-	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
-		return FALSE;
-	}
-
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
@@ -204,12 +182,6 @@ bool TDERootSystemDevice::canFreeze() {
 }
 
 bool TDERootSystemDevice::canSuspend() {
-	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
-	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
-		return FALSE;
-	}
-
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
@@ -323,12 +295,6 @@ bool TDERootSystemDevice::canSuspend() {
 }
 
 bool TDERootSystemDevice::canHibernate() {
-	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
-	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
-		return FALSE;
-	}
-
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
