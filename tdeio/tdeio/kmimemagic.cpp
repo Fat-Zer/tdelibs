@@ -171,7 +171,6 @@ int KMimeMagic::apprentice( const TQString& magicfile ) {
 	}
 	conf->databases.clear();
 	conf->databases.append(maindatabase);
-printf("[RAJA DEBUG 342.0] Loading database '%s'\n\r", conf->databases[0].ascii()); fflush(stdout);
 	return magic_load(conf->magic, conf->databases[0].latin1());
 }
 
@@ -190,7 +189,6 @@ void process(struct config_rec* conf, const TQString & fn) {
 	}
 	magic_setflags(conf->magic, magic_flags);
 	conf->resultBuf = TQString(magic_file(conf->magic, fileName));
-printf("[RAJA DEBUG 340.0] fileName: '%s' conf->resultBuf: '%s'\n\r", fileName.data(), conf->resultBuf.ascii()); fflush(stdout);
 	conf->resultBuf = fixupMagicOutput(conf->resultBuf);
 
 	if ( conf->utimeConf && conf->utimeConf->restoreAccessTime( fn ) ) {
@@ -258,7 +256,6 @@ bool KMimeMagic::mergeConfig(const TQString & _configfile) {
 	TQString merged_databases = conf->databases.join(":");
 	int magicvers = magic_version();
 	if ((magicvers < 512) || (magicvers >= 518)) {
-printf("[RAJA DEBUG 342.1] Loading database(s) '%s'\n\r", merged_databases.ascii()); fflush(stdout);
 		if (magic_load(conf->magic, merged_databases.latin1()) == 0) {
 			return true;
 		}
@@ -295,7 +292,6 @@ KMimeMagicResult *KMimeMagic::findBufferType(const TQByteArray &array) {
 		}
 		magic_setflags(conf->magic, magic_flags);
 		conf->resultBuf = TQString(magic_buffer(conf->magic, array.data(), nbytes));
-printf("[RAJA DEBUG 340.1] conf->resultBuf: '%s'\n\r", conf->resultBuf.ascii()); fflush(stdout);
 		conf->resultBuf = fixupMagicOutput(conf->resultBuf);
 	}
 	/* if we have any results, put them in the request structure */

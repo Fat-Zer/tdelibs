@@ -2937,8 +2937,6 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
                       i18n("Device:") ); // new style (combobox)
   layout->addWidget(label, 0, 0);
 
-// RAJA FIXME
-// Disable the OK button if no device is selected!
   device = new TQComboBox( true, d->m_frame, "ComboBox_device" );
   device->insertStringList( devices );
   layout->addWidget(device, 0, 1);
