@@ -184,6 +184,8 @@ TQString Field::value( const TDEABC::Addressee &a )
       return a.phoneNumber( PhoneNumber::Pager ).number();
     case FieldImpl::HomeAddressStreet:
       return a.address( Address::Home ).street();
+    case FieldImpl::HomeAddressPostOfficeBox:
+      return a.address( Address::Home ).postOfficeBox();
     case FieldImpl::HomeAddressLocality:
       return a.address( Address::Home ).locality();
     case FieldImpl::HomeAddressRegion:
@@ -196,6 +198,8 @@ TQString Field::value( const TDEABC::Addressee &a )
       return a.address( Address::Home ).label();
     case FieldImpl::BusinessAddressStreet:
       return a.address( Address::Work ).street();
+    case FieldImpl::BusinessAddressPostOfficeBox:
+      return a.address( Address::Work ).postOfficeBox();
     case FieldImpl::BusinessAddressLocality:
       return a.address( Address::Work ).locality();
     case FieldImpl::BusinessAddressRegion:
@@ -266,6 +270,13 @@ bool Field::setValue( TDEABC::Addressee &a, const TQString &value )
         a.insertAddress( address );
         return true;
       }
+    case FieldImpl::HomeAddressPostOfficeBox:
+      {
+        TDEABC::Address address = a.address( Address::Home );
+        address.setPostOfficeBox( value );
+        a.insertAddress( address );
+        return true;
+      }
     case FieldImpl::HomeAddressLocality:
       {
         TDEABC::Address address = a.address( Address::Home );
@@ -305,6 +316,13 @@ bool Field::setValue( TDEABC::Addressee &a, const TQString &value )
       {
         TDEABC::Address address = a.address( Address::Work );
         address.setStreet( value );
+        a.insertAddress( address );
+        return true;
+      }
+    case FieldImpl::BusinessAddressPostOfficeBox:
+      {
+        TDEABC::Address address = a.address( Address::Work );
+        address.setPostOfficeBox( value );
         a.insertAddress( address );
         return true;
       }
