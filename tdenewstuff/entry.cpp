@@ -301,6 +301,10 @@ TQStringList Entry::langs()
 // FIXME
 // It appears that OCS has removed the ability to retrieve author EMail;
 // further confirmation is needed before removing EMail-related code
+// NOTE
+// OCS also removed the ability to have individually localized names and summaries for a single item
+// As this would be a useful feature to add to the OCS system I'm keeping the lang code skeleton in at this time
+// Note that the "language" XML tag refers to the intended language of the content, not the language of the entry!
 void Entry::parseDomElement( const TQDomElement &element )
 {
   if ( element.tagName() != "content" ) return;
@@ -308,17 +312,6 @@ void Entry::parseDomElement( const TQDomElement &element )
 
   TQDomNode n;
   TQString lang;
-  for( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
-    TQDomElement e = n.toElement();
-    if ( e.tagName() == "language" )
-    {
-      lang = e.text();
-    }
-  }
-  if (lang == "") {
-    lang = TQString::null;
-  }
-
   for( n = element.firstChild(); !n.isNull(); n = n.nextSibling() ) {
     TQDomElement e = n.toElement();
     if ( e.tagName() == "name" )

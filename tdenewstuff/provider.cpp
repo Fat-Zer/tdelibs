@@ -316,7 +316,12 @@ void Provider::slotJobResult( TDEIO::Job *job )
   //int maxEntries = 50;
   int maxEntries = 100;
 
-  setDownloadUrl( KURL( mBaseURL ) );
+  // FIXME
+  // The download URL assumes no more than 100 entries will be present on the remote server
+  // Any more and assembly of the list from multiple fetched pages will be required; the TDENewStuff Engine class does not have support for paging at this time
+  setDownloadUrl( KURL( mBaseURL + "content/data?categories=" + desiredCategories + "&search=&sortmode=alpha&page=0&pagesize=" + TQString("%1").arg(maxEntries) ) );
+  // FIXME
+  // Uploading is not implemented at this time
   setUploadUrl( KURL( mBaseURL ) );
   setNoUploadUrl( KURL( mBaseURL ) );
 
@@ -347,8 +352,9 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
   cfg->setGroup("TDENewStuff");
 
   TQString providersUrl = providersList;
-  if( providersUrl.isEmpty() )
-  	providersUrl = cfg->readEntry( "ProvidersUrl" );
+  if( providersUrl.isEmpty() ) {
+    providersUrl = cfg->readEntry( "ProvidersUrl" );
+  }
 
   if ( providersUrl.isEmpty() ) {
     TQString server = cfg->readEntry( "MasterServer",

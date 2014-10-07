@@ -141,34 +141,51 @@ void Engine::slotNewStuffJobResult( TDEIO::Job *job )
 
     TQDomDocument doc;
     if ( !doc.setContent( knewstuffDoc ) ) {
-      kdDebug() << "Error parsing knewstuff.xml." << endl;
+      kdDebug() << "Error parsing OCS response." << endl;
       return;
-    } else {
+    }
+    else {
       TQDomElement knewstuff = doc.documentElement();
 
       if ( knewstuff.isNull() ) {
-        kdDebug() << "No document in knewstuffproviders.xml." << endl;
-      } else {
-        TQDomNode p;
-        for ( p = knewstuff.firstChild(); !p.isNull(); p = p.nextSibling() ) {
-          TQDomElement stuff = p.toElement();
-          if ( stuff.tagName() != "stuff" ) continue;
-          if ( stuff.attribute("type", mType) != mType ) continue;
+        kdDebug() << "No document in OCS response." << endl;
+      }
+      else {
+        TQDomElement content;
+        for(TQDomNode pn = knewstuff.firstChild(); !pn.isNull(); pn = pn.nextSibling())
+        {
+          TQDomElement stuff = pn.toElement();
 
-          Entry *entry = new Entry( stuff );
+          if(stuff.tagName() == "data")
+          {
+            content = pn.toElement();
+          }
+        }
 
-          mDownloadDialog->show();
+        if ( content.isNull() ) {
+          kdDebug() << "No content in OCS response." << endl;
+        }
+        else {
+          TQDomNode p;
+          for ( p = content.firstChild(); !p.isNull(); p = p.nextSibling() ) {
+            TQDomElement stuff = p.toElement();
+            if ( stuff.tagName() != "content" ) continue;
 
-          mDownloadDialog->addEntry( entry );
+            Entry *entry = new Entry( stuff );
 
-          kdDebug() << "KNEWSTUFF: " << entry->name() << endl;
+            mDownloadDialog->show();
 
-          kdDebug() << "  SUMMARY: " << entry->summary() << endl;
-          kdDebug() << "  VERSION: " << entry->version() << endl;
-          kdDebug() << "  RELEASEDATE: " << TQString(entry->releaseDate().toString()) << endl;
-          kdDebug() << "  RATING: " << entry->rating() << endl;
+            mDownloadDialog->addEntry( entry );
 
-          kdDebug() << "  LANGS: " << entry->langs().join(", ") << endl;
+            kdDebug() << "KNEWSTUFF: " << entry->name() << endl;
+
+            kdDebug() << "  SUMMARY: " << entry->summary() << endl;
+            kdDebug() << "  VERSION: " << entry->version() << endl;
+            kdDebug() << "  RELEASEDATE: " << TQString(entry->releaseDate().toString()) << endl;
+            kdDebug() << "  RATING: " << entry->rating() << endl;
+
+            kdDebug() << "  LANGS: " << entry->langs().join(", ") << endl;
+          }
         }
       }
     }
