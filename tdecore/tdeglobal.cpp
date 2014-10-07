@@ -34,8 +34,10 @@
 #include <tdelocale.h>
 #include <kcharsets.h>
 #include <kiconloader.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
 #include <tdenetworkconnections.h>
+#endif
 #include <kstandarddirs.h>
 #include <kinstance.h>
 #include "kstaticdeleter.h"
@@ -81,6 +83,7 @@ TDEIconLoader *TDEGlobal::iconLoader()
     return _instance->iconLoader();
 }
 
+#ifdef __TDE_HAVE_TDEHWLIB
 TDEHardwareDevices *TDEGlobal::hardwareDevices()
 {
     MYASSERT(_instance);
@@ -94,6 +97,7 @@ TDEGlobalNetworkManager *TDEGlobal::networkManager()
 
     return _instance->networkManager();
 }
+#endif
 
 TDEInstance *TDEGlobal::instance()
 {

@@ -85,7 +85,8 @@ OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for tdeio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
-option( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_ALL_OPTIONS} )
+option( WITH_TDEHWLIB "Enable TDE hwlib globally" ON )
+option( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_TDEHWLIB} )
 option( WITH_HAL "Enable HAL support" OFF )
 option( WITH_DEVKITPOWER "Enable DeviceKit Power support" OFF )
 option( WITH_LOGINDPOWER "Enable Logind/Systemd Power support" OFF )
@@ -455,16 +456,29 @@ if( HAVE_RES_INIT )
 endif( HAVE_RES_INIT)
 
 set( CMAKE_REQUIRED_LIBRARIES util )
-check_c_source_runs("
-    #include <pty.h>
-    int main(int argc, char* argv) {
-      int master_fd, slave_fd;
-      int result;
-      result = openpty(&master_fd, &slave_fd, 0, 0, 0);
-      return 0;
-  }"
-  HAVE_OPENPTY
-)
+if( HAVE_PTY_H )
+  check_c_source_runs("
+      #include <pty.h>
+      int main(int argc, char* argv) {
+        int master_fd, slave_fd;
+        int result;
+        result = openpty(&master_fd, &slave_fd, 0, 0, 0);
+        return 0;
+    }"
+    HAVE_OPENPTY
+  )
+elseif( HAVE_UTIL_H )
+  check_c_source_runs("
+      #include <util.h>
+      int main(int argc, char* argv) {
+        int master_fd, slave_fd;
+        int result;
+        result = openpty(&master_fd, &slave_fd, 0, 0, 0);
+        return 0;
+    }"
+    HAVE_OPENPTY
+  )
+endif( )
 if( HAVE_OPENPTY )
   set( LIB_UTIL util )
 endif( )
@@ -492,6 +506,10 @@ endif( TDESU_BACKEND-NOTFOUND )
 set( LTDL_OBJDIR \".\" )
 set( KDELIBSUFF "${LIB_SUFFIX}" )
 set( kde_socklen_t socklen_t )
+
+if( WITH_TDEHWLIB )
+  set( __TDE_HAVE_TDEHWLIB 1 )
+endif( WITH_TDEHWLIB )
 
 
 ##### check for libdl ###########################

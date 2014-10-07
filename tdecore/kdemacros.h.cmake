@@ -21,6 +21,7 @@
 #define _KDE_MACROS_H_
 
 /* Set by configure */
+#cmakedefine __TDE_HAVE_TDEHWLIB 1
 #cmakedefine __KDE_HAVE_GCC_VISIBILITY 1
 
 /**

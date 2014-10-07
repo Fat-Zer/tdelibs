@@ -79,6 +79,13 @@ add_custom_command(
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/scripts
 )
 
+add_custom_target(
+  addressee_files
+  DEPENDS
+    ${CMAKE_CURRENT_BINARY_DIR}/addressee.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/addressee.h
+    ${CMAKE_CURRENT_BINARY_DIR}/field.cpp
+)
 
 ##### tdeabc ######################################
 
@@ -103,7 +110,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
   LINK vcards-static vcard-shared tdeio-shared tderesources-shared
-  DEPENDENCIES addressee.h dcopidl
+  DEPENDENCIES addressee_files dcopidl
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
