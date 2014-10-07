@@ -343,6 +343,7 @@ void Entry::parseDomElement( const TQDomElement &element )
     }
     if ( e.tagName() == "score" ) setRating( e.text().toInt() );
     if ( e.tagName() == "downloads" ) setDownloads( e.text().toInt() );
+//     if ( e.tagName() == "typename" ) setType( e.text() );
   }
 }
 

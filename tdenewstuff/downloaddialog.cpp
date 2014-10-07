@@ -46,6 +46,7 @@
 #include <tqtimer.h> // hack
 
 #define OPENDESKTOP_REDIRECT_URL "opendesktop.org/content/download.php?content="
+#define OPENDESKTOP_REDIRECT_TEXT "If the download does not start in 3 seconds:</span><span class=\"defaulttext\">&nbsp;<a href=\""
 
 using namespace KNS;
 
@@ -609,7 +610,7 @@ void DownloadDialog::slotInstallPhase2()
   }
   else
   {
-    m_s = new TDENewStuffGeneric(e->type(), this);
+    m_s = new TDENewStuffGeneric(m_filter, this);
     m_entry = e;
     KURL source = e->payload();
     KURL dest = KURL(m_s->downloadDestination(e));
@@ -648,6 +649,12 @@ void DownloadDialog::slotJobResult( TDEIO::Job *job )
       realURL = realURL.mid(0, realURL.find("\">"));
       realURL = realURL.mid(strlen("<a href=\""));
       realURL = e->payload().protocol() + "://opendesktop.org" + realURL;
+      e->setPayload(realURL);
+    }
+    else if ((pos = mJobData.find(OPENDESKTOP_REDIRECT_TEXT)) > 0) {
+      pos = pos + strlen(OPENDESKTOP_REDIRECT_TEXT);
+      TQString realURL = mJobData.mid(pos);
+      realURL = realURL.mid(0, realURL.find("\">"));
       e->setPayload(realURL);
     }
   }

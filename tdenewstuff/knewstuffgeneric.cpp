@@ -29,6 +29,7 @@
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <tdemessagebox.h>
+#include <kmimemagic.h>
 #include <ktar.h>
 
 #include "entry.h"
@@ -49,6 +50,18 @@ TDENewStuffGeneric::~TDENewStuffGeneric()
 
 bool TDENewStuffGeneric::install( const TQString &fileName )
 {
+  // Try to detect the most common cases where (usually adware) Web pages are downloaded
+  // instead of the desired file and abort
+  KMimeMagicResult *res = KMimeMagic::self()->findFileType( fileName );
+  if ( res->isValid() && res->accuracy() > 40 ) {
+    if (type().lower().contains("wallpaper")) {
+      if (!res->mimeType().startsWith("image/")) {
+        TQFile::remove(fileName);
+        return false;
+      }
+    }
+}
+
   kdDebug() << "TDENewStuffGeneric::install(): " << fileName << endl;
   TQStringList list, list2;
 
