@@ -19,6 +19,7 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
+
 #include "kmimemagic.h"
 #include <kdebug.h>
 #include <tdeapplication.h>
@@ -30,6 +31,10 @@
 #include <assert.h>
 
 #include <magic.h>
+
+// Taken from file/file.h
+// Keep in sync with that header!
+#define	FILE_LOAD	0
 
 static void process(struct config_rec* conf,  const TQString &);
 
@@ -63,8 +68,6 @@ void KMimeMagic::initStatic() {
 #include <tqregexp.h>
 #include <tqstring.h>
 
-#define HOWMANY 4000            /* big enough to recognize most WWW files, and skip GPL-headers */
-
 #define MIME_INODE_DIR         "inode/directory"
 #define MIME_INODE_CDEV        "inode/chardevice"
 #define MIME_INODE_BDEV        "inode/blockdevice"
@@ -88,7 +91,7 @@ class KMimeMagicUtimeConf {
 	public:
 		KMimeMagicUtimeConf() {
 			tmpDirs << TQString::fromLatin1("/tmp"); // default value
-		
+
 			// The trick is that we also don't want the user to override globally set
 			// directories. So we have to misuse TDEStandardDirs :}
 			TQStringList confDirs = TDEGlobal::dirs()->resourceDirs( "config" );
@@ -121,7 +124,7 @@ class KMimeMagicUtimeConf {
 			}
 		#endif
 		}
-		
+
 		bool restoreAccessTime( const TQString & file ) const {
 			TQString dir = file.left( file.findRev( '/' ) );
 			bool res = tmpDirs.contains( dir );
@@ -150,6 +153,7 @@ struct config_rec {
 	int accuracy;
 
 	magic_t magic;
+	TQStringList databases;
 
 	KMimeMagicUtimeConf * utimeConf;
 };
@@ -158,7 +162,13 @@ struct config_rec {
  * apprentice - load configuration from the magic file.
  */
 int KMimeMagic::apprentice( const TQString& magicfile ) {
-	return magic_load(conf->magic, magicfile.latin1());
+	TQString maindatabase = magicfile;
+	if (maindatabase == "") {
+		maindatabase = magic_getpath(0, FILE_LOAD);
+	}
+	conf->databases.clear();
+	conf->databases.append(maindatabase);
+	return magic_load(conf->magic, conf->databases[0].latin1());
 }
 
 /*
@@ -239,10 +249,19 @@ KMimeMagic::~KMimeMagic() {
 }
 
 bool KMimeMagic::mergeConfig(const TQString & _configfile) {
-	if (magic_load(conf->magic, _configfile.latin1()) == 0) {
-		return true;
+	conf->databases.append(_configfile);
+	TQString merged_databases = conf->databases.join(":");
+	int magicvers = magic_version();
+	if ((magicvers < 512) || (magicvers >= 518)) {
+		if (magic_load(conf->magic, merged_databases.latin1()) == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
+		kdWarning(7018) << "KMimeMagic::mergeConfig disabled due to buggy libmagic version " << magicvers << endl;
 		return false;
 	}
 }
@@ -251,7 +270,7 @@ void KMimeMagic::setFollowLinks( bool _enable ) {
 	conf->followLinks = _enable;
 }
 
-KMimeMagicResult *KMimeMagic::findBufferType(const TQByteArray &array) {	
+KMimeMagicResult *KMimeMagic::findBufferType(const TQByteArray &array) {
 	conf->resultBuf = TQString::null;
 	if ( !magicResult ) {
 		magicResult = new KMimeMagicResult();
@@ -327,22 +346,21 @@ KMimeMagicResult* KMimeMagic::findFileType(const TQString & fn) {
 	kdDebug(7018) << "KMimeMagic::findFileType " << fn << endl;
 #endif
 	conf->resultBuf = TQString::null;
-	
+
 	if ( !magicResult ) {
 		magicResult = new KMimeMagicResult();
 	}
 	magicResult->setInvalid();
 	conf->accuracy = 100;
-	
+
 	if ( !conf->utimeConf ) {
 		conf->utimeConf = new KMimeMagicUtimeConf();
 	}
-	
+
 	/* process it based on the file contents */
 	process(conf, fn );
-	
+
 	/* if we have any results, put them in the request structure */
-	//finishResult();
 	magicResult->setMimeType(conf->resultBuf.stripWhiteSpace());
 	magicResult->setAccuracy(conf->accuracy);
 	refineResult(magicResult, fn);
