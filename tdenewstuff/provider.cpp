@@ -234,7 +234,7 @@ TQDomElement Provider::createDomElement( TQDomDocument &doc, TQDomElement &paren
 
 void Provider::slotJobData( TDEIO::Job *, const TQByteArray &data )
 {
-  kdDebug() << "ProviderLoader::slotJobData()" << endl;
+  kdDebug() << "Provider::slotJobData()" << endl;
 
   if ( data.size() == 0 ) return;
 
@@ -369,6 +369,8 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
            TQT_SLOT( slotJobResult( TDEIO::Job * ) ) );
   connect( job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
            TQT_SLOT( slotJobData( TDEIO::Job *, const TQByteArray & ) ) );
+  connect( job, TQT_SIGNAL( percent (TDEIO::Job *, unsigned long) ),
+           TQT_SIGNAL( percent (TDEIO::Job *, unsigned long) ) );
 
 //  job->dumpObjectInfo();
 }
@@ -388,6 +390,8 @@ void ProviderLoader::slotJobResult( TDEIO::Job *job )
 {
   if ( job->error() ) {
     job->showErrorDialog( TQT_TQWIDGET(parent()) );
+    emit error();
+    return;
   }
 
   kdDebug() << "--PROVIDERS-START--" << endl << mJobData << "--PROV_END--"
@@ -396,6 +400,7 @@ void ProviderLoader::slotJobResult( TDEIO::Job *job )
   TQDomDocument doc;
   if ( !doc.setContent( mJobData ) ) {
     KMessageBox::error( TQT_TQWIDGET(parent()), i18n("Error parsing providers list.") );
+    emit error();
     return;
   }
 
@@ -403,6 +408,8 @@ void ProviderLoader::slotJobResult( TDEIO::Job *job )
 
   if ( providers.isNull() ) {
     kdDebug() << "No document in Providers.xml." << endl;
+    emit error();
+    return;
   }
 
   TQDomNode n;

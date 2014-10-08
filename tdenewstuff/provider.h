@@ -42,7 +42,7 @@ namespace KNS {
  *
  * @author Cornelius Schumacher (schumacher@kde.org)
  * \par Maintainer:
- * Josef Spillner (spillner@kde.org)
+ * Timothy Pearson (kb9vqf@pearsoncomputing.net)
  */
 class KDE_EXPORT Provider : public TQObject
 {
@@ -215,6 +215,8 @@ class KDE_EXPORT ProviderLoader : public TQObject
      * Indicates that the list of providers has been successfully loaded.
      */
     void providersLoaded( Provider::List * );
+    void percent(TDEIO::Job *job, unsigned long percent);
+    void error();
 
   protected slots:
     void slotJobData( TDEIO::Job *, const TQByteArray & );

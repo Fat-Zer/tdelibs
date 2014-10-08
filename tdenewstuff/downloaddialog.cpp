@@ -659,6 +659,9 @@ void DownloadDialog::slotJobResult( TDEIO::Job *job )
     }
   }
 
+  // Reset for next load
+  mJobData = TQString::null;
+
   slotInstallPhase2();
 }
 
