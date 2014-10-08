@@ -94,7 +94,7 @@ KURLBarItem::KURLBarItem( KURLBar *parent,
       m_url( url ),
       m_pixmap( 0L ),
       m_parent( parent ),
-      m_appLocal( true )
+      m_appLocal( false )
 {
     init( icon, group, description, persistent );
 }
@@ -106,7 +106,7 @@ KURLBarItem::KURLBarItem( KURLBar *parent,
       m_url( url ),
       m_pixmap( 0L ),
       m_parent( parent ),
-      m_appLocal( true )
+      m_appLocal( false )
 {
     init( icon, group, description, true /*persistent*/ );
 }
