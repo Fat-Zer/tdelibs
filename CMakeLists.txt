@@ -679,6 +679,12 @@ if( WITH_XCOMPOSITE )
   else( WITH_XCOMPOSITE )
     tde_message_fatal( "xcomposite support was requested, but xcomposite was not found on your system" )
   endif( XCOMPOSITE_FOUND )
+
+  # xext (tderandr, tdestyles/keramik, tdeui)
+  pkg_search_module( XEXT xext )
+  if( NOT XEXT_FOUND )
+    tde_message_fatal( "xext is required for xcomposite support, but was not found on your system" )
+  endif( )
 endif( WITH_XCOMPOSITE )
 
 

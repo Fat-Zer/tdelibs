@@ -65,6 +65,6 @@ set_source_files_properties( pixmaploader.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK tdefx-shared Xext
+  LINK tdefx-shared ${XEXT_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/styles
 )
