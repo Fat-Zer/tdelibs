@@ -254,7 +254,11 @@ KMimeMagic::~KMimeMagic() {
 bool KMimeMagic::mergeConfig(const TQString & _configfile) {
 	conf->databases.append(_configfile);
 	TQString merged_databases = conf->databases.join(":");
+#ifdef MAGIC_VERSION
 	int magicvers = magic_version();
+#else // MAGIC_VERSION
+	int magicvers = 0;
+#endif // MAGIC_VERSION
 	if ((magicvers < 512) || (magicvers >= 518)) {
 		if (magic_load(conf->magic, merged_databases.latin1()) == 0) {
 			return true;
