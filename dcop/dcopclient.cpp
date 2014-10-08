@@ -717,7 +717,11 @@ bool DCOPClient::isSuspended() const
 // Check whether the remote end is owned by the same user.
 static bool peerIsUs(int sockfd)
 {
+#if defined(__OpenBSD__)
+    struct sockpeercred cred;
+#else
     struct ucred cred;
+#endif
     socklen_t siz = sizeof(cred);
     if (getsockopt(sockfd, SOL_SOCKET, SO_PEERCRED, &cred, &siz) != 0)
         return false;
