@@ -1549,6 +1549,20 @@ bool TDEListView::automaticSelection() const
    return d->selectedBySimpleMove;
 }
 
+void TDEListView::resetKeyboardSelectionOperation()
+{
+	d->wasShiftEvent = false;
+	d->selectionDirection = 0;
+}
+
+void TDEListView::setActiveMultiSelectItem(TQListViewItem *item) {
+	TQListViewItem* origItem = currentItem();
+	if (!d->initialFileManagerItem) {
+		d->initialFileManagerItem = origItem;
+	}
+	setCurrentItem(item);
+}
+
 void TDEListView::fileManagerKeyPressEvent (TQKeyEvent* e)
 {
 	//don't care whether it's on the keypad or not

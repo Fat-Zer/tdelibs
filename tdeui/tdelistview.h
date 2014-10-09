@@ -997,6 +997,21 @@ protected:
   void resetAutoSelection();
 
   /**
+   * In FileManager selection mode: reset the keyboard selection operation;
+   * e.g. after completion of a mouse rubberband operation
+   * @since 14.0
+   */
+  void resetKeyboardSelectionOperation();
+
+  /**
+   * In FileManager selection mode: set the current keyboard cursor selection
+   * item; e.g. during a mouse rubberband operation
+   * @param direction down is 1, up is -1
+   * @since 14.0
+   */
+  void setActiveMultiSelectItem(TQListViewItem *item);
+
+  /**
    * @deprecated This is just here for binary compatibility.  Use the signal
    * in TQListView instead.
    */
