@@ -604,7 +604,7 @@ TQString TDECModuleProxy::handbookSection() const
 		return realModule() ? realModule()->handbookSection() : TQString::null;
 	}
 	else {
-	/* This needs fixing, perhaps cache a TDEAboutData copy
+	/* This needs fixing, perhaps cache a handbookSection() copy
 	 * while in root mode? */
 		return TQString::null;
 	}
