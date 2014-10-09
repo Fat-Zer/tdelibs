@@ -525,6 +525,26 @@ if( NOT HAVE_LIBDL )
 endif( NOT HAVE_LIBDL )
 
 
+##### check for magic ###########################
+
+set( MAGIC_LIBRARIES magic )
+check_library_exists( ${MAGIC_LIBRARIES} magic_load "" HAVE_LIBMAGIC )
+if( HAVE_LIBMAGIC )
+  check_library_exists( ${MAGIC_LIBRARIES} magic_getpath "" HAVE_LIBMAGIC_GETPATH )
+  if( NOT HAVE_LIBMAGIC_GETPATH )
+    execute_process(
+      COMMAND file --version
+      OUTPUT_VARIABLE LIBMAGIC_VERSION
+      ERROR_VARIABLE LIBMAGIC_VERSION
+    )
+    string(REGEX REPLACE ".*magic file from ([^ \n]*).*" "\\1" LIBMAGIC_PATH ${LIBMAGIC_VERSION} )
+    message( STATUS "libmagick default path ${LIBMAGIC_PATH}" )
+  endif( NOT HAVE_LIBMAGIC_GETPATH )
+else( HAVE_LIBMAGIC )
+  tde_message_fatal( "libmagic is required, but not found on your system" )
+endif( HAVE_LIBMAGIC )
+
+
 ##### check for utempter ########################
 
 if( WITH_UTEMPTER )

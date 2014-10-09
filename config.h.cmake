@@ -914,6 +914,12 @@
 /* Defined if compiling with TDEIconLoader debugging */
 #cmakedefine TDEICONLOADER_DEBUG 1
 
+/* Defined if libmagic contain magic_getpath function */
+#cmakedefine HAVE_LIBMAGIC_GETPATH 1
+
+/* Define default path for libmagick files */
+#cmakedefine LIBMAGIC_PATH "@LIBMAGIC_PATH@"
+
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
 #if defined AC_APPLE_UNIVERSAL_BUILD
