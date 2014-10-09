@@ -20,6 +20,7 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include "config.h"
 #include "kmimemagic.h"
 #include <kdebug.h>
 #include <tdeapplication.h>
@@ -164,7 +165,11 @@ struct config_rec {
 int KMimeMagic::apprentice( const TQString& magicfile ) {
 	TQString maindatabase = magicfile;
 	if (maindatabase == "") {
+#ifdef HAVE_LIBMAGIC_GETPATH
 		maindatabase = magic_getpath(0, FILE_LOAD);
+#else
+		maindatabase = TQString(LIBMAGIC_PATH);
+#endif
 		if (maindatabase == "") {
 			kdWarning() << k_funcinfo << "Unable to locate system mime magic database; mime type detection will not function correctly!" << endl;
 		}

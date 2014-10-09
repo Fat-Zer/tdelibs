@@ -117,7 +117,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK magic ${GAMIN_LIBRARIES}
+  LINK ${MAGIC_LIBRARIES} ${GAMIN_LIBRARIES}
 )
 
 
