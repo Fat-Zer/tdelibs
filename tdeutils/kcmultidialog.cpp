@@ -186,12 +186,18 @@ void KCMultiDialog::slotHelp()
 
     int curPageIndex = activePageIndex();
     ModuleList::Iterator end = m_modules.end();
-    for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
+    for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it ) {
         if( pageIndex( ( TQWidget * )( *it ).kcm->parent() ) == curPageIndex )
         {
             docPath = ( *it ).kcm->moduleInfo().docPath();
+            TDECModuleProxy * m = ( *it ).kcm;
+            TQString section = m->handbookSection();
+            if (section != "") {
+                docPath = TQString( "%1#%2" ).arg( docPath ).arg( section );
+            }
             break;
         }
+    }
 
     KURL url( KURL("help:/"), docPath );
 

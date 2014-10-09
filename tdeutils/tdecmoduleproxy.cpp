@@ -588,14 +588,26 @@ TQString TDECModuleProxy::quickHelp() const
 
 const TDEAboutData * TDECModuleProxy::aboutData() const
 {
-	if( !d->rootMode )
+	if( !d->rootMode ) {
 		return realModule() ? realModule()->aboutData() : 0;
-	else
-	/* This needs fixing, perhaps cache a TDEAboutData copy 
+	}
+	else {
+	/* This needs fixing, perhaps cache a TDEAboutData copy
 	 * while in root mode? */
 		return 0;
-		
+	}
+}
 
+TQString TDECModuleProxy::handbookSection() const
+{
+	if( !d->rootMode ) {
+		return realModule() ? realModule()->handbookSection() : TQString::null;
+	}
+	else {
+	/* This needs fixing, perhaps cache a TDEAboutData copy
+	 * while in root mode? */
+		return TQString::null;
+	}
 }
 
 int TDECModuleProxy::buttons() const
