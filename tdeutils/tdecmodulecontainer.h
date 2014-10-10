@@ -118,6 +118,12 @@ class TDEUTILS_EXPORT TDECModuleContainer : public TDECModule
 		 */
 		void defaults();
 
+		/**
+		 * Reimplemented for internal purposes.
+		 * @internal
+		 */
+		virtual TQString handbookSection() const;
+
 	protected:
 
 		/**

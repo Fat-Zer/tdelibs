@@ -60,6 +60,7 @@ class TDECModuleContainer::TDECModuleContainerPrivate
 		KPushButton *btnRootMode;
 		TQHBoxLayout *btnLayout;
 		TQVBoxLayout *topLayout;
+		TQString handbookSection;
 
 
 };
@@ -134,10 +135,14 @@ void TDECModuleContainer::addModule( const TQString& module )
 		return;
 	}
 
-	if( !TDECModuleLoader::testModule( module ))
+	if( !TDECModuleLoader::testModule( module )) {
 		return;
+	}
 
 	TDECModuleProxy* proxy = new TDECModuleProxy( module, false, d->tabWidget, module.latin1());
+	if (allModules.count() < 1) {
+		d->handbookSection = proxy->handbookSection();
+	}
 	allModules.append( proxy );
 
 	d->tabWidget->addTab( proxy, TQIconSet(TDEGlobal::iconLoader()->loadIcon(
@@ -153,37 +158,42 @@ void TDECModuleContainer::addModule( const TQString& module )
 	d->buttons = d->buttons | proxy->realModule()->buttons();
 
 	/* If we should add an Administrator Mode button */
-	if ( proxy->moduleInfo().needsRootPrivileges() )
+	if ( proxy->moduleInfo().needsRootPrivileges() ) {
 		d->hasRootKCM=true;
-
-
+	}
 }
 
 void TDECModuleContainer::tabSwitched( TQWidget * module )
 {
-	if ( !d->hasRootKCM )
+	TDECModuleProxy* mod = (TDECModuleProxy *) module;
+	d->handbookSection = mod->handbookSection();
+
+	if ( !d->hasRootKCM ) {
 		return;
+	}
 
 	/* Not like this. Not like this. */
 	disconnect( d->btnRootMode, 0, 0, 0 );
 	/* Welcome to the real world huh baby? */
-	
-	TDECModuleProxy* mod = (TDECModuleProxy *) module;
 
-	if ( mod->moduleInfo().needsRootPrivileges() && !mod->rootMode() )
-	{
+	if ( mod->moduleInfo().needsRootPrivileges() && !mod->rootMode() ) {
 		d->btnRootMode->setEnabled( true );
 		connect( d->btnRootMode, TQT_SIGNAL( clicked() ), 
 				TQT_SLOT( runAsRoot() ));
 		connect( mod, TQT_SIGNAL( childClosed() ), 
 				TQT_SLOT ( rootExited() ));
 	}
-	else
+	else {
 		d->btnRootMode->setEnabled( false );
+	}
 
 	setQuickHelp( mod->quickHelp() );
 	setAboutData( const_cast<TDEAboutData*>(mod->aboutData()) );
+}
 
+TQString TDECModuleContainer::handbookSection() const
+{
+	return d->handbookSection;
 }
 
 void TDECModuleContainer::runAsRoot()
