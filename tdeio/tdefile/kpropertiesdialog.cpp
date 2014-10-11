@@ -4077,7 +4077,7 @@ TDEApplicationPropsPlugin::TDEApplicationPropsPlugin( KPropertiesDialog *_props 
   TQString commentStr = config.readComment();
   TQString genNameStr = config.readGenericName();
 
-  TQStringList selectedTypes = config.readListEntry( "ServiceTypes" );
+  TQStringList selectedTypes = config.readListEntry( "X-TDE-ServiceTypes" );
   // For compatibility with KDE 1.x
   selectedTypes += config.readListEntry( "MimeType", ';' );
 
@@ -4195,7 +4195,7 @@ void TDEApplicationPropsPlugin::applyChanges()
     selectedTypes.append( extensionsList->text( i ) );
 
   config.writeEntry( "MimeType", selectedTypes, ';' );
-  config.writeEntry( "ServiceTypes", "" );
+  config.writeEntry( "X-TDE-ServiceTypes", "" );
   // hmm, actually it should probably be the contrary (but see also typeslistitem.cpp)
 
   TQString nameStr = nameEdit ? nameEdit->text() : TQString::null;

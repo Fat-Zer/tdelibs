@@ -267,8 +267,8 @@ KService::init( KDesktopFile *config )
   m_strInit = config->readEntry("X-TDE-Init" );
   entryMap.remove("X-TDE-Init");
 
-  m_lstServiceTypes = config->readListEntry( "ServiceTypes" );
-  entryMap.remove("ServiceTypes");
+  m_lstServiceTypes = config->readListEntry( "X-TDE-ServiceTypes" );
+  entryMap.remove("X-TDE-ServiceTypes");
   // For compatibility with KDE 1.x
   if (!kde4application)
      m_lstServiceTypes += config->readListEntry( "MimeType", ';' );
@@ -299,8 +299,8 @@ KService::init( KDesktopFile *config )
   m_initialPreference = config->readNumEntry( "X-TDE-InitialPreference", 1 );
   entryMap.remove("X-TDE-InitialPreference");
   if ( m_initialPreference == 1 )
-     m_initialPreference = config->readNumEntry( "InitialPreference", 1 );
-  entryMap.remove("InitialPreference");
+     m_initialPreference = config->readNumEntry( "X-TDE-InitialPreference", 1 );
+  entryMap.remove("X-TDE-InitialPreference");
 
   // Store all additional entries in the property map.
   // A TQMap<TQString,TQString> would be easier for this but we can't

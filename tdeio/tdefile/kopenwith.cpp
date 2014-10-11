@@ -754,7 +754,7 @@ void KOpenWithDlg::slotOK()
   {
     desktop->writeEntry("Terminal", false);
   }
-  desktop->writeEntry("InitialPreference", maxPreference + 1);
+  desktop->writeEntry("X-TDE-InitialPreference", maxPreference + 1);
 
 
   if (bRemember || d->saveNewApps)
