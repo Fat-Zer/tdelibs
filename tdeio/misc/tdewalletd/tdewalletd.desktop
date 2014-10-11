@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Service
-ServiceTypes=KDEDModule
+X-TDE-ServiceTypes=KDEDModule
 X-TDE-ModuleType=Library
 X-TDE-Library=tdewalletd
 X-TDE-FactoryName=tdewalletd

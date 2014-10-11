@@ -87,6 +87,6 @@ Name[zh_TW]=目錄
 Name[zu]=Uhlu lwamafayela
 X-TDE-Library=tdeabc_dir
 Type=Service
-ServiceTypes=TDEResources/Plugin
+X-TDE-ServiceTypes=TDEResources/Plugin
 X-TDE-ResourceFamily=contact
 X-TDE-ResourceType=dir

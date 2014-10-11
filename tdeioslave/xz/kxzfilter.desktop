@@ -83,4 +83,4 @@ Name[zh_HK]=XZ 過濾器
 Name[zh_TW]=XZ 過濾器
 Name[zu]=Ihluzo le-XZ
 X-TDE-Library=kxzfilter
-ServiceTypes=TDECompressionFilter,application/x-xz,application/x-txz,application/x-lzma
+X-TDE-ServiceTypes=TDECompressionFilter,application/x-xz,application/x-txz,application/x-lzma

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Service
-ServiceTypes=KSpell/Client
+X-TDE-ServiceTypes=KSpell/Client
 X-TDE-Library=tdespell_aspell
 X-TDE-PluginInfo-Author=Zack Rusin
 X-TDE-PluginInfo-Email=zack@kde.org

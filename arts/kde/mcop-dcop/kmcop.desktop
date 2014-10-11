@@ -85,6 +85,6 @@ Comment[zh_HK]=TDE MCOP-DCOP 橋樑
 Comment[zh_TW]=TDE MCOP-DCOP 橋樑
 Comment[zu]=Ibhulogo le-TDE MCOP-DCOP
 Icon=kmcop
-ServiceTypes=KMCOP
+X-TDE-ServiceTypes=KMCOP
 X-DCOP-ServiceType=Unique
 X-TDE-StartupNotify=false

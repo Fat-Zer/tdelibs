@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Service
-ServiceTypes=KSpell/Client
+X-TDE-ServiceTypes=KSpell/Client
 X-TDE-Library=tdespell_hspell
 X-TDE-PluginInfo-Author=Mashrab Kuvatov
 X-TDE-PluginInfo-Email=kmashrab@uni-bremen.de

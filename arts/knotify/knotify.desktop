@@ -114,6 +114,6 @@ Comment[zh_HK]=TDE 通知伺服程式
 Comment[zh_TW]=TDE 通知服務程式
 Comment[zu]=Isaziso se-Daemon ye-TDE
 Icon=knotify
-ServiceTypes=KNotify
+X-TDE-ServiceTypes=KNotify
 X-DCOP-ServiceType=Unique
 X-TDE-StartupNotify=false

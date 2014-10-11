@@ -94,7 +94,7 @@ Comment[zh_CN]=TDE 的进度信息用户界面服务器
 Comment[zh_HK]=TDE 的進度資訊介面伺服程式
 Comment[zh_TW]=TDE 的進度資訊使用者介面伺服器
 Comment[zu]=Umlekeleli we-UI Yolwazi Lwenqubo lwe-TDE
-ServiceTypes=
+X-TDE-ServiceTypes=
 # It is a server
 X-DCOP-ServiceType=Unique
 X-TDE-StartupNotify=false

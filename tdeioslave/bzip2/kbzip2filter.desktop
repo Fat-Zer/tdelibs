@@ -83,4 +83,4 @@ Name[zh_HK]=BZip2 過濾器
 Name[zh_TW]=BZip2 過濾器
 Name[zu]=Ihluzo le-BZip2
 X-TDE-Library=kbzip2filter
-ServiceTypes=TDECompressionFilter,application/x-bzip2,application/x-tbz
+X-TDE-ServiceTypes=TDECompressionFilter,application/x-bzip2,application/x-tbz

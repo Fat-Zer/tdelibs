@@ -5,6 +5,6 @@ Name[hi]=एलडीएपी (LDAP)
 Name[te]=ఎల్డిఏపి
 X-TDE-Library=tdeabc_ldaptdeio
 Type=Service
-ServiceTypes=TDEResources/Plugin
+X-TDE-ServiceTypes=TDEResources/Plugin
 X-TDE-ResourceFamily=contact
 X-TDE-ResourceType=ldaptdeio

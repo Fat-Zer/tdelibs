@@ -77,6 +77,6 @@ Name[zh_HK]=檔案
 Name[zh_TW]=檔案
 X-TDE-Library=tdeabc_file
 Type=Service
-ServiceTypes=TDEResources/Plugin
+X-TDE-ServiceTypes=TDEResources/Plugin
 X-TDE-ResourceFamily=contact
 X-TDE-ResourceType=file
