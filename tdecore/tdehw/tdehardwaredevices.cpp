@@ -4169,7 +4169,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::Camera) {
-		ret = DesktopIcon("camera", size);
+		ret = DesktopIcon("camera-photo", size);
 	}
 	else if (query == TDEGenericDeviceType::Serial) {
 		ret = DesktopIcon("input_devices_settings", size);
