@@ -258,7 +258,7 @@ KService::init( KDesktopFile *config )
   if (!untranslatedGenericName.isEmpty())
     entryMap.insert("UntranslatedGenericName", untranslatedGenericName);
 
-  m_lstKeywords = config->readListEntry("Keywords");
+  m_lstKeywords = config->readListEntry("Keywords", ';');
   entryMap.remove("Keywords");
   d->categories = config->readListEntry("Categories", ';');
   entryMap.remove("Categories");
