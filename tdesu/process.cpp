@@ -492,8 +492,13 @@ int PtyProcess::waitForChild()
 
     while (1) 
     {
-        FD_SET(m_Fd, &fds);
-        int ret = select(m_Fd+1, &fds, 0L, 0L, 0L);
+        int ret = 0;
+
+        if (m_Fd != -1)
+        {
+            FD_SET(m_Fd, &fds);
+            ret = select(m_Fd+1, &fds, 0L, 0L, 0L);
+        }
         if (ret == -1) 
         {
             if (errno != EINTR) 
