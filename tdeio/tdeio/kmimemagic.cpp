@@ -33,6 +33,10 @@
 
 #include <magic.h>
 
+#ifndef MAGIC_MIME_TYPE
+#define MAGIC_MIME_TYPE MAGIC_MIME
+#endif
+
 // Taken from file/file.h
 // Keep in sync with that header!
 #define	FILE_LOAD	0
