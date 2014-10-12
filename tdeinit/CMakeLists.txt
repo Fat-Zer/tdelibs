@@ -140,7 +140,11 @@ tde_add_executable( ${target} ${_setuid}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-set_target_properties( ${target} PROPERTIES COMPILE_FLAGS -DEXECUTE=\\"${BIN_INSTALL_DIR}/tdeinit\\" )
+set_property(
+  TARGET ${target}
+  APPEND PROPERTY COMPILE_DEFINITIONS
+  EXECUTE="${BIN_INSTALL_DIR}/tdeinit"
+)
 
 
 #### start_tdeinit_wrapper ######################
