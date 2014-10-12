@@ -147,7 +147,7 @@ setAutoSaveSettings();
     tb->setItemAutoSized (5);
 
     // Now add another button and align it right
-    pix = BarIcon("exit");
+    pix = BarIcon("system-log-out");
     tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), TDEApplication::kApplication(),
                           TQT_SLOT( quit() ), true, "Exit");
     tb->alignItemRight (6);
@@ -407,7 +407,7 @@ void testWindow::slotExit ()
   else
    {
      TQPixmap pix;
-     pix = BarIcon("exit");
+     pix = BarIcon("system-log-out");
      tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), TDEApplication::kApplication(),
                            TQT_SLOT( quit() ), true, "Exit");
      tb->alignItemRight (6);

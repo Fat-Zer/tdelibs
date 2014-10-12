@@ -259,8 +259,8 @@ void KMJobViewer::init()
 void KMJobViewer::initActions()
 {
 	// job actions
-	TDEAction	*hact = new TDEAction(i18n("&Hold"),"stop",0,TQT_TQOBJECT(this),TQT_SLOT(slotHold()),actionCollection(),"job_hold");
-	TDEAction	*ract = new TDEAction(i18n("&Resume"),"run",0,TQT_TQOBJECT(this),TQT_SLOT(slotResume()),actionCollection(),"job_resume");
+	TDEAction	*hact = new TDEAction(i18n("&Hold"),"process-stop",0,TQT_TQOBJECT(this),TQT_SLOT(slotHold()),actionCollection(),"job_hold");
+	TDEAction	*ract = new TDEAction(i18n("&Resume"),"system-run",0,TQT_TQOBJECT(this),TQT_SLOT(slotResume()),actionCollection(),"job_resume");
 	TDEAction	*dact = new TDEAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,TQT_TQOBJECT(this),TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
 	TDEAction *sact = new TDEAction(i18n("Res&tart"),"redo",0,TQT_TQOBJECT(this),TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
 	TDEActionMenu *mact = new TDEActionMenu(i18n("&Move to Printer"),"fileprint",actionCollection(),"job_move");

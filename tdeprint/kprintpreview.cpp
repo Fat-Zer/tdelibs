@@ -158,7 +158,7 @@ KPrintPreview::KPrintPreview(TQWidget *parent, bool previewOnly)
 	else
 	{
 		new TDEAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
-		new TDEAction(i18n("Cancel"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
+		new TDEAction(i18n("Cancel"), "process-stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
 	}
 
 }

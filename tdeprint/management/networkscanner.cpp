@@ -146,7 +146,7 @@ void NetworkScanner::start()
 	d->printers.clear();
 	emit scanStarted();
 	d->settings->setEnabled( false );
-	d->scan->setGuiItem( KGuiItem( i18n( "&Abort" ), "stop" ) );
+	d->scan->setGuiItem( KGuiItem( i18n( "&Abort" ), "process-stop" ) );
 	d->currentaddress = -1;
 	d->scanning = true;
 	next();

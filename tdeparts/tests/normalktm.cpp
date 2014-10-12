@@ -44,7 +44,7 @@ Shell::Shell()
   m_paCloseEditor->plug( pFile );
 
   TDEAction * paQuit = new TDEAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
-  paQuit->setIconSet(TQIconSet(BarIcon("exit")));
+  paQuit->setIconSet(TQIconSet(BarIcon("system-log-out")));
   paQuit->plug( pFile );
 
   setCentralWidget( m_splitter );

@@ -229,7 +229,7 @@ KGuiItem KStdGuiItem::open()
 
 KGuiItem KStdGuiItem::quit()
 {
-  return KGuiItem( i18n( "&Quit" ), "exit",
+  return KGuiItem( i18n( "&Quit" ), "system-log-out",
                    i18n( "Quit application" ) );
 }
 
@@ -256,7 +256,7 @@ KGuiItem KStdGuiItem::find()
 
 KGuiItem KStdGuiItem::stop()
 {
-  return KGuiItem(i18n("Stop"), "stop");
+  return KGuiItem(i18n("Stop"), "process-stop");
 }
 
 KGuiItem KStdGuiItem::add()

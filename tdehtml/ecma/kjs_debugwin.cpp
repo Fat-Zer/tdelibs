@@ -81,7 +81,7 @@ SourceDisplay::SourceDisplay(KJSDebugWin *debugWin, TQWidget *parent, const char
 {
   verticalScrollBar()->setLineStep(TQFontMetrics(m_font).height());
   viewport()->setBackgroundMode(TQt::NoBackground);
-  m_breakpointIcon = TDEGlobal::iconLoader()->loadIcon("stop",TDEIcon::Small);
+  m_breakpointIcon = TDEGlobal::iconLoader()->loadIcon("process-stop",TDEIcon::Small);
 }
 
 SourceDisplay::~SourceDisplay()
@@ -361,7 +361,7 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   m_execsAlloc = 0;
   m_steppingDepth = 0;
 
-  m_stopIcon = TDEGlobal::iconLoader()->loadIcon("stop",TDEIcon::Small);
+  m_stopIcon = TDEGlobal::iconLoader()->loadIcon("process-stop",TDEIcon::Small);
   m_emptyIcon = TQPixmap(m_stopIcon.width(),m_stopIcon.height());
   TQBitmap emptyMask(m_stopIcon.width(),m_stopIcon.height(),true);
   m_emptyIcon.setMask(emptyMask);
@@ -454,7 +454,7 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   scCont.append(KKeySequence(KKey(Qt::Key_F9)));
   m_continueAction   = new TDEAction(i18n("&Continue"),"dbgrun",scCont,TQT_TQOBJECT(this),TQT_SLOT(slotContinue()),
 				   m_actionCollection,"cont");
-  m_stopAction       = new TDEAction(i18n("St&op"),"stop",TDEShortcut(Qt::Key_F4),TQT_TQOBJECT(this),TQT_SLOT(slotStop()),
+  m_stopAction       = new TDEAction(i18n("St&op"),"process-stop",TDEShortcut(Qt::Key_F4),TQT_TQOBJECT(this),TQT_SLOT(slotStop()),
 				   m_actionCollection,"stop");
   m_breakAction      = new TDEAction(i18n("&Break at Next Statement"),"dbgrunto",TDEShortcut(Qt::Key_F8),TQT_TQOBJECT(this),TQT_SLOT(slotBreakNext()),
 				   m_actionCollection,"breaknext");

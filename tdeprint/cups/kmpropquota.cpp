@@ -56,7 +56,7 @@ KMPropQuota::KMPropQuota(TQWidget *parent, const char *name)
 
 	m_title = i18n("Quotas");
 	m_header = i18n("Quota Settings");
-	m_pixmap = "lock";
+	m_pixmap = "system-lock-screen";
 }
 
 KMPropQuota::~KMPropQuota()

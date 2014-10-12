@@ -41,7 +41,7 @@ Shell::Shell()
   m_paCloseEditor = new TDEAction( "&Close file editor", 0, this, TQT_SLOT( slotFileCloseEditor() ), coll, "close_editor" );
   m_paCloseEditor->setEnabled(false);
   TDEAction * paQuit = new TDEAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
-  paQuit->setIconSet(TQIconSet(BarIcon("exit")));
+  paQuit->setIconSet(TQIconSet(BarIcon("system-log-out")));
 
   (void)new TDEAction( "Yet another menu item", 0, coll, "shell_yami" );
   (void)new TDEAction( "Yet another submenu item", 0, coll, "shell_yasmi" );

@@ -39,7 +39,7 @@ KMWSmb::KMWSmb(TQWidget *parent, const char *name)
 	m_view = new SmbView(this,"SmbView");
 	m_loginlabel = new TQLabel( this );
 	TQPushButton	*m_scan = new KPushButton(KGuiItem(i18n("Scan"), "viewmag"), this);
-	TQPushButton	*m_abort = new KPushButton(KGuiItem(i18n("Abort"), "stop"), this);
+	TQPushButton	*m_abort = new KPushButton(KGuiItem(i18n("Abort"), "process-stop"), this);
 	m_abort->setEnabled(false);
 	TQLabel		*m_worklabel = new TQLabel(i18n("Workgroup:"), this);
 	TQLabel		*m_serverlabel = new TQLabel(i18n("Server:"), this);

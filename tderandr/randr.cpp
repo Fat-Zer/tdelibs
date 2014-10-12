@@ -413,7 +413,7 @@ KDE_EXPORT TQPixmap RandRScreen::rotationIcon(int rotation) const
 		case RR_Reflect_X:
 		case RR_Reflect_Y:
 		default:
-			return SmallIcon("stop");
+			return SmallIcon("process-stop");
 	}
 }
 
