@@ -87,13 +87,13 @@ void KateBookmarks::createActions( TDEActionCollection* ac )
   m_bookmarkClear->setWhatsThis(i18n("Remove all bookmarks of the current document."));
 
   m_goNext = new TDEAction(
-    i18n("Next Bookmark"), "next", ALT + Key_PageDown,
+    i18n("Next Bookmark"), "go-next", ALT + Key_PageDown,
     this, TQT_SLOT(goNext()),
     ac, "bookmarks_next");
   m_goNext->setWhatsThis(i18n("Go to the next bookmark."));
 
   m_goPrevious = new TDEAction(
-    i18n("Previous Bookmark"), "previous", ALT + Key_PageUp,
+    i18n("Previous Bookmark"), "go-previous", ALT + Key_PageUp,
     this, TQT_SLOT(goPrevious()),
     ac, "bookmarks_previous");
   m_goPrevious->setWhatsThis(i18n("Go to the previous bookmark."));
