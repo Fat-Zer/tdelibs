@@ -82,8 +82,8 @@ TDEAction* create( StdAction id, const char *name, const TQObject *recvr, const 
 		if (TQApplication::reverseLayout()){
 			if (id == Prior) iconName = "forward";
 			if (id == Next ) iconName = "back";
-			if (id == FirstPage) iconName = "finish";
-			if (id == LastPage) iconName = "start";
+			if (id == FirstPage) iconName = "go-last";
+			if (id == LastPage) iconName = "go-first";
 		}
 
 		TDEShortcut cut = TDEStdAccel::shortcut(pInfo->idAccel);

@@ -59,9 +59,9 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ SelectAll,     TDEStdAccel::SelectAll, "edit_select_all", I18N_NOOP("Select &All"), 0, 0 },
 	{ Deselect,      TDEStdAccel::Deselect, "edit_deselect", I18N_NOOP("Dese&lect"), 0, 0 },
 	{ Find,          TDEStdAccel::Find, "edit_find", I18N_NOOP("&Find..."), 0, "find" },
-	{ FindNext,      TDEStdAccel::FindNext, "edit_find_next", I18N_NOOP("Find &Next"), 0, "next" },
+	{ FindNext,      TDEStdAccel::FindNext, "edit_find_next", I18N_NOOP("Find &Next"), 0, "go-next" },
 	// FIXME: rename edit_find_last to edit_find_prev for KDE 4
-	{ FindPrev,      TDEStdAccel::FindPrev, "edit_find_last", I18N_NOOP("Find Pre&vious"), 0, "previous" },
+	{ FindPrev,      TDEStdAccel::FindPrev, "edit_find_last", I18N_NOOP("Find Pre&vious"), 0, "go-previous" },
 	{ Replace,       TDEStdAccel::Replace, "edit_replace", I18N_NOOP("&Replace..."), 0, 0 },
 
 	{ ActualSize,    TDEStdAccel::AccelNone, "view_actual_size", I18N_NOOP("&Actual Size"), 0, "viewmag1" },
@@ -84,8 +84,8 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ Goto,          TDEStdAccel::AccelNone, "go_goto", I18N_NOOP("&Go To..."), 0, 0 },
 	{ GotoPage,      TDEStdAccel::AccelNone, "go_goto_page", I18N_NOOP("&Go to Page..."), 0, "goto" },
 	{ GotoLine,      TDEStdAccel::GotoLine, "go_goto_line", I18N_NOOP("&Go to Line..."), 0, 0 },
-	{ FirstPage,     TDEStdAccel::Home, "go_first", I18N_NOOP("&First Page"), 0, "start" },
-	{ LastPage,      TDEStdAccel::End, "go_last", I18N_NOOP("&Last Page"), 0, "finish" },
+	{ FirstPage,     TDEStdAccel::Home, "go_first", I18N_NOOP("&First Page"), 0, "go-first" },
+	{ LastPage,      TDEStdAccel::End, "go_last", I18N_NOOP("&Last Page"), 0, "go-last" },
 
 	{ AddBookmark,   TDEStdAccel::AddBookmark, "bookmark_add", I18N_NOOP("&Add Bookmark"), 0, "bookmark_add" },
 	{ EditBookmarks, TDEStdAccel::AccelNone, "bookmark_edit", I18N_NOOP("&Edit Bookmarks"), 0, "bookmark" },
