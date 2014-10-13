@@ -30,7 +30,7 @@ QDirLineEdit::QDirLineEdit(bool file, TQWidget *parent, const char *name)
 {
 	edit_ = new TQLineEdit(this);
 	button_ = new KPushButton(this);
-	button_->setPixmap(SmallIcon("fileopen"));
+	button_->setPixmap(SmallIcon("document-open"));
 	connect(button_,TQT_SIGNAL(clicked()),TQT_SLOT(buttonClicked()));
 
 	TQHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 3);

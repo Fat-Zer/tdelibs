@@ -138,7 +138,7 @@ static bool continuePrint(const TQString& msg_, TQWidget *parent, bool previewOn
 	else
 	{
 		msg.append(" ").append(i18n("Do you want to continue printing anyway?"));
-		return (KMessageBox::warningContinueCancel(parent, msg, TQString::null, KGuiItem(i18n("Print"),"fileprint")) == KMessageBox::Continue);
+		return (KMessageBox::warningContinueCancel(parent, msg, TQString::null, KGuiItem(i18n("Print"),"document-print")) == KMessageBox::Continue);
 	}
 }
 
@@ -157,7 +157,7 @@ KPrintPreview::KPrintPreview(TQWidget *parent, bool previewOnly)
 		KStdAction::close(TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "close_print");
 	else
 	{
-		new TDEAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
+		new TDEAction(i18n("Print"), "document-print", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
 		new TDEAction(i18n("Cancel"), "process-stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
 	}
 
@@ -319,7 +319,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	}
 	else if (!previewOnly)
 	{
-		return (KMessageBox::questionYesNo(parentW, i18n("Do you want to continue printing?"), TQString::null, KGuiItem(i18n("Print"),"fileprint"), KStdGuiItem::cancel(), "continuePrinting") == KMessageBox::Yes);
+		return (KMessageBox::questionYesNo(parentW, i18n("Do you want to continue printing?"), TQString::null, KGuiItem(i18n("Print"),"document-print"), KStdGuiItem::cancel(), "continuePrinting") == KMessageBox::Yes);
 	}
 	else
 		return false;

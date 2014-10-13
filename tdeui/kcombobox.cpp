@@ -729,7 +729,7 @@ void KHistoryComboEditor::virtual_hook( int id, void* data )
 KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget *parent )
 : KDialogBase( parent, "khistorycomboeditor", true, i18n( "History Editor" ),
     KDialogBase::Close | KDialogBase::User1, KDialogBase::User1, true,
-    KGuiItem( i18n( "&Delete Entry" ), "editdelete") ), d(0)
+    KGuiItem( i18n( "&Delete Entry" ), "edit-delete") ), d(0)
 {
     TQVBox* box = new TQVBox( this );
     box->setSpacing( KDialog::spacingHint() );

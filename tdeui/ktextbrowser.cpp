@@ -125,15 +125,15 @@ TQPopupMenu *KTextBrowser::createPopupMenu( const TQPoint & pos )
     TQPopupMenu *popup = TQTextBrowser::createPopupMenu( pos );
 
     if ( isReadOnly() )
-      popup->changeItem( popup->idAt(0), SmallIconSet("editcopy"), popup->text( popup->idAt(0) ) );
+      popup->changeItem( popup->idAt(0), SmallIconSet("edit-copy"), popup->text( popup->idAt(0) ) );
     else {
       int id = popup->idAt(0);
       popup->changeItem( id - IdUndo, SmallIconSet("edit-undo"), popup->text( id - IdUndo) );
       popup->changeItem( id - IdRedo, SmallIconSet("edit-redo"), popup->text( id - IdRedo) );
-      popup->changeItem( id - IdCut, SmallIconSet("editcut"), popup->text( id - IdCut) );
-      popup->changeItem( id - IdCopy, SmallIconSet("editcopy"), popup->text( id - IdCopy) );
-      popup->changeItem( id - IdPaste, SmallIconSet("editpaste"), popup->text( id - IdPaste) );
-      popup->changeItem( id - IdClear, SmallIconSet("editclear"), popup->text( id - IdClear) );
+      popup->changeItem( id - IdCut, SmallIconSet("edit-cut"), popup->text( id - IdCut) );
+      popup->changeItem( id - IdCopy, SmallIconSet("edit-copy"), popup->text( id - IdCopy) );
+      popup->changeItem( id - IdPaste, SmallIconSet("edit-paste"), popup->text( id - IdPaste) );
+      popup->changeItem( id - IdClear, SmallIconSet("edit-clear"), popup->text( id - IdClear) );
     }
 
     return popup;

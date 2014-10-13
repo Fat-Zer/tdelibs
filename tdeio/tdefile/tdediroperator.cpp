@@ -1271,9 +1271,9 @@ void KDirOperator::setupActions()
     TDEAction* trash = new TDEAction( i18n( "Move to Trash" ), "edittrash", Key_Delete, myActionCollection, "trash" );
     connect( trash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
 	     this, TQT_SLOT( trashSelected( TDEAction::ActivationReason, TQt::ButtonState ) ) );
-    new TDEAction( i18n( "Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this),
+    new TDEAction( i18n( "Delete" ), "edit-delete", SHIFT+Key_Delete, TQT_TQOBJECT(this),
                   TQT_SLOT( deleteSelected() ), myActionCollection, "delete" );
-    mkdirAction->setIcon( TQString::fromLatin1("folder_new") );
+    mkdirAction->setIcon( TQString::fromLatin1("folder-new") );
     reloadAction->setText( i18n("Reload") );
     reloadAction->setShortcut( TDEStdAccel::shortcut( TDEStdAccel::Reload ));
 

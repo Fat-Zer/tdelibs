@@ -440,7 +440,7 @@ int TDEWalletD::internalOpen(const TQCString& appid, const TQString& wallet, boo
 					kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to open the wallet '<b>%2</b>'. Please enter the password for this wallet below.").arg(TQStyleSheet::escape(appid)).arg(TQStyleSheet::escape(wallet)));
 				}
 				brandNew = false;
-				kpd->setButtonOK(KGuiItem(i18n("&Open"),"fileopen"));
+				kpd->setButtonOK(KGuiItem(i18n("&Open"),"document-open"));
 			} else {
 				emptyPass = true;
 			}
@@ -454,7 +454,7 @@ int TDEWalletD::internalOpen(const TQCString& appid, const TQString& wallet, boo
 				kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to open the TDE wallet. This is used to store sensitive data in a secure fashion. Please enter a password to use with this wallet or click cancel to deny the application's request.").arg(TQStyleSheet::escape(appid)));
 			}
 			brandNew = true;
-			kpd->setButtonOK(KGuiItem(i18n("&Open"),"fileopen"));
+			kpd->setButtonOK(KGuiItem(i18n("&Open"),"document-open"));
 		} else {
 			kpd = new KPasswordDialog(KPasswordDialog::NewPassword, false, 0);
 			if (appid.length() == 0) {
@@ -463,7 +463,7 @@ int TDEWalletD::internalOpen(const TQCString& appid, const TQString& wallet, boo
 				kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to create a new wallet named '<b>%2</b>'. Please choose a password for this wallet, or cancel to deny the application's request.").arg(TQStyleSheet::escape(appid)).arg(TQStyleSheet::escape(wallet)));
 			}
 			brandNew = true;
-			kpd->setButtonOK(KGuiItem(i18n("C&reate"),"filenew"));
+			kpd->setButtonOK(KGuiItem(i18n("C&reate"),"document-new"));
 		}
 
 		if (kpd) {

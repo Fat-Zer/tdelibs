@@ -31,14 +31,14 @@
 #include <tqpaintdevicemetrics.h>
 
 IppReportDlg::IppReportDlg(TQWidget *parent, const char *name)
-: KDialogBase(parent, name, true, i18n("IPP Report"), Close|User1, Close, false, KGuiItem(i18n("&Print"), "fileprint"))
+: KDialogBase(parent, name, true, i18n("IPP Report"), Close|User1, Close, false, KGuiItem(i18n("&Print"), "document-print"))
 {
 	m_edit = new KTextEdit(this);
 	m_edit->setReadOnly(true);
 	setMainWidget(m_edit);
 	resize(540, 500);
 	setFocusProxy(m_edit);
-	setButtonGuiItem(User1, KGuiItem(i18n("&Print"),"fileprint"));
+	setButtonGuiItem(User1, KGuiItem(i18n("&Print"),"document-print"));
 }
 
 void IppReportDlg::slotUser1()

@@ -767,10 +767,10 @@ void KEditToolbarWidget::setupLayout()
           this,           TQT_SLOT(slotToolbarSelected(const TQString&)));
 
 //  TQPushButton *new_toolbar = new TQPushButton(i18n("&New"), this);
-//  new_toolbar->setPixmap(BarIcon("filenew", TDEIcon::SizeSmall));
+//  new_toolbar->setPixmap(BarIcon("document-new", TDEIcon::SizeSmall));
 //  new_toolbar->setEnabled(false); // disabled until implemented
 //  TQPushButton *del_toolbar = new TQPushButton(i18n("&Delete"), this);
-//  del_toolbar->setPixmap(BarIcon("editdelete", TDEIcon::SizeSmall));
+//  del_toolbar->setPixmap(BarIcon("edit-delete", TDEIcon::SizeSmall));
 //  del_toolbar->setEnabled(false); // disabled until implemented
 
   // our list of inactive actions

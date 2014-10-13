@@ -97,7 +97,7 @@ class UIServerSystemTray:public KSystemTray
          TDEPopupMenu* pop= contextMenu();
          pop->insertItem(i18n("Settings..."), uis, TQT_SLOT(slotConfigure()));
          pop->insertItem(i18n("Remove"), uis, TQT_SLOT(slotRemoveSystemTrayIcon()));
-         setPixmap(loadIcon("filesave"));
+         setPixmap(loadIcon("document-save"));
          //actionCollection()->action("file_quit")->setEnabled(true);
          KStdAction::quit(TQT_TQOBJECT(uis), TQT_SLOT(slotQuit()), actionCollection());
       }
@@ -595,7 +595,7 @@ UIServer::UIServer()
   readSettings();
 
   // setup toolbar
-  toolBar()->insertButton("editdelete", TOOL_CANCEL,
+  toolBar()->insertButton("edit-delete", TOOL_CANCEL,
                           TQT_SIGNAL(clicked()), TQT_TQOBJECT(this),
                           TQT_SLOT(slotCancelCurrent()), FALSE, i18n("Cancel"));
   toolBar()->insertButton("configure", TOOL_CONFIGURE,

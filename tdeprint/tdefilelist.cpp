@@ -110,7 +110,7 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 	connect(m_files, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotSelectionChanged()));
 
 	m_add = new TQToolButton(this);
-	m_add->setIconSet(SmallIconSet("fileopen"));
+	m_add->setIconSet(SmallIconSet("document-open"));
 	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddFile()));
 	TQToolTip::add(m_add, i18n("Add file"));
 	TQWhatsThis::add(m_add, whatsThisAddFileButton);

@@ -89,7 +89,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	m_extensionlabel->setBuddy(m_extension);
 
 	m_icon = new TDEIconButton(dummy);
-	m_icon->setIcon("fileprint");
+	m_icon->setIcon("document-print");
 	m_icon->setFixedSize(TQSize(48,48));
 
 	connect( m_usefile, TQT_SIGNAL( toggled( bool ) ), m_mimetype, TQT_SLOT( setEnabled( bool ) ) );

@@ -145,7 +145,7 @@ void KMJobViewer::updateCaption()
 	if (!m_standalone)
 		return;
 
-	TQString	pixname("fileprint");
+	TQString	pixname("document-print");
 	if (!m_prname.isEmpty())
 	{
 		setCaption(i18n("Print Jobs for %1").arg(m_prname));
@@ -263,7 +263,7 @@ void KMJobViewer::initActions()
 	TDEAction	*ract = new TDEAction(i18n("&Resume"),"system-run",0,TQT_TQOBJECT(this),TQT_SLOT(slotResume()),actionCollection(),"job_resume");
 	TDEAction	*dact = new TDEAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,TQT_TQOBJECT(this),TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
 	TDEAction *sact = new TDEAction(i18n("Res&tart"),"edit-redo",0,TQT_TQOBJECT(this),TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
-	TDEActionMenu *mact = new TDEActionMenu(i18n("&Move to Printer"),"fileprint",actionCollection(),"job_move");
+	TDEActionMenu *mact = new TDEActionMenu(i18n("&Move to Printer"),"document-print",actionCollection(),"job_move");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotMove(int)));
 	connect(mact->popupMenu(),TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));
@@ -353,7 +353,7 @@ void KMJobViewer::buildPrinterMenu(TQPopupMenu *menu, bool use_all, bool use_spe
 	int	i(0);
 	if (use_all)
 	{
-		menu->insertItem(SmallIcon("fileprint"), i18n("All Printers"), i++);
+		menu->insertItem(SmallIcon("document-print"), i18n("All Printers"), i++);
 		menu->insertSeparator();
 	}
 	for (; it.current(); ++it, i++)

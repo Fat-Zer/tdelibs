@@ -1838,7 +1838,7 @@ void KFileDialog::setOperationMode( OperationMode mode )
     d->keepLocation = (mode == Saving);
     filterWidget->setEditable( !d->hasDefaultFilter || mode != Saving );
     if ( mode == Opening )
-       d->okButton->setGuiItem( KGuiItem( i18n("&Open"), "fileopen") );
+       d->okButton->setGuiItem( KGuiItem( i18n("&Open"), "document-open") );
     else if ( mode == Saving ) {
        d->okButton->setGuiItem( KStdGuiItem::save() );
        setNonExtSelection();

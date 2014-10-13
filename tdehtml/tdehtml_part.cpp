@@ -1088,7 +1088,7 @@ KJSErrorDlg *TDEHTMLPart::jsErrorExtension() {
     d->m_jsedlg->setURL(m_url.prettyURL());
     if (TDEGlobalSettings::showIconsOnPushButtons()) {
       d->m_jsedlg->_clear->setIconSet(SmallIconSet("locationbar_erase"));
-      d->m_jsedlg->_close->setIconSet(SmallIconSet("fileclose"));
+      d->m_jsedlg->_close->setIconSet(SmallIconSet("window-close"));
     }
   }
   return d->m_jsedlg;

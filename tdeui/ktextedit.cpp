@@ -217,15 +217,15 @@ TQPopupMenu *KTextEdit::createPopupMenu( const TQPoint &pos )
     TQPopupMenu *menu = TQTextEdit::createPopupMenu( pos );
 
     if ( isReadOnly() )
-      menu->changeItem( menu->idAt(0), SmallIconSet("editcopy"), menu->text( menu->idAt(0) ) );
+      menu->changeItem( menu->idAt(0), SmallIconSet("edit-copy"), menu->text( menu->idAt(0) ) );
     else {
       int id = menu->idAt(0);
       menu->changeItem( id - IdUndo, SmallIconSet("edit-undo"), menu->text( id - IdUndo) );
       menu->changeItem( id - IdRedo, SmallIconSet("edit-redo"), menu->text( id - IdRedo) );
-      menu->changeItem( id - IdCut, SmallIconSet("editcut"), menu->text( id - IdCut) );
-      menu->changeItem( id - IdCopy, SmallIconSet("editcopy"), menu->text( id - IdCopy) );
-      menu->changeItem( id - IdPaste, SmallIconSet("editpaste"), menu->text( id - IdPaste) );
-      menu->changeItem( id - IdClear, SmallIconSet("editclear"), menu->text( id - IdClear) );
+      menu->changeItem( id - IdCut, SmallIconSet("edit-cut"), menu->text( id - IdCut) );
+      menu->changeItem( id - IdCopy, SmallIconSet("edit-copy"), menu->text( id - IdCopy) );
+      menu->changeItem( id - IdPaste, SmallIconSet("edit-paste"), menu->text( id - IdPaste) );
+      menu->changeItem( id - IdClear, SmallIconSet("edit-clear"), menu->text( id - IdClear) );
 
         menu->insertSeparator();
         id = menu->insertItem( SmallIconSet( "spellcheck" ), i18n( "Check Spelling..." ),

@@ -206,7 +206,7 @@ void KURLRequester::init()
 	d->edit = new KLineEdit( this, "line edit" );
 
     myButton = new KURLDragPushButton( this, "tdefile button");
-    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("document-open"));
     TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
     myButton->setIconSet( iconSet );
     myButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );

@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     (void)new TDEAction( "Benchmark...", 0, 0, dummy, TQT_SLOT( doBenchmark() ), doc->actionCollection(), "debugDoBenchmark" );
     TDEAction* kprint = new TDEAction( "Print", "print", 0, doc->browserExtension(), TQT_SLOT( print() ), doc->actionCollection(), "print" );
     kprint->setEnabled(true);
-    TDEToggleAction *ta = new TDEToggleAction( "Navigable", "editclear", 0, doc->actionCollection(), "navigable" );
+    TDEToggleAction *ta = new TDEToggleAction( "Navigable", "edit-clear", 0, doc->actionCollection(), "navigable" );
     ta->setChecked(doc->isCaretMode());
     TQWidget::connect(ta, TQT_SIGNAL(toggled(bool)), dummy, TQT_SLOT( toggleNavigable(bool) ));
     ta = new TDEToggleAction( "Editable", "edit", 0, doc->actionCollection(), "editable" );

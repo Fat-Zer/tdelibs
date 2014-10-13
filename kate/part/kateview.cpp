@@ -221,7 +221,7 @@ void KateView::setupActions()
   m_copy = a=KStdAction::copy(TQT_TQOBJECT(this), TQT_SLOT(copy()), ac);
   a->setWhatsThis(i18n( "Use this command to copy the currently selected text to the system clipboard."));
 
-  m_copyHTML = a = new TDEAction(i18n("Copy as &HTML"), "editcopy", 0, TQT_TQOBJECT(this), TQT_SLOT(copyHTML()), ac, "edit_copy_html");
+  m_copyHTML = a = new TDEAction(i18n("Copy as &HTML"), "edit-copy", 0, TQT_TQOBJECT(this), TQT_SLOT(copyHTML()), ac, "edit_copy_html");
   a->setWhatsThis(i18n( "Use this command to copy the currently selected text as HTML to the system clipboard."));
 
   if (!m_doc->readOnly())
@@ -889,7 +889,7 @@ bool KateView::checkOverwrite( KURL u )
               ( this,
                 i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?" ).arg( info.fileName() ),
                 i18n( "Overwrite File?" ),
-                KGuiItem( i18n( "&Overwrite" ), "filesave", i18n( "Overwrite the file" ) )
+                KGuiItem( i18n( "&Overwrite" ), "document-save", i18n( "Overwrite the file" ) )
               );
 }
 

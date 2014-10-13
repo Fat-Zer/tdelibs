@@ -84,14 +84,14 @@ void KMInstancePage::addButton(const TQString& txt, const TQString& pixmap, cons
 
 void KMInstancePage::initActions()
 {
-	addButton(i18n("New..."), "filenew", TQT_SLOT(slotNew()));
-	addButton(i18n("Copy..."), "editcopy", TQT_SLOT(slotCopy()));
+	addButton(i18n("New..."), "document-new", TQT_SLOT(slotNew()));
+	addButton(i18n("Copy..."), "edit-copy", TQT_SLOT(slotCopy()));
 	addButton(i18n("Remove"), "edittrash", TQT_SLOT(slotRemove()));
 	m_buttons.append(0);
 	addButton(i18n("Set as Default"), "exec", TQT_SLOT(slotDefault()));
 	addButton(i18n("Settings"), "configure", TQT_SLOT(slotSettings()));
 	m_buttons.append(0);
-	addButton(i18n("Test..."), "fileprint", TQT_SLOT(slotTest()));
+	addButton(i18n("Test..."), "document-print", TQT_SLOT(slotTest()));
 }
 
 void KMInstancePage::setPrinter(KMPrinter *p)
@@ -110,7 +110,7 @@ void KMInstancePage::setPrinter(KMPrinter *p)
 		for (;it.current();++it)
 		{
 			TQStringList	pair = TQStringList::split('/',it.current()->name(),false);
-			m_view->insertItem(SmallIcon((it.current()->isSoftDefault() ? "exec" : "fileprint")),(pair.count() > 1 ? pair[1] : i18n("(Default)")));
+			m_view->insertItem(SmallIcon((it.current()->isSoftDefault() ? "exec" : "document-print")),(pair.count() > 1 ? pair[1] : i18n("(Default)")));
 		}
 		m_view->sort();
 	}

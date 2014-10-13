@@ -143,7 +143,7 @@ KMdiChildFrm::KMdiChildFrm( KMdiChildArea *parent )
 	TQObject::connect( m_pClose, TQT_SIGNAL( clicked() ), this, TQT_SLOT( closePressed() ) );
 	TQObject::connect( m_pUndock, TQT_SIGNAL( clicked() ), this, TQT_SLOT( undockPressed() ) );
 
-	m_pIconButtonPixmap = new TQPixmap( SmallIcon( "filenew" ) );
+	m_pIconButtonPixmap = new TQPixmap( SmallIcon( "document-new" ) );
 	if ( m_pIconButtonPixmap->isNull() )
 		* m_pIconButtonPixmap = TQPixmap( filenew );
 

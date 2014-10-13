@@ -37,10 +37,10 @@ QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)
 	connect(m_view, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotSelected(TQListViewItem*)));
 
 	m_add = new TQPushButton(this);
-	m_add->setPixmap(SmallIcon("folder_new"));
+	m_add->setPixmap(SmallIcon("folder-new"));
 	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddClicked()));
 	m_remove = new TQPushButton(this);
-	m_remove->setPixmap(SmallIcon("editdelete"));
+	m_remove->setPixmap(SmallIcon("edit-delete"));
 	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveClicked()));
 	m_remove->setEnabled(false);
 

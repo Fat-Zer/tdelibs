@@ -52,7 +52,7 @@ KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 	m_raw = new TQCheckBox(i18n("&Raw printer (no driver needed)"),this);
 	m_postscript->setCursor(KCursor::handCursor());
 	m_raw->setCursor(KCursor::handCursor());
-	m_other = new KPushButton(KGuiItem(i18n("&Other..."), "fileopen"), this);
+	m_other = new KPushButton(KGuiItem(i18n("&Other..."), "document-open"), this);
 	TQLabel	*l1 = new TQLabel(i18n("&Manufacturer:"), this);
 	TQLabel	*l2 = new TQLabel(i18n("Mo&del:"), this);
 	l1->setBuddy(m_manu);

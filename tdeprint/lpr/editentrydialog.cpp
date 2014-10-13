@@ -75,7 +75,7 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const c
 		TQListViewItem	*root = new TQListViewItem(m_view, entry->name), *item = 0;
 		root->setSelectable(false);
 		root->setOpen(true);
-		root->setPixmap(0, SmallIcon("fileprint"));
+		root->setPixmap(0, SmallIcon("document-print"));
 		for (TQMap<TQString,Field>::ConstIterator it=m_fields.begin(); it!=m_fields.end(); ++it)
 			item = new TQListViewItem(root, item, (*it).toString(), it.key());
 	}

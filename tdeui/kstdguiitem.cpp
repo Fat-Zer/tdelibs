@@ -124,7 +124,7 @@ KGuiItem KStdGuiItem::discard()
 
 KGuiItem KStdGuiItem::save()
 {
-  return KGuiItem( i18n( "&Save" ), "filesave", i18n( "Save data" ) );
+  return KGuiItem( i18n( "&Save" ), "document-save", i18n( "Save data" ) );
 }
 
 KGuiItem KStdGuiItem::dontSave()
@@ -135,7 +135,7 @@ KGuiItem KStdGuiItem::dontSave()
 
 KGuiItem KStdGuiItem::saveAs()
 {
-  return KGuiItem( i18n( "Save &As..." ), "filesaveas",
+  return KGuiItem( i18n( "Save &As..." ), "document-save-as",
                    i18n( "Save file with another name" ) );
 }
 
@@ -171,7 +171,7 @@ KGuiItem KStdGuiItem::help()
 
 KGuiItem KStdGuiItem::close()
 {
-  return KGuiItem( i18n( "&Close" ), "fileclose",
+  return KGuiItem( i18n( "&Close" ), "window-close",
                    i18n( "Close the current window or document" ) );
 }
 
@@ -204,7 +204,7 @@ TQPair<KGuiItem, KGuiItem> KStdGuiItem::backAndForward()
 
 KGuiItem KStdGuiItem::print()
 {
-  return KGuiItem( i18n( "&Print..." ), "fileprint",
+  return KGuiItem( i18n( "&Print..." ), "document-print",
                    i18n( "Opens the print dialog to print "
                          "the current document" ) );
 }
@@ -217,13 +217,13 @@ KGuiItem KStdGuiItem::cont()
 
 KGuiItem KStdGuiItem::del()
 {
-  return KGuiItem( i18n( "&Delete" ), "editdelete",
+  return KGuiItem( i18n( "&Delete" ), "edit-delete",
                    i18n( "Delete item(s)" ) );
 }
 
 KGuiItem KStdGuiItem::open()
 {
-  return KGuiItem( i18n( "&Open..." ), "fileopen",
+  return KGuiItem( i18n( "&Open..." ), "document-open",
                    i18n( "Open file" ) );
 }
 

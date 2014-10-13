@@ -95,7 +95,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_addopt = new TQToolButton(this);
 	m_addopt->setIconSet(SmallIconSet("document"));
 	m_delopt = new TQToolButton(this);
-	m_delopt->setIconSet(SmallIconSet("editdelete"));
+	m_delopt->setIconSet(SmallIconSet("edit-delete"));
 	m_up = new TQToolButton(this);
 	m_up->setIconSet(SmallIconSet("go-up"));
 	m_down = new TQToolButton(this);
@@ -144,9 +144,9 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_values->setSorting(-1);
 	m_values->setMaximumHeight(110);
 	m_addval = new TQToolButton(w2);
-	m_addval->setIconSet(SmallIconSet("editcopy"));
+	m_addval->setIconSet(SmallIconSet("edit-copy"));
 	m_delval = new TQToolButton(w2);
-	m_delval->setIconSet(SmallIconSet("editdelete"));
+	m_delval->setIconSet(SmallIconSet("edit-delete"));
 	TQToolTip::add(m_addval, i18n("Add value"));
 	TQToolTip::add(m_delval, i18n("Delete value"));
 
@@ -370,7 +370,7 @@ void KXmlCommandAdvancedDlg::parseXmlCommand(KXmlCommand *xmlcmd)
 	TQListViewItem	*root = new TQListViewItem(m_view, xmlcmd->name(), xmlcmd->name());
 	DrMain	*driver = xmlcmd->driver();
 
-	root->setPixmap(0, SmallIcon("fileprint"));
+	root->setPixmap(0, SmallIcon("document-print"));
 	root->setOpen(true);
 	if (driver)
 	{
@@ -845,9 +845,9 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	m_requirements->addColumn("");
 	m_requirements->header()->hide();
 	m_addreq = new TQToolButton(m_gb2);
-	m_addreq->setIconSet(SmallIconSet("filenew"));
+	m_addreq->setIconSet(SmallIconSet("document-new"));
 	m_removereq = new TQToolButton(m_gb2);
-	m_removereq->setIconSet(SmallIconSet("editdelete"));
+	m_removereq->setIconSet(SmallIconSet("edit-delete"));
 	TQPushButton	*m_edit = new KPushButton(KGuiItem(i18n("&Edit Command..."), "edit"), topmain);
 	m_mimetype = new TQComboBox(dummy);
 	m_availablemime = new TDEListBox(m_gb1);

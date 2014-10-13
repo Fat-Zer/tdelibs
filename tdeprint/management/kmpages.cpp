@@ -66,7 +66,7 @@ void KMPages::initialize()
 
 	// Instance page
 	KMInstancePage	*instpage = new KMInstancePage(this, "Instance");
-	addTab(instpage, SmallIcon("fileprint"), i18n("Instances"));
+	addTab(instpage, SmallIcon("document-print"), i18n("Instances"));
 	m_pages.append(instpage);
 
 	// initialize pages

@@ -752,11 +752,11 @@ void KURLBar::slotContextMenuRequested( TQListBoxItem *_item, const TQPoint& pos
         popup->insertSeparator();
     }
 
-    popup->insertItem(SmallIconSet("filenew"), i18n("&Add Entry..."), AddItem);
+    popup->insertItem(SmallIconSet("document-new"), i18n("&Add Entry..."), AddItem);
 
     if (item != 0L && item->isPersistent())
     {
-        popup->insertItem( SmallIconSet("editdelete"), i18n("&Remove Entry"),
+        popup->insertItem( SmallIconSet("edit-delete"), i18n("&Remove Entry"),
                           RemoveItem );
     }
 

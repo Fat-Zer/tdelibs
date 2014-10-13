@@ -69,9 +69,9 @@ StatusWindow::StatusWindow(int pid)
 	m_label->setAlignment(AlignCenter);
 	m_button = new KPushButton(KStdGuiItem::close(), this);
 	m_icon = new TQLabel(this);
-	m_icon->setPixmap(DesktopIcon("fileprint"));
+	m_icon->setPixmap(DesktopIcon("document-print"));
 	m_icon->setAlignment(AlignCenter);
-	KWin::setIcons(winId(), *(m_icon->pixmap()), SmallIcon("fileprint"));
+	KWin::setIcons(winId(), *(m_icon->pixmap()), SmallIcon("document-print"));
 	TQGridLayout	*l0 = new TQGridLayout(this, 2, 3, 10, 10);
 	l0->setRowStretch(0, 1);
 	l0->setColStretch(1, 1);

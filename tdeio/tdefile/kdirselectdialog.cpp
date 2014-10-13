@@ -89,7 +89,7 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
                                    bool modal)
     : KDialogBase( parent, name, modal, i18n("Select Folder"),
                    Ok|Cancel|User1, Ok, false,
-                   KGuiItem( i18n("New Folder..."), "folder_new" ) ),
+                   KGuiItem( i18n("New Folder..."), "folder-new" ) ),
       m_localOnly( localOnly )
 {
     d = new KDirSelectDialogPrivate;
@@ -122,7 +122,7 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
              TQT_SLOT( slotComboTextChanged( const TQString& ) ));
 
     m_contextMenu = new TQPopupMenu( this );
-    TDEAction* newFolder = new TDEAction( i18n("New Folder..."), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotMkdir() ), TQT_TQOBJECT(this));
+    TDEAction* newFolder = new TDEAction( i18n("New Folder..."), "folder-new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotMkdir() ), TQT_TQOBJECT(this));
     newFolder->plug(m_contextMenu);
     m_contextMenu->insertSeparator();
     m_showHiddenFolders = new TDEToggleAction ( i18n( "Show Hidden Folders" ), 0, TQT_TQOBJECT(this),

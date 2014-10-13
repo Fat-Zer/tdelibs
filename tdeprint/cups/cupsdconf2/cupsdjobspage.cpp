@@ -33,7 +33,7 @@ CupsdJobsPage::CupsdJobsPage(TQWidget *parent, const char *name)
 {
 	setPageLabel(i18n("Jobs"));
 	setHeader(i18n("Print Jobs Settings"));
-	setPixmap("fileprint");
+	setPixmap("document-print");
 
 	keepjobhistory_ = new TQCheckBox(i18n("Preserve job history"), this);
 	keepjobfiles_ = new TQCheckBox(i18n("Preserve job files"), this);

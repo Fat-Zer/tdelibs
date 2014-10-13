@@ -48,7 +48,7 @@ KMPropBanners::KMPropBanners(TQWidget *parent, const char *name)
 
 	m_title = i18n("Banners");
 	m_header = i18n("Banner Settings");
-	m_pixmap = "editcopy";
+	m_pixmap = "edit-copy";
 }
 
 KMPropBanners::~KMPropBanners()

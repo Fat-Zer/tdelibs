@@ -112,17 +112,17 @@ setAutoSaveSettings();
 
     
     // First four  buttons
-    pix = BarIcon("filenew");
+    pix = BarIcon("document-new");
     itemId = tb->insertButton(pix, 0, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotNew()),
                          true, "Create.. (toggles upper button)", 50);
-    pix = BarIcon("fileopen");
+    pix = BarIcon("document-open");
     tb->insertButton(pix, 1, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotOpen()),
                          false, "Open");
     pix = BarIcon("filefloppy");
     tb->insertButton(pix, 2, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSave()),
                           true, "Save (beep or delayed popup)");
     tb->setDelayedPopup(2, itemsMenu);
-    pix = BarIcon("fileprint");
+    pix = BarIcon("document-print");
     tb->insertButton(pix, 3, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotPrint()),
                          true, "Print (enables/disables open)");
 
@@ -156,12 +156,12 @@ setAutoSaveSettings();
     tb1 = new TDEToolBar(this, TQMainWindow::DockTop); // this one is normal and has separators
 
 
-    pix = BarIcon("filenew");
+    pix = BarIcon("document-new");
     tb1->insertButton(pix, 0, true, "Create new file2 (Toggle)");
     tb1->setToggle(0);
     tb1->addConnection (0, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotToggle(bool)));
 
-    pix = BarIcon("fileopen");
+    pix = BarIcon("document-open");
     tb1->insertButton(pix, 1, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotOpen()),
                           true, "Open (starts progres in sb)");
 
@@ -172,16 +172,16 @@ setAutoSaveSettings();
                       true, "Save file2 (autorepeat)");
     tb1->setAutoRepeat(2);
     
-    pix = BarIcon("fileprint");
+    pix = BarIcon("document-print");
     tb1->insertButton(pix, 3, itemsMenu, true, "Print (pops menu)");
     
     tb1->insertSeparator ();
     /**** RADIO BUTTONS */
-    pix = BarIcon("filenew");
+    pix = BarIcon("document-new");
     tb1->insertButton(pix, 4, true, "Radiobutton1");
     tb1->setToggle(4);
 
-    pix = BarIcon("fileopen");
+    pix = BarIcon("document-open");
     tb1->insertButton(pix, 5, true, "Radiobutton2");
     tb1->setToggle(5);
     
@@ -189,7 +189,7 @@ setAutoSaveSettings();
     tb1->insertButton(pix, 6, true, "Radiobutton3");
     tb1->setToggle(6);
     
-    pix = BarIcon("fileprint");
+    pix = BarIcon("document-print");
     tb1->insertButton(pix, 7, true, "Radiobutton4");
     tb1->setToggle(7);
 

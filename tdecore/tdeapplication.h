@@ -648,7 +648,7 @@ public slots:
    * If the widget with focus provides a clear() slot, call that slot.  Thus for a
    * simple application clear() can be implemented as:
    * \code
-   * new TDEAction( i18n( "Clear" ), "editclear", 0, kapp, TQT_SLOT( clear() ), actionCollection(), "clear" );
+   * new TDEAction( i18n( "Clear" ), "edit-clear", 0, kapp, TQT_SLOT( clear() ), actionCollection(), "clear" );
    * \endcode
    *
    * Note that for some widgets, this may not provide the intended bahavior.  For

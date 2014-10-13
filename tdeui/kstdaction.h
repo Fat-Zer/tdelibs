@@ -50,7 +50,7 @@ class TDEToggleFullScreenAction;
  * for regular actions.  For example, if you previously had:
  *
  * \code
- * TDEAction *newAct = new TDEAction(i18n("&New"), TQIconSet(BarIcon("filenew")),
+ * TDEAction *newAct = new TDEAction(i18n("&New"), TQIconSet(BarIcon("document-new")),
  *                               TDEStdAccel::shortcut(TDEStdAccel::New), this,
  *                               TQT_SLOT(fileNew()), actionCollection());
  * \endcode

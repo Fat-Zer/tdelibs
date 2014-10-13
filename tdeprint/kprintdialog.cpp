@@ -304,7 +304,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	d->m_wizard->setMinimumSize(TQSize(d->m_printers->minimumHeight(),d->m_printers->minimumHeight()));
 	TQToolTip::add(d->m_wizard, i18n("Add printer..."));
 	TQWhatsThis::add(d->m_wizard, whatsThisAddPrinterWizard);
-	d->m_ok = new KPushButton(KGuiItem(i18n("&Print"), "fileprint"), this);
+	d->m_ok = new KPushButton(KGuiItem(i18n("&Print"), "document-print"), this);
         TQWhatsThis::add( d->m_ok, whatsThisPrintButton);
 	d->m_ok->setDefault(true);
 	d->m_ok->setEnabled( false );

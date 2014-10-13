@@ -43,7 +43,7 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 {
 	setPageName(i18n("General"));
 	setPageHeader(i18n("General Settings"));
-	setPagePixmap("fileprint");
+	setPagePixmap("document-print");
 
 	TQGroupBox	*m_timerbox = new TQGroupBox(0, Qt::Vertical, i18n("Refresh Interval"), this);
 	m_timer = new KIntNumInput(m_timerbox,"Timer");

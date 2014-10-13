@@ -28,7 +28,7 @@ DriverItem::DriverItem(TQListView *parent, DrBase *item)
 : TQListViewItem(parent), m_item(item), m_conflict(false)
 {
 	setOpen(depth() < 3);
-	setPixmap(0,SmallIcon("fileprint"));
+	setPixmap(0,SmallIcon("document-print"));
 	updateText();
 }
 

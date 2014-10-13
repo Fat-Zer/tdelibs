@@ -47,7 +47,7 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 	connect(m_cmd, TQT_SIGNAL(activated(int)), TQT_SLOT(slotCommandSelected(int)));
 	TQPushButton	*m_add = new KPushButton(this);
 	TQPushButton	*m_edit = new KPushButton(this);
-	m_add->setPixmap(SmallIcon("filenew"));
+	m_add->setPixmap(SmallIcon("document-new"));
 	m_edit->setPixmap(SmallIcon("configure"));
 	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddCommand()));
 	connect(m_edit, TQT_SIGNAL(clicked()), TQT_SLOT(slotEditCommand()));
@@ -69,7 +69,7 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 	if (canBeNull)
 	{
 		m_line = new TQLineEdit(this);
-		m_browse = new KPushButton(KGuiItem(i18n("&Browse..."), "fileopen"), this);
+		m_browse = new KPushButton(KGuiItem(i18n("&Browse..."), "document-open"), this);
 		m_usefilter = new TQCheckBox(i18n("Use co&mmand:"), this);
 		connect(m_browse, TQT_SIGNAL(clicked()), TQT_SLOT(slotBrowse()));
 		connect(m_usefilter, TQT_SIGNAL(toggled(bool)), m_line, TQT_SLOT(setDisabled(bool)));

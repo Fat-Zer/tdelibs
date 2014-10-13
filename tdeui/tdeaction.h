@@ -133,7 +133,7 @@ class TDEMainWindow;
  *
  * Here is an example of enabling a "New [document]" action
  * \code
- * TDEAction *newAct = new TDEAction(i18n("&New"), "filenew",
+ * TDEAction *newAct = new TDEAction(i18n("&New"), "document-new",
  *                               TDEStdAccel::shortcut(TDEStdAccel::New),
  *                               this, TQT_SLOT(fileNew()),
  *                               actionCollection(), "new");

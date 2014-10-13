@@ -276,7 +276,7 @@ void RMB::fillContextMenu2( TQPopupMenu* contextMenu, const TQString & address, 
     id = contextMenu->insertItem( i18n( "Open Folder in Bookmark Editor" ), recv, TQT_SLOT(slotRMBActionEditAt(int)) );
     contextMenu->setItemParameter( id, val );
     contextMenu->insertSeparator();
-    id = contextMenu->insertItem( SmallIcon("editdelete"), i18n( "Delete Folder" ), recv, TQT_SLOT(slotRMBActionRemove(int)) );
+    id = contextMenu->insertItem( SmallIcon("edit-delete"), i18n( "Delete Folder" ), recv, TQT_SLOT(slotRMBActionRemove(int)) );
     contextMenu->setItemParameter( id, val );
     contextMenu->insertSeparator();
     id = contextMenu->insertItem( i18n( "Properties" ), recv, TQT_SLOT(slotRMBActionProperties(int)) );
@@ -287,7 +287,7 @@ void RMB::fillContextMenu2( TQPopupMenu* contextMenu, const TQString & address, 
     id = contextMenu->insertItem( i18n( "Copy Link Address" ), recv, TQT_SLOT(slotRMBActionCopyLocation(int)) );
     contextMenu->setItemParameter( id, val );
     contextMenu->insertSeparator();
-    id = contextMenu->insertItem( SmallIcon("editdelete"), i18n( "Delete Bookmark" ), recv, TQT_SLOT(slotRMBActionRemove(int)) );
+    id = contextMenu->insertItem( SmallIcon("edit-delete"), i18n( "Delete Bookmark" ), recv, TQT_SLOT(slotRMBActionRemove(int)) );
     contextMenu->setItemParameter( id, val );
     contextMenu->insertSeparator();
     id = contextMenu->insertItem( i18n( "Properties" ), recv, TQT_SLOT(slotRMBActionProperties(int)) );
@@ -541,7 +541,7 @@ void KBookmarkMenu::addNewFolder()
     title.remove( p, 1 );
 
   TDEAction * paNewFolder = new TDEAction( title,
-                                       "folder_new", //"folder",
+                                       "folder-new", //"folder",
                                        0,
                                        this,
                                        TQT_SLOT( slotNewFolder() ),
@@ -828,7 +828,7 @@ KBookmarkEditDialog::KBookmarkEditDialog(const TQString& title, const TQString& 
 {
   setButtonOK( (editType == InsertionMode) ? KGuiItem( i18n( "&Add" ), "bookmark_add") : i18n( "&Update" ) );
   if (editType == InsertionMode) {
-    setButtonGuiItem( User1, KGuiItem( i18n( "&New Folder..." ), "folder_new") );
+    setButtonGuiItem( User1, KGuiItem( i18n( "&New Folder..." ), "folder-new") );
   }
 
   bool folder = url.isNull();

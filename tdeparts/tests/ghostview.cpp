@@ -20,7 +20,7 @@ Shell::Shell()
 {
   setXMLFile( "ghostviewtest_shell.rc" );
 
-  TDEAction * paOpen = new TDEAction( "&Open file" , "fileopen", 0, this,
+  TDEAction * paOpen = new TDEAction( "&Open file" , "document-open", 0, this,
     TQT_SLOT( slotFileOpen() ), actionCollection(), "file_open" );
 
   TDEAction * paQuit = new TDEAction( "&Quit" , "system-log-out", 0, this, TQT_SLOT( close() ), actionCollection(), "file_quit" );
