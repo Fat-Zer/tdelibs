@@ -235,7 +235,7 @@ KGuiItem KStdGuiItem::quit()
 
 KGuiItem KStdGuiItem::reset()
 {
-  return KGuiItem( i18n( "&Reset" ), "undo",
+  return KGuiItem( i18n( "&Reset" ), "edit-undo",
                   i18n( "Reset configuration" ) );
 }
 
@@ -251,7 +251,7 @@ KGuiItem KStdGuiItem::configure()
 
 KGuiItem KStdGuiItem::find()
 {
-  return KGuiItem(i18n("&Find"), "find");
+  return KGuiItem(i18n("&Find"), "edit-find");
 }
 
 KGuiItem KStdGuiItem::stop()

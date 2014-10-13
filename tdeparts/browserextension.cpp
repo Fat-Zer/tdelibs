@@ -483,7 +483,7 @@ void BrowserExtension::pasteRequest()
     {
         if ( KMessageBox::questionYesNo( m_part->widget(),
 		    i18n( "<qt>Do you want to search the Internet for <b>%1</b>?" ).arg( TQStyleSheet::escape(url) ),
-		    i18n( "Internet Search" ), KGuiItem( i18n( "&Search" ), "find"),
+		    i18n( "Internet Search" ), KGuiItem( i18n( "&Search" ), "edit-find"),
 		    KStdGuiItem::cancel(), "MiddleClickSearch" ) == KMessageBox::Yes)
           slotOpenURLRequest( filterData.uri(), KParts::URLArgs() );
     }

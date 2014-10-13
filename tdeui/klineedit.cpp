@@ -866,8 +866,8 @@ TQPopupMenu *KLineEdit::createPopupMenu()
     TQPopupMenu *popup = TQLineEdit::createPopupMenu();
 
       int id = popup->idAt(0);
-      popup->changeItem( id - IdUndo, SmallIconSet("undo"), popup->text( id - IdUndo) );
-      popup->changeItem( id - IdRedo, SmallIconSet("redo"), popup->text( id - IdRedo) );
+      popup->changeItem( id - IdUndo, SmallIconSet("edit-undo"), popup->text( id - IdUndo) );
+      popup->changeItem( id - IdRedo, SmallIconSet("edit-redo"), popup->text( id - IdRedo) );
       popup->changeItem( id - IdCut, SmallIconSet("editcut"), popup->text( id - IdCut) );
       popup->changeItem( id - IdCopy, SmallIconSet("editcopy"), popup->text( id - IdCopy) );
       popup->changeItem( id - IdPaste, SmallIconSet("editpaste"), popup->text( id - IdPaste) );

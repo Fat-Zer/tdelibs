@@ -220,8 +220,8 @@ TQPopupMenu *KTextEdit::createPopupMenu( const TQPoint &pos )
       menu->changeItem( menu->idAt(0), SmallIconSet("editcopy"), menu->text( menu->idAt(0) ) );
     else {
       int id = menu->idAt(0);
-      menu->changeItem( id - IdUndo, SmallIconSet("undo"), menu->text( id - IdUndo) );
-      menu->changeItem( id - IdRedo, SmallIconSet("redo"), menu->text( id - IdRedo) );
+      menu->changeItem( id - IdUndo, SmallIconSet("edit-undo"), menu->text( id - IdUndo) );
+      menu->changeItem( id - IdRedo, SmallIconSet("edit-redo"), menu->text( id - IdRedo) );
       menu->changeItem( id - IdCut, SmallIconSet("editcut"), menu->text( id - IdCut) );
       menu->changeItem( id - IdCopy, SmallIconSet("editcopy"), menu->text( id - IdCopy) );
       menu->changeItem( id - IdPaste, SmallIconSet("editpaste"), menu->text( id - IdPaste) );

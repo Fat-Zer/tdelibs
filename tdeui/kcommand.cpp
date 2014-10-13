@@ -83,7 +83,7 @@ KCommandHistory::KCommandHistory(TDEActionCollection * actionCollection, bool wi
     d=new KCommandHistoryPrivate();
     if (withMenus)
     {
-        TDEToolBarPopupAction * undo = new TDEToolBarPopupAction( i18n("&Undo"), "undo",
+        TDEToolBarPopupAction * undo = new TDEToolBarPopupAction( i18n("&Undo"), "edit-undo",
                                           TDEStdAccel::shortcut(TDEStdAccel::Undo), this, TQT_SLOT( undo() ),
                                           actionCollection, KStdAction::stdName( KStdAction::Undo ) );
         connect( undo->popupMenu(), TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotUndoAboutToShow() ) );
@@ -91,7 +91,7 @@ KCommandHistory::KCommandHistory(TDEActionCollection * actionCollection, bool wi
         m_undo = undo;
         m_undoPopup = undo->popupMenu();
 
-        TDEToolBarPopupAction * redo = new TDEToolBarPopupAction( i18n("&Redo"), "redo",
+        TDEToolBarPopupAction * redo = new TDEToolBarPopupAction( i18n("&Redo"), "edit-redo",
                                           TDEStdAccel::shortcut(TDEStdAccel::Redo), this, TQT_SLOT( redo() ),
                                           actionCollection, KStdAction::stdName( KStdAction::Redo ) );
         connect( redo->popupMenu(), TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotRedoAboutToShow() ) );

@@ -49,8 +49,8 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ Mail,          TDEStdAccel::AccelNone, "file_mail", I18N_NOOP("&Mail..."), 0, "mail_send" },
 	{ Quit,          TDEStdAccel::Quit, "file_quit", I18N_NOOP("&Quit"), 0, "exit" },
 
-	{ Undo,          TDEStdAccel::Undo, "edit_undo", I18N_NOOP("&Undo"), 0, "undo" },
-	{ Redo,          TDEStdAccel::Redo, "edit_redo", I18N_NOOP("Re&do"), 0, "redo" },
+	{ Undo,          TDEStdAccel::Undo, "edit_undo", I18N_NOOP("&Undo"), 0, "edit-undo" },
+	{ Redo,          TDEStdAccel::Redo, "edit_redo", I18N_NOOP("Re&do"), 0, "edit-redo" },
 	{ Cut,           TDEStdAccel::Cut, "edit_cut", I18N_NOOP("Cu&t"), 0, "editcut" },
 	{ Copy,          TDEStdAccel::Copy, "edit_copy", I18N_NOOP("&Copy"), 0, "editcopy" },
 	{ Paste,         TDEStdAccel::Paste, "edit_paste", I18N_NOOP("&Paste"), 0, "editpaste" },
@@ -58,7 +58,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ Clear,         TDEStdAccel::AccelNone, "edit_clear", I18N_NOOP("C&lear"), 0, "editclear" },
 	{ SelectAll,     TDEStdAccel::SelectAll, "edit_select_all", I18N_NOOP("Select &All"), 0, 0 },
 	{ Deselect,      TDEStdAccel::Deselect, "edit_deselect", I18N_NOOP("Dese&lect"), 0, 0 },
-	{ Find,          TDEStdAccel::Find, "edit_find", I18N_NOOP("&Find..."), 0, "find" },
+	{ Find,          TDEStdAccel::Find, "edit_find", I18N_NOOP("&Find..."), 0, "edit-find" },
 	{ FindNext,      TDEStdAccel::FindNext, "edit_find_next", I18N_NOOP("Find &Next"), 0, "go-next" },
 	// FIXME: rename edit_find_last to edit_find_prev for KDE 4
 	{ FindPrev,      TDEStdAccel::FindPrev, "edit_find_last", I18N_NOOP("Find Pre&vious"), 0, "go-previous" },

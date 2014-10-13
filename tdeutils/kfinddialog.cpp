@@ -237,7 +237,7 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
     }
     else
     {
-      setButtonOK(KGuiItem( i18n("&Find"), "find",
+      setButtonOK(KGuiItem( i18n("&Find"), "edit-find",
                     i18n("Start searching"),
                     i18n("<qt>If you press the <b>Find</b> button, the text you entered "
                          "above is searched for within the document.</qt>")));

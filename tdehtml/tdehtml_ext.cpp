@@ -465,7 +465,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
       {
         TQString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
         if ( iconPath.isEmpty() )
-          icon = SmallIcon("find");
+          icon = SmallIcon("edit-find");
         else
           icon = TQPixmap( iconPath );
         name = service->name();
@@ -502,7 +502,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
           {
             TQString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
             if ( iconPath.isEmpty() )
-              icon = SmallIcon("find");
+              icon = SmallIcon("edit-find");
             else
               icon = TQPixmap( iconPath );
             name = service->name();
