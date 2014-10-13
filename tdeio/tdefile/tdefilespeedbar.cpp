@@ -97,7 +97,7 @@ KFileSpeedBar::KFileSpeedBar( TQWidget *parent, const char *name )
 			}
 			// now add in the speedbar
 			if (!download.isEmpty())
-                insertItem( download, i18n( "Download" ), false, "folder_html" );
+                insertItem( download, i18n( "Downloads" ), false, "folder_html" );
 			if (!music.isEmpty())
                 insertItem( music, i18n( "Music" ), false, "folder_sound" );
 			if (!pictures.isEmpty())

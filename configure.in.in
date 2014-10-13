@@ -407,5 +407,5 @@ if test "x$with_utempter" != xno; then
   fi
 fi
 
-KDE_INIT_DOXYGEN([The KDE API Reference], [Version $VERSION])
+KDE_INIT_DOXYGEN([The TDE API Reference], [Version $VERSION])
 KDE_CHECK_BINUTILS
