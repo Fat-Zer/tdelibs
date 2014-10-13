@@ -827,7 +827,7 @@ void KEditToolbarWidget::setupLayout()
   TQIconSet iconSet;
 
   m_upAction     = new TQToolButton(this);
-  iconSet = SmallIconSet( "up" );
+  iconSet = SmallIconSet( "go-up" );
   m_upAction->setIconSet( iconSet );
   m_upAction->setEnabled(false);
   m_upAction->setAutoRepeat(true);
@@ -846,7 +846,7 @@ void KEditToolbarWidget::setupLayout()
   connect(m_removeAction, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveButton()));
 
   m_downAction   = new TQToolButton(this);
-  iconSet = SmallIconSet( "down" );
+  iconSet = SmallIconSet( "go-down" );
   m_downAction->setIconSet( iconSet );
   m_downAction->setEnabled(false);
   m_downAction->setAutoRepeat(true);

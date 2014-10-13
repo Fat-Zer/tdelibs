@@ -74,7 +74,7 @@ static const KStdActionInfo g_rgActionInfo[] =
         // KDE4: give Redisplay the shortcut TDEStdAccel::AccelReload
 	{ Redisplay,     TDEStdAccel::AccelNone, "view_redisplay", I18N_NOOP("&Redisplay"), 0, "reload" },
 
-	{ Up,            TDEStdAccel::Up, "go_up", I18N_NOOP("&Up"), 0, "up" },
+	{ Up,            TDEStdAccel::Up, "go_up", I18N_NOOP("&Up"), 0, "go-up" },
 	// The following three have special i18n() needs for sLabel
 	{ Back,          TDEStdAccel::Back, "go_back", 0, 0, "back" },
 	{ Forward,       TDEStdAccel::Forward, "go_forward", 0, 0, "forward" },

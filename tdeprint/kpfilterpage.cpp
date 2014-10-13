@@ -147,12 +147,12 @@ KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)
 
 	m_up = new TQToolButton(this);
 	  TQWhatsThis::add(m_up, whatsThisMoveFilterUpButton);
-	m_up->setIconSet(BarIconSet("up"));
+	m_up->setIconSet(BarIconSet("go-up"));
 	TQToolTip::add(m_up, i18n("Move filter up"));
 
 	m_down = new TQToolButton(this);
 	  TQWhatsThis::add(m_down, whatsThisMoveFilterDownButton);
-	m_down->setIconSet(BarIconSet("down"));
+	m_down->setIconSet(BarIconSet("go-down"));
 	TQToolTip::add(m_down, i18n("Move filter down"));
 
 	m_configure = new TQToolButton(this);

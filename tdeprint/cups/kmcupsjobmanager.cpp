@@ -359,9 +359,9 @@ TQValueList<TDEAction*> KMCupsJobManager::createPluginActions(TDEActionCollectio
 
 	list <<  (act = new PluginAction(0, i18n("&Job IPP Report"), "tdeprint_report", 0, coll, "plugin_ipp"));
 	act->setGroup("plugin");
-	list << (act = new PluginAction(1, i18n("&Increase Priority"), "up", 0, coll, "plugin_prioup"));
+	list << (act = new PluginAction(1, i18n("&Increase Priority"), "go-up", 0, coll, "plugin_prioup"));
 	act->setGroup("plugin");
-	list << (act = new PluginAction(2, i18n("&Decrease Priority"), "down", 0, coll, "plugin_priodown"));
+	list << (act = new PluginAction(2, i18n("&Decrease Priority"), "go-down", 0, coll, "plugin_priodown"));
 	act->setGroup("plugin");
 	list << (act = new PluginAction(3, i18n("&Edit Attributes..."), "edit", 0, coll, "plugin_editjob"));
 	act->setGroup("plugin");

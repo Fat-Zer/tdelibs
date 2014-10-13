@@ -130,14 +130,14 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 	m_open->setEnabled(false);
 
 	m_up = new TQToolButton(this);
-	m_up->setIconSet(SmallIconSet("up"));
+	m_up->setIconSet(SmallIconSet("go-up"));
 	connect(m_up, TQT_SIGNAL(clicked()), TQT_SLOT(slotUp()));
 	TQToolTip::add(m_up, i18n("Move up"));
 	TQWhatsThis::add(m_up, whatsThisMoveFileUpButton);
 	m_up->setEnabled(false);
 
 	m_down = new TQToolButton(this);
-	m_down->setIconSet(SmallIconSet("down"));
+	m_down->setIconSet(SmallIconSet("go-down"));
 	connect(m_down, TQT_SIGNAL(clicked()), TQT_SLOT(slotDown()));
 	TQToolTip::add(m_down, i18n("Move down"));
 	TQWhatsThis::add(m_down, whatsThisMoveFileDownButton);

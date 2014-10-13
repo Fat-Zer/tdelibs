@@ -97,9 +97,9 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_delopt = new TQToolButton(this);
 	m_delopt->setIconSet(SmallIconSet("editdelete"));
 	m_up = new TQToolButton(this);
-	m_up->setIconSet(SmallIconSet("up"));
+	m_up->setIconSet(SmallIconSet("go-up"));
 	m_down = new TQToolButton(this);
-	m_down->setIconSet(SmallIconSet("down"));
+	m_down->setIconSet(SmallIconSet("go-down"));
 	m_dummy = new TQWidget(this);
 	m_desc = new TQLineEdit(m_dummy);
 	m_name = new TQLineEdit(m_dummy);

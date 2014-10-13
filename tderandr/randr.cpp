@@ -403,11 +403,11 @@ KDE_EXPORT TQPixmap RandRScreen::rotationIcon(int rotation) const
 
 	switch (rotation) {
 		case RR_Rotate_0:
-			return SmallIcon("up");
+			return SmallIcon("go-up");
 		case RR_Rotate_90:
 			return SmallIcon("back");
 		case RR_Rotate_180:
-			return SmallIcon("down");
+			return SmallIcon("go-down");
 		case RR_Rotate_270:
 			return SmallIcon("forward");
 		case RR_Reflect_X:

@@ -54,8 +54,8 @@ TDEActionSelector::TDEActionSelector( TQWidget *parent, const char *name )
   d->iconSize = SmallIcon;
   d->addIcon = TQApplication::reverseLayout()? "back" : "forward";
   d->removeIcon = TQApplication::reverseLayout()? "forward" : "back";
-  d->upIcon = "up";
-  d->downIcon = "down";
+  d->upIcon = "go-up";
+  d->downIcon = "go-down";
   d->availableInsertionPolicy = Sorted;
   d->selectedInsertionPolicy = BelowCurrent;
   d->showUpDownButtons = true;

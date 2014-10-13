@@ -54,8 +54,8 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	m_fontpath->setSorting(-1);
 	m_addpath = new KURLRequester(box2);
 	m_addpath->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
-	m_up = new KPushButton(KGuiItem(i18n("&Up"), "up"), box2);
-	m_down = new KPushButton(KGuiItem(i18n("&Down"), "down"), box2);
+	m_up = new KPushButton(KGuiItem(i18n("&Up"), "go-up"), box2);
+	m_down = new KPushButton(KGuiItem(i18n("&Down"), "go-down"), box2);
 	m_add = new KPushButton(KGuiItem(i18n("&Add"), "add"), box2);
 	m_remove = new KPushButton(KGuiItem(i18n("&Remove"), "editdelete"), box2);
 	TQLabel	*lab0 = new TQLabel(i18n("Additional director&y:"), box2);
