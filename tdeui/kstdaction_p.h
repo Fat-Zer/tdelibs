@@ -90,7 +90,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ AddBookmark,   TDEStdAccel::AddBookmark, "bookmark_add", I18N_NOOP("&Add Bookmark"), 0, "bookmark_add" },
 	{ EditBookmarks, TDEStdAccel::AccelNone, "bookmark_edit", I18N_NOOP("&Edit Bookmarks"), 0, "bookmark" },
 
-	{ Spelling,      TDEStdAccel::AccelNone, "tools_spelling", I18N_NOOP("&Spelling..."), 0, "spellcheck" },
+	{ Spelling,      TDEStdAccel::AccelNone, "tools_spelling", I18N_NOOP("&Spelling..."), 0, "tools-check-spelling" },
 
 	{ ShowMenubar,   TDEStdAccel::ShowMenubar, "options_show_menubar", I18N_NOOP("Show &Menubar"), 0, "showmenu" },
 	{ ShowToolbar,   TDEStdAccel::AccelNone, "options_show_toolbar", I18N_NOOP("Show &Toolbar"), 0, 0 },

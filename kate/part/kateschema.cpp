@@ -1051,10 +1051,10 @@ KateStyleListView::KateStyleListView( TQWidget *parent, bool showUseDefaults )
 {
   setSorting( -1 ); // disable sorting, let the styles appear in their defined order
   addColumn( i18n("Context") );
-  addColumn( SmallIconSet("text_bold"), TQString::null );
-  addColumn( SmallIconSet("text_italic"), TQString::null );
-  addColumn( SmallIconSet("text_under"), TQString::null );
-  addColumn( SmallIconSet("text_strike"), TQString::null );
+  addColumn( SmallIconSet("format-text-bold"), TQString::null );
+  addColumn( SmallIconSet("format-text-italic"), TQString::null );
+  addColumn( SmallIconSet("format-text-underline"), TQString::null );
+  addColumn( SmallIconSet("format-text-strikethrough"), TQString::null );
   addColumn( i18n("Normal") );
   addColumn( i18n("Selected") );
   addColumn( i18n("Background") );

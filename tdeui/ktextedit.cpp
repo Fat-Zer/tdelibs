@@ -228,7 +228,7 @@ TQPopupMenu *KTextEdit::createPopupMenu( const TQPoint &pos )
       menu->changeItem( id - IdClear, SmallIconSet("edit-clear"), menu->text( id - IdClear) );
 
         menu->insertSeparator();
-        id = menu->insertItem( SmallIconSet( "spellcheck" ), i18n( "Check Spelling..." ),
+        id = menu->insertItem( SmallIconSet( "tools-check-spelling" ), i18n( "Check Spelling..." ),
                                    this, TQT_SLOT( checkSpelling() ) );
 
         if( text().isEmpty() )

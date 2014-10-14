@@ -12,7 +12,7 @@ PluginSpellCheck::PluginSpellCheck( TQObject* parent, const char* name,
     : Plugin( parent, name )
 {
     (void) new TDEAction( "&Select current line (plugin)", 0, this, TQT_SLOT(slotSpellCheck()),
-                        actionCollection(), "spellcheck" );
+                        actionCollection(), "tools-check-spelling" );
 }
 
 PluginSpellCheck::~PluginSpellCheck()
