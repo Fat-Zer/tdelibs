@@ -263,7 +263,7 @@ KNotifyWidget::KNotifyWidget( TQWidget *parent, const char *name,
 
     d->toolTip = new KNotifyToolTip( header );
 
-    m_playButton->setIconSet( SmallIconSet( "player_play" ) );
+    m_playButton->setIconSet( SmallIconSet( "media-playback-start" ) );
     connect( m_playButton, TQT_SIGNAL( clicked() ), TQT_SLOT( playSound() ));
 
     connect( m_listview, TQT_SIGNAL( currentChanged( TQListViewItem * ) ),

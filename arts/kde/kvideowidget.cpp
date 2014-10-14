@@ -101,7 +101,7 @@ void KVideoWidget::init(void)
     videoHeight	     = 0;
 
     // Setup actions
-    new TDEToggleAction( i18n("Fullscreen &Mode"), "window_fullscreen",
+    new TDEToggleAction( i18n("Fullscreen &Mode"), "view-fullscreen",
 		       CTRL+SHIFT+Key_F, TQT_TQOBJECT(this), TQT_SLOT(fullscreenActivated()),
 		       actionCollection(), "fullscreen_mode" );
     new TDERadioAction( i18n("&Half Size"), ALT+Key_0,

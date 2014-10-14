@@ -334,10 +334,10 @@ void KateView::setupActions()
   m_deSelect = a=KStdAction::deselect(TQT_TQOBJECT(this), TQT_SLOT(clearSelection()), ac);
   a->setWhatsThis(i18n("If you have selected something within the current document, this will no longer be selected."));
 
-  a=new TDEAction(i18n("Enlarge Font"), "viewmag+", 0, TQT_TQOBJECT(m_viewInternal), TQT_SLOT(slotIncFontSizes()), ac, "incFontSizes");
+  a=new TDEAction(i18n("Enlarge Font"), "zoom-in", 0, TQT_TQOBJECT(m_viewInternal), TQT_SLOT(slotIncFontSizes()), ac, "incFontSizes");
   a->setWhatsThis(i18n("This increases the display font size."));
 
-  a=new TDEAction(i18n("Shrink Font"), "viewmag-", 0, TQT_TQOBJECT(m_viewInternal), TQT_SLOT(slotDecFontSizes()), ac, "decFontSizes");
+  a=new TDEAction(i18n("Shrink Font"), "zoom-out", 0, TQT_TQOBJECT(m_viewInternal), TQT_SLOT(slotDecFontSizes()), ac, "decFontSizes");
   a->setWhatsThis(i18n("This decreases the display font size."));
 
   a= m_toggleBlockSelection = new TDEToggleAction(

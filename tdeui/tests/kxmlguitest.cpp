@@ -47,7 +47,7 @@ int main( int argc, char **argv )
 
     Client *part = new Client;
 
-    (void)new TDEAction( "decfont", "viewmag-", 0, 0, 0, part->actionCollection(), "decFontSizes" );
+    (void)new TDEAction( "decfont", "zoom-out", 0, 0, 0, part->actionCollection(), "decFontSizes" );
     (void)new TDEAction( "sec", "unlock", Qt::ALT + Qt::Key_1, part, TQT_SLOT( slotSec() ), part->actionCollection(), "security" );
 
     part->setXMLFile( "./kxmlguitest_part.rc" );

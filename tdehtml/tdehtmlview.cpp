@@ -1269,7 +1269,7 @@ void TDEHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 
     if ( ( mailtoCursor || newWindowCursor ) && isVisible() && hasFocus() ) {
 #ifdef Q_WS_X11
-        TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( mailtoCursor ? "mail_generic" : "window_new", TDEIcon::Small, 0, TDEIcon::DefaultState, 0, true );
+        TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( mailtoCursor ? "mail_generic" : "window-new", TDEIcon::Small, 0, TDEIcon::DefaultState, 0, true );
 
         if (d->cursor_icon_widget) {
             const TQPixmap *pm = d->cursor_icon_widget->backgroundPixmap();

@@ -140,12 +140,12 @@ TDEPopupMenu *KPixmapRegionSelectorWidget::createPopupMenu()
    TDEPopupMenu *popup=new TDEPopupMenu(this, "PixmapRegionSelectorPopup");
    popup->insertTitle(i18n("Image Operations"));
    
-   TDEAction *action = new TDEAction(i18n("&Rotate Clockwise"), "rotate_cw",
+   TDEAction *action = new TDEAction(i18n("&Rotate Clockwise"), "object-rotate-right",
                                 0, TQT_TQOBJECT(this), TQT_SLOT(rotateClockwise()),
                                 TQT_TQOBJECT(popup), "rotateclockwise");
    action->plug(popup);
 
-   action = new TDEAction(i18n("Rotate &Counterclockwise"), "rotate_ccw",
+   action = new TDEAction(i18n("Rotate &Counterclockwise"), "object-rotate-left",
                                 0, TQT_TQOBJECT(this), TQT_SLOT(rotateCounterclockwise()),
                                 TQT_TQOBJECT(popup), "rotatecounterclockwise");
    action->plug(popup);

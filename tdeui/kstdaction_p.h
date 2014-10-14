@@ -46,7 +46,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ Close,         TDEStdAccel::Close, "file_close", I18N_NOOP("&Close"), 0, "window-close" },
 	{ Print,         TDEStdAccel::Print, "file_print", I18N_NOOP("&Print..."), 0, "document-print" },
 	{ PrintPreview,  TDEStdAccel::AccelNone, "file_print_preview", I18N_NOOP("Print Previe&w..."), 0, "document-print-preview" },
-	{ Mail,          TDEStdAccel::AccelNone, "file_mail", I18N_NOOP("&Mail..."), 0, "mail_send" },
+	{ Mail,          TDEStdAccel::AccelNone, "file_mail", I18N_NOOP("&Mail..."), 0, "mail-send" },
 	{ Quit,          TDEStdAccel::Quit, "file_quit", I18N_NOOP("&Quit"), 0, "exit" },
 
 	{ Undo,          TDEStdAccel::Undo, "edit_undo", I18N_NOOP("&Undo"), 0, "edit-undo" },
@@ -64,12 +64,12 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ FindPrev,      TDEStdAccel::FindPrev, "edit_find_last", I18N_NOOP("Find Pre&vious"), 0, "go-previous" },
 	{ Replace,       TDEStdAccel::Replace, "edit_replace", I18N_NOOP("&Replace..."), 0, 0 },
 
-	{ ActualSize,    TDEStdAccel::AccelNone, "view_actual_size", I18N_NOOP("&Actual Size"), 0, "viewmag1" },
+	{ ActualSize,    TDEStdAccel::AccelNone, "view_actual_size", I18N_NOOP("&Actual Size"), 0, "zoom-original" },
 	{ FitToPage,     TDEStdAccel::AccelNone, "view_fit_to_page", I18N_NOOP("&Fit to Page"), 0, "view_fit_window" },
 	{ FitToWidth,    TDEStdAccel::AccelNone, "view_fit_to_width", I18N_NOOP("Fit to Page &Width"), 0, "view_fit_width" },
 	{ FitToHeight,   TDEStdAccel::AccelNone, "view_fit_to_height", I18N_NOOP("Fit to Page &Height"), 0, "view_fit_height" },
-	{ ZoomIn,        TDEStdAccel::ZoomIn, "view_zoom_in", I18N_NOOP("Zoom &In"), 0, "viewmag+" },
-	{ ZoomOut,       TDEStdAccel::ZoomOut, "view_zoom_out", I18N_NOOP("Zoom &Out"), 0, "viewmag-" },
+	{ ZoomIn,        TDEStdAccel::ZoomIn, "view_zoom_in", I18N_NOOP("Zoom &In"), 0, "zoom-in" },
+	{ ZoomOut,       TDEStdAccel::ZoomOut, "view_zoom_out", I18N_NOOP("Zoom &Out"), 0, "zoom-out" },
 	{ Zoom,          TDEStdAccel::AccelNone, "view_zoom", I18N_NOOP("&Zoom..."), 0, "viewmag" },
         // KDE4: give Redisplay the shortcut TDEStdAccel::AccelReload
 	{ Redisplay,     TDEStdAccel::AccelNone, "view_redisplay", I18N_NOOP("&Redisplay"), 0, "reload" },
@@ -95,7 +95,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ ShowMenubar,   TDEStdAccel::ShowMenubar, "options_show_menubar", I18N_NOOP("Show &Menubar"), 0, "showmenu" },
 	{ ShowToolbar,   TDEStdAccel::AccelNone, "options_show_toolbar", I18N_NOOP("Show &Toolbar"), 0, 0 },
 	{ ShowStatusbar, TDEStdAccel::AccelNone, "options_show_statusbar", I18N_NOOP("Show St&atusbar"), 0, 0 },
-	{ FullScreen,    TDEStdAccel::FullScreen, "fullscreen", I18N_NOOP("F&ull Screen Mode"), 0, "window_fullscreen" },
+	{ FullScreen,    TDEStdAccel::FullScreen, "fullscreen", I18N_NOOP("F&ull Screen Mode"), 0, "view-fullscreen" },
 	{ SaveOptions,   TDEStdAccel::AccelNone, "options_save_options", I18N_NOOP("&Save Settings"), 0, 0 },
 	{ KeyBindings,   TDEStdAccel::AccelNone, "options_configure_keybinding", I18N_NOOP("Configure S&hortcuts..."), 0,"configure_shortcuts" },
 	{ Preferences,   TDEStdAccel::AccelNone, "options_configure", I18N_NOOP("&Configure %1..."), 0, "configure" },

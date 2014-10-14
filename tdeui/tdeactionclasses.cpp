@@ -2091,12 +2091,12 @@ void TDEToggleFullScreenAction::setChecked( bool c )
   if (c)
   {
      setText(i18n("Exit F&ull Screen Mode"));
-     setIcon("window_nofullscreen");
+     setIcon("view-restore");
   }
   else
   {
      setText(i18n("F&ull Screen Mode"));
-     setIcon("window_fullscreen");
+     setIcon("view-fullscreen");
   }
   TDEToggleAction::setChecked( c );
 }

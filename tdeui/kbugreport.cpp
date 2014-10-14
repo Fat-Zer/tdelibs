@@ -133,7 +133,7 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const TDEAboutData *abou
     glay->addWidget( tmpLabel, row, 1 );
     TQWhatsThis::add( tmpLabel, qwtstr );
 
-    setButtonOK( KGuiItem( i18n("&Send"), "mail_send", i18n( "Send bug report." ),
+    setButtonOK( KGuiItem( i18n("&Send"), "mail-send", i18n( "Send bug report." ),
                     i18n( "Send this bug report to %1." ).arg( m_aboutData->bugAddress() ) ) );
 
   }

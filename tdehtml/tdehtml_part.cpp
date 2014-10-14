@@ -358,13 +358,13 @@ void TDEHTMLPart::init( TDEHTMLView *view, GUIProfile prof )
 
   if ( prof == BrowserViewGUI ) {
       d->m_paIncZoomFactor = new TDEHTMLZoomFactorAction( this, true, i18n(
-                  "Enlarge Font" ), "viewmag+", "CTRL++;CTRL+=", this,
+                  "Enlarge Font" ), "zoom-in", "CTRL++;CTRL+=", this,
               TQT_SLOT( slotIncZoomFast() ), actionCollection(), "incFontSizes" );
       d->m_paIncZoomFactor->setWhatsThis( i18n( "Enlarge Font<p>"
                                                 "Make the font in this window bigger. "
                             "Click and hold down the mouse button for a menu with all available font sizes." ) );
       d->m_paDecZoomFactor = new TDEHTMLZoomFactorAction( this, false, i18n(
-                  "Shrink Font" ), "viewmag-", CTRL + Key_Minus, this,
+                  "Shrink Font" ), "zoom-out", CTRL + Key_Minus, this,
               TQT_SLOT( slotDecZoomFast() ), actionCollection(), "decFontSizes" );
       d->m_paDecZoomFactor->setWhatsThis( i18n( "Shrink Font<p>"
                                                 "Make the font in this window smaller. "

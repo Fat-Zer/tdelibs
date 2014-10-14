@@ -515,7 +515,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
 
 
       if ( selectedText.contains("://") && KURL(selectedText).isValid() )
-         new TDEAction( i18n( "Open '%1'" ).arg( selectedText ), "window_new", 0,
+         new TDEAction( i18n( "Open '%1'" ).arg( selectedText ), "window-new", 0,
          d->m_tdehtml->browserExtension(), TQT_SLOT( openSelection() ), actionCollection(), "openSelection" );
   }
   else if ( url.isEmpty() && !isImage )
@@ -547,7 +547,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
   {
     if ( tdehtml->parentPart() )
     {
-      new TDEAction( i18n( "Open in New &Window" ), "window_new", 0, this, TQT_SLOT( slotFrameInWindow() ),
+      new TDEAction( i18n( "Open in New &Window" ), "window-new", 0, this, TQT_SLOT( slotFrameInWindow() ),
                                           actionCollection(), "frameinwindow" );
       new TDEAction( i18n( "Open in &This Window" ), 0, this, TQT_SLOT( slotFrameInTop() ),
                                           actionCollection(), "frameintop" );
