@@ -272,8 +272,8 @@ void KMJobViewer::initActions()
 	TDEToggleAction	*tact = new TDEToggleAction(i18n("&Toggle Completed Jobs"),"history",0,actionCollection(),"view_completed");
 	tact->setEnabled(m_manager->actions() & KMJob::ShowCompleted);
 	connect(tact,TQT_SIGNAL(toggled(bool)),TQT_SLOT(slotShowCompleted(bool)));
-	TDEToggleAction	*uact = new TDEToggleAction(i18n("Show Only User Jobs"), "personal", 0, actionCollection(), "view_user_jobs");
-	uact->setCheckedState(KGuiItem(i18n("Hide Only User Jobs"),"personal"));
+	TDEToggleAction	*uact = new TDEToggleAction(i18n("Show Only User Jobs"), "preferences-desktop-personal", 0, actionCollection(), "view_user_jobs");
+	uact->setCheckedState(KGuiItem(i18n("Hide Only User Jobs"),"preferences-desktop-personal"));
 	connect(uact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotUserOnly(bool)));
 	m_userfield = new TQLineEdit(0);
 	m_userfield->setText(getenv("USER"));

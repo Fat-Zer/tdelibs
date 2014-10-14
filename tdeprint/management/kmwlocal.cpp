@@ -59,7 +59,7 @@ KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 	m_parents[2] = new TQListViewItem(root, m_parents[1], i18n("USB"));
 	m_parents[3] = new TQListViewItem(root, m_parents[2], i18n("Others"));
 	for (int i=0;i<4;i++)
-		m_parents[i]->setPixmap(0, SmallIcon("input_devices_settings"));
+		m_parents[i]->setPixmap(0, SmallIcon("preferences-desktop-peripherals"));
 	TQLabel	*l2 = new TQLabel(i18n("<p>Select a valid detected port, or enter directly the corresponding URI in the bottom edit field.</p>"), this);
 
 	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);

@@ -4115,10 +4115,10 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::I2C) {
-		ret = DesktopIcon("input_devices_settings", size);
+		ret = DesktopIcon("preferences-desktop-peripherals", size);
 	}
 	else if (query == TDEGenericDeviceType::MDIO) {
-		ret = DesktopIcon("input_devices_settings", size);
+		ret = DesktopIcon("preferences-desktop-peripherals", size);
 	}
 	else if (query == TDEGenericDeviceType::Mainboard) {
 		ret = DesktopIcon("kcmpci", size);	// FIXME
@@ -4172,10 +4172,10 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("camera-photo", size);
 	}
 	else if (query == TDEGenericDeviceType::Serial) {
-		ret = DesktopIcon("input_devices_settings", size);
+		ret = DesktopIcon("preferences-desktop-peripherals", size);
 	}
 	else if (query == TDEGenericDeviceType::Parallel) {
-		ret = DesktopIcon("input_devices_settings", size);
+		ret = DesktopIcon("preferences-desktop-peripherals", size);
 	}
 	else if (query == TDEGenericDeviceType::TextIO) {
 		ret = DesktopIcon("chardevice", size);
@@ -4208,19 +4208,19 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Platform) {
-		ret = DesktopIcon("kcmsystem", size);
+		ret = DesktopIcon("preferences-system", size);
 	}
 	else if (query == TDEGenericDeviceType::Cryptography) {
 		ret = DesktopIcon("password", size);
 	}
 	else if (query == TDEGenericDeviceType::Event) {
-		ret = DesktopIcon("kcmsystem", size);
+		ret = DesktopIcon("preferences-system", size);
 	}
 	else if (query == TDEGenericDeviceType::Input) {
-		ret = DesktopIcon("kcmsystem", size);
+		ret = DesktopIcon("preferences-system", size);
 	}
 	else if (query == TDEGenericDeviceType::PNP) {
-		ret = DesktopIcon("kcmsystem", size);
+		ret = DesktopIcon("preferences-system", size);
 	}
 	else if (query == TDEGenericDeviceType::OtherACPI) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
@@ -4238,7 +4238,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::OtherVirtual) {
-		ret = DesktopIcon("kcmsystem", size);
+		ret = DesktopIcon("preferences-system", size);
 	}
 	else {
 		ret = DesktopIcon("hwinfo", size);

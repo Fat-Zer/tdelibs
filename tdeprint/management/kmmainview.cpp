@@ -227,7 +227,7 @@ void KMMainView::initActions()
 	tact->setChecked(KMManager::self()->isFilterEnabled());
 	connect(tact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotToggleFilter(bool)));
 
-	TDEActionMenu	*mact = new TDEActionMenu(i18n("Pri&nter Tools"), "package_utilities", m_actions, "printer_tool");
+	TDEActionMenu	*mact = new TDEActionMenu(i18n("Pri&nter Tools"), "applications-utilities", m_actions, "printer_tool");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(), TQT_SIGNAL(activated(int)), TQT_SLOT(slotToolSelected(int)));
 	TQStringList	files = TDEGlobal::dirs()->findAllResources("data", "tdeprint/tools/*.desktop");
