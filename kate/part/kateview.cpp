@@ -241,10 +241,10 @@ void KateView::setupActions()
     " when the view is resized."));
 
     // setup Tools menu
-    a=new TDEAction(i18n("&Indent"), "indent", Qt::CTRL+Qt::Key_I, TQT_TQOBJECT(this), TQT_SLOT(indent()), ac, "tools_indent");
+    a=new TDEAction(i18n("&Indent"), "format-indent-more", Qt::CTRL+Qt::Key_I, TQT_TQOBJECT(this), TQT_SLOT(indent()), ac, "tools_indent");
     a->setWhatsThis(i18n("Use this to indent a selected block of text.<br><br>"
         "You can configure whether tabs should be honored and used or replaced with spaces, in the configuration dialog."));
-    a=new TDEAction(i18n("&Unindent"), "unindent", Qt::CTRL+Qt::SHIFT+Qt::Key_I, TQT_TQOBJECT(this), TQT_SLOT(unIndent()), ac, "tools_unindent");
+    a=new TDEAction(i18n("&Unindent"), "format-indent-less", Qt::CTRL+Qt::SHIFT+Qt::Key_I, TQT_TQOBJECT(this), TQT_SLOT(unIndent()), ac, "tools_unindent");
     a->setWhatsThis(i18n("Use this to unindent a selected block of text."));
 
     a=new TDEAction(i18n("&Clean Indentation"), 0, TQT_TQOBJECT(this), TQT_SLOT(cleanIndent()), ac, "tools_cleanIndent");
