@@ -490,7 +490,7 @@ TDEIcon TDEIconLoader::findMatchingIcon(const TQString& name, int size) const
 	for (int i = 0 ; i < count ; i++)
 	{
 	    icon = themeNode->theme->iconPath(name + *ext[i], size, TDEIcon::MatchBest);
-	    if (icon.isValid()) goto icon_found;	
+	    if (icon.isValid()) goto icon_found;
 	}
     }
     icon_found:
