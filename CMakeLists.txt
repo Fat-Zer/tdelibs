@@ -52,7 +52,7 @@ list( APPEND TDECORE_LIBRARY_DIRS ${TQT_LIBRARY_DIRS} )
 ##### add apidox targets ############
 
 add_custom_target(apidox
-  COMMAND "./generate_apidox" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${HTML_INSTALL_DIR}" "/usr/share/qt3/doc/html"
+  COMMAND "./generate_apidox" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${HTML_INSTALL_DIR}" "/usr/share/tqt3/doc/html"
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/cmake/")
 
 add_custom_target(install-apidox
