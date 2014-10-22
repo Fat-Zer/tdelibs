@@ -32,7 +32,7 @@ KMConfigJobs::KMConfigJobs(TQWidget *parent, const char *name)
 {
 	setPageName(i18n("Jobs"));
 	setPageHeader(i18n("Print Job Settings"));
-	setPagePixmap("exec");
+	setPagePixmap("application-x-executable");
 
 	TQGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Jobs Shown"), this);
 

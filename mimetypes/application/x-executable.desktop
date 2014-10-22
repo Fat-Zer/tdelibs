@@ -81,6 +81,6 @@ Comment[zh_CN]=可执行文件
 Comment[zh_HK]=可執行檔
 Comment[zh_TW]=可執行檔
 Comment[zu]=Ifayela Eliphumelelisekayo
-Icon=exec
+Icon=application-x-executable
 Type=MimeType
 MimeType=application/x-executable

@@ -237,7 +237,7 @@ KNotifyWidget::KNotifyWidget( TQWidget *parent, const char *name,
     m_listview->setFullWidth( true );
     m_listview->setAllColumnsShowFocus( true );
 
-    TQPixmap pexec = SmallIcon("exec");
+    TQPixmap pexec = SmallIcon("application-x-executable");
     TQPixmap pstderr = SmallIcon("terminal");
     TQPixmap pmessage = SmallIcon("application-vnd.tde.info");
     TQPixmap plogfile = SmallIcon("text-x-log");

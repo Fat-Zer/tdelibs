@@ -32,7 +32,7 @@ KMConfigCommand::KMConfigCommand(TQWidget *parent, const char *name)
 {
 	setPageName(i18n("Commands"));
 	setPageHeader(i18n("Command Settings"));
-	setPagePixmap("exec");
+	setPagePixmap("application-x-executable");
 
 	TQGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Edit/Create Commands"), this);
 	TQLabel	*lab = new TQLabel(i18n(

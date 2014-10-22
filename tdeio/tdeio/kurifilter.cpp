@@ -191,7 +191,7 @@ TQString KURIFilterData::iconName()
                 }
                 else {
                     // use default
-                    m_strIconName = TQString::fromLatin1("exec");
+                    m_strIconName = TQString::fromLatin1("application-x-executable");
                 }
 #else // HAVE_ELFICON
 		// Try to find an icon with the same name as the binary (useful for non-tde apps)
@@ -205,7 +205,7 @@ TQString KURIFilterData::iconName()
 		}
 		else {
 			// use default
-			m_strIconName = TQString::fromLatin1("exec");
+			m_strIconName = TQString::fromLatin1("application-x-executable");
 		}
 		// Try to load from elf file (if supported)
 		// Check for an embedded icon

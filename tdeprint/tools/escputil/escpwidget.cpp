@@ -72,15 +72,15 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 	connect(&m_proc, TQT_SIGNAL(receivedStderr(TDEProcess*,char*,int)), TQT_SLOT(slotReceivedStderr(TDEProcess*,char*,int)));
 
 	TQPushButton	*cleanbtn = new TQPushButton(this, "-c");
-	cleanbtn->setPixmap(DesktopIcon("exec"));
+	cleanbtn->setPixmap(DesktopIcon("application-x-executable"));
 	TQPushButton	*nozzlebtn = new TQPushButton(this, "-n");
-	nozzlebtn->setPixmap(DesktopIcon("exec"));
+	nozzlebtn->setPixmap(DesktopIcon("application-x-executable"));
 	TQPushButton	*alignbtn = new TQPushButton(this, "-a");
-	alignbtn->setPixmap(DesktopIcon("exec"));
+	alignbtn->setPixmap(DesktopIcon("application-x-executable"));
 	TQPushButton	*inkbtn = new TQPushButton(this, "-i");
 	inkbtn->setPixmap(DesktopIcon("tdeprint_inklevel"));
 	TQPushButton	*identbtn = new TQPushButton(this, "-d");
-	identbtn->setPixmap(DesktopIcon("exec"));
+	identbtn->setPixmap(DesktopIcon("application-x-executable"));
 
 	TQFont	f(font());
 	f.setBold(true);
