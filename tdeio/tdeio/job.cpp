@@ -3439,7 +3439,7 @@ void CopyJob::copyNextFile()
                            else if ( protocol == TQString::fromLatin1("http") )
                                config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("www") );
                            else if ( protocol == TQString::fromLatin1("info") )
-                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("info") );
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("application-vnd.tde.info") );
                            else if ( protocol == TQString::fromLatin1("mailto") )   // sven:
                                config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("kmail") ); // added mailto: support
                            else

@@ -752,7 +752,7 @@ TQPixmap KDEDesktopMimeType::pixmap( const KURL& _url, TDEIcon::Group _group, in
   TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( _icon, _group,
         _force_size, _state, _path, false );
   if ( pix.isNull() )
-      pix = TDEGlobal::iconLoader()->loadIcon( ""text-x-katefilelist", _group,
+      pix = TDEGlobal::iconLoader()->loadIcon( "unknown", _group,
         _force_size, _state, _path, false );
   return pix;
 }
