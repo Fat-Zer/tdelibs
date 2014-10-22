@@ -226,7 +226,7 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, TQPixmap pixmap, const
 			connect( btn, TQT_SIGNAL( clicked() ), this, TQT_SLOT( changeOverlapMode() ) );
 		}
 
-		m_tb->appendTab( pixmap.isNull() ? SmallIcon( "misc" ) : pixmap, tab, w->tabPageLabel() );
+		m_tb->appendTab( pixmap.isNull() ? SmallIcon( "application-vnd.tde.misc" ) : pixmap, tab, w->tabPageLabel() );
 		m_tb->tab( tab )->installEventFilter( this );
 		kdDebug( 760 ) << k_funcinfo << "Added tab with label " << w->tabPageLabel() <<
 			" to the tabbar" << endl;
@@ -509,7 +509,7 @@ void KMdiDockContainer::setPixmap( KDockWidget* widget , const TQPixmap& pixmap 
 	if ( id == -1 )
 		return ;
 	KMultiTabBarTab *tab = m_tb->tab( id );
-	tab->setIcon( pixmap.isNull() ? SmallIcon( "misc" ) : pixmap );
+	tab->setIcon( pixmap.isNull() ? SmallIcon( "application-vnd.tde.misc" ) : pixmap );
 }
 
 void KMdiDockContainer::save( TQDomElement& dockEl )

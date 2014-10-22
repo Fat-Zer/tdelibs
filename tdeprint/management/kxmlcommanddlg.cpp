@@ -93,7 +93,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_addgrp = new TQToolButton(this);
 	m_addgrp->setIconSet(SmallIconSet("folder"));
 	m_addopt = new TQToolButton(this);
-	m_addopt->setIconSet(SmallIconSet("document"));
+	m_addopt->setIconSet(SmallIconSet("text-x-generic"));
 	m_delopt = new TQToolButton(this);
 	m_delopt->setIconSet(SmallIconSet("edit-delete"));
 	m_up = new TQToolButton(this);
@@ -424,7 +424,7 @@ void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, TQListViewItem *parent
 		}
 		oit.current()->setName(namestr);
 		item = new TQListViewItem(parent, item, oit.current()->get("text"), namestr);
-		item->setPixmap(0, SmallIcon("document"));
+		item->setPixmap(0, SmallIcon("text-x-generic"));
 		item->setRenameEnabled(0, true);
 		m_opts[namestr] = oit.current();
 	}
@@ -670,7 +670,7 @@ void KXmlCommandAdvancedDlg::slotAddOption()
 
 		TQListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Option"), ID);
 		item->setRenameEnabled(0, true);
-		item->setPixmap(0, SmallIcon("document"));
+		item->setPixmap(0, SmallIcon("text-x-generic"));
 		m_view->ensureItemVisible(item);
 		item->startRename(0);
 	}

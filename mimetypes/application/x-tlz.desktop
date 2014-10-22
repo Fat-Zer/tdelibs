@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-tlz
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.tar.lzma;*.tlz;*.tar.lz
 Comment=LZMA Tar Archive
 Comment[af]=LZMA gekompakteerde Tar Argief

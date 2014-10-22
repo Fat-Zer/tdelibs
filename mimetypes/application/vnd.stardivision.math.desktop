@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.stardivision.math
 Patterns=*.sdf;*.SDF;
-Icon=kformula_kfo
+Icon=application-x-kformula
 Comment=StarOffice Math Document
 Comment[af]=StarOffice Wiskunde Dokument
 Comment[be]=Формула StarOffice Math

@@ -84,5 +84,5 @@ Comment[zh_CN]=AbiWord 文档
 Comment[zh_HK]=AbiWord 文件
 Comment[zh_TW]=AbiWord 文件
 Comment[zu]=Uhlu lwamafayela e-AbiWord
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.abw;*.ABW;*.abw.gz;*.zabw;*.abw.bz2;*.bzabw;*.awt

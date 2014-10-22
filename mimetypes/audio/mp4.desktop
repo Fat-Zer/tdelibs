@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/mp4
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.m4a;*.M4A;
 Comment=MPEG-4 Audio
 Comment[af]=MPEG-4 Klank

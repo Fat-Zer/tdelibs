@@ -2,7 +2,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=video/avi
-Icon=video
+Icon=video-x-generic
 X-TDE-IsAlso=video/x-msvideo
 Comment=Microsoft AVI Video
 Comment[af]=Microsoft Avi Video

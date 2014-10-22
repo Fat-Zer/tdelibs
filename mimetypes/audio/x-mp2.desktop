@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-mp2
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.mp2;*.MP2;
 X-TDE-IsAlso=audio/mpeg
 Comment=MPEG Layer 2 Audio

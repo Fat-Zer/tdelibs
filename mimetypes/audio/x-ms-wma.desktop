@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-ms-wma
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.wma;*.WMA
 Comment=Windows Media Audio
 Comment[af]=Windows Media Klank

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-python-bytecode
-Icon=binary
+Icon=application-octet-stream
 Patterns=*.pyc;
 Comment=Python Bytecode
 Comment[af]=Python Bytekode

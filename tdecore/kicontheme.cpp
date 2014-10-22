@@ -156,7 +156,7 @@ TDEIconTheme::TDEIconTheme(const TQString& name, const TQString& appName)
     d->screenshot = cfg.readPathEntry("ScreenShot");
     d->linkOverlay = cfg.readEntry("LinkOverlay", "link");
     d->lockOverlay = cfg.readEntry("LockOverlay", "lock");
-    d->zipOverlay = cfg.readEntry("ZipOverlay", "zip");
+    d->zipOverlay = cfg.readEntry("ZipOverlay", "application-vnd.tde.overlay.zip");
     d->shareOverlay = cfg.readEntry("ShareOverlay","share");
 
     TQStringList dirs = cfg.readPathListEntry("Directories");

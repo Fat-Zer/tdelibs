@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.spreadsheet-template
 Patterns=*.ots;*.OTS
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Comment=OASIS OpenDocument SpreadSheet Template
 Comment[af]=OASIS Oop Dokument Spreiblad Voorbeeld
 Comment[be]=Шаблон разліковага аркуша OASIS OpenDocument

@@ -1923,10 +1923,10 @@ void KMdiMainFrm::findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDock
 
 void KMdiMainFrm::setupToolViewsForIDEALMode()
 {
-	m_leftContainer = createDockWidget( "KMdiDock::leftDock", SmallIcon( "misc" ), 0L, "Left Dock" );
-	m_rightContainer = createDockWidget( "KMdiDock::rightDock", SmallIcon( "misc" ), 0L, "Right Dock" );
-	m_topContainer = createDockWidget( "KMdiDock::topDock", SmallIcon( "misc" ), 0L, "Top Dock" );
-	m_bottomContainer = createDockWidget( "KMdiDock::bottomDock", SmallIcon( "misc" ), 0L, "Bottom Dock" );
+	m_leftContainer = createDockWidget( "KMdiDock::leftDock", SmallIcon( "application-vnd.tde.misc" ), 0L, "Left Dock" );
+	m_rightContainer = createDockWidget( "KMdiDock::rightDock", SmallIcon( "application-vnd.tde.misc" ), 0L, "Right Dock" );
+	m_topContainer = createDockWidget( "KMdiDock::topDock", SmallIcon( "application-vnd.tde.misc" ), 0L, "Top Dock" );
+	m_bottomContainer = createDockWidget( "KMdiDock::bottomDock", SmallIcon( "application-vnd.tde.misc" ), 0L, "Bottom Dock" );
 
 	KDockWidget *mainDock = getMainDockWidget();
 	KDockWidget *w = mainDock;

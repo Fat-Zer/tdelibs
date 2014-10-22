@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-kformula
-Icon=kformula_kfo
+Icon=application-x-kformula
 Patterns=*.kfo;
 Comment=KFormula Document
 Comment[af]=KFormula Dokument

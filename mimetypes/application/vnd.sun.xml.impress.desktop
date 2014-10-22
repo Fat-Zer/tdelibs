@@ -77,7 +77,7 @@ Comment[zh_HK]=OpenOffice.org 簡報
 Comment[zh_TW]=OpenOffice.org 簡報
 MimeType=application/vnd.sun.xml.impress
 Type=MimeType
-Icon=presentation
+Icon=application-vnd.oasis.opendocument.presentation
 Patterns=*.sxi;*.SXI;
 [Property::X-TDE-NativeExtension]
 Type=TQString

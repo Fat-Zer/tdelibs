@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-object
-Icon=binary
+Icon=application-octet-stream
 Patterns=*.o;
 Comment=Object Code
 Comment[af]=Voorwerp Kode

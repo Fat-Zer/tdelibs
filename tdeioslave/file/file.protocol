@@ -13,4 +13,4 @@ moving=true
 maxInstances=4
 DocPath=tdeioslave/file/index.html
 Class=:local
-Icon=document-new
+Icon=text-x-text-x-generic-new

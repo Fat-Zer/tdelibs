@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-quattropro
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Patterns=*.wb1;*.WB1;*.wb2;*.WB2;*.wb3;*.WB3;
 Comment=Quattro Pro Document
 Comment[af]=Quattro Pro Dokument

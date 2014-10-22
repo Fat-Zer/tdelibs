@@ -826,7 +826,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       if ( (*it)->mode() != mode )
         mode = (mode_t)0;
       if ( KMimeType::iconForURL(url, mode) != iconStr )
-        iconStr = "tdemultiple";
+        iconStr = "application-vnd.tde.tdemultiple";
       if ( url.directory() != directory )
         directory = TQString::null;
       if ( url.protocol() != protocol )

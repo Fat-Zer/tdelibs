@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-applixspread
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Patterns=*.as
 Comment=Applix Spreadsheets Document
 Comment[af]=Applix Spreiblad Dokument

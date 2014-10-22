@@ -76,7 +76,7 @@ Comment[wa]=Documint XML
 Comment[zh_CN]=XML 文档
 Comment[zh_HK]=XML 文件
 Comment[zh_TW]=XML 文件
-Icon=html
+Icon=text-x-text-html
 Type=MimeType
 MimeType=application/xml
 # This mimetype is an alias for text/xml. Both are referenced by the W3C.

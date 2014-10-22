@@ -81,5 +81,5 @@ Comment[zh_HK]=AIFF/Amiga 音效檔
 Comment[zh_TW]=AIFF/Amiga 聲音文件
 Comment[zu]=Okuzwakalayo kwe-AIFF/Amiga
 MimeType=audio/x-aiff
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.aiff;*.AIFF

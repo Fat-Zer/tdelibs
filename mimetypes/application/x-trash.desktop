@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-trash
-Icon=recycled
+Icon=application-x-trash
 Patterns=*~;*%;*.bak;*.old;*.sik;
 Comment=Backup File
 Comment[af]=Rugsteun Lêer

@@ -36,7 +36,7 @@ DriverItem::DriverItem(TQListViewItem *parent, TQListViewItem *after, DrBase *it
 : TQListViewItem(parent, after), m_item(item), m_conflict(false)
 {
 	setOpen(depth() < 3);
-	if (item) setPixmap(0,SmallIcon((item->isOption() ? "document" : "folder")));
+	if (item) setPixmap(0,SmallIcon((item->isOption() ? "text-x-generic" : "folder")));
 	updateText();
 }
 

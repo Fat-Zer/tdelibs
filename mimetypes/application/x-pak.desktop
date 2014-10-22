@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-pak
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.pak;*.PAK;
 Comment=PAK File Archive
 Comment[af]=PAK Argief

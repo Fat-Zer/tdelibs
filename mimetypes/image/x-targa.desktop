@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/x-targa
-Icon=image
+Icon=image-x-generic
 Patterns=*.tga;*.TGA;
 Comment=Truevision Targa Image
 Comment[af]=Truevision Targa Beeld

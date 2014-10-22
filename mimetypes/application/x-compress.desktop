@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-compress
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.Z;
 Comment=UNIX Compressed File
 Comment[af]=Unix Saamgepersde Lêer

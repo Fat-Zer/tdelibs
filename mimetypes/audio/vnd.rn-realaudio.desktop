@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/vnd.rn-realaudio
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.ra;*.ram;*.RA;*.RAM;
 X-TDE-IsAlso=audio/x-pn-realaudio
 Comment=RealAudio File

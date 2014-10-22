@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=video/vnd.rn-realvideo
-Icon=video
+Icon=video-x-generic
 Patterns=*.rv;*.RV;
 Comment=RealVideo File
 Comment[af]=RealVideo Lêer

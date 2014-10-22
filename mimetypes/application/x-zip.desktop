@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-zip
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.zip;*.ZIP;
 Comment=Zip Archive
 Comment[af]=Zip Argief

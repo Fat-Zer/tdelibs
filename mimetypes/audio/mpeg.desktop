@@ -4,7 +4,7 @@
 # See also audio/x-mp3 and audio/x-mp2
 Type=MimeType
 MimeType=audio/mpeg
-Icon=sound
+Icon=audio-x-generic
 Comment=MPEG Audio
 Comment[af]=MPEG Klank
 Comment[be]=Гукавы файл MPEG

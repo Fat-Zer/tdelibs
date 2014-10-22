@@ -78,5 +78,5 @@ Comment[zh_HK]=CD 音效
 Comment[zh_TW]=CD 音效
 Comment[zu]=Umsindo we-CD
 MimeType=application/x-cda
-Icon=cdtrack
+Icon=application-x-cda
 Patterns=*.cda;*.CDA

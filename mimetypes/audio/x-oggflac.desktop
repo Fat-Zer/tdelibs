@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-oggflac
-Icon=sound
+Icon=audio-x-generic
 X-TDE-IsAlso=application/ogg
 Comment=Ogg FLAC Audio
 Comment[af]=Ogg FLAC Klank

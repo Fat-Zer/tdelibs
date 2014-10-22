@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-cpio
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.cpio;
 Comment=CPIO Archive
 Comment[af]=Cpio Argief

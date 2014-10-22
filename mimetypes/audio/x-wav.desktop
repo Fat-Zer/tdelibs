@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-wav
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.wav;*.WAV;
 Comment=WAV Audio
 Comment[af]=Wav Audio

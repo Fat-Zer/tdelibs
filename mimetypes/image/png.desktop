@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/png
-Icon=image
+Icon=image-x-generic
 Patterns=*.png;*.PNG;
 Comment=PNG Image
 Comment[af]=Png Beeld

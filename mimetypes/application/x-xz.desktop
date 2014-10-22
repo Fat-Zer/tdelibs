@@ -83,6 +83,6 @@ Comment[zh_CN]=Xzip 文件
 Comment[zh_HK]=Xzip 檔案
 Comment[zh_TW]=Xzip 檔案
 Comment[zu]=Ifayela le-Xzip
-Icon=tgz
+Icon=application-x-tarz
 Type=MimeType
 Patterns=*.xz;

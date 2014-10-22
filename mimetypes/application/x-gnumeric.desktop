@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-gnumeric
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Patterns=*.gnumeric;*.GNUMERIC;
 Comment=GNUmeric Spreadsheet
 Comment[af]=Gnumeric Spreiblad

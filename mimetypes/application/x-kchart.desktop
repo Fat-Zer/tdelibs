@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-kchart
-Icon=kchart_chrt
+Icon=application-x-kchart
 Patterns=*.chrt;
 Comment=KChart Document
 Comment[af]=Kchart Dokument

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-linguist
-Icon=gettext
+Icon=application-x-gettext
 Patterns=*.ts;
 Comment=Qt Translation Source File
 Comment[af]=Qt Vertaal Bronlêer

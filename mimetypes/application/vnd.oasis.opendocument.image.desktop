@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.image
 Patterns=*.odi;*.ODI
-Icon=krita_kra
+Icon=application-x-krita
 Comment=OASIS OpenDocument Image
 Comment[af]=OASIS oop Dokument beeld
 Comment[be]=Рысунак OASIS OpenDocument

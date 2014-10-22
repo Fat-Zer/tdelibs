@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-kpresenter
-Icon=kpresenter_kpr
+Icon=application-x-kpresenter
 Patterns=*.kpr;*.kpt;
 X-TDE-AutoEmbed=false
 Comment=KPresenter Document

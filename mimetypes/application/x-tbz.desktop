@@ -65,7 +65,7 @@ Comment[zh_CN]=Bzip 压缩的 Tar 归档
 Comment[zh_HK]=Bzip2 壓縮的 Tar 保存檔
 Comment[zh_TW]=Bzip2-ed Tar 壓縮文件
 MimeType=application/x-tbz
-Icon=tgz
+Icon=application-x-tarz
 Type=MimeType
 Patterns=*.tar.bz;*.tbz;*.tar.bz2;*.tbz2;
 

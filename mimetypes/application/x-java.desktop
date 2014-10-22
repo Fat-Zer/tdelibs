@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-java
-Icon=source_java
+Icon=text-x-text-x-java
 Patterns=*.class;
 Comment=Java Class
 Comment[af]=Java Klas

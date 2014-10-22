@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/ogg
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.ogg;*.OGG;
 # Previous name of this mimetype
 X-TDE-IsAlso=application/x-ogg

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/vnd.palm
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.pdb;*.PDB;*.prc;*.PRC;
 Comment=Palm Document
 Comment[af]=Palm Dokument

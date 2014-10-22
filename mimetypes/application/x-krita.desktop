@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-krita
-Icon=krita_kra
+Icon=application-x-krita
 Patterns=*.kra;
 X-TDE-AutoEmbed=false
 Comment=Krita Document

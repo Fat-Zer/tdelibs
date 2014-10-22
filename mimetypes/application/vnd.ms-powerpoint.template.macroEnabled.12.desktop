@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.ms-powerpoint.template.macroEnabled.12
 Patterns=*.potm;*.POTM
-Icon=presentation
+Icon=application-vnd.oasis.opendocument.presentation
 Comment=Microsoft PowerPoint Presentation Template Macro Enabled
 Comment[af]=Microsoft Powerpoint Voorlegging
 Comment[ar]=مستند مايكروسوفت باوربوينت

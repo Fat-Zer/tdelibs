@@ -2,7 +2,7 @@
 Type=MimeType
 # RFC 4047
 MimeType=image/fits
-Icon=image
+Icon=image-x-generic
 Comment=FITS Image
 Comment[af]=FITS Beeld
 Comment[be]=Відарыс FITS

@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.presentation
 Patterns=*.odp;*.ODP
-Icon=presentation
+Icon=application-vnd.oasis.opendocument.presentation
 Comment=OASIS OpenDocument Presentation
 Comment[af]=OASIS Oop dokument Voorlegging
 Comment[be]=Прэзентацыя OASIS OpenDocument

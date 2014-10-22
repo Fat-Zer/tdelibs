@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.stardivision.calc
 Patterns=*.sdc;*.SDC;
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Comment=StarOffice Calc Spreadsheet
 Comment[af]=StarOffice Calc Spreiblad
 Comment[ar]=مستند StarOffice Calc

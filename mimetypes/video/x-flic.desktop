@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=video/x-flic
-Icon=video
+Icon=video-x-generic
 Patterns=*.fli;*.flc;*.FLI;*.FLC;
 Comment=Autodesk's FLIC File
 Comment[af]=Autodesk se FLIC Lêer

@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.ms-excel.template.macroEnabled.12
 Patterns=*.xltm;*.XLTM
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Comment=Microsoft Excel Spreadsheet Template Macro Enabled
 Comment[af]=Microsoft Excel Spreiblad
 Comment[ar]=ورقة عمل مايكروسوفت اكسل

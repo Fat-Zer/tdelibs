@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-pn-realaudio-plugin
-Icon=sound
+Icon=audio-x-generic
 Comment=RealAudio Plugin File
 Comment[bg]=Приставка за RealAudio
 Comment[ca]=Fitxer endollable de RealAudio

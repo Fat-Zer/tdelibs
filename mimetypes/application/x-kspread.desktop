@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-kspread
-Icon=kspread_ksp
+Icon=application-x-kspread
 Patterns=*.ksp;
 X-TDE-AutoEmbed=false
 Comment=KSpread Document

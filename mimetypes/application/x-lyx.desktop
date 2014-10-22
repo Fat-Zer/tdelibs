@@ -85,7 +85,7 @@ Comment[zu]=Uhlu lwamafayela lwe-LyX
 MimeType=application/x-lyx
 Patterns=*.lyx
 Type=MimeType
-Icon=dvi
+Icon=application-x-lyx
 
 [Property::X-TDE-text]
 Type=bool

@@ -78,7 +78,7 @@ Comment[zh_HK]=OpenOffice.org 文字文件
 Comment[zh_TW]=OpenOffice.org Text 文件
 MimeType=application/vnd.sun.xml.writer
 Type=MimeType
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.sxw;*.SXW;
 [Property::X-TDE-NativeExtension]
 Type=TQString

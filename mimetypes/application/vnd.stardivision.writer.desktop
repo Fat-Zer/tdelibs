@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.stardivision.writer
 Patterns=*.sdw;*.SDW;
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Comment=StarOffice Writer Document
 Comment[af]=StarOffice skrywer Dokument
 Comment[ar]=مستند StarOffice Writer

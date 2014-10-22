@@ -83,7 +83,7 @@ Comment[zh_TW]=Python 程式
 Comment[zu]=Uhlelo lwamafayela lwe-Python
 Type=MimeType
 MimeType=text/x-python
-Icon=source_py
+Icon=text-x-text-x-src_py
 # alias of application/x-python
 X-TDE-IsAlso=application/x-python
 

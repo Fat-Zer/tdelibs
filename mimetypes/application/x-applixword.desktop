@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-applixword
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.aw
 Comment=Applix Words Document
 Comment[af]=Applix Woorde Dokument

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-font-bdf
-Icon=font_bitmap
+Icon=font-x-generic_bitmap
 Patterns=*.bdf;*.bdf.Z;*.bdf.gz;*.BDF;*.BDF.Z;*.BDF.gz
 Comment=BDF Bitmap Font
 Comment[af]=Bdf Biskaart Skrif tipe

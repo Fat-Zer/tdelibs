@@ -1,5 +1,5 @@
 [Desktop Entry]
-Icon=txt
+Icon=text-plain
 Type=MimeType
 MimeType=text/x-csv
 Patterns=*.csv;*.CSV;

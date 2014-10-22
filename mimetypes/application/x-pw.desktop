@@ -77,6 +77,6 @@ Comment[wa]=Documint «Pathetic Writer»
 Comment[zh_CN]=Pathetic Writer 文档
 Comment[zh_HK]=Pathetic Writer 文件
 Comment[zh_TW]=Pathetic Writer 文件
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Type=MimeType
 Patterns=*.pw;*.PW;

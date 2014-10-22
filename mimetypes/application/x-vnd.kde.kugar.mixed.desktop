@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-vnd.kde.kugar.mixed
-Icon=kugar_kud
+Icon=application-x-kugar
 Patterns=*.kug
 Comment=Kugar Archive File
 Comment[af]=Kugar Argief Lêer

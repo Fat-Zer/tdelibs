@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/x-portable-greymap
-Icon=image
+Icon=image-x-generic
 Patterns=*.pgm;*.PGM;*.pgmraw;*.PGMRAW
 Comment=Portable Graymap Image
 Comment[af]=Draagbaar Graymap Beeld

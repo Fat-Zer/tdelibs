@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.ms-excel.addin.macroEnabled.12
 Patterns=*.xlam;*.XLAM
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Comment=Microsoft Excel Spreadsheet Add-In Macro Enabled
 Comment[af]=Microsoft Excel Spreiblad
 Comment[ar]=ورقة عمل مايكروسوفت اكسل

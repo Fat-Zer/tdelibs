@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-kcsrc
-Icon=colorscm
+Icon=application-x-kcsrc
 Patterns=*.kcsrc;*.KCSRC
 Comment=TDE Color Theme
 Comment[af]=TDE Kleur Tema

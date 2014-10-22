@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-xliff
-Icon=gettext
+Icon=application-x-gettext
 Patterns=*.xlf;*.XLF;
 Comment=XLIFF Translation File
 Comment[af]=XLIFF Vertaal Lêer

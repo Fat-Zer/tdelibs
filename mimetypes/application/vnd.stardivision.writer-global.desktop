@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.stardivision.writer-global
 Patterns=*.sgl;*.SGL;
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Comment=StarOffice Writer Master Document
 Comment[af]=StarOffice skrywer Meester Dokument
 Comment[be]=Дакумент-чараўнік StarOffice Writer

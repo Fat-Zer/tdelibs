@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.graphics
 Patterns=*.odg;*.ODG
-Icon=drawing
+Icon=application-vnd.oasis.opendocument.graphics
 Comment=OASIS OpenDocument Graphics
 Comment[af]=OASIS Oop Dokument Grafieke
 Comment[be]=Графіка OASIS OpenDocument

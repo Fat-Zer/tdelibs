@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.text-template
 Patterns=*.ott;*.OTT
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Comment=OASIS OpenDocument Text Template
 Comment[af]=OASIS Oop Dokument Teks Voorbeeld
 Comment[be]=Шаблон тэкставага файла OASIS OpenDocument

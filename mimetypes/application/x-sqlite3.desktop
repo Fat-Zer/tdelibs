@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-sqlite3
-Icon=empty
+Icon=application-x-zerosize
 Patterns=
 Comment=SQLite3 Database File
 Comment[af]=SQLite3 Databasis Lêer

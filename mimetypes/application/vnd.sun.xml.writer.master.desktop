@@ -71,7 +71,7 @@ Comment[zh_HK]=OpenOffice.org 主控文字文件
 Comment[zh_TW]=OpenOffice.org Master Text 文件
 MimeType=application/vnd.sun.xml.writer.master
 Type=MimeType
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.sxg;*.SXG;
 [Property::X-TDE-NativeExtension]
 Type=TQString

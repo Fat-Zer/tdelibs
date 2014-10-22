@@ -2,7 +2,7 @@
 # This is just a silly MS alias for progressive JPEGs
 Type=MimeType
 MimeType=image/pjpeg
-Icon=image
+Icon=image-x-generic
 X-TDE-IsAlso=image/jpeg
 Comment=JPEG Image
 Comment[af]=JPEG Beeld

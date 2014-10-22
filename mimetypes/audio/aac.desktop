@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/aac
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.aac;*.AAC;
 Comment=AAC Sound
 Comment[af]=AAC Klank

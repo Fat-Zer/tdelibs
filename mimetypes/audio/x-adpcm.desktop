@@ -81,7 +81,7 @@ Comment[zh_HK]=PCM 音效檔
 Comment[zh_TW]=PCM 聲音文件
 Comment[zu]=Okuzwakalayo kwe-PCM
 MimeType=audio/x-adpcm
-Icon=sound
+Icon=audio-x-generic
 Patterns=;
 [Property::X-TDE-NativeExtension]
 Type=TQString

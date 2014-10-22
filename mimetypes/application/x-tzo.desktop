@@ -85,6 +85,6 @@ Comment[zh_CN]=Lzopped 压缩的 Tar 归档
 Comment[zh_HK]=Lzop 壓縮的 Tar 保存檔
 Comment[zh_TW]=Lzop 壓縮的 Tar 壓縮文件
 Comment[zu]=Umquu lwe-Lzopped Tar
-Icon=tgz
+Icon=application-x-tarz
 Type=MimeType
 Patterns=*.tar.lzo;*.tzo;

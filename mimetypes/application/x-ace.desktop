@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-ace
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.ace;*.ACE;
 Comment=ACE Archive
 Comment[af]=ACE Argief

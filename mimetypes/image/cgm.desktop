@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/cgm
-Icon=image
+Icon=image-x-generic
 Patterns=*.cgm;*.CGM;
 Comment=Computer Graphics Metafile
 Comment[af]=Rekenaar Grafieka Metaleêr

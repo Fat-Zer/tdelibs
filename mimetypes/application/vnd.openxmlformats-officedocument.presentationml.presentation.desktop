@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.openxmlformats-officedocument.presentationml.presentation
 Patterns=*.pptx;*.PPTX
-Icon=presentation
+Icon=application-vnd.oasis.opendocument.presentation
 Comment=Microsoft PowerPoint Presentation
 Comment[af]=Microsoft Powerpoint Voorlegging
 Comment[ar]=مستند مايكروسوفت باوربوينت

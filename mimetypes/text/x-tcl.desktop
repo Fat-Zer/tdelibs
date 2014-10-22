@@ -85,7 +85,7 @@ Comment[zu]=Ifayela le-Tcl
 Type=MimeType
 MimeType=text/x-tcl
 Patterns=*.tcl;*.tk;
-Icon=source
+Icon=text-x-text-x-src
 X-TDE-IsAlso=text/plain
 
 [Property::X-TDE-text]

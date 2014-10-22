@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-rar
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.rar;*.RAR;
 Comment=Rar Archive
 Comment[af]=Rar Argief

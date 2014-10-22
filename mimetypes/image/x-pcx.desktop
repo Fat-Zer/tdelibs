@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/x-pcx
-Icon=image
+Icon=image-x-generic
 Patterns=*.pcx;*.PCX;
 Comment=PCX Image
 Comment[af]=PCX Beeld

@@ -79,6 +79,6 @@ Comment[wa]=Documint tåvleu Siag
 Comment[zh_CN]=Siag 电子表格
 Comment[zh_HK]=Siag 電子表格
 Comment[zh_TW]=Siag 電子表格
-Icon=spreadsheet
+Icon=application-vnd.oasis.opendocument.spreadsheet
 Type=MimeType
 Patterns=*.siag;*.csv;*.wk1;

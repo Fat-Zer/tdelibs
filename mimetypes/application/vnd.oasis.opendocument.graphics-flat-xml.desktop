@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.graphics-flat-xml
 Patterns=*.fodg;*.FODG
-Icon=drawing
+Icon=application-vnd.oasis.opendocument.graphics
 Comment=OASIS OpenDocument Graphics (Flat XML)
 Comment[af]=OASIS Oop Dokument Grafieke (Flat XML)
 Comment[be]=Графіка OASIS OpenDocument (Flat XML)

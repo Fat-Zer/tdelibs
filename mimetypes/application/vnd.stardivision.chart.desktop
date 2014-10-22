@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.stardivision.chart
 Patterns=*.sds;*.SDS;
-Icon=kchart_chrt
+Icon=application-x-kchart
 Comment=StarOffice Chart
 Comment[af]=StarOffice Kaart
 Comment[be]=Дыяграма StarOffice

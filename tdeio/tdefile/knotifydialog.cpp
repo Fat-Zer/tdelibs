@@ -239,9 +239,9 @@ KNotifyWidget::KNotifyWidget( TQWidget *parent, const char *name,
 
     TQPixmap pexec = SmallIcon("exec");
     TQPixmap pstderr = SmallIcon("terminal");
-    TQPixmap pmessage = SmallIcon("info");
-    TQPixmap plogfile = SmallIcon("log");
-    TQPixmap psound = SmallIcon("sound");
+    TQPixmap pmessage = SmallIcon("application-vnd.tde.info");
+    TQPixmap plogfile = SmallIcon("text-x-log");
+    TQPixmap psound = SmallIcon("audio-x-generic");
     TQPixmap ptaskbar = SmallIcon("kicker");
 
     d->pixmaps[COL_EXECUTE] = pexec;

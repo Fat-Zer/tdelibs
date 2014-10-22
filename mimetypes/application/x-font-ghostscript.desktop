@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-font-ghostscript
-Icon=font
+Icon=font-x-generic
 Patterns=*.gsf;*.GSF
 Comment=Ghostscript Font
 Comment[af]=Ghostscript Skrif tipe

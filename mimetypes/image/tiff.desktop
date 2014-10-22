@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/tiff
-Icon=image
+Icon=image-x-generic
 Patterns=*.tiff;*.TIFF;*.tif;*.TIF;
 Comment=TIFF Image
 Comment[af]=Tiff Beeld

@@ -2,7 +2,7 @@
 Type=MimeType
 Patterns=*.cue;*.CUE
 MimeType=application/x-cue
-Icon=cdimage
+Icon=application-x-cd-image
 Comment=CDRWIN Cue-Sheet
 Comment[af]=CDRWIN Cue-Bladsy
 Comment[bg]=CDRWIN документ

@@ -81,5 +81,5 @@ Comment[zh_HK]=ULAW (Sun) 音效檔
 Comment[zh_TW]=ULAW (Sun) 聲音文件
 Comment[zu]=Okuzwakalayo kwe-ULAW (Ilanga)
 MimeType=audio/basic
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.au;*.AU;*.snd;*.SND

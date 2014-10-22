@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/postscript
-Icon=postscript
+Icon=application-postscript
 Patterns=*.ps;*.PS;
 X-TDE-PatternsAccuracy=95
 Comment=PostScript Document

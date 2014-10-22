@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-font-pcf
-Icon=font_bitmap
+Icon=font-x-generic_bitmap
 Patterns=*.pcf;*.pcf.Z;*.pcf.gz;*.PCF;*.PCF.Z;*.PCF.gz
 Comment=PCF Bitmap Font
 Comment[af]=Pcf Biskaart Skrif tipe

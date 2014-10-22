@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=text/x-mswinurl
 Patterns=*.url;*.URL;
-Icon=html
+Icon=text-x-text-html
 Comment=Internet Shortcut
 Comment[af]=Internet Kortpad
 Comment[ar]=إختصار إنترنت

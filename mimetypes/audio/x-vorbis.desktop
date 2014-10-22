@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-vorbis
-Icon=sound
+Icon=audio-x-generic
 X-TDE-IsAlso=application/ogg
 Comment=Ogg Vorbis Audio
 Comment[af]=Ogg Vorbis Klank

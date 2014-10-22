@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-zoo
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.zoo;*.ZOO;
 Comment=Zoo Archive
 Comment[af]=Zoo Argief

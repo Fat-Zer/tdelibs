@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/jp2
-Icon=image
+Icon=image-x-generic
 Patterns=*.jp2;*.JP2
 Comment=JPEG 2000 Image
 Comment[af]=JPEG 2000 Beeld

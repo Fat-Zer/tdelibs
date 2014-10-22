@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/wordperfect
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.wpd;*.WPD;
 Comment=WordPerfect Document
 Comment[af]=WordPerfect Dokument

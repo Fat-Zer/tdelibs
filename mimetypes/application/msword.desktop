@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/msword
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.doc;*.DOC;
 X-TDE-IsAlso=application/vnd.ms-word
 X-TDE-PatternsAccuracy=50

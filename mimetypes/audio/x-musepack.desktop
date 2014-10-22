@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-musepack
-Icon=sound
+Icon=audio-x-generic
 Patterns=*.mpc;*.MPC;*.mp+;*.MP+
 Comment=Musepack Audio
 Comment[af]=Musepack Klank

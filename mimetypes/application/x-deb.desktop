@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-deb
-Icon=deb
+Icon=application-x-deb
 Patterns=*.deb;*.DEB;
 Comment=Debian Package
 Comment[af]=Debian Pakkie

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=audio/x-midi
-Icon=midi
+Icon=audio-midi
 Patterns=*.mid;*.MID;
 Comment=MIDI Audio
 Comment[af]=MIDI Klank

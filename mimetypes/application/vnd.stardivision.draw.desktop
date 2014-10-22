@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.stardivision.draw
 Patterns=*.sda;*.SDA;
-Icon=image
+Icon=image-x-generic
 Comment=StarOffice Drawing
 Comment[af]=StarOffice Tekening
 Comment[be]=Рысунак StarOffice

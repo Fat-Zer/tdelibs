@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-tar
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.tar;
 Comment=Tar Archive
 Comment[af]=Tar Argief

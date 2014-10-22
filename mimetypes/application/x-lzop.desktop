@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-lzop
-Icon=tgz
+Icon=application-x-tarz
 Patterns=*.lzo
 Comment=Lzopped File
 Comment[af]=Lzop gekompakteerde Lêer

@@ -82,7 +82,7 @@ Comment[zh_TW]=應用程式日誌檔案
 Comment[zu]=Ifayela Lokungena Lomyaleli
 Type=MimeType
 Patterns=*.log;
-Icon=log
+Icon=text-x-text-x-log
 X-TDE-IsAlso=text/plain
 
 [Property::X-TDE-text]

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=video/x-mng
-Icon=image
+Icon=image-x-generic
 Patterns=*.mng;*.MNG;
 Comment=MNG Image
 Comment[af]=Mng Beeld

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/illustrator
-Icon=pdf
+Icon=application-pdf
 Patterns=*.ai;*.AI;
 Comment=Adobe Illustrator Document
 Comment[af]=Adobe Illustreerder Dokument

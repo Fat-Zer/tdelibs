@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-hancomword
-Icon=wordprocessing
+Icon=application-vnd.oasis.opendocument.text
 Patterns=*.hwp;*.HWP;
 Comment=HancomWord Document
 Comment[af]=HancomWord Dokument

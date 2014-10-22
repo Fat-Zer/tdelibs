@@ -83,6 +83,6 @@ Comment[zh_CN]=Bzip 文件
 Comment[zh_HK]=Bzip 檔案
 Comment[zh_TW]=Bzip 檔案
 Comment[zu]=Ifayela le-Bzip
-Icon=tgz
+Icon=application-x-tarz
 Type=MimeType
 Patterns=*.bz;*.BZ;

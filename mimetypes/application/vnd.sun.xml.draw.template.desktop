@@ -73,7 +73,7 @@ Comment[zh_HK]=OpenOffice.org 繪圖範本
 Comment[zh_TW]=OpenOffice.org 繪圖樣本
 MimeType=application/vnd.sun.xml.draw.template
 Type=MimeType
-Icon=image
+Icon=image-x-generic
 Patterns=*.std;*.STD;
 [Property::X-TDE-NativeExtension]
 Type=TQString

@@ -4,7 +4,7 @@
 # application/ogg "inherits" from it, so that apps associated with x-ogg can open ogg files.
 Type=MimeType
 MimeType=application/x-ogg
-Icon=sound
+Icon=audio-x-generic
 Comment=Ogg Multimedia
 Comment[ar]=وسائط Ogg متعددة
 Comment[az]=Ogg Multimediya

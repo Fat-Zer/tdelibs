@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=image/x-jng
-Icon=image
+Icon=image-x-generic
 Patterns=*.jng;*.JNG;
 Comment=JNG Image
 Comment[af]=Jng Beeld

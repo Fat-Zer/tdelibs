@@ -73,7 +73,7 @@ Comment[zh_HK]=OpenOffice.org 簡報範本
 Comment[zh_TW]=OpenOffice.org 簡報樣本
 MimeType=application/vnd.sun.xml.impress.template
 Type=MimeType
-Icon=presentation
+Icon=application-vnd.oasis.opendocument.presentation
 Patterns=*.sti;*.STI;
 [Property::X-TDE-NativeExtension]
 Type=TQString

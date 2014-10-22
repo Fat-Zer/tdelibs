@@ -2,7 +2,7 @@
 Type=MimeType
 Patterns=*.iso;*.ISO
 MimeType=application/x-iso
-Icon=cdtrack
+Icon=application-x-cda
 Comment=ISO9660 Image File
 Comment[af]=ISO9660 Beeld Leêr
 Comment[bg]=ISO9660 образ

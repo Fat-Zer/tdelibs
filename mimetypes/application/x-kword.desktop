@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-kword
-Icon=kword_kwd
+Icon=x-office-document
 Patterns=*.kwd;*.kwt;
 X-TDE-AutoEmbed=false
 Comment=KWord Document

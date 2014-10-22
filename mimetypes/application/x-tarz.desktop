@@ -84,7 +84,7 @@ Comment[zh_CN]=压缩的 Tar 归档
 Comment[zh_HK]=壓縮過的 Tar 保存檔
 Comment[zh_TW]=壓縮的 Tar 壓縮文件
 Comment[zu]=Umqulu we-Tar Elicindezelwe
-Icon=tgz
+Icon=application-x-tarz
 Type=MimeType
 Patterns=*.tar.Z;
 [Property::X-TDE-LocalProtocol]

@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.database
 Patterns=*.odb;*.ODB
-Icon=database
+Icon=application-vnd.oasis.opendocument.database
 Comment=OASIS OpenDocument Database
 [Property::X-TDE-NativeExtension]
 Type=TQString

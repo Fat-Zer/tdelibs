@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/vnd.oasis.opendocument.presentation-flat-xml
 Patterns=*.fodp;*.FODP
-Icon=presentation
+Icon=application-vnd.oasis.opendocument.presentation
 Comment=OASIS OpenDocument Presentation (Flat XML)
 Comment[af]=OASIS Oop dokument Voorlegging (Flat XML)
 Comment[be]=Прэзентацыя OASIS OpenDocument (Flat XML)
