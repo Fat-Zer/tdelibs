@@ -1057,7 +1057,7 @@ void KBookmarkMenuNSImporter::newBookmark( const TQString & text, const TQCStrin
 {
   TQString _text = KStringHandler::csqueeze(text);
   _text.replace( '&', "&&" );
-  TDEAction * action = new KBookmarkAction(_text, "html", 0, 0, "", m_actionCollection, 0);
+  TDEAction * action = new KBookmarkAction(_text, "text-html", 0, 0, "", m_actionCollection, 0);
   connect(action, TQT_SIGNAL( activated ( TDEAction::ActivationReason, TQt::ButtonState )),
           m_menu, TQT_SLOT( slotBookmarkSelected( TDEAction::ActivationReason, TQt::ButtonState ) ));
   action->setProperty( "url", url );

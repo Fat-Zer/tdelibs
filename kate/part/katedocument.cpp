@@ -528,7 +528,7 @@ TQPixmap KateDocument::configPagePixmap (uint number, int size) const
       return BarIcon("document-save", size);
 
     case 6:
-      return BarIcon("source", size);
+      return BarIcon("text-x-src", size);
 
     case 7:
       return BarIcon("edit", size);

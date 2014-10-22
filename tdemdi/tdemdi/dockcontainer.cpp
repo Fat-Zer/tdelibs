@@ -203,7 +203,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
       connect(btn,TQT_SIGNAL(clicked()),this,TQT_SLOT(changeOverlapMode()));
     }
 
-    m_tb->appendTab(pixmap.isNull()?SmallIcon("application-vnd.tde.misc"):pixmap,tab,w->tabPageLabel());
+    m_tb->appendTab(pixmap.isNull()?SmallIcon("misc"):pixmap,tab,w->tabPageLabel());
     m_tb->tab(tab)->installEventFilter( this );
     kdDebug(760)<<"NAMENAMENAMENAME:===========================:"<<w->tabPageLabel()<<endl;
 
@@ -457,7 +457,7 @@ void DockContainer::setPixmap(KDockWidget* widget ,const TQPixmap& pixmap)
   int id=m_ws->id(widget);
   if (id==-1) return;
   KMultiTabBarTab *tab=m_tb->tab(id);
-  tab->setIcon(pixmap.isNull()?SmallIcon("application-vnd.tde.misc"):pixmap);
+  tab->setIcon(pixmap.isNull()?SmallIcon("misc"):pixmap);
 }
 
 void DockContainer::save(TDEConfig* cfg,const TQString& group_or_prefix)
