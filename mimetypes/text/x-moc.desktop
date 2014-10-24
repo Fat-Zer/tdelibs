@@ -81,7 +81,7 @@ Comment[zh_TW]=Qt Meta 目標文件
 Comment[zu]=Ifayela Lento ye-Meta lwe-Qt
 Type=MimeType
 Patterns=*.moc;
-Icon=text-x-text-x-mocsrc
+Icon=text-x-mocsrc
 X-TDE-IsAlso=text/plain
 
 [Property::X-TDE-text]

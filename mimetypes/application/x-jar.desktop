@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/x-jar
-Icon=text-x-text-x-java
+Icon=text-x-java
 Patterns=*.jar;
 Comment=Java Archive
 Comment[af]=Java Argief

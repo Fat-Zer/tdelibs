@@ -34,7 +34,7 @@ Comment[xh]=Yenza ifayile
 Comment[zu]=Yenza ifayela
 Type=MimeType
 Patterns=GNUmakefile;Makefile;makefile;Makefile.*;makefile.*
-Icon=text-x-text-x-makefile
+Icon=text-x-makefile
 X-TDE-IsAlso=text/plain
 
 [Property::X-TDE-text]
