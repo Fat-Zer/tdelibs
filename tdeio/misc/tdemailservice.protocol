@@ -10,6 +10,6 @@ writing=false
 makedir=false
 deleting=false
 DocPath=tdeioslave/mailto/index.html
-Icon=mail_new
+Icon=mail-message-new
 Class=:internet
 URIMode=mailto
