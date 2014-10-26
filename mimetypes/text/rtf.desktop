@@ -77,7 +77,7 @@ Comment[wa]=Documint RTF
 Comment[zh_CN]=RTF 文档
 Comment[zh_HK]=RTF 文件
 Comment[zh_TW]=RTF 文件
-Icon=text-x-text-rtf
+Icon=text-rtf
 Type=MimeType
 Patterns=*.rtf;*.RTF;
 [Property::X-TDE-text]

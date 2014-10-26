@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/mathml+xml
 Patterns=*.mml;*.MML
-Icon=text-x-text-html
+Icon=text-html
 Hidden=false
 X-TDE-IsAlso=text/xml
 Comment=MathML Document

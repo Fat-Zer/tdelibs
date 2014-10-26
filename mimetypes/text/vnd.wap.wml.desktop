@@ -1,5 +1,5 @@
 [Desktop Entry]
-Icon=text-x-text-html
+Icon=text-html
 Type=MimeType
 MimeType=text/vnd.wap.wml
 Patterns=*.wml;*.WML;

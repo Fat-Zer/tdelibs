@@ -64,7 +64,7 @@ Comment[vi]=Tài liệu DTD XML
 Comment[zh_CN]=XML DTD 文档
 Comment[zh_HK]=XML DTD 文件
 Comment[zh_TW]=XML DTD 文件
-Icon=text-x-text-html
+Icon=text-html
 Type=MimeType
 # RFC 3023
 MimeType=application/xml-dtd
