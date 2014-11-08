@@ -364,11 +364,6 @@ void KDesktopFile::virtual_hook( int id, void* data )
 
 TQString KDesktopFile::readDocPath() const
 {
-  // Depreciated, remove in KDE4 or 5?
-  // See: http://www.freedesktop.org/Standards/desktop-entry-spec
-  if(hasKey( "DocPath" ))
-    return readPathEntry( "DocPath" );
-
   return readPathEntry( "X-DocPath" );
 }
 

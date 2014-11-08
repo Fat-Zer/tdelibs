@@ -173,7 +173,7 @@ TDECModuleInfo::loadAll()
   setIsHiddenByDefault( tmp.isValid() ? tmp.toBool() : false );
 
   // get the documentation path
-  setDocPath( _service->property( "DocPath", TQVariant::String ).toString() );
+  setDocPath( _service->property( "X-DocPath", TQVariant::String ).toString() );
 
   tmp = _service->property( "X-TDE-Test-Module", TQVariant::Bool );
   setNeedsTest( tmp.isValid() ? tmp.asBool() : false );

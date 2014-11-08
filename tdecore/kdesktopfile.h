@@ -200,10 +200,8 @@ public:
   TQString resource() const;
 
   /**
-   * Returns the value of the "X-DocPath=" Or "DocPath=" entry.
-	 * X-DocPath should be used and DocPath is depreciated and will
-	 * one day be not supported.
-   * @return The value of the "X-DocPath=" Or "DocPath=" entry.
+   * Returns the value of the "X-DocPath=" entry.
+   * @return The value of the "X-DocPath=" entry.
    * @since 3.1
    */
   TQString readDocPath() const;

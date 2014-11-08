@@ -89,7 +89,7 @@ Name[zu]=Umyaleli
 [PropertyDef::NoDisplay]
 Type=bool
 
-[PropertyDef::DocPath]
+[PropertyDef::X-DocPath]
 Type=TQString
 
 [PropertyDef::X-TDE-SubstituteUID]

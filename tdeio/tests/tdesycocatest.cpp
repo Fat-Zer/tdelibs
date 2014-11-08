@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
    {
      debug("Found it !");
      debug(TQString("Comment is %1").arg(se->comment()));
-     TQVariant qv = se->property("DocPath");
+     TQVariant qv = se->property("X-DocPath");
      debug(TQString("Property type is %1").arg(qv.typeName()));
      debug(TQString("Property value is %1").arg(qv.toString()));
    }

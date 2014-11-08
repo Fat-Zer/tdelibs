@@ -105,7 +105,7 @@ KProtocolInfo::KProtocolInfo(const TQString &path)
   else
     m_outputType = KProtocolInfo::T_NONE;
 
-  d->docPath = config.readPathEntry( "DocPath" );
+  d->docPath = config.readPathEntry( "X-DocPath" );
   d->protClass = config.readEntry( "Class" ).lower();
   if (d->protClass[0] != ':')
      d->protClass.prepend(':');
