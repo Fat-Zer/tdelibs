@@ -1919,21 +1919,19 @@ public:
 #if defined(Q_WS_X11) && defined(COMPOSITE)
 bool TDEApplication::isCompositionManagerAvailable() {
 	bool have_manager = false;
-	const char *home;
-	struct passwd *p;
-	p = getpwuid(getuid());
-	if (p)
-		home = p->pw_dir;
-	else
-		home = getenv("HOME");
 
-	char *filename;
-	const char *configfile = "/.kompmgr.available";
-	int n = strlen(home)+strlen(configfile)+1;
-	filename = (char*)malloc(n*sizeof(char));
-	memset(filename,0,n);
-	strcat(filename, home);
-	strcat(filename, configfile);
+        char *filename;
+        const char *pidfile = "compton-tde.available";
+        char uidstr[sizeof(uid_t)*8+1];
+        sprintf(uidstr, "%d", getuid());
+        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, P_tmpdir);
+        strcat(filename, "/.");
+        strcat(filename, uidstr);
+        strcat(filename, "-");
+        strcat(filename, pidfile);
 
         // Now that we did all that by way of introduction...read the file!
 	FILE *pFile;
@@ -1991,21 +1989,18 @@ bool TDEApplication::detectCompositionManagerAvailable(bool force_available, boo
 		}
 	}
 	
-	const char *home;
-	struct passwd *p;
-	p = getpwuid(getuid());
-	if (p)
-		home = p->pw_dir;
-	else
-		home = getenv("HOME");
-
-	char *filename;
-	const char *configfile = "/.kompmgr.available";
-	int n = strlen(home)+strlen(configfile)+1;
-	filename = (char*)malloc(n*sizeof(char));
-	memset(filename,0,n);
-	strcat(filename, home);
-	strcat(filename, configfile);
+        char *filename;
+        const char *pidfile = "compton-tde.available";
+        char uidstr[sizeof(uid_t)*8+1];
+        sprintf(uidstr, "%d", getuid());
+        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, P_tmpdir);
+        strcat(filename, "/.");
+        strcat(filename, uidstr);
+        strcat(filename, "-");
+        strcat(filename, pidfile);
 
 	/* now that we did all that by way of introduction...create or remove the file! */
 	if (compositing_manager_available) {
@@ -2117,21 +2112,18 @@ bool TDEApplication::isCompositionManagerAvailable() {
 }
 
 bool TDEApplication::detectCompositionManagerAvailable(bool force_available, bool available) {
-	const char *home;
-	struct passwd *p;
-	p = getpwuid(getuid());
-	if (p)
-		home = p->pw_dir;
-	else
-		home = getenv("HOME");
-
-	char *filename;
-	const char *configfile = "/.kompmgr.available";
-	int n = strlen(home)+strlen(configfile)+1;
-	filename = (char*)malloc(n*sizeof(char));
-	memset(filename,0,n);
-	strcat(filename, home);
-	strcat(filename, configfile);
+        char *filename;
+        const char *pidfile = "compton-tde.available";
+        char uidstr[sizeof(uid_t)*8+1];
+        sprintf(uidstr, "%d", getuid());
+        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, P_tmpdir);
+        strcat(filename, "/.");
+        strcat(filename, uidstr);
+        strcat(filename, "-");
+        strcat(filename, pidfile);
 
 	/* now that we did all that by way of introduction...create or remove the file! */
 	if (force_available) {
