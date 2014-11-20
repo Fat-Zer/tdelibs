@@ -1925,7 +1925,7 @@ bool TDEApplication::isCompositionManagerAvailable() {
         char uidstr[sizeof(uid_t)*8+1];
         sprintf(uidstr, "%d", getuid());
         int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
-        filename = (char*)malloc(n*sizeof(char));
+        filename = (char*)malloc(n*sizeof(char)+1);
         memset(filename,0,n);
         strcat(filename, P_tmpdir);
         strcat(filename, "/.");
@@ -1994,7 +1994,7 @@ bool TDEApplication::detectCompositionManagerAvailable(bool force_available, boo
         char uidstr[sizeof(uid_t)*8+1];
         sprintf(uidstr, "%d", getuid());
         int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
-        filename = (char*)malloc(n*sizeof(char));
+        filename = (char*)malloc(n*sizeof(char)+1);
         memset(filename,0,n);
         strcat(filename, P_tmpdir);
         strcat(filename, "/.");
@@ -2117,7 +2117,7 @@ bool TDEApplication::detectCompositionManagerAvailable(bool force_available, boo
         char uidstr[sizeof(uid_t)*8+1];
         sprintf(uidstr, "%d", getuid());
         int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
-        filename = (char*)malloc(n*sizeof(char));
+        filename = (char*)malloc(n*sizeof(char)+1);
         memset(filename,0,n);
         strcat(filename, P_tmpdir);
         strcat(filename, "/.");

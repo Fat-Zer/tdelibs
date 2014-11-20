@@ -1,6 +1,7 @@
 /*
  *  This file is part of the KDE libraries
  *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
+ *  Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -22,9 +23,9 @@
 
 #include <stdio.h>
 
-void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, FILE*));
+void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, const char*, FILE*));
 void initFoomatic(void);
 int execute(int argc, char *argv[]);
-void addFile(const char *filename);
+void addFile(const char *filename, const char *origin);
 
 #endif

@@ -1,3 +1,23 @@
+/*
+ *  This file is part of the KDE libraries
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
+ *  Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Library General Public
+ *  License version 2 as published by the Free Software Foundation.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Library General Public License
+ *  along with this library; see the file COPYING.LIB.  If not, write to
+ *  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ *  Boston, MA 02110-1301, USA.
+ **/
+
 #include "driverparse.h"
 
 #include <string.h>
@@ -9,15 +29,16 @@
 #include <unistd.h>
 
 char	**files = NULL;
+char	**fileorigins = NULL;
 int	nfiles = 0, maxfiles = 0;
 int	nhandlers = 0, maxhandlers = 0;
 int	nlibs = 0, maxlibs = 0;
 typedef struct
 {
 	void (*init)(const char*);
-	int (*parse)(const char*, FILE*);
+	int (*parse)(const char*, const char*, FILE*);
 	char	*name;
-	int		namelen;
+	int	namelen;
 } handler;
 handler	**handlers = NULL;
 void	**libs = NULL;
@@ -39,7 +60,7 @@ void freeHandlers(void)
 	free(handlers);
 }
 
-void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, FILE*))
+void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, const char*, FILE*))
 {
 	handler	*h = (handler*)malloc(sizeof(handler));
 	h->init = initf;
@@ -88,6 +109,7 @@ void initFiles(void)
 {
 	maxfiles = 100;
 	files = (char**)malloc(sizeof(char*) * maxfiles);
+	fileorigins = (char**)malloc(sizeof(char*) * maxfiles);
 }
 
 void freeFiles(void)
@@ -95,7 +117,9 @@ void freeFiles(void)
 	int	i;
 	for (i=0; i<nfiles; i++)
 		free(files[i]);
+		free(fileorigins[i]);
 	free(files);
+	free(fileorigins);
 }
 
 void checkSize(void)
@@ -104,15 +128,18 @@ void checkSize(void)
 	{
 		maxfiles += 100;
 		files = (char**)realloc(files, sizeof(char*) * maxfiles);
+		fileorigins = (char**)realloc(fileorigins, sizeof(char*) * maxfiles);
 	}
 }
 
-void addFile(const char *filename)
+void addFile(const char *filename, const char *origin)
 {
 	if (maxfiles == 0)
 		initFiles();
 	checkSize();
-	files[nfiles++] = strdup(filename);
+	files[nfiles] = strdup(filename);
+	fileorigins[nfiles] = strdup(origin);
+	nfiles++;
 }
 
 void nextTag(FILE *f, char *tag, int len)
@@ -246,7 +273,7 @@ int getMaticPrinterInfos(const char *base, const char *id, char *make, char *mod
 	return 1;
 }
 
-int parseMaticFile(const char *driver, FILE *output)
+int parseMaticFile(const char *driver, const char *origin, FILE *output)
 {
 	FILE	*drFile;
 	char	name[32] = {0},
@@ -350,7 +377,7 @@ void initMatic(const char *base)
 			continue;
 		else if (!S_ISREG(st.st_mode))
 			continue;
-		addFile(drFile);
+		addFile(drFile, "");
 	}
 	closedir(foodir);
 }
@@ -416,7 +443,7 @@ int execute(int argc, char *argv[])
 		for (hi=0; hi<nhandlers; hi++)
 			if (strncmp(files[i], handlers[hi]->name, handlers[hi]->namelen) == 0)
 			{
-				handlers[hi]->parse(files[i]+handlers[hi]->namelen, dbFile);
+				handlers[hi]->parse(files[i]+handlers[hi]->namelen, fileorigins[i], dbFile);
 				break;
 			}
 		fprintf(stdout, "%d\n", i);
