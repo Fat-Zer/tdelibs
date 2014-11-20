@@ -203,6 +203,13 @@ void initPpd(const char *dirname)
 	}
 }
 
+void initCompressedPpd(const char *dirname)
+{
+	// HACK
+	// The initPpd function actually handles the compressed PPDs as well, so do nothing here
+	// If we were to rerun initPpd here then all drivers would be duplicated!
+}
+
 int parsePpdFile(const char *filename, const char *origin, const char *metadata, FILE *output_file)
 {
 	gzFile	ppd_file;
@@ -350,7 +357,7 @@ int parseCompressedPpdFile(const char *ppdfilename, const char *origin, const ch
 int main(int argc, char *argv[])
 {
 	registerHandler("ppd:", initPpd, parsePpdFile);
-	registerHandler("compressed-ppd:", initPpd, parseCompressedPpdFile);
+	registerHandler("compressed-ppd:", initCompressedPpd, parseCompressedPpdFile);
 	initFoomatic();
 	return execute(argc, argv);
 }
