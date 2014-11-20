@@ -72,12 +72,12 @@ tde_add_kpart( ${target} AUTOMOC
 set( target make_driver_db_cups )
 
 set( ${target}_SRCS
-  make_driver_db_cups.c
+  make_driver_db_cups.cpp
 )
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK driverparse-static tdefakes-shared ${ZLIB_LIBRARIES} ${DL_LIBRARIES}
+  LINK driverparse-static tdefakes-shared ${ZLIB_LIBRARIES} ${DL_LIBRARIES} ${TQT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

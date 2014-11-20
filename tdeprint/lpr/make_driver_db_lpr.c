@@ -114,7 +114,7 @@ void initAps(const char *base)
 			gsversion = 1;
 		}
 		snprintf(drFile, 256, "apsfilter:%s/%s", base, d->d_name);
-		addFile(drFile, "");
+		addFile(drFile, "", "");
 	}
 	closedir(apsdir);
 }
@@ -199,7 +199,7 @@ void initIfhp(const char *base)
 	snprintf(path, 255, "lprngtool:%s/printerdb", base);
 	if (access(path+10, R_OK) == 0)
 	{
-		addFile(path, "");
+		addFile(path, "", "");
 	}
 }
 

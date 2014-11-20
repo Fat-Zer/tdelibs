@@ -23,9 +23,9 @@
 
 #include <stdio.h>
 
-void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, const char*, FILE*));
+void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, const char*, const char*, FILE*));
 void initFoomatic(void);
 int execute(int argc, char *argv[]);
-void addFile(const char *filename, const char *origin);
+void addFile(const char *filename, const char *origin, const char *metadata);
 
 #endif

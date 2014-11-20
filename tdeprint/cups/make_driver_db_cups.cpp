@@ -29,7 +29,12 @@
 #include <ctype.h>
 #include <zlib.h>
 
-#include "driverparse.h"
+#include <tqstringlist.h>
+#include <tqlocale.h>
+
+extern "C" {
+	#include "driverparse.h"
+}
 
 #define PROCESS_PPD_FILE_CONTENTS												\
 		memset(value,0,256);												\
@@ -126,7 +131,7 @@ void initPpd(const char *dirname)
 						snprintf(drFile, 255, "ppd:%s", buffer);
 						if (c && strncmp(c,".ppd",4) == 0)
 						{
-							addFile(drFile, "");
+							addFile(drFile, "", "");
 						}
 						else if (c && strncmp(c, ".gz", 3) == 0)
 						{ /* keep also compressed driver files */
@@ -136,7 +141,7 @@ void initPpd(const char *dirname)
 							}
 							if (*c == '.' && strncmp(c, ".ppd",4) == 0)
 							{
-								addFile(drFile, "");
+								addFile(drFile, "", "");
 							}
 						}
 					}
@@ -160,19 +165,19 @@ void initPpd(const char *dirname)
 			ssize_t read;
 			while ((read = getline(&line, &len, file)) != -1) {
 				char * pos1 = strstr(line, "\"");
-				if (pos1 >= 0) {
+				if (pos1 != NULL) {
 					char * pos2 = strstr(pos1 + 1, "\"");
-					if (pos2 >= 0) {
+					if (pos2 != NULL) {
 						*pos2 = 0;
 						char * pos3 = strstr(pos1 + 1, ":");
-						if (pos3 >= 0) {
+						if (pos3 != NULL) {
 							char *ppduri;
 							int n2 = strlen("compressed-ppd:")+strlen(pos3+1);
 							ppduri = (char*)malloc(n2*sizeof(char)+1);
 							memset(ppduri,0,n2);
 							strcat(ppduri, "compressed-ppd:");
 							strcat(ppduri, pos3+1);
-							addFile(ppduri, dirname);
+							addFile(ppduri, dirname, pos2+1);
 							free(ppduri);
 							ppduri = NULL;
 						}
@@ -198,7 +203,7 @@ void initPpd(const char *dirname)
 	}
 }
 
-int parsePpdFile(const char *filename, const char *origin, FILE *output_file)
+int parsePpdFile(const char *filename, const char *origin, const char *metadata, FILE *output_file)
 {
 	gzFile	ppd_file;
 	char	line[4096], value[256], langver[64] = {0}, desc[256] = {0};
@@ -223,44 +228,116 @@ int parsePpdFile(const char *filename, const char *origin, FILE *output_file)
 	return 1;
 }
 
-int parseCompressedPpdFile(const char *ppdfilename, const char *origin, FILE *output_file)
+int parseCompressedPpdFile(const char *ppdfilename, const char *origin, const char *metadata, FILE *output_file)
 {
 	char	value[256], langver[64] = {0}, desc[256] = {0};
 	char	*c1, *c2;
 	int	count = 0;
 
-	char *filename;
-	int n = strlen(origin)+strlen(" cat ")+strlen(ppdfilename);
-	filename = (char*)malloc(n*sizeof(char)+1);
-	memset(filename,0,n);
-	strcat(filename, origin);
-	strcat(filename, " cat ");
-	strcat(filename, ppdfilename);
+	bool useFallbackExtractionMethod = false;
 
-	FILE* file = popen(filename, "r");
-	if (file) {
-		char * line = NULL;
-		size_t len = 0;
-		ssize_t read;
+	if (strlen(metadata) > 0) {
+		TQString metadataProcessed(metadata);
+		metadataProcessed = metadataProcessed.stripWhiteSpace();
+		TQStringList metadataList = TQStringList::split(" ", metadataProcessed, TRUE);
+		TQLocale ppdLanguage(metadataList[0]);
+		TQString languageVersion = TQLocale::languageToString(ppdLanguage.language());
+		metadataList = TQStringList::split("\" \"", metadataProcessed, TRUE);
+		TQString description = metadataList[1];
 
-		fprintf(output_file,"FILE=compressed-ppd:%s:%s\n", origin, ppdfilename);
-
-		while ((read = getline(&line, &len, file)) != -1) {
-			PROCESS_PPD_FILE_CONTENTS
+		int pos = metadataProcessed.find("MFG:");
+		if (pos < 0) {
+			pos = metadataProcessed.find("MANUFACTURER:");
 		}
-		if (line) {
-			free(line);
+		if (pos >= 0) {
+			TQString manufacturer;
+			TQString model;
+			TQString modelName;
+			TQString pnpManufacturer;
+			TQString pnpModel;
+			TQString driver;
+			TQStringList metadataList = TQStringList::split(";", metadataProcessed.mid(pos), TRUE);
+			for (TQStringList::Iterator it = metadataList.begin(); it != metadataList.end(); ++it) {
+				TQStringList kvPair = TQStringList::split(":", *it, TRUE);
+				if ((kvPair[0].upper() == "MFG") || (kvPair[0].upper() == "MANUFACTURER")) {
+					manufacturer = kvPair[1];
+				}
+				else if ((kvPair[0].upper() == "MDL") ||(kvPair[0].upper() == "MODEL")) {
+					modelName = kvPair[1];
+				}
+// 				else if (kvPair[0].upper() == "PNPMANUFACTURER") {
+// 					pnpManufacturer = kvPair[1];
+// 				}
+// 				else if (kvPair[0].upper() == "PNPMODEL") {
+// 					pnpModel = kvPair[1];
+// 				}
+				else if ((kvPair[0].upper() == "DRV") || (kvPair[0].upper() == "DRIVER")) {
+					driver = kvPair[1];
+				}
+			}
+
+			TQStringList driverList = TQStringList::split(",", driver, TRUE);
+			driver = driverList[0];
+			if (driver.startsWith("D")) {
+				driver = driver.mid(1);
+			}
+			model = manufacturer + " " + modelName + " " + driver;
+			description = description + " [" + languageVersion + "]";
+
+			fprintf(output_file,"FILE=compressed-ppd:%s:%s\n", origin, ppdfilename);
+
+			fprintf(output_file,"MANUFACTURER=%s\n",manufacturer.ascii());
+			fprintf(output_file,"MODELNAME=%s\n",modelName.ascii());
+			fprintf(output_file,"MODEL=%s\n",model.ascii());
+			if (pnpManufacturer.length() > 0) {
+				fprintf(output_file,"PNPMANUFACTURER=%s\n",pnpManufacturer.ascii());
+			}
+			if (pnpModel.length() > 0) {
+				fprintf(output_file,"PNPMODEL=%s\n",pnpModel.ascii());
+			}
+			if (description.length() > 0) {
+				fprintf(output_file,"DESCRIPTION=%s\n",description.ascii());
+			}
 		}
-
-		pclose(file);
-	}
-	else {
-		fprintf(stderr, "Can't open driver file : %s\n", ppdfilename);
-		return 0;
+		else {
+			useFallbackExtractionMethod = true;
+		}
 	}
 
-	free(filename);
-	filename = NULL;
+	if (useFallbackExtractionMethod) {
+		char *filename;
+		int n = strlen(origin)+strlen(" cat ")+strlen(ppdfilename);
+		filename = (char*)malloc(n*sizeof(char)+1);
+		memset(filename,0,n);
+		strcat(filename, origin);
+		strcat(filename, " cat ");
+		strcat(filename, ppdfilename);
+	
+		FILE* file = popen(filename, "r");
+		if (file) {
+			char * line = NULL;
+			size_t len = 0;
+			ssize_t read;
+	
+			fprintf(output_file,"FILE=compressed-ppd:%s:%s\n", origin, ppdfilename);
+	
+			while ((read = getline(&line, &len, file)) != -1) {
+				PROCESS_PPD_FILE_CONTENTS
+			}
+			if (line) {
+				free(line);
+			}
+	
+			pclose(file);
+		}
+		else {
+			fprintf(stderr, "Can't open driver file : %s\n", ppdfilename);
+			return 0;
+		}
+	
+		free(filename);
+		filename = NULL;
+	}
 
 	return 1;
 }

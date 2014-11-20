@@ -30,13 +30,14 @@
 
 char	**files = NULL;
 char	**fileorigins = NULL;
+char	**filemetadata = NULL;
 int	nfiles = 0, maxfiles = 0;
 int	nhandlers = 0, maxhandlers = 0;
 int	nlibs = 0, maxlibs = 0;
 typedef struct
 {
 	void (*init)(const char*);
-	int (*parse)(const char*, const char*, FILE*);
+	int (*parse)(const char*, const char*, const char*, FILE*);
 	char	*name;
 	int	namelen;
 } handler;
@@ -60,7 +61,7 @@ void freeHandlers(void)
 	free(handlers);
 }
 
-void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, const char*, FILE*))
+void registerHandler(const char *name, void(*initf)(const char*), int(*parsef)(const char*, const char*, const char*, FILE*))
 {
 	handler	*h = (handler*)malloc(sizeof(handler));
 	h->init = initf;
@@ -110,6 +111,7 @@ void initFiles(void)
 	maxfiles = 100;
 	files = (char**)malloc(sizeof(char*) * maxfiles);
 	fileorigins = (char**)malloc(sizeof(char*) * maxfiles);
+	filemetadata = (char**)malloc(sizeof(char*) * maxfiles);
 }
 
 void freeFiles(void)
@@ -118,8 +120,10 @@ void freeFiles(void)
 	for (i=0; i<nfiles; i++)
 		free(files[i]);
 		free(fileorigins[i]);
+		free(filemetadata[i]);
 	free(files);
 	free(fileorigins);
+	free(filemetadata);
 }
 
 void checkSize(void)
@@ -129,16 +133,18 @@ void checkSize(void)
 		maxfiles += 100;
 		files = (char**)realloc(files, sizeof(char*) * maxfiles);
 		fileorigins = (char**)realloc(fileorigins, sizeof(char*) * maxfiles);
+		filemetadata = (char**)realloc(filemetadata, sizeof(char*) * maxfiles);
 	}
 }
 
-void addFile(const char *filename, const char *origin)
+void addFile(const char *filename, const char *origin, const char *metadata)
 {
 	if (maxfiles == 0)
 		initFiles();
 	checkSize();
 	files[nfiles] = strdup(filename);
 	fileorigins[nfiles] = strdup(origin);
+	filemetadata[nfiles] = strdup(metadata);
 	nfiles++;
 }
 
@@ -273,7 +279,7 @@ int getMaticPrinterInfos(const char *base, const char *id, char *make, char *mod
 	return 1;
 }
 
-int parseMaticFile(const char *driver, const char *origin, FILE *output)
+int parseMaticFile(const char *driver, const char *origin, const char *metadata, FILE *output)
 {
 	FILE	*drFile;
 	char	name[32] = {0},
@@ -377,7 +383,7 @@ void initMatic(const char *base)
 			continue;
 		else if (!S_ISREG(st.st_mode))
 			continue;
-		addFile(drFile, "");
+		addFile(drFile, "", "");
 	}
 	closedir(foodir);
 }
@@ -443,7 +449,7 @@ int execute(int argc, char *argv[])
 		for (hi=0; hi<nhandlers; hi++)
 			if (strncmp(files[i], handlers[hi]->name, handlers[hi]->namelen) == 0)
 			{
-				handlers[hi]->parse(files[i]+handlers[hi]->namelen, fileorigins[i], dbFile);
+				handlers[hi]->parse(files[i]+handlers[hi]->namelen, fileorigins[i], filemetadata[i], dbFile);
 				break;
 			}
 		fprintf(stdout, "%d\n", i);
