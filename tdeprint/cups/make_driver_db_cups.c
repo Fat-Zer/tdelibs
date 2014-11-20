@@ -164,7 +164,18 @@ void initPpd(const char *dirname)
 					char * pos2 = strstr(pos1 + 1, "\"");
 					if (pos2 >= 0) {
 						*pos2 = 0;
-						addFile(line+1, dirname);
+						char * pos3 = strstr(pos1 + 1, ":");
+						if (pos3 >= 0) {
+							char *ppduri;
+							int n2 = strlen("compressed-ppd:")+strlen(pos3+1);
+							ppduri = (char*)malloc(n2*sizeof(char)+1);
+							memset(ppduri,0,n2);
+							strcat(ppduri, "compressed-ppd:");
+							strcat(ppduri, pos3+1);
+							addFile(ppduri, dirname);
+							free(ppduri);
+							ppduri = NULL;
+						}
 					}
 				}
 			}
@@ -232,7 +243,7 @@ int parseCompressedPpdFile(const char *ppdfilename, const char *origin, FILE *ou
 		size_t len = 0;
 		ssize_t read;
 
-		fprintf(output_file,"FILE=foomatic-db-compressed-ppds:%s\n",ppdfilename);
+		fprintf(output_file,"FILE=compressed-ppd:%s:%s\n", origin, ppdfilename);
 
 		while ((read = getline(&line, &len, file)) != -1) {
 			PROCESS_PPD_FILE_CONTENTS
@@ -257,7 +268,7 @@ int parseCompressedPpdFile(const char *ppdfilename, const char *origin, FILE *ou
 int main(int argc, char *argv[])
 {
 	registerHandler("ppd:", initPpd, parsePpdFile);
-	registerHandler("foomatic-db-compressed-ppds:", initPpd, parseCompressedPpdFile);
+	registerHandler("compressed-ppd:", initPpd, parseCompressedPpdFile);
 	initFoomatic();
 	return execute(argc, argv);
 }
