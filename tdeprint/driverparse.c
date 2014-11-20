@@ -117,10 +117,11 @@ void initFiles(void)
 void freeFiles(void)
 {
 	int	i;
-	for (i=0; i<nfiles; i++)
+	for (i=0; i<nfiles; i++) {
 		free(files[i]);
 		free(fileorigins[i]);
 		free(filemetadata[i]);
+	}
 	free(files);
 	free(fileorigins);
 	free(filemetadata);

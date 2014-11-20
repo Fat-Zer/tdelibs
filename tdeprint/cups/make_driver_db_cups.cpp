@@ -276,10 +276,15 @@ int parseCompressedPpdFile(const char *ppdfilename, const char *origin, const ch
 				}
 			}
 
+			manufacturer = manufacturer.stripWhiteSpace();
+			modelName = modelName.stripWhiteSpace();
+			driver = driver.stripWhiteSpace();
+
 			TQStringList driverList = TQStringList::split(",", driver, TRUE);
 			driver = driverList[0];
 			if (driver.startsWith("D")) {
 				driver = driver.mid(1);
+				driver = driver.stripWhiteSpace();
 			}
 			model = manufacturer + " " + modelName + " " + driver;
 			description = description + " [" + languageVersion + "]";

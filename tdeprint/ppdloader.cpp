@@ -24,8 +24,10 @@
 #include <kfilterdev.h>
 #include <kdebug.h>
 #include <tdelocale.h>
+#include <tdetempfile.h>
 #include <tqfile.h>
 #include <math.h>
+#include <stdlib.h>
 
 void tdeprint_ppdscanner_init( TQIODevice* );
 void tdeprint_ppdscanner_terminate( bool deleteIt = true );
@@ -119,12 +121,62 @@ PPDLoader::~PPDLoader()
 
 DrMain* PPDLoader::readFromFile( const TQString& filename )
 {
+	bool ppdFilenameIsTempFile = false;
+	TQString ppdFilename = filename;
+
+	if (filename.startsWith("compressed-ppd:")) {
+		KTempFile tempFile(TQString::null, "ppd", 0600);
+		tempFile.setAutoDelete(false);
+		ppdFilename = tempFile.name();
+
+		TQStringList filenameParts = TQStringList::split(":", filename);
+		TQString databaseFilename = TQString::null;
+		TQString compressedFilename = TQString::null;
+		int i = 0;
+		for (TQStringList::Iterator it = filenameParts.begin(); it != filenameParts.end(); ++it) {
+			if (i == 1) {
+				databaseFilename = *it;
+			}
+			else if (i > 1) {
+				compressedFilename += *it;
+			}
+			i++;
+		}
+
+		TQString command = databaseFilename + " cat " + compressedFilename;
+
+		FILE* file = popen(command.ascii(), "r");
+		if (file) {
+			char * line = NULL;
+			size_t len = 0;
+			ssize_t read;
+
+			FILE* tmpFileStream = tempFile.fstream();
+
+			while ((read = getline(&line, &len, file)) != -1) {
+				fputs(line, tmpFileStream);
+			}
+			if (line) {
+				free(line);
+			}
+
+			tempFile.close();
+			pclose(file);
+		}
+		else {
+			fprintf(stderr, "Can't open driver file : %s\n", compressedFilename.ascii());
+			return 0;
+		}
+
+		ppdFilenameIsTempFile = true;
+	}
+
 	// Initialization
 	m_groups.clear();
 	m_option = NULL;
 	m_fonts.clear();
 	// Open driver file
-	TQIODevice *d = KFilterDev::deviceForFile( filename );
+	TQIODevice *d = KFilterDev::deviceForFile( ppdFilename );
 	if ( d && d->open( IO_ReadOnly ) )
 	{
 		DrMain *driver = new DrMain;
@@ -153,6 +205,9 @@ DrMain* PPDLoader::readFromFile( const TQString& filename )
 			processPageSizes( driver );
 			if ( !m_fonts.isEmpty() )
 				driver->set( "fonts", m_fonts.join( "," ) );
+			if (ppdFilenameIsTempFile) {
+				driver->set("temporary-cppd", ppdFilename);
+			}
 			return driver;
 		}
 		else
@@ -161,7 +216,7 @@ DrMain* PPDLoader::readFromFile( const TQString& filename )
 		m_ps.clear();
 	}
 	else
-		kdWarning( 500 ) << "PPD read error, unable to open device for file " << filename << endl;
+		kdWarning( 500 ) << "PPD read error, unable to open device for file " << ppdFilename << endl;
 	return 0;
 }
 

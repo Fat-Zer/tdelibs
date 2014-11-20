@@ -110,6 +110,8 @@ DrMain::~DrMain()
 	// remove a possible temporary file
 	if (has("temporary"))
 		TQFile::remove(get("temporary"));
+	if (has("temporary-cppd"))
+		TQFile::remove(get("temporary-cppd"));
 }
 
 DriverItem* DrMain::createTreeView(TQListView *parent)

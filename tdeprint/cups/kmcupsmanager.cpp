@@ -114,6 +114,8 @@ TQString KMCupsManager::driverDirectory()
 	d.append(":/usr/local/share/foomatic/db/source");
 #else
 	d.append(":/usr/share/foomatic/db/source");
+	// compressed foomatic support
+	d.append(":/usr/lib/cups/driver/foomatic-db-compressed-ppds");
 #endif
 	return d;
 }
@@ -626,6 +628,8 @@ DrMain* KMCupsManager::loadFileDriver(const TQString& filename)
 {
 	if (filename.startsWith("ppd:"))
 		return loadDriverFile(filename.mid(4));
+	else if (filename.startsWith("compressed-ppd:"))
+		return loadDriverFile(filename);
 	else if (filename.startsWith("foomatic/"))
 		return loadMaticDriver(filename);
 	else
@@ -685,7 +689,7 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 
 DrMain* KMCupsManager::loadDriverFile(const TQString& fname)
 {
-	if (TQFile::exists(fname))
+	if ((fname.startsWith("compressed-ppd:")) || TQFile::exists(fname))
 	{
 		TQString msg; /* possible error message */
 		DrMain *driver = PPDLoader::loadDriver( fname, &msg );
@@ -704,7 +708,11 @@ DrMain* KMCupsManager::loadDriverFile(const TQString& fname)
 void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 {
 	kdDebug( 500 ) << "Saving PPD file with template=" << driver->get( "template" ) << endl;
-	TQIODevice *in = KFilterDev::deviceForFile( driver->get( "template" ) );
+	TQString templateFile = driver->get( "template" );
+	if (templateFile.startsWith("compressed-ppd:")) {
+		templateFile = driver->get( "temporary-cppd" );
+	}
+	TQIODevice *in = KFilterDev::deviceForFile( templateFile );
 	TQFile	out(filename);
 	if (in && in->open(IO_ReadOnly) && out.open(IO_WriteOnly))
 	{
