@@ -47,7 +47,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ Print,         TDEStdAccel::Print, "file_print", I18N_NOOP("&Print..."), 0, "document-print" },
 	{ PrintPreview,  TDEStdAccel::AccelNone, "file_print_preview", I18N_NOOP("Print Previe&w..."), 0, "document-print-preview" },
 	{ Mail,          TDEStdAccel::AccelNone, "file_mail", I18N_NOOP("&Mail..."), 0, "mail-send" },
-	{ Quit,          TDEStdAccel::Quit, "file_quit", I18N_NOOP("&Quit"), 0, "exit" },
+	{ Quit,          TDEStdAccel::Quit, "file_quit", I18N_NOOP("&Quit"), 0, "application-exit" },
 
 	{ Undo,          TDEStdAccel::Undo, "edit_undo", I18N_NOOP("&Undo"), 0, "edit-undo" },
 	{ Redo,          TDEStdAccel::Redo, "edit_redo", I18N_NOOP("Re&do"), 0, "edit-redo" },
