@@ -1737,7 +1737,7 @@ bool DCOPClient::call(const TQCString &remApp, const TQCString &remObjId,
                       TQCString& replyType, TQByteArray &replyData,
                       bool useEventLoop)
 {
-    return call( remApp, remObjId, remFun, data, replyType, replyData, useEventLoop, -1 );
+    return call( remApp, remObjId, remFun, data, replyType, replyData, useEventLoop, -1, false );
 }
 
 bool DCOPClient::call(const TQCString &remApp, const TQCString &remObjId,
@@ -1745,23 +1745,31 @@ bool DCOPClient::call(const TQCString &remApp, const TQCString &remObjId,
                       TQCString& replyType, TQByteArray &replyData,
                       bool useEventLoop, int timeout)
 {
+    return call( remApp, remObjId, remFun, data, replyType, replyData, useEventLoop, timeout, false );
+}
+
+bool DCOPClient::call(const TQCString &remApp, const TQCString &remObjId,
+                      const TQCString &remFun, const TQByteArray &data,
+                      TQCString& replyType, TQByteArray &replyData,
+                      bool useEventLoop, int timeout, bool forceRemote)
+{
     if (remApp.isEmpty())
         return false;
     DCOPClient *localClient = findLocalClient( remApp );
 
-    if ( localClient ) {
+    if ( localClient && !forceRemote ) {
         bool saveTransaction = d->transaction;
         TQ_INT32 saveTransactionId = d->transactionId;
         TQCString saveSenderId = d->senderId;
 
         d->senderId = 0; // Local call
         bool b = localClient->receive(  remApp, remObjId, remFun, data, replyType, replyData );
-        
+
         TQ_INT32 id = localClient->transactionId();
         if (id) {
            // Call delayed. We have to wait till it has been processed.
            do {
-              TQApplication::eventLoop()->processEvents( TQEventLoop::WaitForMore);
+              TQApplication::eventLoop()->processEvents(TQEventLoop::WaitForMore);
            } while( !localClient->isLocalTransactionFinished(id, replyType, replyData));
            b = true;
         }

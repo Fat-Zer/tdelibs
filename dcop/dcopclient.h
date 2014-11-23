@@ -292,12 +292,25 @@ class DCOP_EXPORT DCOPClient : public TQObject
    * @param useEventLoop if true the event loop will be started when
    *         the call blocks too long
    * @param timeout timeout for the call in miliseconds, or -1 for no timeout
+   * @param forceRemote if set do not allow calls within the current application
+   *         to bypass the remote call mechanism
    * @return true if successful, false otherwise
    *
    * @since 3.2
    *
    * @see send()
    */
+
+  bool call(const TQCString &remApp, const TQCString &remObj,
+	    const TQCString &remFun, const TQByteArray &data,
+	    TQCString& replyType, TQByteArray &replyData,
+	    bool useEventLoop/*=false*/, int timeout/*=-1*/,
+	    bool forceRemote/*=false*/);
+
+  /**
+   * @deprecated
+   */
+  // KDE4 merge with above
   bool call(const TQCString &remApp, const TQCString &remObj,
 	    const TQCString &remFun, const TQByteArray &data,
 	    TQCString& replyType, TQByteArray &replyData,

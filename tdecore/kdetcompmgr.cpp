@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2011 Timothy Pearson <kb9vqf@pearsoncomputing.net>      *
+ *   Copyright (C) 2011-2014 Timothy Pearson <kb9vqf@pearsoncomputing.net> *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -44,7 +44,7 @@ static TDECmdLineOptions options[] =
 int main(int argc, char **argv)
 {
     TDEAboutData about("kdetcompmgr", I18N_NOOP("kdetcompmgr"), version, description,
-		     TDEAboutData::License_GPL, "(C) 2011 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
+		     TDEAboutData::License_GPL, "(C) 2011-2014 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
     about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
     TDECmdLineArgs::init(argc, argv, &about);
     TDECmdLineArgs::addCmdLineOptions( options );
@@ -54,21 +54,19 @@ int main(int argc, char **argv)
     TDEConfig config("twinrc", true);
     config.setGroup( "Notification Messages" );
     if (!config.readBoolEntry("UseTranslucency",false)) {
-        // Attempt to load the kompmgr pid file
-        const char *home;
-        struct passwd *p;
-        p = getpwuid(getuid());
-        if (p)
-            home = p->pw_dir;
-        else
-            home = getenv("HOME");
+        // Attempt to load the compton-tde pid file
         char *filename;
-        const char *configfile = "/.kompmgr.pid";
-        int n = strlen(home)+strlen(configfile)+1;
-        filename = (char*)malloc(n*sizeof(char));
+        const char *pidfile = "compton-tde.pid";
+        char uidstr[sizeof(uid_t)*8+1];
+        sprintf(uidstr, "%d", getuid());
+        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
+        filename = (char*)malloc(n*sizeof(char)+1);
         memset(filename,0,n);
-        strcat(filename, home);
-        strcat(filename, configfile);
+        strcat(filename, P_tmpdir);
+        strcat(filename, "/.");
+        strcat(filename, uidstr);
+        strcat(filename, "-");
+        strcat(filename, pidfile);
 
         // Now that we did all that by way of introduction...read the file!
         FILE *pFile;
@@ -76,7 +74,7 @@ int main(int argc, char **argv)
         pFile = fopen(filename, "r");
         int kompmgrpid = 0;
         if (pFile) {
-            printf("[kdetcompmgr] Using '%s' as kompmgr pidfile\n", filename);
+            printf("[kdetcompmgr] Using '%s' as compton-tde pidfile\n", filename);
             // obtain file size
             fseek (pFile , 0 , SEEK_END);
             unsigned long lSize = ftell (pFile);
