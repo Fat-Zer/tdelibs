@@ -37,7 +37,7 @@ install( FILES
     euphoria.xml e.xml fasm.xml ferite.xml fgl-4gl.xml fgl-per.xml fortran.xml freebasic.xml
     fsharp.xml fstab.xml ftl.xml gap.xml gcc.xml gdb.xml gdl.xml gettext.xml git-ignore.xml
     git-rebase.xml gitolite.xml glosstex.xml glsl.xml gnuassembler.xml gnuplot.xml go.xml
-    grammar.xml haml.xml haskell.xml haxe.xml html.xml hunspell-aff.xml hunspell-dat.xml 
+    grammar.xml hamlet.xml haml.xml haskell.xml haxe.xml html.xml hunspell-aff.xml hunspell-dat.xml 
     hunspell-dic.xml hunspell-idx.xml idconsole.xml idl.xml ilerpg.xml inform.xml
     ini.xml isocpp.xml jam.xml javadoc.xml javascript.xml java.xml json.xml
     jsp.xml julia.xml j.xml kbasic.xml latex.xml ldif.xml ld.xml less.xml lex.xml lilypond.xml
