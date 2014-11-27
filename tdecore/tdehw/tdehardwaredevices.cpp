@@ -2497,6 +2497,10 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
+
+			if (TQString(udev_device_get_property_value(dev, "UDISKS_IGNORE")) == "1") {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Hidden;
+			}
 	
 			if ((disktype & TDEDiskDeviceType::CDROM)
 				|| (disktype & TDEDiskDeviceType::CDR)

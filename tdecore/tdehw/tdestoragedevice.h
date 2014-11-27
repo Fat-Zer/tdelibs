@@ -105,6 +105,7 @@ enum TDEDiskDeviceStatus {
 	UsesDevice =		0x00000020,
 	ContainsFilesystem =	0x00000040,
 	Hotpluggable =		0x00000080,
+	Hidden =		0x00000100,
 	Other =			0x80000000
 };
 
