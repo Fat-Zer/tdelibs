@@ -158,6 +158,11 @@ public:
 	const TDEAboutData * aboutData() const;
 
 	/**
+	 * @return the module's handbookDocPath()
+	 */
+	TQString handbookDocPath() const;
+
+	/**
 	 * @return the module's handbookSection()
 	 */
 	TQString handbookSection() const;

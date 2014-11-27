@@ -598,6 +598,18 @@ const TDEAboutData * TDECModuleProxy::aboutData() const
 	}
 }
 
+TQString TDECModuleProxy::handbookDocPath() const
+{
+	if( !d->rootMode ) {
+		return realModule() ? realModule()->handbookDocPath() : TQString::null;
+	}
+	else {
+	/* This needs fixing, perhaps cache a handbookSection() copy
+	 * while in root mode? */
+		return TQString::null;
+	}
+}
+
 TQString TDECModuleProxy::handbookSection() const
 {
 	if( !d->rootMode ) {

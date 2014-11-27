@@ -208,6 +208,11 @@ TQString TDECModule::quickHelp() const
     return d->_quickHelp;
 }
 
+TQString TDECModule::handbookDocPath() const
+{
+    return TQString::null;
+}
+
 TQString TDECModule::handbookSection() const
 {
     return TQString::null;

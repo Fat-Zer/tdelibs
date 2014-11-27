@@ -178,6 +178,16 @@ public:
   virtual TQString quickHelp() const;
 
   /**
+   * If the handbook's docPath string of the currently displayed content
+   * (for example in tabbed control center modules) differs from the docPath string
+   * of the currently displaying container, this method returns the relevant docPath string
+   *
+   * @returns a TQString containing the relevant handbook's docPath string or TQString::null 
+   *          if no specific docPath string is required (i.e. the container docPath is sufficient)
+   */
+  virtual TQString handbookDocPath() const;
+  
+  /**
    * If a specific handbook section is relevant to the currently displayed content
    * (for example tabbed control center modules) this method returns the relevant section name
    *

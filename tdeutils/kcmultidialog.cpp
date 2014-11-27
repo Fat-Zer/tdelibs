@@ -189,10 +189,14 @@ void KCMultiDialog::slotHelp()
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it ) {
         if( pageIndex( ( TQWidget * )( *it ).kcm->parent() ) == curPageIndex )
         {
-            docPath = ( *it ).kcm->moduleInfo().docPath();
-            TDECModuleProxy * m = ( *it ).kcm;
+            TDECModuleProxy *m = (*it).kcm;
+            
+            docPath = m->handbookDocPath();
+            if (docPath == TQString::null)
+              docPath = m->moduleInfo().docPath();
+                        
             TQString section = m->handbookSection();
-            if (section != "") {
+            if (section != TQString::null) {
                 docPath = TQString( "%1#%2" ).arg( docPath ).arg( section );
             }
             break;
