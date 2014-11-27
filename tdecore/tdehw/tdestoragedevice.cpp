@@ -25,6 +25,7 @@
 #include <sys/ioctl.h>
 #include <linux/cdrom.h>
 
+#include <tqregexp.h>
 #include <tqpixmap.h>
 #include <tqfile.h>
 
@@ -489,13 +490,26 @@ void TDEStorageDevice::internalSetSlaveDevices(TQStringList sd) {
 	m_slaveDevices = sd;
 }
 
+TQString decodeHexEncoding(TQString str) {
+	TQRegExp hexEncRegExp("\\\\x[0-9A-Fa-f]{1,2}");
+	hexEncRegExp.setMinimal(false);
+	hexEncRegExp.setCaseSensitive(true);
+	int s = -1;
+
+	while((s = hexEncRegExp.search(str, s+1))>=0){
+		str.replace(s, hexEncRegExp.cap(0).length(), TQChar((char)strtol(hexEncRegExp.cap(0).mid(2).ascii(), NULL, 16)));
+	}
+
+	return str;
+}
+
 TQString TDEStorageDevice::friendlyName() {
 	// Return the actual storage device name
 	TQString devicevendorid = vendorEncoded();
 	TQString devicemodelid = modelEncoded();
 
-	devicevendorid.replace("\\x20", " ");
-	devicemodelid.replace("\\x20", " ");
+	devicevendorid = decodeHexEncoding(devicevendorid);
+	devicemodelid = decodeHexEncoding(devicemodelid);
 
 	devicevendorid = devicevendorid.stripWhiteSpace();
 	devicemodelid = devicemodelid.stripWhiteSpace();
@@ -637,7 +651,7 @@ TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
 		ret = DesktopIcon("tape_unmount", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
-		ret = DesktopIcon("camera_unmount");
+		ret = DesktopIcon("camera_unmount", size);
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {

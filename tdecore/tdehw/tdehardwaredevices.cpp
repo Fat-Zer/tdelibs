@@ -402,8 +402,8 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 			TDEGenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
-					emit hardwareRemoved(hwdevice);
-					emit hardwareEvent(TDEHardwareEvent::HardwareRemoved, hwdevice->uniqueID());
+					// Temporarily disable auto-deletion to ensure object validity when calling the Removed events below
+					m_deviceList.setAutoDelete(false);
 
 					// If the device is a storage device and has a slave, update it as well
 					if (hwdevice->type() == TDEGenericDeviceType::Disk) {
@@ -422,6 +422,13 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 					else {
 						m_deviceList.remove(hwdevice);
 					}
+
+					emit hardwareRemoved(hwdevice);
+					emit hardwareEvent(TDEHardwareEvent::HardwareRemoved, hwdevice->uniqueID());
+
+					// Reenable auto-deletion and delete the removed device object
+					m_deviceList.setAutoDelete(true);
+					delete hwdevice;
 
 					break;
 				}
