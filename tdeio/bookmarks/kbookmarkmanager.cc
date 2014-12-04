@@ -255,6 +255,7 @@ void KBookmarkManager::convertToXBEL( TQDomElement & group )
     {
         TQDomElement e = n.toElement();
         if ( !e.isNull() )
+	{
             if ( e.tagName() == "TEXT" )
             {
                 e.setTagName("title");
@@ -280,6 +281,7 @@ void KBookmarkManager::convertToXBEL( TQDomElement & group )
                 convertToXBEL( e );
             }
             else
+	    {
                 if ( e.tagName() == "BOOKMARK" )
                 {
                     e.setTagName("bookmark"); // so much difference :-)
@@ -294,7 +296,11 @@ void KBookmarkManager::convertToXBEL( TQDomElement & group )
                     titleElem.appendChild( e.ownerDocument().createTextNode( text ) );
                 }
                 else
+		{
                     kdWarning(7043) << "Unknown tag " << e.tagName() << endl;
+		}
+	    }
+	}
         n = n.nextSibling();
     }
 }

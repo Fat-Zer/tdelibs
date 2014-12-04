@@ -296,16 +296,21 @@ KURL KBookmark::url() const
 TQString KBookmark::icon() const
 {
     TQString icon = element.attribute("icon");
-    if ( icon.isEmpty() )
+    if ( icon.isEmpty() ) {
         // Default icon depends on URL for bookmarks, and is default directory
         // icon for groups.
-        if ( isGroup() )
+        if ( isGroup() ) {
             icon = "bookmark_folder";
-        else
-            if ( isSeparator() )
+	}
+        else {
+            if ( isSeparator() ) {
                 icon = "eraser"; // whatever
-            else
+	    }
+            else {
                 icon = KMimeType::iconForURL( url() );
+	    }
+	}
+    }
     return icon;
 }
 

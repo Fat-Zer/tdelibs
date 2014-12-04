@@ -734,21 +734,25 @@ void SlaveBase::sigsegv_handler(int sig)
     // call malloc.. and get in a nice recursive malloc loop
     char buffer[120];
     snprintf(buffer, sizeof(buffer), "tdeioslave: ####### CRASH ###### protocol = %s pid = %d signal = %d\n", s_protocol, getpid(), sig);
-    write(2, buffer, strlen(buffer));
+    if (write(2, buffer, strlen(buffer)) >= 0) {
 #ifdef SECURE_DEBUG
 	kdBacktraceFD();
 #else // SECURE_DEBUG
-	// Screw the malloc issue! We want nice demangled backtrace! 
+	// Screw the malloc issue! We want nice demangled backtraces!
 	// Anyway we are not supposed to go into infinite loop because next signal
-	// will kill us. If you are unlucky and  there is a second crash during 
-	// backtrase in your system, you can define SECURE_DEBUG to avoid it 
+	// will kill us. If you are unlucky and  there is a second crash during
+	// backtrase in your system, you can define SECURE_DEBUG to avoid it
 
 	// Extra sync here so we are sure even if the backtrace will fail
 	// we will pass at least some crash message.
 	fsync(2);
 	TQString backtrace = kdBacktrace();
-	write(2, backtrace.ascii(), backtrace.length());
+	if (write(2, backtrace.ascii(), backtrace.length()) < 0) {
+		// FIXME
+		// Could not write crash information
+	}
 #endif // SECURE_DEBUG
+    }
     ::exit(1);
 #endif
 }

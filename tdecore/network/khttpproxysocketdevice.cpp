@@ -170,11 +170,14 @@ bool KHttpProxySocketDevice::connect(const TQString& node, const TQString& servi
 bool KHttpProxySocketDevice::parseServerReply()
 {
   // make sure we're connected
-  if (!TDESocketDevice::connect(d->proxy))
-    if (error() == InProgress)
+  if (!TDESocketDevice::connect(d->proxy)) {
+    if (error() == InProgress) {
       return true;
-    else if (error() != NoError)
+    }
+    else if (error() != NoError) {
       return false;
+    }
+  }
 
   if (!d->request.isEmpty())
     {

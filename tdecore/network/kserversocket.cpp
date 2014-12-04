@@ -292,7 +292,7 @@ KActiveSocketBase* TDEServerSocket::accept()
 	}
       else if (!listen())
 	// error happened during listen
-	return false;
+	return 0L;
     }
 
   // check to see if we're doing a timeout

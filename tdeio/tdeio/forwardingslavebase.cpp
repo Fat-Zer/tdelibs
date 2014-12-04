@@ -69,7 +69,6 @@ void ForwardingSlaveBase::prepareUDSEntry(TDEIO::UDSEntry &entry,
     kdDebug() << "ForwardingSlaveBase::prepareUDSEntry: listing=="
               << listing << endl;
 
-    bool url_found = false;
     TQString name;
     KURL url;
 
@@ -87,7 +86,6 @@ void ForwardingSlaveBase::prepareUDSEntry(TDEIO::UDSEntry &entry,
             kdDebug() << "Name = " << name << endl;
 	    break;
         case TDEIO::UDS_URL:
-            url_found = true;
             url = (*it).m_str;
 	    if (listing)
             {

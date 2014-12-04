@@ -533,11 +533,15 @@ void SlaveInterface::sigpipe_handler(int)
 {
     int saved_errno = errno;
     // Using kdDebug from a signal handler is not a good idea.
-#ifndef NDEBUG    
+#ifndef NDEBUG
     char msg[1000];
     sprintf(msg, "*** SIGPIPE *** (ignored, pid = %ld)\n", (long) getpid());
-    write(2, msg, strlen(msg));
-#endif    
+    if (write(2, msg, strlen(msg)) < 0) {
+        // FIXME
+        // Could not write error message
+        // Triple fault? ;-)
+    }
+#endif
 
     // Do nothing.
     // dispatch will return false and that will trigger ERR_SLAVE_DIED in slave.cpp

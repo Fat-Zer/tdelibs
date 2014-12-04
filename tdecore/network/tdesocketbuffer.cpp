@@ -183,7 +183,7 @@ TQ_LONG TDESocketBuffer::consumeBuffer(char *destbuffer, TQ_LONG maxlen, bool di
     {
       // calculate how much we'll copy
       size_t to_copy = (*it).size() - offset;
-      if (to_copy > maxlen)
+      if (to_copy > (size_t)maxlen)
 	to_copy = maxlen;
 
       // do the copying
@@ -234,12 +234,12 @@ TQ_LONG TDESocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
     return 0;
 
   TQMutexLocker locker(&m_mutex);
-  
+
   TQValueListIterator<TQByteArray> it = m_list.begin(),
     end = m_list.end();
   TQIODevice::Offset offset = m_offset;
   TQ_LONG written = 0;
-  
+
   // walk the buffer
   while (it != end && (len || len == -1))
     {
@@ -249,8 +249,9 @@ TQ_LONG TDESocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
       // question is: how big should that buffer be? 2 kB should be enough
 
       TQ_ULONG bufsize = 1460;
-      if (len != -1 && len < bufsize)
+      if ((len != -1) && ((TQ_ULONG)len < bufsize)) {
 	bufsize = len;
+      }
       TQByteArray buf(bufsize);
       TQ_LONG count = 0;
 
@@ -263,7 +264,7 @@ TQ_LONG TDESocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
 	}
 
       // see if we can still fit more
-      if (count < bufsize && it != end)
+      if ((TQ_ULONG)count < bufsize && it != end)
 	{
 	  // getting here means this buffer (*it) is larger than
 	  // (bufsize - count) (even for count == 0).
