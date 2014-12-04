@@ -441,13 +441,17 @@ void Kded::updateResourceList()
 void Kded::crashHandler(int)
 {
    DCOPClient::emergencyClose();
-   if (_self) // Don't restart if we were closing down
-      system("kded");
-tqWarning("Last DCOP call before KDED crash was from application '%s'\n"
+   if (_self) { // Don't restart if we were closing down
+      tqWarning("Last DCOP call before KDED crash was from application '%s'\n"
          "to object '%s', function '%s'.",
          DCOPClient::postMortemSender(),
          DCOPClient::postMortemObject(),
          DCOPClient::postMortemFunction());
+      tqWarning("Restarting KDED...\n");
+      if (system("kded") < 0) {
+         tqWarning("Unable to restart KDED!\n");
+      }
+   }
 }
 
 void Kded::installCrashHandler()
