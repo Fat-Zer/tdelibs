@@ -200,7 +200,6 @@ bool TDEApplication::s_dcopClientNeedsPostInit = false;
 #ifdef Q_WS_X11
 static Atom atom_DesktopWindow;
 static Atom atom_NetSupported;
-static Atom kde_xdnd_drop;
 #endif
 
 #if defined(Q_WS_X11) && defined(COMPOSITE)
@@ -1020,9 +1019,6 @@ void TDEApplication::init(bool GUIenabled)
 
       atoms[n] = &atom_NetSupported;
       names[n++] = (char *) "_NET_SUPPORTED";
-
-      atoms[n] = &kde_xdnd_drop;
-      names[n++] = (char *) "XdndDrop";
 
       XInternAtoms( tqt_xdisplay(), names, n, false, atoms_return );
 
@@ -2173,43 +2169,6 @@ void TDEApplication::dcopBlockUserInput( bool b )
 #ifdef Q_WS_X11
 bool TDEApplication::x11EventFilter( XEvent *_event )
 {
-    switch ( _event->type ) {
-        case ClientMessage:
-        {
-#if KDE_IS_VERSION( 3, 90, 90 )
-#warning This should be already in Qt, check.
-#endif
-        // Workaround for focus stealing prevention not working when dragging e.g. text from KWrite
-        // to KDesktop -> the dialog asking for filename doesn't get activated. This is because
-        // Qt-3.2.x doesn't have concept of tqt_x_user_time at all, and Qt-3.3.0b1 passes the timestamp
-        // in the XdndDrop message in incorrect field (and doesn't update tqt_x_user_time either).
-        // Patch already sent, future Qt version should have this fixed.
-            if( _event->xclient.message_type == kde_xdnd_drop )
-                { // if the message is XdndDrop
-                if( _event->xclient.data.l[ 1 ] == 1 << 24     // and it's broken the way it's in Qt-3.2.x
-                    && _event->xclient.data.l[ 2 ] == 0
-                    && _event->xclient.data.l[ 4 ] == 0
-                    && _event->xclient.data.l[ 3 ] != 0 )
-                    {
-                    if( GET_QT_X_USER_TIME() == 0
-                        || NET::timestampCompare( _event->xclient.data.l[ 3 ], GET_QT_X_USER_TIME() ) > 0 )
-                        { // and the timestamp looks reasonable
-                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 3 ]); // update our tqt_x_user_time from it
-                        }
-                    }
-                else // normal DND, only needed until Qt updates tqt_x_user_time from XdndDrop
-                    {
-                    if( GET_QT_X_USER_TIME() == 0
-                        || NET::timestampCompare( _event->xclient.data.l[ 2 ], GET_QT_X_USER_TIME() ) > 0 )
-                        { // the timestamp looks reasonable
-                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 2 ]); // update our tqt_x_user_time from it
-                        }
-                    }
-                }
-        }
-	default: break;
-    }
-
     if ( kapp_block_user_input ) {
         switch ( _event->type  ) {
         case ButtonPress:
