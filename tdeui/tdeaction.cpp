@@ -772,9 +772,11 @@ void TDEAction::unplug( TQWidget *w )
 
 void TDEAction::plugAccel(TDEAccel *kacc, bool configurable)
 {
+#if 0 //ndef NDEBUG
   kdWarning(129) << "TDEAction::plugAccel(): call to deprecated action." << endl;
   kdDebug(129) << kdBacktrace() << endl;
   //kdDebug(129) << "TDEAction::plugAccel( kacc = " << kacc << " ): name \"" << name() << "\"" << endl;
+#endif
   if ( d->m_tdeaccel )
     unplugAccel();
 
@@ -795,7 +797,11 @@ void TDEAction::plugAccel(TDEAccel *kacc, bool configurable)
     //connect(d->m_tdeaccel, TQT_SIGNAL(keycodeChanged()), this, TQT_SLOT(slotKeycodeChanged()));
   }
   else
+  {
+#if 0 //ndef NDEBUG
     kdWarning(129) << "TDEAction::plugAccel( kacc = " << kacc << " ): TDEAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
+#endif
+  }
 }
 
 void TDEAction::unplugAccel()
