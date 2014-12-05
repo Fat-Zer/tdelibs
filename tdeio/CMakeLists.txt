@@ -36,6 +36,8 @@ link_directories(
 
 ##### other data ################################
 
+install( FILES tdeio.magic DESTINATION ${CONFIG_INSTALL_DIR}/magic )
+
 install( FILES
     application.desktop kurifilterplugin.desktop
     kcomprfilter.desktop kscan.desktop kdatatool.desktop

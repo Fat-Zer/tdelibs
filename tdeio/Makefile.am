@@ -34,9 +34,14 @@ libtdeio_la_LIBADD = kssl/libkssl.la tdeio/libtdeiocore.la \
 	../tdewallet/client/libtdewalletclient.la \
 	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 
+magicdir = $(kde_confdir)/magic
+magic_DATA = tdeio.magic
+
 kde_servicetypes_DATA = application.desktop kurifilterplugin.desktop \
                         kcomprfilter.desktop kscan.desktop kdatatool.desktop \
                         tdefileplugin.desktop tdecmodule.desktop
+
+EXTRA_DIST = $(kde_mime_DATA)
 
 update_DATA = tdeioslave.upd
 update_SCRIPTS = useragent.pl proxytype.pl
