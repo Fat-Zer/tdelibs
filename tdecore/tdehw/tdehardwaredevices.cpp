@@ -311,7 +311,7 @@ TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
 
 TDECPUDevice* TDEHardwareDevices::findCPUBySystemPath(TQString syspath, bool inCache=true) {
 	TDECPUDevice* cdevice;
-	
+
 	// Look for the device in the cache first
 	if(inCache && !m_cpuByPathCache.isEmpty()) {
 		cdevice = m_cpuByPathCache.find(syspath);
@@ -328,7 +328,7 @@ TDECPUDevice* TDEHardwareDevices::findCPUBySystemPath(TQString syspath, bool inC
 		}
 		return cdevice;
 	}
-	
+
 	return 0;
 }
 
@@ -660,7 +660,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 #endif
 
 	TDECPUDevice* firstCPU = NULL;
-	
+
 	// Read in other information from cpufreq, if available
 	for (processorNumber=0; processorNumber<processorCount; processorNumber++) {
 		cdevice = dynamic_cast<TDECPUDevice*>(findCPUBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
@@ -860,7 +860,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 		}
 	}
-	
+
 #ifdef CPUPROFILING
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
 	printf("TDEHardwareDevices::processModifiedCPUs() : end at %u [%u]\n", time2.tv_nsec, diff(time1,time2).tv_nsec);
@@ -1664,7 +1664,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 								match = false;
 							}
 						}
-		
+
 						if (match) {
 							rulesFile.setGroup("DeviceType");
 							TQString gentype = rulesFile.readEntry("GENTYPE");
@@ -1672,7 +1672,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 							if (!gentype.isNull()) {
 								desiredDeviceType = readGenericDeviceTypeFromString(gentype);
 							}
-		
+
 							// Handle main type
 							if (desiredDeviceType != device->type()) {
 								printf("[tdehardwaredevices] Rules file %s used to set device type for device at path %s\n", fi->absFilePath().ascii(), device->systemPath().ascii()); fflush(stdout);
@@ -1684,7 +1684,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 								}
 								device = createDeviceObjectForType(desiredDeviceType);
 							}
-	
+
 							// Parse subtype and store in m_externalSubtype for later
 							// This speeds things up considerably due to the expense of the file scanning/parsing/matching operation
 							device->m_externalSubtype = rulesFile.readListEntry("SUBTYPE", ',');
@@ -2407,7 +2407,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		else {
 			bool removable = false;
 			bool hotpluggable = false;
-	
+
 			// We can get the removable flag, but we have no idea if the device has the ability to notify on media insertion/removal
 			// If there is no such notification possible, then we should not set the removable flag
 			// udev can be such an amazing pain at times
@@ -2434,7 +2434,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			if (capabilities & GENHD_FL_MEDIA_CHANGE_NOTIFY) {
 				removable = true;
 			}
-	
+
 			// See if any other devices are exclusively using this device, such as the Device Mapper
 			TQStringList holdingDeviceNodes;
 			TQString holdersnodename = udev_device_get_syspath(dev);
@@ -2454,7 +2454,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					++holdersdirit;
 				}
 			}
-	
+
 			// See if any other physical devices underlie this device, for example when the Device Mapper is in use
 			TQStringList slaveDeviceNodes;
 			TQString slavesnodename = udev_device_get_syspath(dev);
@@ -2474,25 +2474,25 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					++slavedirit;
 				}
 			}
-	
+
 			// Determine generic disk information
 			TQString devicevendor(udev_device_get_property_value(dev, "ID_VENDOR"));
 			TQString devicemodel(udev_device_get_property_value(dev, "ID_MODEL"));
 			TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
-	
+
 			// Get disk specific info
 			TQString disklabel(TQString::fromLocal8Bit(udev_device_get_property_value(dev, "ID_FS_LABEL")));
 			TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
 			TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
 			TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
-	
+
 			device->internalSetVendorName(devicevendor);
 			device->internalSetVendorModel(devicemodel);
 			device->internalSetDeviceBus(devicebus);
-	
+
 			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
 			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
-	
+
 			disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
@@ -2501,7 +2501,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			if (TQString(udev_device_get_property_value(dev, "UDISKS_IGNORE")) == "1") {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Hidden;
 			}
-	
+
 			if ((disktype & TDEDiskDeviceType::CDROM)
 				|| (disktype & TDEDiskDeviceType::CDR)
 				|| (disktype & TDEDiskDeviceType::CDRW)
@@ -2532,7 +2532,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				// These drives are guaranteed to be optical
 				disktype = disktype | TDEDiskDeviceType::Optical;
 			}
-	
+
 			if (disktype & TDEDiskDeviceType::Floppy) {
 				// Floppy drives don't work well under udev
 				// I have to look for the block device name manually
@@ -2552,7 +2552,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						++floppyblkdirit;
 					}
 				}
-	
+
 				// Some interesting information can be gleaned from the CMOS type file
 				// 0 : Defaults
 				// 1 : 5 1/4 DD
@@ -2573,20 +2573,20 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				}
 				// FIXME
 				// Do something with the information in cmosstring
-	
+
 				if (devicenode.isNull()) {
 					// This floppy drive cannot be mounted, so ignore it
 					disktype = disktype & ~TDEDiskDeviceType::Floppy;
 				}
 			}
-	
+
 			if (devicetypestring.upper() == "CD") {
 				if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
 					diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
 				}
 				sdevice->internalSetMediaInserted((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) != ""));
 			}
-	
+
 			if (disktype & TDEDiskDeviceType::Zip) {
 				// A Zip drive does not advertise its status via udev, but it can be guessed from the size parameter
 				TQString zipnodename = systempath;
@@ -2602,18 +2602,18 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					sdevice->internalSetMediaInserted((zipsize.toInt() != 0));
 				}
 			}
-	
+
 			if (removable) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
 			}
 			if (hotpluggable) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
 			}
-	
+
 			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO") && (filesystemtype.upper() != "SWAP") && (!filesystemtype.isNull())) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
 			}
-	
+
 			// Set mountable flag if device is likely to be mountable
 			diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
 			if ((devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
@@ -2631,21 +2631,25 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			if (filesystemtype.upper() == "SWAP") {
 				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 			}
+			// Partition tables cannot be mounted
+			if (TQString(udev_device_get_property_value(dev, "ID_PART_TABLE_TYPE")) != "") {
+				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+			}
 			// If certain disk types do not report the presence of a filesystem, they are likely not mountable
 			if ((disktype & TDEDiskDeviceType::HDD) || (disktype & TDEDiskDeviceType::Optical)) {
 				if (!(diskstatus & TDEDiskDeviceStatus::ContainsFilesystem)) {
 					diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 				}
 			}
-	
+
 			if (holdingDeviceNodes.count() > 0) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::UsedByDevice;
 			}
-	
+
 			if (slaveDeviceNodes.count() > 0) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::UsesDevice;
 			}
-	
+
 			// See if any slaves were crypted
 			for ( TQStringList::Iterator slaveit = slaveDeviceNodes.begin(); slaveit != slaveDeviceNodes.end(); ++slaveit ) {
 				struct udev_device *slavedev;
@@ -2658,7 +2662,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				}
 				udev_device_unref(slavedev);
 			}
-	
+
 			sdevice->internalSetDiskType(disktype);
 			sdevice->internalSetDiskUUID(diskuuid);
 			sdevice->internalSetDiskStatus(diskstatus);
@@ -2666,7 +2670,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			sdevice->internalSetFileSystemUsage(filesystemusage);
 			sdevice->internalSetSlaveDevices(slaveDeviceNodes);
 			sdevice->internalSetHoldingDevices(holdingDeviceNodes);
-	
+
 			// Clean up disk label
 			if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDR))
@@ -2705,7 +2709,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					}
 				}
 			}
-	
+
 			sdevice->internalSetDiskLabel(disklabel);
 		}
 	}
@@ -2776,7 +2780,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						if (ifa->ifa_addr == NULL) {
 							continue;
 						}
-						
+
 						family = ifa->ifa_addr->sa_family;
 
 						if (TQString(ifa->ifa_name) == devicenode) {
@@ -2829,7 +2833,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						}
 					}
 				}
-				
+
 				freeifaddrs(ifaddr);
 
 				// Gather statistics
@@ -3524,7 +3528,7 @@ TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString model
 			printf("[tdehardwaredevices] Unable to locate PCI information database pci.ids\n"); fflush(stdout);
 			return i18n("Unknown PCI Device");
 		}
-	
+
 		TQFile database(database_filename);
 		if (database.open(IO_ReadOnly)) {
 			TQTextStream stream(&database);
@@ -3634,7 +3638,7 @@ TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString model
 			printf("[tdehardwaredevices] Unable to locate USB information database usb.ids\n"); fflush(stdout);
 			return i18n("Unknown USB Device");
 		}
-	
+
 		TQFile database(database_filename);
 		if (database.open(IO_ReadOnly)) {
 			TQTextStream stream(&database);
@@ -3742,7 +3746,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 		for ( TQStringList::Iterator it = hardware_info_directories.begin(); it != hardware_info_directories.end(); ++it ) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
-	
+
 			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				database_filename = hardware_info_directory + "pnp.ids";
 				if (TQFile::exists(database_filename)) {
@@ -3755,7 +3759,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 			printf("[tdehardwaredevices] Unable to locate PNP information database pnp.ids\n"); fflush(stdout);
 			return i18n("Unknown PNP Device");
 		}
-	
+
 		TQFile database(database_filename);
 		if (database.open(IO_ReadOnly)) {
 			TQTextStream stream(&database);
@@ -3812,7 +3816,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 		for ( TQStringList::Iterator it = hardware_info_directories.begin(); it != hardware_info_directories.end(); ++it ) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
-	
+
 			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				database_filename = hardware_info_directory + "dpy.ids";
 				if (TQFile::exists(database_filename)) {
@@ -3825,7 +3829,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 			printf("[tdehardwaredevices] Unable to locate monitor information database dpy.ids\n"); fflush(stdout);
 			return i18n("Unknown Monitor Device");
 		}
-	
+
 		TQFile database(database_filename);
 		if (database.open(IO_ReadOnly)) {
 			TQTextStream stream(&database);
