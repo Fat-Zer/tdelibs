@@ -1,5 +1,5 @@
 /* This file is part of the TDE libraries
-   Copyright (C) 2012 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+   Copyright (C) 2012-2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
