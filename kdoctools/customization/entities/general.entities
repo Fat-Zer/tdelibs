@@ -425,6 +425,6 @@
 
 <!ENTITY tde-team "The &tde; Team">
 
-<!ENTITY tde-release-version "R14.0.0 [DEVELOPMENT]">
-<!ENTITY tde-release-date "October  9, 2014">
+<!ENTITY tde-release-version "R14.0.0">
+<!ENTITY tde-release-date "December  9, 2014">
 <!ENTITY tde-copyright-date "2010-2014">
