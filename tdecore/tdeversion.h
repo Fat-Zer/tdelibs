@@ -32,9 +32,9 @@
     A new FEATURE REVISION level always resets the BUG AND SECURITY PATCHLEVEL.
     A new ABI version resets both the FEATURE REVISION and BUG AND SECURITY PATCH LEVEL.
 */
-#define TDE_VERSION_STRING "R14.0.0"
+#define TDE_VERSION_STRING "R14.1.0 [DEVELOPMENT]"
 #define TDE_VERSION_MAJOR 14
-#define TDE_VERSION_MINOR 0
+#define TDE_VERSION_MINOR 1
 #define TDE_VERSION_RELEASE 0
 #define TDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 
