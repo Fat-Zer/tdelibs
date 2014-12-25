@@ -407,7 +407,7 @@ bool IppRequest::doFileRequest(const TQString& res, const TQString& filename)
 	}
 
 #ifdef HAVE_CUPS_NO_PWD_CACHE
-#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR <= 2
+#if CUPS_VERSION_MAJOR < 1 || (CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 2)
    strncpy(  HTTP->authstring, cups_authstring.data(), HTTP_MAX_VALUE );
 #else
    httpSetAuthString( HTTP, NULL, cups_authstring.data() );
@@ -421,7 +421,7 @@ bool IppRequest::doFileRequest(const TQString& res, const TQString& filename)
 
 	request_ = cupsDoFileRequest(HTTP, request_, (res.isEmpty() ? "/" : res.latin1()), (filename.isEmpty() ? NULL : filename.latin1()));
 #ifdef HAVE_CUPS_NO_PWD_CACHE
-#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR <= 2
+#if CUPS_VERSION_MAJOR < 1 || (CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR < 2)
    cups_authstring = HTTP->authstring;
 #else
 	cups_authstring = httpGetAuthString( HTTP );
@@ -757,7 +757,7 @@ void IppRequest::setMap(const TQMap<TQString,TQString>& opts)
 	cupsFreeOptions(n, options);
 
 	// find an remove that annoying "document-format" attribute
-#if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 2
+#if CUPS_VERSION_MAJOR > 1 || (CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 2)
     ipp_attribute_t *attr = ippFindAttribute(request_, "document-format", IPP_TAG_NAME);
     ippDeleteAttribute(request_, attr);
 #else
