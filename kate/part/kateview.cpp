@@ -284,8 +284,13 @@ void KateView::setupActions()
     a->setWhatsThis( i18n("Capitalize the selection, or the word under the "
       "cursor if no text is selected.") );
 
+    a = new TDEAction( i18n("Delete Line"), 0, TQT_TQOBJECT(this), 
+      TQT_SLOT( killLine() ), ac, "tools_delete_line");
+    a->setWhatsThis(i18n("Use this to delete the current line."));
+    
     a = new TDEAction( i18n("Join Lines"), CTRL + Qt::Key_J, TQT_TQOBJECT(this),
       TQT_SLOT( joinLines() ), ac, "tools_join_lines" );
+    a->setWhatsThis(i18n("Use this to join lines together."));
   }
   else
   {
@@ -756,8 +761,8 @@ void KateView::slotReadWriteChanged ()
   l << "edit_replace" << "set_insert" << "tools_spelling" << "tools_indent"
       << "tools_unindent" << "tools_cleanIndent" << "tools_align"  << "tools_comment"
       << "tools_uncomment" << "tools_uppercase" << "tools_lowercase"
-      << "tools_capitalize" << "tools_join_lines" << "tools_apply_wordwrap"
-      << "edit_undo" << "edit_redo" << "tools_spelling_from_cursor"
+      << "tools_capitalize" << "tools_delete_line" << "tools_join_lines"
+      << "tools_apply_wordwrap" << "edit_undo" << "edit_redo" << "tools_spelling_from_cursor"
       << "tools_spelling_selection";
 
   TDEAction *a = 0;
