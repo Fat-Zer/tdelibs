@@ -91,15 +91,11 @@ TQIconView *TDEIconViewSearchLine::iconView() const
  *****************************************************************************/
 void TDEIconViewSearchLine::updateSearch( const TQString &s )
 {
-	long original_count;
-	int original_hiddenListChanged;
-
 	if( ! d->iconView )
-		return; // disabled
+		return;
 
-	TQString search = d->search = s.isNull() ? text() : s;
+	d->search = s.isNull() ? text() : s;
 	TQIconViewItem *currentItem = d->iconView->currentItem();
-
 	TQIconViewItem *item = NULL;
 
 	// Remove Non-Matching items, add them to the hidden list
@@ -107,7 +103,7 @@ void TDEIconViewSearchLine::updateSearch( const TQString &s )
 	while ( i != NULL ) {
 		item = i;
 		i = i->nextItem(); // Point to next, otherwise will loose it.
-		if ( ! itemMatches( item, search ) ) {
+		if ( ! itemMatches( item, d->search ) ) {
 			hideItem( item );
 
 			if ( item == currentItem )
@@ -118,8 +114,7 @@ void TDEIconViewSearchLine::updateSearch( const TQString &s )
 		}
 	}
 
-	d->iconView->sort();
-	//d->iconView->arrangeItemsInGrid(true); // Already done inside the sort() routine
+	d->iconView->sort(); // This also arranges items in grid
 
 	if ( currentItem != NULL )
 		d->iconView->ensureItemVisible( currentItem );
