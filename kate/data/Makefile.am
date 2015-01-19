@@ -32,7 +32,7 @@ syntaxkate_DATA = language.dtd syntax.template \
     relaxng.xml replicode.xml restructuredtext.xml rest.xml rexx.xml rhtml.xml rib.xml \
     roff.xml rpmspec.xml rsiidl.xml rtf.xml ruby.xml r.xml sather.xml scala.xml scheme.xml \
     sci.xml scss.xml sed.xml sgml.xml sieve.xml sisu.xml sml.xml spice.xml sql-mysql.xml \
-    sql-postgresql.xml sql.xml stata.xml systemc.xml systemverilog.xml tads3.xml \
+    sql-oracle.xml sql-postgresql.xml sql.xml stata.xml systemc.xml systemverilog.xml tads3.xml \
     tcl.xml tcsh.xml template-toolkit.xml texinfo.xml textile.xml tibasic.xml \
     txt2tags.xml update-files.xml uscript.xml valgrind-suppression.xml \
     varnishtest.xml varnish.xml vcard.xml velocity.xml vera.xml verilog.xml vhdl.xml \

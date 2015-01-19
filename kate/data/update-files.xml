@@ -16,7 +16,7 @@
 <Definition name="Asm6502" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asm6502.xml" version="1.04"/>
 <Definition name="AVR Assembler" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asm-avr.xml" version="1.04-1"/>
 <Definition name="Motorola DSP56k" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asm-dsp56k.xml" version="1.01"/>
-<Definition name="Motorola 68k (VASM/Devpac)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asm-m68k.xml" version="1.01"/>
+<Definition name="Motorola 68k (VASM/Devpac)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asm-m68k.xml" version="1.02"/>
 <Definition name="ASN.1" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asn1.xml" version="1.01-1"/>
 <Definition name="ASP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asp.xml" version="1.04"/>
 <Definition name="Asterisk" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/asterisk.xml" version="1.00"/>
@@ -166,7 +166,7 @@
 <Definition name="Pike" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/pike.xml" version="1.07"/>
 <Definition name="PostScript" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/postscript.xml" version="1.01"/>
 <Definition name="POV-Ray" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/povray.xml" version="1.2.1"/>
-<Definition name="PostScript Printer Description" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ppd.xml" version="0.1"/>
+<Definition name="PostScript Printer Description" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ppd.xml" version="0.2"/>
 <Definition name="progress" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/progress.xml" version="1.10"/>
 <Definition name="Prolog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/prolog.xml" version="1.3-1"/>
 <Definition name="Protobuf" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/protobuf.xml" version="2.40"/>
@@ -204,6 +204,7 @@
 <Definition name="SML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sml.xml" version="1.06"/>
 <Definition name="Spice" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/spice.xml" version="1.01"/>
 <Definition name="SQL (MySQL)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sql-mysql.xml" version="1.16"/>
+<Definition name="SQL (Oracle)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sql-oracle.xml" version="1.0"/>
 <Definition name="SQL (PostgreSQL)" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sql-postgresql.xml" version="1.13"/>
 <Definition name="SQL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sql.xml" version="1.17"/>
 <Definition name="Stata" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/stata.xml" version="2.00"/>
