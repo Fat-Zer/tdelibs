@@ -13,4 +13,4 @@ deleting=false
 Icon=www
 Class=:internet
 URIMode=url
-DocPath=tdeioslave/pnm/index.html
+X-DocPath=tdeioslave/pnm/index.html

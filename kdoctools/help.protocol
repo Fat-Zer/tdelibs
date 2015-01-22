@@ -7,4 +7,4 @@ reading=true
 defaultMimetype=text/html
 Icon=help
 Class=:local
-DocPath=tdeioslave/help/index.html
+X-DocPath=tdeioslave/help/index.html

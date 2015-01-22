@@ -13,4 +13,4 @@ deleting=false
 Icon=www
 Class=:internet
 URIMode=url
-DocPath=tdeioslave/mms/index.html
+X-DocPath=tdeioslave/mms/index.html

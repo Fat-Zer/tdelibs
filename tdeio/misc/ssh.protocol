@@ -11,4 +11,4 @@ makedir=false
 deleting=false
 Icon=konsole
 
-DocPath=tdeioslave/ssh/index.html
+X-DocPath=tdeioslave/ssh/index.html

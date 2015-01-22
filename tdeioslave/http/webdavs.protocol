@@ -14,5 +14,5 @@ defaultMimetype=application/octet-stream
 determineMimetypeFromExtension=false
 Icon=www
 config=webdav
-DocPath=tdeioslave/webdav/index.html
+X-DocPath=tdeioslave/webdav/index.html
 Class=:internet

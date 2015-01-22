@@ -8,5 +8,5 @@ defaultMimetype=application/octet-stream
 determineMimetypeFromExtension=false
 Icon=www
 maxInstances=3
-DocPath=tdeioslave/http/index.html
+X-DocPath=tdeioslave/http/index.html
 Class=:internet

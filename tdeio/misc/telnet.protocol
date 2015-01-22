@@ -9,5 +9,5 @@ reading=false
 writing=false
 makedir=false
 deleting=false
-DocPath=tdeioslave/telnet/index.html
+X-DocPath=tdeioslave/telnet/index.html
 Icon=konsole

@@ -7,4 +7,4 @@ reading=true
 writing=true
 source=false
 Icon=help
-DocPath=tdeioslave/metainfo/index.html
+X-DocPath=tdeioslave/metainfo/index.html
