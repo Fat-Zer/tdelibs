@@ -621,55 +621,55 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 }
 
 TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
-	TQPixmap ret = DesktopIcon("hdd_unmount", size);
+	TQPixmap ret = DesktopIcon("drive-harddisk", size);
 
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
-		ret = DesktopIcon("3floppy_unmount", size);
+		ret = DesktopIcon("media-floppy-3_5", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
-		ret = DesktopIcon("cdrom_unmount", size);
+		ret = DesktopIcon("media-optical-cdrom", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
-		ret = DesktopIcon("cdrom_unmount", size);
+		ret = DesktopIcon("media-optical-cdrom", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
-		ret = DesktopIcon("cdwriter_unmount", size);
+		ret = DesktopIcon("media-optical-cdwriter", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
-		ret = DesktopIcon("dvd_unmount", size);
+		ret = DesktopIcon("media-optical-dvd", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
-		ret = DesktopIcon("dvd_unmount", size);
+		ret = DesktopIcon("media-optical-dvd", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
-		ret = DesktopIcon("dvd_unmount", size);
+		ret = DesktopIcon("media-optical-dvd", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
-		ret = DesktopIcon("zip_unmount", size);
+		ret = DesktopIcon("media-floppy-zip", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
-		ret = DesktopIcon("tape_unmount", size);
+		ret = DesktopIcon("media-tape", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
 		ret = DesktopIcon("camera_unmount", size);
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
-		ret = DesktopIcon("hdd_unmount", size);
+		ret = DesktopIcon("drive-harddisk", size);
 		if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
-			ret = DesktopIcon("usbpendrive_unmount", size);
+			ret = DesktopIcon("media-flash-usb", size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
-			ret = DesktopIcon("compact_flash_unmount", size);
+			ret = DesktopIcon("media-flash-compact_flash", size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
-			ret = DesktopIcon("memory_stick_unmount", size);
+			ret = DesktopIcon("media-flash-memory_stick", size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
-			ret = DesktopIcon("smart_media_unmount", size);
+			ret = DesktopIcon("media-flash-smart_media", size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::SDMMC)) {
-			ret = DesktopIcon("sd_mmc_unmount", size);
+			ret = DesktopIcon("media-flash-sd_mmc", size);
 		}
 	}
 

@@ -4140,7 +4140,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::Disk) {
-		ret = DesktopIcon("hdd_unmount", size);
+		ret = DesktopIcon("drive-harddisk", size);
 	}
 	else if (query == TDEGenericDeviceType::SCSI) {
 		ret = DesktopIcon("kcmscsi", size);
