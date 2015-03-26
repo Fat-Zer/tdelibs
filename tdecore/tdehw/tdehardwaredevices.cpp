@@ -4167,7 +4167,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Printer) {
-		ret = DesktopIcon("printer1", size);
+		ret = DesktopIcon("printer", size);
 	}
 	else if (query == TDEGenericDeviceType::Scanner) {
 		ret = DesktopIcon("scanner", size);

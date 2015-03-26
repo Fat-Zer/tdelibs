@@ -286,7 +286,7 @@ void KMMainView::initActions()
 	m_actions->action("printer_tool")->plug( menu );
 	menu->insertSeparator();
 	//m_menubar->insertItem( i18n( "Printer" ), menu );
-	m_menubar->insertButton( "printer1", 1, true, i18n( "Printer" ) );
+	m_menubar->insertButton( "printer", 1, true, i18n( "Printer" ) );
 	m_menubar->getButton( 1 )->setPopup( menu, true );
 	menu = new TQPopupMenu( this );
 	m_actions->action("server_restart")->plug( menu );
