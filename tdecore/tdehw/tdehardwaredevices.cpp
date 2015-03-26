@@ -4149,7 +4149,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Mouse) {
-		ret = DesktopIcon("mouse", size);
+		ret = DesktopIcon("input-mouse", size);
 	}
 	else if (query == TDEGenericDeviceType::Keyboard) {
 		ret = DesktopIcon("keyboard", size);
