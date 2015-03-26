@@ -4152,7 +4152,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("input-mouse", size);
 	}
 	else if (query == TDEGenericDeviceType::Keyboard) {
-		ret = DesktopIcon("keyboard", size);
+		ret = DesktopIcon("input-keyboard", size);
 	}
 	else if (query == TDEGenericDeviceType::HID) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
