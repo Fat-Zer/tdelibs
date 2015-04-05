@@ -101,6 +101,7 @@ OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
 OPTION( WITH_XRANDR "Build the tderandr library" ON )
 OPTION( WITH_XCOMPOSITE "Enable xcomposite support" ON )
+OPTION( WITH_MITSHM "Use MIT-SHM for pixmap loading/saving" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_KDE4_MENU_SUFFIX "Add [KDE4] tag to KDE4 menu items" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
@@ -703,15 +704,27 @@ if( WITH_XCOMPOSITE )
 endif( WITH_XCOMPOSITE )
 
 
+##### check for mit-shm extension ##################
+
+if( WITH_MITSHM )
+  tde_save_and_set( CMAKE_REQUIRED_FLAGS "-include X11/Xlib.h" )
+  check_include_file( "X11/extensions/XShm.h" HAVE_MITSHM )
+  tde_restore( CMAKE_REQUIRED_FLAGS )
+  if( NOT HAVE_MITSHM )
+    tde_message_fatal( "XShm extension is required, but was not found on your system" )
+  endif( NOT HAVE_MITSHM )
+endif( WITH_MITSHM )
+
+
 ##### check for xext ###############################
 
-if( HAVE_XRENDER OR WITH_XCOMPOSITE OR WITH_XRANDR OR HAVE_X11_EXTENSIONS_SHAPE_H )
+if( HAVE_XRENDER OR WITH_XCOMPOSITE OR WITH_XRANDR OR HAVE_X11_EXTENSIONS_SHAPE_H OR WITH_MITSHM )
   # xext (tdecore, tdeui, tderandr, tdestyles/keramik)
   pkg_search_module( XEXT xext )
   if( NOT XEXT_FOUND )
     tde_message_fatal( "xext is required, but was not found on your system" )
   endif( )
-endif( HAVE_XRENDER OR WITH_XCOMPOSITE OR WITH_XRANDR OR HAVE_X11_EXTENSIONS_SHAPE_H )
+endif( HAVE_XRENDER OR WITH_XCOMPOSITE OR WITH_XRANDR OR HAVE_X11_EXTENSIONS_SHAPE_H OR WITH_MITSHM )
 
 
 ##### check for libxml-2.0 ######################
