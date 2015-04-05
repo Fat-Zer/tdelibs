@@ -690,6 +690,7 @@ else( XRENDER_FOUND)
   message(FATAL_ERROR "\nxrender support is required, but not found on your system" )
 endif( XRENDER_FOUND )
 
+
 ##### check for xcomposite #########################
 
 if( WITH_XCOMPOSITE )
@@ -699,13 +700,18 @@ if( WITH_XCOMPOSITE )
   else( WITH_XCOMPOSITE )
     tde_message_fatal( "xcomposite support was requested, but xcomposite was not found on your system" )
   endif( XCOMPOSITE_FOUND )
+endif( WITH_XCOMPOSITE )
 
-  # xext (tderandr, tdestyles/keramik, tdeui)
+
+##### check for xext ###############################
+
+if( HAVE_XRENDER OR WITH_XCOMPOSITE OR WITH_XRANDR OR HAVE_X11_EXTENSIONS_SHAPE_H )
+  # xext (tdecore, tdeui, tderandr, tdestyles/keramik)
   pkg_search_module( XEXT xext )
   if( NOT XEXT_FOUND )
-    tde_message_fatal( "xext is required for xcomposite support, but was not found on your system" )
+    tde_message_fatal( "xext is required, but was not found on your system" )
   endif( )
-endif( WITH_XCOMPOSITE )
+endif( HAVE_XRENDER OR WITH_XCOMPOSITE OR WITH_XRANDR OR HAVE_X11_EXTENSIONS_SHAPE_H )
 
 
 ##### check for libxml-2.0 ######################
