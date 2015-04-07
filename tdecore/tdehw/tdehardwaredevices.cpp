@@ -2112,7 +2112,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (devicesubsystem == "tifm_adapter") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
 		}
-		if (devicesubsystem == "mmc_host") {
+		if ((devicesubsystem == "mmc_host")
+			|| (devicesubsystem == "memstick_host")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
 		}
 		if (devicesubsystem == "mmc") {
