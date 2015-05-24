@@ -310,7 +310,7 @@ void HTTPProtocol::resetSessionSettings()
     m_bUseProxy = m_proxyURL.isValid();
 
     kdDebug(7113) << "(" << m_pid << ") Using proxy: " << m_bUseProxy <<
-                                              " URL: " << m_proxyURL.url() <<
+                                              " URL: " << m_proxyURL.prettyURL() <<
                                             " Realm: " << m_strProxyRealm << endl;
   }
 
@@ -480,7 +480,7 @@ void HTTPProtocol::setHost( const TQString& host, int port,
 
 bool HTTPProtocol::checkRequestURL( const KURL& u )
 {
-  kdDebug (7113) << "(" << m_pid << ") HTTPProtocol::checkRequestURL:  " << u.url() << endl;
+  kdDebug (7113) << "(" << m_pid << ") HTTPProtocol::checkRequestURL:  " << u.prettyURL() << endl;
 
   m_request.url = u;
 
@@ -662,7 +662,7 @@ void HTTPProtocol::stat(const KURL& url)
 
 void HTTPProtocol::listDir( const KURL& url )
 {
-  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::listDir " << url.url()
+  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::listDir " << url.prettyURL()
                 << endl;
 
   if ( !checkRequestURL( url ) )
@@ -834,7 +834,7 @@ void HTTPProtocol::davStatList( const KURL& url, bool stat )
 
 void HTTPProtocol::davGeneric( const KURL& url, TDEIO::HTTP_METHOD method )
 {
-  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::davGeneric " << url.url()
+  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::davGeneric " << url.prettyURL()
                 << endl;
 
   if ( !checkRequestURL( url ) )
@@ -1233,7 +1233,7 @@ void HTTPProtocol::davFinished()
 
 void HTTPProtocol::mkdir( const KURL& url, int )
 {
-  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::mkdir " << url.url()
+  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::mkdir " << url.prettyURL()
                 << endl;
 
   if ( !checkRequestURL( url ) )
@@ -1255,7 +1255,7 @@ void HTTPProtocol::mkdir( const KURL& url, int )
 
 void HTTPProtocol::get( const KURL& url )
 {
-  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::get " << url.url()
+  kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::get " << url.prettyURL()
                 << endl;
 
   if ( !checkRequestURL( url ) )
@@ -1570,8 +1570,10 @@ TQString HTTPProtocol::davError( int code /* = -1 */, TQString url )
     callError = true;
   }
 
+  // Huh? This looks like inverted logic to me (it doesn't make sense to me as
+  // written), but I'm only fixing the CVE now. -- Kevin Kofler
   if ( !url.isNull() )
-    url = m_request.url.url();
+    url = m_request.url.prettyURL();
 
   TQString action, errorString;
   TDEIO::Error kError;
@@ -1869,7 +1871,7 @@ void HTTPProtocol::multiGet(const TQByteArray &data)
      if ( !checkRequestURL( url ) )
         continue;
 
-     kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::multi_get " << url.url() << endl;
+     kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::multi_get " << url.prettyURL() << endl;
 
      m_request.method = HTTP_GET;
      m_request.path = url.path();
@@ -2241,17 +2243,17 @@ bool HTTPProtocol::httpOpen()
 
      if (bCacheOnly && bOffline)
      {
-        error( ERR_OFFLINE_MODE, m_request.url.url() );
+        error( ERR_OFFLINE_MODE, m_request.url.prettyURL() );
         return false;
      }
      if (bCacheOnly)
      {
-        error( ERR_DOES_NOT_EXIST, m_request.url.url() );
+        error( ERR_DOES_NOT_EXIST, m_request.url.prettyURL() );
         return false;
      }
      if (bOffline)
      {
-        error( ERR_OFFLINE_MODE, m_request.url.url() );
+        error( ERR_OFFLINE_MODE, m_request.url.prettyURL() );
         return false;
      }
   }
@@ -2925,7 +2927,7 @@ try_again:
               errorPage();
            else
            {
-              error(ERR_INTERNAL_SERVER, m_request.url.url());
+              error(ERR_INTERNAL_SERVER, m_request.url.prettyURL());
               return false;
            }
         }
@@ -2965,7 +2967,7 @@ try_again:
           errorPage();
         else
         {
-          error(ERR_DOES_NOT_EXIST, m_request.url.url());
+          error(ERR_DOES_NOT_EXIST, m_request.url.prettyURL());
           return false;
         }
         m_request.bCachedWrite = false; // Don't put in cache
@@ -3618,7 +3620,7 @@ try_again:
     KURL u(m_request.url, locationStr);
     if(!u.isValid())
     {
-      error(ERR_MALFORMED_URL, u.url());
+      error(ERR_MALFORMED_URL, u.prettyURL());
       return false;
     }
     if ((u.protocol() != "http") && (u.protocol() != "https") &&
@@ -3626,7 +3628,7 @@ try_again:
        (u.protocol() != "webdavs"))
     {
       redirection(u);
-      error(ERR_ACCESS_DENIED, u.url());
+      error(ERR_ACCESS_DENIED, u.prettyURL());
       return false;
     }
 
@@ -3647,10 +3649,10 @@ try_again:
        sendMetaData();
     }
 
-    kdDebug(7113) << "(" << m_pid << ") request.url: " << m_request.url.url()
+    kdDebug(7113) << "(" << m_pid << ") request.url: " << m_request.url.prettyURL()
                   << endl << "LocationStr: " << locationStr.data() << endl;
 
-    kdDebug(7113) << "(" << m_pid << ") Requesting redirection to: " << u.url()
+    kdDebug(7113) << "(" << m_pid << ") Requesting redirection to: " << u.prettyURL()
                   << endl;
 
     // If we're redirected to a http:// url, remember that we're doing webdav...
@@ -3866,7 +3868,7 @@ try_again:
         if (!m_request.fcache)
         {
           m_request.bCachedWrite = false; // Error creating cache entry.
-          kdDebug(7113) << "(" << m_pid << ") Error creating cache entry for " << m_request.url.url()<<"!\n";
+          kdDebug(7113) << "(" << m_pid << ") Error creating cache entry for " << m_request.url.prettyURL()<<"!\n";
         }
         m_request.expireDate = expireDate;
         m_maxCacheSize = config()->readNumEntry("MaxCacheSize", DEFAULT_MAX_CACHE_SIZE) / 2;
@@ -3874,11 +3876,11 @@ try_again:
   }
 
   if (m_request.bCachedWrite && !m_strMimeType.isEmpty())
-    kdDebug(7113) << "(" << m_pid << ") Cache, adding \"" << m_request.url.url() << "\"" << endl;
+    kdDebug(7113) << "(" << m_pid << ") Cache, adding \"" << m_request.url.prettyURL() << "\"" << endl;
   else if (m_request.bCachedWrite && m_strMimeType.isEmpty())
-    kdDebug(7113) << "(" << m_pid << ") Cache, pending \"" << m_request.url.url() << "\"" << endl;
+    kdDebug(7113) << "(" << m_pid << ") Cache, pending \"" << m_request.url.prettyURL() << "\"" << endl;
   else
-    kdDebug(7113) << "(" << m_pid << ") Cache, not adding \"" << m_request.url.url() << "\"" << endl;
+    kdDebug(7113) << "(" << m_pid << ") Cache, not adding \"" << m_request.url.prettyURL() << "\"" << endl;
   return true;
 }
 
