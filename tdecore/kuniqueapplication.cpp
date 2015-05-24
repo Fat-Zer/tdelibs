@@ -322,9 +322,14 @@ KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool c
   d->processingRequest = false;
   d->firstInstance = true;
 
-  if (s_nofork)
+  if (s_nofork) {
     // Can't call newInstance directly from the constructor since it's virtual...
     TQTimer::singleShot( 0, this, TQT_SLOT(newInstanceNoFork()) );
+  }
+  else {
+    // Force to handle DCOP requests (newInstance call)
+    TQTimer::singleShot( 0, this, TQT_SLOT(processDelayed()));
+  }
 }
 
 
@@ -338,9 +343,14 @@ KUniqueApplication::KUniqueApplication(Display *display, Qt::HANDLE visual,
   d->processingRequest = false;
   d->firstInstance = true;
 
-  if (s_nofork)
+  if (s_nofork) {
     // Can't call newInstance directly from the constructor since it's virtual...
     TQTimer::singleShot( 0, this, TQT_SLOT(newInstanceNoFork()) );
+  }
+  else {
+    // Force to handle DCOP requests (newInstance call)
+    TQTimer::singleShot( 0, this, TQT_SLOT(processDelayed()));
+  }
 }
 #endif
 
