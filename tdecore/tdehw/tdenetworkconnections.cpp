@@ -99,7 +99,8 @@ void TDENetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
 	unsigned int internalMask = mask;
 	if (!ipv6) {
 		m_ipv4NetMask = 0;
-		for (i=31;i>=(32-internalMask);i--) {
+		for (i=32; i>(32-internalMask); ) {
+			i--;
 			SET_BIT(m_ipv4NetMask, i);
 		}
 		m_isIPV6 = false;
@@ -109,7 +110,8 @@ void TDENetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
 		j=0;
 		unsigned int byteno=0;
 		memset(maskarray.c, 0, 16);
-		for (i=127;i>=(128-internalMask);i--) {
+		for (i=128; i>(128-internalMask); ) {
+			i--;
 			SET_BIT(maskarray.c[byteno], (i-((15-byteno)*8)));
 			j++;
 			if (j>7) {
