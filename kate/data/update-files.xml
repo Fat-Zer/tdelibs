@@ -100,7 +100,7 @@
 <Definition name="IDL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/idl.xml" version="1.07"/>
 <Definition name="ILERPG" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ilerpg.xml" version="1.05-1"/>
 <Definition name="Inform" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/inform.xml" version="1.23-1"/>
-<Definition name="INI Files" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ini.xml" version="1.1"/>
+<Definition name="INI Files" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ini.xml" version="1.1-1"/>
 <Definition name="ISO C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/isocpp.xml" version="2.5-1"/>
 <Definition name="Jam" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/jam.xml" version="0.4"/>
 <Definition name="Javadoc" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/javadoc.xml" version="1.05"/>
