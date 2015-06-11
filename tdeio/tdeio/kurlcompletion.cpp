@@ -778,13 +778,13 @@ bool KURLCompletion::userCompletion(const MyURL &url, TQString *match)
 // Environment variables
 //
 
-#if !defined(__OpenBSD__)
+#if !defined(__OpenBSD__) && !defined(__FreeBSD__)
 extern char **environ; // Array of environment variables
 #endif
 
 bool KURLCompletion::envCompletion(const MyURL &url, TQString *match)
 {
-#if defined(__OpenBSD__)
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 	return false;
 #else
 	if ( url.file().at(0) != '$' )

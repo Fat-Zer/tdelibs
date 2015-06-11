@@ -43,7 +43,7 @@
 #include <kdebug.h>
 #include <tqsocketnotifier.h>
 
-#if defined(__OpenBSD__)
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 #define __progname getprogname()
 #else
 extern char *__progname;

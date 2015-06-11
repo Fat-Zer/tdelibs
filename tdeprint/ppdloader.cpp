@@ -17,6 +17,10 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE   /* Needed for getline */
+#endif
+
 #include "ppdloader.h"
 #include "foomatic2loader.h"
 #include "driver.h"
