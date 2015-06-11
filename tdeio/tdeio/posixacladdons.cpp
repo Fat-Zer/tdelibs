@@ -21,6 +21,8 @@
 
 #if defined(USE_POSIX_ACL) && !defined(HAVE_NON_POSIX_ACL_EXTENSIONS)
 
+#include <kdemacros.h>
+
 #include <errno.h>
 #include <sys/stat.h>
 
@@ -61,7 +63,7 @@ protected:
     }
 };
 
-int acl_cmp(acl_t acl1, acl_t acl2)
+KDE_EXPORT int acl_cmp(acl_t acl1, acl_t acl2)
 {
     if ( !acl1 || !acl2 )
         return -1;
@@ -127,7 +129,7 @@ int acl_cmp(acl_t acl1, acl_t acl2)
     return 0;
 }
 
-acl_t acl_from_mode(mode_t mode)
+KDE_EXPORT acl_t acl_from_mode(mode_t mode)
 {
     acl_t newACL = acl_init( 3 );
     acl_entry_t entry;
@@ -178,7 +180,7 @@ acl_t acl_from_mode(mode_t mode)
     return newACL;
 }
 
-int acl_equiv_mode(acl_t acl, mode_t *mode_p)
+KDE_EXPORT int acl_equiv_mode(acl_t acl, mode_t *mode_p)
 {
     acl_entry_t entry;
     acl_tag_t tag;

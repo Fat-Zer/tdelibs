@@ -55,10 +55,6 @@ if( HAVE_ELFICON )
   set( ELFICON_STATIC_LIB tdelficon-static )
 endif( HAVE_ELFICON )
 
-if( HAVE_NON_POSIX_ACL_EXTENSIONS )
-  set( ACL_LIBRARIES acl )
-endif( HAVE_NON_POSIX_ACL_EXTENSIONS )
-
 
 ##### libtdeio ####################################
 

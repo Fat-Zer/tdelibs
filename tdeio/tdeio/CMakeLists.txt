@@ -49,10 +49,9 @@ install( FILES
     kremoteencoding.h kmimetypechooser.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
-# FIXME seems that ACL is no longer optional
-#if( USE_POSIX_ACL )
+if( USE_POSIX_ACL )
   install( FILES kacl.h DESTINATION ${INCLUDE_INSTALL_DIR} )
-#endif( USE_POSIX_ACL )
+endif( USE_POSIX_ACL )
 
 install( FILES
     connection.h slaveinterface.h slave.h slaveconfig.h
@@ -111,10 +110,9 @@ set( ${target}_SRCS
   dataprotocol.cpp
 )
 
-# FIXME seems that ACL is no longer optional
-#if( USE_POSIX_ACL )
+if( USE_POSIX_ACL )
   set( ${target}_SRCS ${${target}_SRCS} kacl.cpp posixacladdons.cpp )
-#endif( USE_POSIX_ACL )
+endif( USE_POSIX_ACL )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
