@@ -68,7 +68,7 @@
 #include <unistd.h>
 #include <grp.h>
 
-#ifdef HAVE_LIBUTIL_H
+#if defined(HAVE_LIBUTIL_H) && (!defined(__FreeBSD__) || __FreeBSD_version < 900007)
 # include <libutil.h>
 # define USE_LOGIN
 #elif defined(HAVE_UTIL_H)
