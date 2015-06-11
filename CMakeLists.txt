@@ -153,10 +153,12 @@ endif( NO_BUILTIN )
 
 ##### system checks #############################
 
+tde_save_and_set( CMAKE_REQUIRED_INCLUDES ${CMAKE_SOURCE_DIR}/libltdl )
 check_include_file( "ltdl.h" HAVE_LTDL_H )
 if( NOT HAVE_LTDL_H )
-  tde_message_fatal( "ltdl.h are required, but not found on your system" )
+  tde_message_fatal( "ltdl.h is required, but not found on your system" )
 endif( )
+tde_restore( CMAKE_REQUIRED_INCLUDES )
 
 check_include_file( "alloca.h" HAVE_ALLOCA_H )
 check_include_file( "arpa/nameser8_compat.h" HAVE_ARPA_NAMESER8_COMPAT_H )
