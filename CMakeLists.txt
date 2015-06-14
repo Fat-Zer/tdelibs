@@ -472,20 +472,16 @@ endif( HAVE_RES_INIT)
 
 set( CMAKE_REQUIRED_LIBRARIES util )
 if( HAVE_PTY_H )
-  check_c_source_runs("
-      #include <pty.h>
-      int main(int argc, char* argv) {
-        int master_fd, slave_fd;
-        int result;
-        result = openpty(&master_fd, &slave_fd, 0, 0, 0);
-        return 0;
-    }"
-    HAVE_OPENPTY
-  )
+  set( USE_OPENPTY_H pty.h )
 elseif( HAVE_UTIL_H )
+  set( USE_OPENPTY_H util.h )
+elseif( HAVE_LIBUTIL_H )
+  set( USE_OPENPTY_H libutil.h )
+endif( )
+if( USE_OPENPTY_H )
   check_c_source_runs("
-      #include <util.h>
-      int main(int argc, char* argv) {
+      #include <${USE_OPENPTY_H}>
+      int main(int argc, char* argv[]) {
         int master_fd, slave_fd;
         int result;
         result = openpty(&master_fd, &slave_fd, 0, 0, 0);
