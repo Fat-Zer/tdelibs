@@ -824,10 +824,17 @@ endif( WITH_ARTS )
 
 ##### check for Xft #############################
 
+string( REGEX REPLACE ".*;([^;]*qt-mt);.*" "\\1" TQT_MT ";${TQT_LIBRARIES};" )
+if( TQT_MT )
+  pkg_search_module( TQT_MT ${TQT_MT} )
+  tde_save_and_set( CMAKE_REQUIRED_LIBRARIES "${TQT_MT_LIBRARIES}" )
+  check_library_exists( tqt-mt XftInit "" TDEINIT_USE_XFT )
+  tde_restore( CMAKE_REQUIRED_LIBRARIES )
+endif( TQT_MT )
 if( TDEINIT_USE_XFT )
   pkg_search_module( XFT xft )
   if( NOT XFT_FOUND )
-      message(FATAL_ERROR "\nXft are required, but not found on your system" )
+    tde_message_fatal( "Xft is required, but not found on your system" )
   endif( NOT XFT_FOUND )
 endif( TDEINIT_USE_XFT )
 

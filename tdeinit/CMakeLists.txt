@@ -40,7 +40,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK ltdlc-static tdeparts-shared
+  LINK ltdlc-static tdeparts-shared ${XFT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
