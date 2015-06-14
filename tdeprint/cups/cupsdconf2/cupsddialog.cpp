@@ -71,7 +71,7 @@ extern "C"
 
 int getServerPid()
 {
-#if defined(__OpenBSD__)
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 	TQProcess *proc = new TQProcess();
 	proc->addArgument("pgrep");
 	proc->addArgument("cupsd");

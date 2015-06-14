@@ -188,7 +188,7 @@ KSpellConfig::readGlobalSettings()
   setDictionary    ( kc->readEntry("KSpell_Dictionary") );
   setDictFromList  ( kc->readNumEntry("KSpell_DictFromList", false) );
   setEncoding ( kc->readNumEntry ("KSpell_Encoding", KS_E_UTF8) );
-#ifdef __OpenBSD__
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
   setClient ( kc->readNumEntry ("KSpell_Client", KS_CLIENT_ASPELL) );
 #else
   setClient ( kc->readNumEntry ("KSpell_Client", KS_CLIENT_ISPELL) );

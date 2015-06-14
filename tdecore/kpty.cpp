@@ -68,10 +68,13 @@
 #include <unistd.h>
 #include <grp.h>
 
-#if defined(HAVE_LIBUTIL_H) && (!defined(__FreeBSD__) || __FreeBSD_version < 900007)
+#if defined(HAVE_LIBUTIL_H)
 # include <libutil.h>
-# define USE_LOGIN
-#elif defined(HAVE_UTIL_H)
+# if (!defined(__FreeBSD__) || __FreeBSD_version < 900007)
+#   define USE_LOGIN
+# endif
+#endif
+#if defined(HAVE_UTIL_H)
 # include <util.h>
 # define USE_LOGIN
 #endif
@@ -305,7 +308,7 @@ bool KPty::open()
   if (d->masterFd >= 0)
     return true;
 
-#if defined(__OpenBSD__)
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
   char cpty[16];
 
   if (openpty(&d->masterFd, &d->slaveFd, cpty, NULL, &d->winSize) == 0) {
@@ -580,7 +583,7 @@ int KPty::slaveFd() const
 // private
 bool KPty::chownpty(bool grant)
 {
-#if !defined(__OpenBSD__)
+#if !defined(__OpenBSD__) && !defined(__FreeBSD__)
   TDEProcess proc;
   proc << locate("exe", BASE_CHOWN) << (grant?"--grant":"--revoke") << TQString::number(d->masterFd);
   return proc.start(TDEProcess::Block) && proc.normalExit() && !proc.exitStatus();

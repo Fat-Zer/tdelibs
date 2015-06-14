@@ -102,7 +102,7 @@ TQString KMCupsManager::driverDirectory()
 {
 	TQString	d = cupsInstallDir();
 	if (d.isEmpty()) {
-#ifdef __OpenBSD__
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 		d = "/usr/local";
 #else
 		d = "/usr";
@@ -110,7 +110,7 @@ TQString KMCupsManager::driverDirectory()
 	}
 	d.append("/share/cups/model");
 	// raw foomatic support
-#ifdef __OpenBSD__
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 	d.append(":/usr/local/share/foomatic/db/source");
 #else
 	d.append(":/usr/share/foomatic/db/source");
@@ -640,7 +640,7 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 {
 	TQStringList	comps = TQStringList::split('/', drname, false);
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-#ifdef __OpenBSD__
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/local/bin:/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 #else
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
@@ -959,7 +959,7 @@ void KMCupsManager::exportDriver()
 	{
 		TQString	path = cupsInstallDir();
 		if (path.isEmpty()) {
-#ifdef __OpenBSD__
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
 			path = "/usr/local/share/cups";
 #else
 			path = "/usr/share/cups";
