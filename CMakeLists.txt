@@ -518,6 +518,15 @@ endif( TDESU_BACKEND-NOTFOUND )
 
 #### set some constants #########################
 
+if( NOT "${TDEDIR}" )
+  if( DEFINED ENV{TDEDIR} )
+    set( TDEDIR "$ENV{TDEDIR}" )
+  else( )
+    set( TDEDIR "${CMAKE_INSTALL_PREFIX}" )
+  endif( )
+endif( )
+set( KDE_COMPILER_VERSION "${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}" )
+set( KDE_COMPILING_OS "${CMAKE_SYSTEM_NAME}" )
 set( LTDL_OBJDIR \".\" )
 set( KDELIBSUFF "${LIB_SUFFIX}" )
 set( kde_socklen_t socklen_t )
