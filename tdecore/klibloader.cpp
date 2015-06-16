@@ -33,6 +33,8 @@
 
 #include "ltdl.h"
 
+LT_SCOPE int lt_dlopen_flag;
+
 template class TQAsciiDict<KLibrary>;
 
 #include <stdlib.h> //getenv
