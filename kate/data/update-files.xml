@@ -46,7 +46,7 @@
 <Definition name="Curry" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/curry.xml" version="0.3"/>
 <Definition name="C" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/c.xml" version="1.46"/>
 <Definition name="Ddoc" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ddoc.xml" version="1.15"/>
-<Definition name="Debian Changelog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/debianchangelog.xml" version="0.70"/>
+<Definition name="Debian Changelog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/debianchangelog.xml" version="0.71"/>
 <Definition name="Debian Control" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/debiancontrol.xml" version="0.84"/>
 <Definition name=".desktop" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/desktop.xml" version="1.05-1"/>
 <Definition name="Diff" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/diff.xml" version="1.12"/>
@@ -171,7 +171,7 @@
 <Definition name="Prolog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/prolog.xml" version="1.3-1"/>
 <Definition name="Protobuf" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/protobuf.xml" version="2.40"/>
 <Definition name="Puppet" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/puppet.xml" version="1.18"/>
-<Definition name="PureBasic" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/purebasic.xml" version="3.91"/>
+<Definition name="PureBasic" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/purebasic.xml" version="5.31"/>
 <Definition name="Python" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/python.xml" version="2.23"/>
 <Definition name="QMake" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qmake.xml" version="1.2"/>
 <Definition name="QML" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/qml.xml" version="1.4"/>
@@ -191,6 +191,7 @@
 <Definition name="RSI IDL" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rsiidl.xml" version="1.04"/>
 <Definition name="Rich Text Format" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rtf.xml" version="1.0"/>
 <Definition name="Ruby" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/ruby.xml" version="1.27"/>
+<Definition name="Rust" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/rust.xml" version="1.0"/>
 <Definition name="R Script" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/r.xml" version="2.07-1"/>
 <Definition name="Sather" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/sather.xml" version="1.03"/>
 <Definition name="Scala" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/scala.xml" version="1.0"/>
