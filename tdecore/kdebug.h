@@ -96,7 +96,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the boolean to print (as "true" or "false")
      * @return this stream
      */
-    kdbgstream &operator<<(bool i)  {
+    kdbgstream& operator<<(bool i)  {
 	if (!print) return *this;
 	output += TQString::fromLatin1(i ? "true" : "false");
 	return *this;
@@ -106,7 +106,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the short to print
      * @return this stream
      */
-    kdbgstream &operator<<(short i)  {
+    kdbgstream& operator<<(short i)  {
 	if (!print) return *this;
 	TQString tmp; tmp.setNum(i); output += tmp;
 	return *this;
@@ -116,7 +116,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the unsigned short to print
      * @return this stream
      */
-    kdbgstream &operator<<(unsigned short i) {
+    kdbgstream& operator<<(unsigned short i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -126,13 +126,13 @@ class TDECORE_EXPORT kdbgstream {
      * @param ch the char to print
      * @return this stream
      */
-    kdbgstream &operator<<(char ch);
+    kdbgstream& operator<<(char ch);
     /**
      * Prints the given value.
      * @param ch the unsigned char to print
      * @return this stream
      */
-    kdbgstream &operator<<(unsigned char ch) {
+    kdbgstream& operator<<(unsigned char ch) {
         return operator<<( static_cast<char>( ch ) );
     }
     /**
@@ -140,7 +140,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the int to print
      * @return this stream
      */
-    kdbgstream &operator<<(int i)  {
+    kdbgstream& operator<<(int i)  {
 	if (!print) return *this;
 	TQString tmp; tmp.setNum(i); output += tmp;
 	return *this;
@@ -150,7 +150,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the unsigned int to print
      * @return this stream
      */
-    kdbgstream &operator<<(unsigned int i) {
+    kdbgstream& operator<<(unsigned int i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -160,7 +160,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the long to print
      * @return this stream
      */
-    kdbgstream &operator<<(long i) {
+    kdbgstream& operator<<(long i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -170,7 +170,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the unsigned long to print
      * @return this stream
      */
-    kdbgstream &operator<<(unsigned long i) {
+    kdbgstream& operator<<(unsigned long i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -180,7 +180,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the long long to print
      * @return this stream
      */
-    kdbgstream &operator<<(TQ_LLONG i) {
+    kdbgstream& operator<<(TQ_LLONG i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -190,7 +190,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param i the unsigned long long to print
      * @return this stream
      */
-    kdbgstream &operator<<(TQ_ULLONG i) {
+    kdbgstream& operator<<(TQ_ULLONG i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -207,13 +207,13 @@ class TDECORE_EXPORT kdbgstream {
      * @return this stream
      * @since 3.3
      */
-    kdbgstream &operator<<(TQChar ch);
+    kdbgstream& operator<<(TQChar ch);
     /**
      * Prints the given value.
      * @param string the string to print
      * @return this stream
      */
-    kdbgstream &operator<<(const TQString& string) {
+    kdbgstream& operator<<(const TQString& string) {
 	if (!print) return *this;
 	output += string;
 	if (output.at(output.length() -1 ) == (TQChar)'\n')
@@ -225,7 +225,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param string the string to print
      * @return this stream
      */
-    kdbgstream &operator<<(const char *string) {
+    kdbgstream& operator<<(const char *string) {
 	if (!print) return *this;
 	output += TQString::fromUtf8(string);
 	if (output.at(output.length() - 1) == (TQChar)'\n')
@@ -237,7 +237,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param string the string to print
      * @return this stream
      */
-    kdbgstream &operator<<(const TQCString& string) {
+    kdbgstream& operator<<(const TQCString& string) {
         *this << string.data();
         return *this;
     }
@@ -274,7 +274,7 @@ class TDECORE_EXPORT kdbgstream {
      * @param format the printf-style format
      * @return this stream
      */
-    kdbgstream &form(const char *format, ...)
+    kdbgstream& form(const char *format, ...)
 #ifdef __GNUC__
       __attribute__ ( ( format ( printf, 2, 3 ) ) )
 #endif
@@ -285,64 +285,64 @@ class TDECORE_EXPORT kdbgstream {
      * @param widget the widget to print
      * @return this stream
      */
-    kdbgstream& operator << (const TQWidget* widget);
-    kdbgstream& operator << (TQWidget* widget); // KDE4 merge
+    kdbgstream& operator<< (const TQWidget* widget);
+    kdbgstream& operator<< (TQWidget* widget); // KDE4 merge
 
     /**
      * Prints the given value.
      * @param dateTime the datetime to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQDateTime& dateTime );
+    kdbgstream& operator<< ( const TQDateTime& dateTime );
 
     /**
      * Prints the given value.
      * @param date the date to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQDate& date );
+    kdbgstream& operator<< ( const TQDate& date );
 
     /**
      * Prints the given value.
      * @param time the time to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQTime& time );
+    kdbgstream& operator<< ( const TQTime& time );
 
     /**
      * Prints the given value.
      * @param point the point to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQPoint& point );
+    kdbgstream& operator<< ( const TQPoint& point );
 
     /**
      * Prints the given value.
      * @param size the TQSize to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQSize& size );
+    kdbgstream& operator<< ( const TQSize& size );
 
     /**
      * Prints the given value.
      * @param rect the TQRect to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQRect& rect);
+    kdbgstream& operator<< ( const TQRect& rect);
 
     /**
      * Prints the given value.
      * @param region the TQRegion to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQRegion& region);
+    kdbgstream& operator<< ( const TQRegion& region);
 
     /**
      * Prints the given value.
      * @param url the url to print
      * @return this stream
      */
-    kdbgstream& operator << ( const KURL& url );
+    kdbgstream& operator<< ( const KURL& url );
 
     /**
      * Prints the given value.
@@ -350,14 +350,14 @@ class TDECORE_EXPORT kdbgstream {
      * @return this stream
      */
     // ### KDE4: Remove in favor of template operator for TQValueList<T> below
-    kdbgstream& operator << ( const TQStringList& list);
+    kdbgstream& operator<< ( const TQStringList& list);
 
     /**
      * Prints the given value.
      * @param color the color to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQColor& color);
+    kdbgstream& operator<< ( const TQColor& color);
 
     /**
      * Prints the given value.
@@ -365,14 +365,14 @@ class TDECORE_EXPORT kdbgstream {
      * @return this stream
      * @since 3.2
      */
-    kdbgstream& operator << ( const TQPen& pen );
+    kdbgstream& operator<< ( const TQPen& pen );
 
     /**
      * Prints the given value.
      * @param brush the brush to print
      * @return this stream
      */
-    kdbgstream& operator << ( const TQBrush& brush );
+    kdbgstream& operator<< ( const TQBrush& brush );
 
     /**
      * Prints the given value.
@@ -380,7 +380,7 @@ class TDECORE_EXPORT kdbgstream {
      * @return this stream
      * @since 3.3
      */
-    kdbgstream& operator << ( const TQVariant& variant );
+    kdbgstream& operator<< ( const TQVariant& variant );
 
     /**
      * Prints the given value.
@@ -388,7 +388,7 @@ class TDECORE_EXPORT kdbgstream {
      * @return this stream
      * @since 3.3
      */
-    kdbgstream& operator << ( const TQByteArray& data );
+    kdbgstream& operator<< ( const TQByteArray& data );
 
     /**
      * Prints the given value
@@ -397,7 +397,7 @@ class TDECORE_EXPORT kdbgstream {
      * @since 3.3
      */
     template <class T>
-    kdbgstream& operator << ( const TQValueList<T> &list );
+    kdbgstream& operator<< ( const TQValueList<T> &list );
 
  private:
     TQString output;
@@ -407,7 +407,7 @@ class TDECORE_EXPORT kdbgstream {
 };
 
 template <class T>
-kdbgstream &kdbgstream::operator<<( const TQValueList<T> &list )
+kdbgstream& kdbgstream::operator<<( const TQValueList<T> &list )
 {
     *this << "(";
     typename TQValueList<T>::ConstIterator it = list.begin();
@@ -427,7 +427,7 @@ kdbgstream &kdbgstream::operator<<( const TQValueList<T> &list )
  * @param s the debug stream to write to
  * @return the debug stream (@p s)
  */
-inline kdbgstream &endl( kdbgstream &s) { s << "\n"; return s; }
+inline kdbgstream& endl( kdbgstream &s) { s << "\n"; return s; }
 
 /**
  * \relates TDEGlobal
@@ -435,9 +435,9 @@ inline kdbgstream &endl( kdbgstream &s) { s << "\n"; return s; }
  * @param s the debug stream to write to
  * @return the debug stream (@p s)
  */
-inline kdbgstream &flush( kdbgstream &s) { s.flush(); return s; }
+inline kdbgstream& flush( kdbgstream &s) { s.flush(); return s; }
 
-TDECORE_EXPORT kdbgstream &perror( kdbgstream &s);
+TDECORE_EXPORT kdbgstream& perror( kdbgstream &s);
 
 /**
  * \relates TDEGlobal
@@ -454,32 +454,32 @@ class TDECORE_EXPORT kndbgstream {
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(short int )  { return *this; }
+    kndbgstream& operator<<(short int )  { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(unsigned short int )  { return *this; }
+    kndbgstream& operator<<(unsigned short int )  { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(char )  { return *this; }
+    kndbgstream& operator<<(char )  { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(unsigned char )  { return *this; }
+    kndbgstream& operator<<(unsigned char )  { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(int )  { return *this; }
+    kndbgstream& operator<<(int )  { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(unsigned int )  { return *this; }
+    kndbgstream& operator<<(unsigned int )  { return *this; }
     /**
      * Does nothing.
      */
@@ -488,22 +488,22 @@ class TDECORE_EXPORT kndbgstream {
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(TQChar)  { return *this; }
+    kndbgstream& operator<<(TQChar)  { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(const TQString& ) { return *this; }
+    kndbgstream& operator<<(const TQString& ) { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(const TQCString& ) { return *this; }
+    kndbgstream& operator<<(const TQCString& ) { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &operator<<(const char *) { return *this; }
+    kndbgstream& operator<<(const char *) { return *this; }
     /**
      * Does nothing.
      * @return this stream
@@ -548,13 +548,13 @@ class TDECORE_EXPORT kndbgstream {
      * Does nothing.
      * @return this stream
      */
-    kndbgstream& operator << (const TQWidget*) { return *this; }
-    kndbgstream& operator << (TQWidget*) { return *this; } // KDE4 merge
+    kndbgstream& operator<< (const TQWidget*) { return *this; }
+    kndbgstream& operator<< (TQWidget*) { return *this; } // KDE4 merge
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream &form(const char *, ...) { return *this; }
+    kndbgstream& form(const char *, ...) { return *this; }
 
     kndbgstream& operator<<( const TQDateTime& ) { return *this; }
     kndbgstream& operator<<( const TQDate&     ) { return *this; }
@@ -580,14 +580,14 @@ class TDECORE_EXPORT kndbgstream {
  * @param s a stream
  * @return the given @p s
  */
-inline kndbgstream &endl( kndbgstream & s) { return s; }
+inline kndbgstream& endl( kndbgstream & s) { return s; }
 /**
  * Does nothing.
  * @param s a stream
  * @return the given @p s
  */
-inline kndbgstream &flush( kndbgstream & s) { return s; }
-inline kndbgstream &perror( kndbgstream & s) { return s; }
+inline kndbgstream& flush( kndbgstream & s) { return s; }
+inline kndbgstream& perror( kndbgstream & s) { return s; }
 
 /**
  * \relates TDEGlobal
@@ -601,7 +601,7 @@ TDECORE_EXPORT kdbgstream kdDebug(bool cond, int area = 0);
 /**
  * \relates TDEGlobal
  * Returns a backtrace.
- * @param levels the number of levels of the backtrace. Defauls to -1 (as much as avalible).
+ * @param levels the number of levels of the backtrace. Defaults to -1 (as much as available).
  * @return a backtrace
  * @since 3.1
  */
@@ -610,7 +610,7 @@ TDECORE_EXPORT TQString kdBacktrace(int levels=-1);
  * \relates TDEGlobal
  * Writes a backtrace to the given file descriptor. In contrast to 
  * kdBacktrace, this function doesn't call any malloc(). So it supposed to be
- * used in situations than any extra memmmory allocation may lead to yet 
+ * used in situations in which any extra memory allocation may lead to yet 
  * another crash. As a limitation it doesn't produce any symbol demangling.
  * @param fd a file descriptor to write to. Defaults to 2 (stderr)
  * @since 14.0

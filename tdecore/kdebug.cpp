@@ -359,7 +359,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
         abort();
 }
 
-kdbgstream &perror( kdbgstream &s) { return s << TQString(TQString::fromLocal8Bit(strerror(errno))); }
+kdbgstream& perror( kdbgstream &s) { return s << TQString(TQString::fromLocal8Bit(strerror(errno))); }
 kdbgstream kdDebug(int area) { return kdbgstream(area, KDEBUG_INFO); }
 kdbgstream kdDebug(bool cond, int area) { if (cond) return kdbgstream(area, KDEBUG_INFO); else return kdbgstream(0, 0, false); }
 
@@ -401,11 +401,11 @@ kdbgstream::~kdbgstream() {
         if (backtrace.ascii() != NULL) {
                 fprintf(stderr, "%s", backtrace.latin1());
         }
-	*this << "\n";
+	*this << '\n';
     }
 }
 
-kdbgstream& kdbgstream::operator << (char ch)
+kdbgstream& kdbgstream::operator<< (char ch)
 {
   if (!print) return *this;
   if (!isprint(ch))
@@ -417,7 +417,7 @@ kdbgstream& kdbgstream::operator << (char ch)
   return *this;
 }
 
-kdbgstream& kdbgstream::operator << (TQChar ch)
+kdbgstream& kdbgstream::operator<< (TQChar ch)
 {
   if (!print) return *this;
   if (!ch.isPrint())
@@ -429,12 +429,12 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
   return *this;
 }
 
-kdbgstream& kdbgstream::operator << (TQWidget* widget)
+kdbgstream& kdbgstream::operator<< (TQWidget* widget)
 {
     return *this << const_cast< const TQWidget* >( widget );
 }
 
-kdbgstream& kdbgstream::operator << (const TQWidget* widget)
+kdbgstream& kdbgstream::operator<< (const TQWidget* widget)
 {
   TQString string, temp;
   // -----
