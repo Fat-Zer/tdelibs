@@ -2438,27 +2438,32 @@ void KateHighlighting::makeContextList()
         buildPrefix=it.key()+':';  // attribute names get prefixed by the names
                                    // of the highlighting definitions they belong to
 
-        if (identifierToUse.isEmpty() )
+        if (identifierToUse.isEmpty())
+        {
           kdDebug(13010)<<"OHOH, unknown highlighting description referenced"<<endl;
-
-        kdDebug(13010)<<"setting ("<<it.key()<<") to loaded"<<endl;
-
-        //mark hl as loaded
-        it=embeddedHls.insert(it.key(),KateEmbeddedHlInfo(true,startctx));
-        //set class member for context 0 offset, so we don't need to pass it around
-        buildContext0Offset=startctx;
-        //parse one hl definition file
-        startctx=addToContextList(identifierToUse,startctx);
-
-        if (noHl) return;  // an error occurred
-
-        base_startctx = startctx;
-        something_changed=true; // something has been loaded
+          kdDebug(13010)<<"Highlighting for ("<<it.key()<<") can not be loaded"<<endl;
+        }
+        else
+        {
+          // Only do this if we have a non-empty identifier
+          kdDebug(13010)<<"setting ("<<it.key()<<") to loaded"<<endl;
+  
+          //mark hl as loaded
+          it=embeddedHls.insert(it.key(),KateEmbeddedHlInfo(true,startctx));
+          //set class member for context 0 offset, so we don't need to pass it around
+          buildContext0Offset=startctx;
+          //parse one hl definition file
+          startctx=addToContextList(identifierToUse,startctx);
+  
+          if (noHl) return;  // an error occurred
+  
+          base_startctx = startctx;
+          something_changed=true; // something has been loaded
+        }
       }
     }
   } while (something_changed);  // as long as there has been another file parsed
                   // repeat everything, there could be newly added embedded hls.
-
 
   // at this point all needed highlighing (sub)definitions are loaded. It's time
   // to resolve cross file  references (if there are any)

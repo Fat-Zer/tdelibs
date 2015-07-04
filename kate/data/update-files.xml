@@ -38,6 +38,7 @@
 <Definition name="Common Lisp" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/commonlisp.xml" version="1.05-1"/>
 <Definition name="Component-Pascal" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/component-pascal.xml" version="1.05"/>
 <Definition name="ConTeXt" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/context.xml" version="1.1"/>
+<Definition name="C++" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/cpp.xml" version="1.0"/>
 <Definition name="Crack" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/crk.xml" version="1.1"/>
 <Definition name="CSS/PHP" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css-php.xml" version="2.09"/>
 <Definition name="CSS" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/css.xml" version="2.09"/>

@@ -18,8 +18,8 @@ syntaxkate_DATA = language.dtd syntax.template \
     fsharp.xml fstab.xml ftl.xml gap.xml gcc.xml gdb.xml gdl.xml gettext.xml git-ignore.xml \
     git-rebase.xml gitolite.xml glosstex.xml glsl.xml gnuassembler.xml gnuplot.xml go.xml \
     grammar.xml hamlet.xml haml.xml haskell.xml haxe.xml html.xml html-php.xml hunspell-aff.xml \
-    hunspell-dat.xml hunspell-dic.xml hunspell-idx.xml idconsole.xml idl.xml ilerpg.xml \
-    inform.xml ini.xml jam.xml javadoc.xml javascript.xml javascript-php.xml java.xml json.xml \
+    hunspell-dat.xml hunspell-dic.xml hunspell-idx.xml idconsole.xml idl.xml ilerpg.xml inform.xml \
+    ini.xml isocpp.xml jam.xml javadoc.xml javascript.xml javascript-php.xml java.xml json.xml \
     jsp.xml julia.xml j.xml kbasic.xml latex.xml ldif.xml ld.xml less.xml lex.xml lilypond.xml \
     literate-curry.xml literate-haskell.xml logtalk.xml lpc.xml lsl.xml lua.xml m3u.xml \
     m4.xml mab.xml makefile.xml mako.xml mandoc.xml mason.xml mathematica.xml matlab.xml \
