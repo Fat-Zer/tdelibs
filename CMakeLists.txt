@@ -17,7 +17,7 @@ cmake_minimum_required( VERSION 2.8 )
 project( tdelibs )
 
 set( PACKAGE tdelibs )
-set( VERSION R14.0.0 )
+set( VERSION R14.1.0 )
 
 
 ##### include essential cmake modules ###########
@@ -96,7 +96,7 @@ option( WITH_UDISKS2 "Enable uDisks2 support" ${WITH_ALL_OPTIONS} )
 option( WITH_CONSOLEKIT "Enable ConsoleKit support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
-OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
+OPTION( WITH_OLD_XDG_STD "Use the pre R14.1.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
 OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
 OPTION( WITH_XRANDR "Build the tderandr library" ON )
