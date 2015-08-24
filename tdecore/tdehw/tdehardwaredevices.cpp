@@ -1383,11 +1383,17 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Bridge") {
 		ret = TDEGenericDeviceType::Bridge;
 	}
+	else if (query == "Hub") {
+		ret = TDEGenericDeviceType::Hub;
+	}
 	else if (query == "Platform") {
 		ret = TDEGenericDeviceType::Platform;
 	}
 	else if (query == "Cryptography") {
 		ret = TDEGenericDeviceType::Cryptography;
+	}
+	else if (query == "CryptographicCard") {
+		ret = TDEGenericDeviceType::CryptographicCard;
 	}
 	else if (query == "Event") {
 		ret = TDEGenericDeviceType::Event;
@@ -2261,7 +2267,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					TQFile ifaceprotofile(current_path + "/bInterfaceClass");
 					if (ifaceprotofile.open(IO_ReadOnly)) {
 						TQTextStream stream( &ifaceprotofile );
-						usbInterfaceClass = stream.readLine().toUInt();
+						usbInterfaceClass = stream.readLine().toUInt(NULL, 16);
 						ifaceprotofile.close();
 					}
 				}
@@ -2271,7 +2277,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					TQFile ifaceprotofile(current_path + "/bInterfaceSubClass");
 					if (ifaceprotofile.open(IO_ReadOnly)) {
 						TQTextStream stream( &ifaceprotofile );
-						usbInterfaceSubClass = stream.readLine().toUInt();
+						usbInterfaceSubClass = stream.readLine().toUInt(NULL, 16);
 						ifaceprotofile.close();
 					}
 				}
@@ -2281,9 +2287,17 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					TQFile ifaceprotofile(current_path + "/bInterfaceProtocol");
 					if (ifaceprotofile.open(IO_ReadOnly)) {
 						TQTextStream stream( &ifaceprotofile );
-						usbInterfaceProtocol = stream.readLine().toUInt();
+						usbInterfaceProtocol = stream.readLine().toUInt(NULL, 16);
 						ifaceprotofile.close();
 					}
+				}
+				if (usbInterfaceClass == 9) {
+					// Hub
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Hub);
+				}
+				if (usbInterfaceClass == 11) {
+					// Smart Card Reader
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::CryptographicCard);
 				}
 				if ((usbInterfaceClass == 6) && (usbInterfaceSubClass == 1) && (usbInterfaceProtocol == 1)) {
 					// PictBridge
@@ -4069,11 +4083,17 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::Bridge) {
 		ret = i18n("Bridge");
 	}
+	else if (query == TDEGenericDeviceType::Hub) {
+		ret = i18n("Hub");
+	}
 	else if (query == TDEGenericDeviceType::Platform) {
 		ret = i18n("Platform");
 	}
 	else if (query == TDEGenericDeviceType::Cryptography) {
 		ret = i18n("Cryptography");
+	}
+	else if (query == TDEGenericDeviceType::CryptographicCard) {
+		ret = i18n("Cryptographic Card");
 	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = i18n("Platform Event");
@@ -4224,10 +4244,16 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	else if (query == TDEGenericDeviceType::Bridge) {
 		ret = DesktopIcon("kcmpci", size);
 	}
+	else if (query == TDEGenericDeviceType::Hub) {
+		ret = DesktopIcon("usb", size);
+	}
 	else if (query == TDEGenericDeviceType::Platform) {
 		ret = DesktopIcon("preferences-system", size);
 	}
 	else if (query == TDEGenericDeviceType::Cryptography) {
+		ret = DesktopIcon("password", size);
+	}
+	else if (query == TDEGenericDeviceType::CryptographicCard) {
 		ret = DesktopIcon("password", size);
 	}
 	else if (query == TDEGenericDeviceType::Event) {
