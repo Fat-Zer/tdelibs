@@ -56,6 +56,12 @@ if( WITH_CONSOLEKIT )
   add_definitions( -DWITH_CONSOLEKIT )
 endif( )
 
+if( WITH_PCSC )
+  add_definitions( -DWITH_PCSC )
+  list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${PCSCLITE_INCLUDE_DIRS} )
+  list( APPEND TDEHW_CUSTOM_LIBRARIES ${PCSCLITE_LIBRARIES} )
+endif( )
+
 if( WITH_NETWORK_MANAGER_BACKEND )
   list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/networkbackends/network-manager )
   list( APPEND TDEHW_CUSTOM_LIBRARIES network_manager_backend-static )
@@ -83,7 +89,7 @@ install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
     tdestoragedevice.h tdecpudevice.h tdebatterydevice.h tdemainspowerdevice.h
     tdenetworkdevice.h tdebacklightdevice.h tdemonitordevice.h
     tdesensordevice.h tderootsystemdevice.h tdeeventdevice.h tdeinputdevice.h
-    tdehwcommontypes.h
+    tdecryptographiccarddevice.h tdehwcommontypes.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -96,7 +102,7 @@ set( ${target}_SRCS
   tdestoragedevice.cpp tdecpudevice.cpp tdebatterydevice.cpp
   tdemainspowerdevice.cpp tdenetworkdevice.cpp tdebacklightdevice.cpp
   tdemonitordevice.cpp tdesensordevice.cpp tderootsystemdevice.cpp
-  tdeeventdevice.cpp tdeinputdevice.cpp
+  tdeeventdevice.cpp tdeinputdevice.cpp tdecryptographiccarddevice.cpp
 )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC

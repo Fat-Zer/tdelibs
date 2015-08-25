@@ -53,6 +53,7 @@ extern "C" {
 #include "tderootsystemdevice.h"
 #include "tdeeventdevice.h"
 #include "tdeinputdevice.h"
+#include "tdecryptographiccarddevice.h"
 
 /**
  * Hardware Device Access and Monitoring Library

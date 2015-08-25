@@ -66,6 +66,7 @@ extern "C" {
 #include "tderootsystemdevice.h"
 #include "tdeeventdevice.h"
 #include "tdeinputdevice.h"
+#include "tdecryptographiccarddevice.h"
 
 // Compile-time configuration
 #include "config.h"
@@ -2297,7 +2298,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				}
 				if (usbInterfaceClass == 11) {
 					// Smart Card Reader
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::CryptographicCard);
+					if (!device) device = new TDECryptographicCardDevice(TDEGenericDeviceType::CryptographicCard);
 				}
 				if ((usbInterfaceClass == 6) && (usbInterfaceSubClass == 1) && (usbInterfaceProtocol == 1)) {
 					// PictBridge
