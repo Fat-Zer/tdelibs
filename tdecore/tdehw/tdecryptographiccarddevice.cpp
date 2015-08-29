@@ -38,6 +38,7 @@
 /* FIXME
  * This is incomplete
  */
+#ifdef WITH_PCSC
 static TQString pcsc_error_code_to_string(long errcode) {
 	if (errcode == SCARD_W_UNPOWERED_CARD) {
 		return i18n("card not powered on");
@@ -49,6 +50,7 @@ static TQString pcsc_error_code_to_string(long errcode) {
 		return TQString::null;
 	}
 }
+#endif
 
 CryptoCardDeviceWatcher::CryptoCardDeviceWatcher() {
 	m_readerStates = NULL;
@@ -170,6 +172,7 @@ void CryptoCardDeviceWatcher::requestTermination() {
 }
 
 TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
+#ifdef WITH_PCSC
 	unsigned int i;
 	long ret;
 	TQString atr_formatted;
@@ -205,6 +208,7 @@ TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 	}
 
 	return atr_formatted;
+#endif
 }
 
 TDECryptographicCardDevice::TDECryptographicCardDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn),

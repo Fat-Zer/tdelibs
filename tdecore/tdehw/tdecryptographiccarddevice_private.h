@@ -52,8 +52,10 @@ class CryptoCardDeviceWatcher : public TQObject
 
 	private:
 		bool m_terminationRequested;
+#ifdef WITH_PCSC
 		SCARDCONTEXT m_cardContext;
 		SCARD_READERSTATE *m_readerStates;
+#endif
 };
 
 #endif // _TDECRYPTOGRAPHICCARDDEVICE_PRIVATE_H

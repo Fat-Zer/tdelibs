@@ -97,6 +97,7 @@ option( WITH_CONSOLEKIT "Enable ConsoleKit support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
 OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
+option( WITH_PCSC "Enable PC/SC SmartCard support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
 OPTION( WITH_XRANDR "Build the tderandr library" ON )
@@ -624,6 +625,25 @@ if( WITH_LZMA )
   endif( NOT LZMA_FOUND OR NOT LZMA_CODE_FOUND )
   set( HAVE_XZ_SUPPORT 1 )
 endif( WITH_LZMA )
+
+
+##### check for pcsc ############################
+
+if( WITH_PCSC )
+  find_path( PCSCLITE_INCLUDE_DIR pcsclite.h
+    HINTS /usr/include/PCSC )
+  find_library( PCSCLITE_LIBRARY NAMES pcsclite libpcsclite PCSC )
+  if( PCSCLITE_LIBRARY AND PCSCLITE_INCLUDE_DIR )
+    message( STATUS "Found PCSCLITE: ${PCSCLITE_LIBRARY}" )
+    set( PCSCLITE_FOUND 1 )
+    set( PCSCLITE_INCLUDE_DIRS ${PCSCLITE_INCLUDE_DIR} )
+    set( PCSCLITE_LIBRARIES ${PCSCLITE_LIBRARY} )
+  endif( PCSCLITE_LIBRARY AND PCSCLITE_INCLUDE_DIR )
+  if( NOT PCSCLITE_FOUND )
+    tde_message_fatal( "PCSCLITE is requested, but not found on your system" )
+  endif( NOT PCSCLITE_FOUND )
+  set( HAVE_PCSC_SUPPORT 1 )
+endif( WITH_PCSC )
 
 
 ##### check for jpeg ############################
