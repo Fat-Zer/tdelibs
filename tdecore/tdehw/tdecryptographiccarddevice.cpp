@@ -53,11 +53,15 @@ static TQString pcsc_error_code_to_string(long errcode) {
 #endif
 
 CryptoCardDeviceWatcher::CryptoCardDeviceWatcher() {
+#ifdef WITH_PCSC
 	m_readerStates = NULL;
+#endif
 }
 
 CryptoCardDeviceWatcher::~CryptoCardDeviceWatcher() {
+#ifdef WITH_PCSC
 	free(m_readerStates);
+#endif
 }
 
 void CryptoCardDeviceWatcher::run() {
@@ -208,6 +212,8 @@ TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 	}
 
 	return atr_formatted;
+#else
+	return TQString::null;
 #endif
 }
 
