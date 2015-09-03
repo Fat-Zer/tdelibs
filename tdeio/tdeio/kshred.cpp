@@ -206,9 +206,11 @@ KShred::flush()
 bool
 KShred::shred()
 {
-  unsigned char p[6][3] = {{'\222', '\111', '\044'}, {'\111', '\044', '\222'},
-                           {'\044', '\222', '\111'}, {'\155', '\266', '\333'},
-                           {'\266', '\333', '\155'}, {'\333', '\155', '\266'}};
+  // WARNING
+  // These numbers are octal.  Do not remove the leading zeros!
+  unsigned char p[6][3] = {{0222, 0111,  044}, {0111,  044, 0222},
+                           { 044, 0222, 0111}, {0155, 0266, 0333},
+                           {0266, 0333, 0155}, {0333, 0155, 0266}};
   TQString msg = i18n("Shredding:  pass %1 of 35");
 
   emit processedSize(0);
