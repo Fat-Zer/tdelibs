@@ -83,6 +83,7 @@ public:
 	bool m_stateCached;
 	#ifdef KSSL_HAVE_SSL
 		X509 *m_cert;
+		X509_CRL *m_cert_crl;
 	#endif
 	KOSSL *kossl;
 	KSSLCertChain _chain;
@@ -157,6 +158,26 @@ KSSLCertificate *n = NULL;
 
 	n = new KSSLCertificate;
 	n->setCert(x5c);
+#endif
+return n;
+}
+
+KSSLCertificate *KSSLCertificate::crlFromString(TQCString cert) {
+KSSLCertificate *n = NULL;
+#ifdef KSSL_HAVE_SSL
+	if (cert.length() == 0)
+		return NULL;
+
+	TQByteArray qba, qbb = cert.copy();
+	KCodecs::base64Decode(qbb, qba);
+	unsigned char *qbap = reinterpret_cast<unsigned char *>(qba.data());
+	X509_CRL *x5c = KOSSL::self()->d2i_X509_CRL(NULL, &qbap, qba.size());
+	if (!x5c) {
+		return NULL;
+	}
+
+	n = new KSSLCertificate;
+	n->setCRL(x5c);
 #endif
 return n;
 }
@@ -544,6 +565,17 @@ d->m_stateCached = false;
 d->m_stateCache = KSSLCertificate::Unknown;
 }
 
+void KSSLCertificate::setCRL(X509_CRL *c) {
+#ifdef KSSL_HAVE_SSL
+d->m_cert_crl = c;
+if (c) {
+  	d->_extensions.flags = 0;
+}
+#endif
+d->m_stateCached = false;
+d->m_stateCache = KSSLCertificate::Unknown;
+}
+
 X509 *KSSLCertificate::getCert() {
 #ifdef KSSL_HAVE_SSL
 	return d->m_cert;
@@ -624,7 +656,6 @@ KSSLCertificate::KSSLValidationList KSSLCertificate::validateVerbose(KSSLCertifi
 	X509_STORE *certStore;
 	X509_LOOKUP *certLookup;
 	X509_STORE_CTX *certStoreCTX;
-	int rc = 0;
 
 	if (!d->m_cert)
 	{
@@ -702,7 +733,7 @@ KSSLCertificate::KSSLValidationList KSSLCertificate::validateVerbose(KSSLCertifi
 		KSSL_X509CallBack_ca_found = false;
 
 		certStoreCTX->error = X509_V_OK;
-		rc = d->kossl->X509_verify_cert(certStoreCTX);
+		d->kossl->X509_verify_cert(certStoreCTX);
 		int errcode = certStoreCTX->error;
 		if (ca && !KSSL_X509CallBack_ca_found) {
 			ksslv = KSSLCertificate::Irrelevant;
@@ -717,7 +748,7 @@ KSSLCertificate::KSSLValidationList KSSLCertificate::validateVerbose(KSSLCertifi
 						X509_PURPOSE_NS_SSL_SERVER);
 
 			certStoreCTX->error = X509_V_OK;
-			rc = d->kossl->X509_verify_cert(certStoreCTX);
+			d->kossl->X509_verify_cert(certStoreCTX);
 			errcode = certStoreCTX->error;
 			ksslv = processError(errcode);
 		}
@@ -879,6 +910,24 @@ return TQDateTime::currentDateTime();
 TQDateTime KSSLCertificate::getQDTNotAfter() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notAfter(d->m_cert), NULL);
+#else
+return TQDateTime::currentDateTime();
+#endif
+}
+
+
+TQDateTime KSSLCertificate::getQDTLastUpdate() const {
+#ifdef KSSL_HAVE_SSL
+return ASN1_UTCTIME_QDateTime(X509_CRL_get_lastUpdate(d->m_cert_crl), NULL);
+#else
+return TQDateTime::currentDateTime();
+#endif
+}
+
+
+TQDateTime KSSLCertificate::getQDTNextUpdate() const {
+#ifdef KSSL_HAVE_SSL
+return ASN1_UTCTIME_QDateTime(X509_CRL_get_nextUpdate(d->m_cert_crl), NULL);
 #else
 return TQDateTime::currentDateTime();
 #endif
@@ -1115,7 +1164,7 @@ TQStringList KSSLCertificate::subjAltNames() const {
 		TQString s = (const char *)d->kossl->ASN1_STRING_data(val->d.ia5);
 		if (!s.isEmpty()  &&
 				/* skip subjectAltNames with embedded NULs */
-				s.length() == d->kossl->ASN1_STRING_length(val->d.ia5)) {
+				s.length() == (unsigned int)d->kossl->ASN1_STRING_length(val->d.ia5)) {
 			rc += s;
 		}
 	}

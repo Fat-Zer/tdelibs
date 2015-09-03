@@ -291,6 +291,11 @@ public:
     */
    X509 * d2i_X509(X509 **a,unsigned char **pp,long length);
 
+   /*
+    *   d2i_X509 - Covert a text representation of X509 CRL to an X509_CRL object
+    */
+   X509_CRL * d2i_X509_CRL(X509_CRL **a,unsigned char **pp,long length);
+
 
    /*
     *   i2d_X509 - Covert an X509 object into a text representation

@@ -71,6 +71,7 @@ static char * (*K_SSL_CIPHER_get_version) (SSL_CIPHER *) = 0L;
 static const char * (*K_SSL_CIPHER_get_name) (SSL_CIPHER *) = 0L;
 static char * (*K_SSL_CIPHER_description) (SSL_CIPHER *, char *, int) = 0L;
 static X509 * (*K_d2i_X509) (X509 **,unsigned char **,long) = 0L;
+static X509_CRL * (*K_d2i_X509_CRL) (X509_CRL **,unsigned char **,long) = 0L;
 static int (*K_i2d_X509) (X509 *,unsigned char **) = 0L;
 static int (*K_X509_cmp) (X509 *, X509 *) = 0L;
 static void (*K_X509_STORE_CTX_free) (X509_STORE_CTX *) = 0L;
@@ -401,6 +402,7 @@ TDEConfig *cfg;
       K_RAND_write_file = (int (*)(const char *)) GET_CRYPTOLIB_SYMBOL("RAND_write_file");
       K_CRYPTO_free = (void (*) (void *)) GET_CRYPTOLIB_SYMBOL("CRYPTO_free");
       K_d2i_X509 = (X509 * (*)(X509 **,unsigned char **,long)) GET_CRYPTOLIB_SYMBOL("d2i_X509");
+      K_d2i_X509_CRL = (X509_CRL * (*)(X509_CRL **,unsigned char **,long)) GET_CRYPTOLIB_SYMBOL("d2i_X509_CRL");
       K_i2d_X509 = (int (*)(X509 *,unsigned char **)) GET_CRYPTOLIB_SYMBOL("i2d_X509");
       K_X509_cmp = (int (*)(X509 *, X509 *)) GET_CRYPTOLIB_SYMBOL("X509_cmp");
       K_X509_STORE_CTX_new = (X509_STORE_CTX * (*) (void)) GET_CRYPTOLIB_SYMBOL("X509_STORE_CTX_new");
@@ -842,6 +844,12 @@ char * KOpenSSLProxy::SSL_CIPHER_description(SSL_CIPHER *c,char *buf,int size) {
 
 X509 * KOpenSSLProxy::d2i_X509(X509 **a,unsigned char **pp,long length) {
    if (K_d2i_X509) return (K_d2i_X509)(a,pp,length);
+   return 0L;
+}
+
+
+X509_CRL * KOpenSSLProxy::d2i_X509_CRL(X509_CRL **a,unsigned char **pp,long length) {
+   if (K_d2i_X509_CRL) return (K_d2i_X509_CRL)(a,pp,length);
    return 0L;
 }
 
