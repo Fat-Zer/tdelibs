@@ -134,24 +134,28 @@ void KSSLInfoDlg::launchConfig() {
 
 
 void KSSLInfoDlg::setSecurityInQuestion(bool isIt) {
-    d->inQuestion = isIt;
-    if (KSSL::doesSSLWork())
-        if (isIt) {
-            d->pixmap->setPixmap(BarIcon("halfencrypted"));
-            if (d->m_secCon) {
-                d->info->setText(i18n("The main part of this document is secured with SSL, but some parts are not."));
-            } else {
-                d->info->setText(i18n("Some of this document is secured with SSL, but the main part is not."));
-            }
-        } else {
-            if (d->m_secCon) {
-                d->pixmap->setPixmap(BarIcon("encrypted"));
-                d->info->setText(i18n("Current connection is secured with SSL."));
-            } else {
-                d->pixmap->setPixmap(BarIcon("decrypted"));
-                d->info->setText(i18n("Current connection is not secured with SSL."));
-            }
-        }
+	d->inQuestion = isIt;
+	if (KSSL::doesSSLWork()) {
+		if (isIt) {
+			d->pixmap->setPixmap(BarIcon("halfencrypted"));
+			if (d->m_secCon) {
+				d->info->setText(i18n("The main part of this document is secured with SSL, but some parts are not."));
+			}
+			else {
+				d->info->setText(i18n("Some of this document is secured with SSL, but the main part is not."));
+			}
+		}
+		else {
+			if (d->m_secCon) {
+				d->pixmap->setPixmap(BarIcon("encrypted"));
+				d->info->setText(i18n("Current connection is secured with SSL."));
+			}
+			else {
+				d->pixmap->setPixmap(BarIcon("decrypted"));
+				d->info->setText(i18n("Current connection is not secured with SSL."));
+			}
+		}
+	}
 }
 
 
