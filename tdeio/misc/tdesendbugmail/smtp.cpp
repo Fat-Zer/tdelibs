@@ -128,20 +128,22 @@ void SMTP::closeConnection(void)
 
 void SMTP::sendMessage(void)
 {
-    if(!connected)
-        connectTimerTick();
-    if(state == FINISHED && connected){
-        kdDebug() << "state was == FINISHED\n" << endl;
-        finished = false;
-        state = IN;
-        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
-        write(sock->socket(), writeString.ascii(), writeString.length());
-    }
-    if(connected){
-        kdDebug() << "enabling read on sock...\n" << endl;
-        interactTimer.start(timeOut, true);
-        sock->enableRead(true);
-    }
+	if(!connected)
+		connectTimerTick();
+	if(state == FINISHED && connected){
+		kdDebug() << "state was == FINISHED\n" << endl;
+		finished = false;
+		state = IN;
+		writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
+		if (write(sock->socket(), writeString.ascii(), writeString.length()) < 0) {
+			// Error
+		}
+	}
+	if(connected){
+		kdDebug() << "enabling read on sock...\n" << endl;
+		interactTimer.start(timeOut, true);
+		sock->enableRead(true);
+	}
 }
 #include <stdio.h>
 
@@ -246,91 +248,121 @@ void SMTP::socketClose(TDESocket *socket)
 
 void SMTP::processLine(TQString *line)
 {
-    int i, stat;
-    TQString tmpstr;
+	int i, stat;
+	TQString tmpstr;
 
-    i = line->find(' ');
-    tmpstr = line->left(i);
-    if(i > 3)
-        kdDebug() << "warning: SMTP status code longer then 3 digits: " << tmpstr << endl;
-    stat = tmpstr.toInt();
-    serverState = (SMTPServerStatus)stat;
-    lastState = state;
+	i = line->find(' ');
+	tmpstr = line->left(i);
+	if(i > 3)
+		kdDebug() << "warning: SMTP status code longer then 3 digits: " << tmpstr << endl;
+	stat = tmpstr.toInt();
+	serverState = (SMTPServerStatus)stat;
+	lastState = state;
 
-    kdDebug() << "smtp state: [" << stat << "][" << *line << "]" << endl;
+	kdDebug() << "smtp state: [" << stat << "][" << *line << "]" << endl;
 
-    switch(stat){
-    case GREET:     //220
-        state = IN;
-        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
-        kdDebug() << "out: " << writeString << endl;
-	write(sock->socket(), writeString.ascii(), writeString.length());
-        break;
-    case GOODBYE:   //221
-        state = QUIT;
-        break;
-    case SUCCESSFUL://250
-        switch(state){
-        case IN:
-            state = READY;
-            writeString = TQString::fromLatin1("mail from: %1\r\n").arg(senderAddress);
-            kdDebug() << "out: " << writeString << endl;
-            write(sock->socket(), writeString.ascii(), writeString.length());
-            break;
-        case READY:
-            state = SENTFROM;
-            writeString = TQString::fromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
-             kdDebug() << "out: " << writeString << endl;
-            write(sock->socket(), writeString.ascii(), writeString.length());
-            break;
-        case SENTFROM:
-            state = SENTTO;
-            writeString = TQString::fromLatin1("data\r\n");
-             kdDebug() << "out: " << writeString << endl;
-            write(sock->socket(), writeString.ascii(), writeString.length());
-            break;
-        case DATA:
-            state = FINISHED;
-            finished = true;
-            sock->enableRead(false);
-            emit messageSent();
-            break;
-        default:
-            state = CERROR;
-            kdDebug() << "smtp error (state error): [" << lastState << "]:[" << stat << "][" << *line << "]" << endl;
-            socketClose(sock);
-            emit error(COMMAND);
-            break;
-        }
-        break;
-    case READYDATA: //354
-        state = DATA;
-        writeString = TQString::fromLatin1("Subject: %1\r\n").arg(messageSubject);
-        writeString += messageHeader;
-        writeString += "\r\n";
-        writeString += messageBody;
-        writeString += TQString::fromLatin1(".\r\n");
-        kdDebug() << "out: " << writeString;
-        write(sock->socket(), writeString.ascii(), writeString.length());
-        break;
-    case ERROR:     //501
-        state = CERROR;
-        kdDebug() << "smtp error (command error): [" << lastState << "]:[" << stat << "][" << *line << "]\n" << endl;
-        socketClose(sock);
-        emit error(COMMAND);
-        break;
-    case UNKNOWN:   //550
-        state = CERROR;
-        kdDebug() << "smtp error (unknown user): [" << lastState << "]:[" << stat << "][" << *line << "]" << endl;
-        socketClose(sock);
-        emit error(UNKNOWNUSER);
-        break;
-    default:
-        state = CERROR;
-        kdDebug() << "unknown response: [" << lastState << "]:[" << stat << "][" << *line << "]" << endl;
-        socketClose(sock);
-        emit error(UNKNOWNRESPONSE);
-    }
+	switch(stat){
+	case GREET:     //220
+		state = IN;
+		writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
+		kdDebug() << "out: " << writeString << endl;
+		if (write(sock->socket(), writeString.ascii(), writeString.length()) < 0) {
+			// Error
+			state = CERROR;
+			kdDebug() << "smtp error (write failed)" << endl;
+			socketClose(sock);
+			emit error(COMMAND);
+		}
+		break;
+	case GOODBYE:   //221
+		state = QUIT;
+		break;
+	case SUCCESSFUL://250
+		switch(state) {
+			case IN:
+				state = READY;
+				writeString = TQString::fromLatin1("mail from: %1\r\n").arg(senderAddress);
+				kdDebug() << "out: " << writeString << endl;
+				if (write(sock->socket(), writeString.ascii(), writeString.length()) < 0) {
+					// Error
+					state = CERROR;
+					kdDebug() << "smtp error (write failed)" << endl;
+					socketClose(sock);
+					emit error(COMMAND);
+				}
+				break;
+			case READY:
+				state = SENTFROM;
+				writeString = TQString::fromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
+				kdDebug() << "out: " << writeString << endl;
+				if (write(sock->socket(), writeString.ascii(), writeString.length()) < 0) {
+					// Error
+					state = CERROR;
+					kdDebug() << "smtp error (write failed)" << endl;
+					socketClose(sock);
+					emit error(COMMAND);
+				}
+				break;
+			case SENTFROM:
+				state = SENTTO;
+				writeString = TQString::fromLatin1("data\r\n");
+				kdDebug() << "out: " << writeString << endl;
+				if (write(sock->socket(), writeString.ascii(), writeString.length()) < 0) {
+					// Error
+					state = CERROR;
+					kdDebug() << "smtp error (write failed)" << endl;
+					socketClose(sock);
+					emit error(COMMAND);
+				}
+				break;
+			case DATA:
+				state = FINISHED;
+				finished = true;
+				sock->enableRead(false);
+				emit messageSent();
+				break;
+			default:
+				state = CERROR;
+				kdDebug() << "smtp error (state error): [" << lastState << "]:[" << stat << "][" << *line << "]" << endl;
+				socketClose(sock);
+				emit error(COMMAND);
+				break;
+		}
+		break;
+	case READYDATA: //354
+		state = DATA;
+		writeString = TQString::fromLatin1("Subject: %1\r\n").arg(messageSubject);
+		writeString += messageHeader;
+		writeString += "\r\n";
+		writeString += messageBody;
+		writeString += TQString::fromLatin1(".\r\n");
+		kdDebug() << "out: " << writeString;
+		if (write(sock->socket(), writeString.ascii(), writeString.length()) < 0) {
+			// Error
+			state = CERROR;
+			kdDebug() << "smtp error (write failed)" << endl;
+			socketClose(sock);
+			emit error(COMMAND);
+		}
+		break;
+	case ERROR:     //501
+		state = CERROR;
+		kdDebug() << "smtp error (command error): [" << lastState << "]:[" << stat << "][" << *line << "]\n" << endl;
+		socketClose(sock);
+		emit error(COMMAND);
+		break;
+	case UNKNOWN:   //550
+		state = CERROR;
+		kdDebug() << "smtp error (unknown user): [" << lastState << "]:[" << stat << "][" << *line << "]" << endl;
+		socketClose(sock);
+		emit error(UNKNOWNUSER);
+		break;
+	default:
+		state = CERROR;
+		kdDebug() << "unknown response: [" << lastState << "]:[" << stat << "][" << *line << "]" << endl;
+		socketClose(sock);
+		emit error(UNKNOWNRESPONSE);
+	}
 }
 
 #include "smtp.moc"
