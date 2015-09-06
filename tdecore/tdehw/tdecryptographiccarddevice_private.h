@@ -29,6 +29,12 @@
 	#include <reader.h>
 #endif
 
+#ifdef WITH_PKCS
+	#include <pkcs11-helper-1.0/pkcs11h-certificate.h>
+	#include <pkcs11-helper-1.0/pkcs11h-openssl.h>
+	#define PKCS11H_PROMPT_MASK_ALLOW_NONE (PKCS11H_PROMPT_MASK_ALLOW_ALL & ~PKCS11H_PROMPT_MASK_ALLOW_ALL)
+#endif
+
 class TDECryptographicCardDevice;
 
 class CryptoCardDeviceWatcher : public TQObject
@@ -43,12 +49,16 @@ class CryptoCardDeviceWatcher : public TQObject
 		void run();
 		void requestTermination();
 		TQString getCardATR(TQString readerName);
+		int retrieveCardCertificates(TQString readerName);
 
 	signals:
 		void statusChanged(TQString, TQString);
 
 	public:
 		TDECryptographicCardDevice *cardDevice;
+
+	private:
+		void deleteAllCertificatesFromCache();
 
 	private:
 		bool m_terminationRequested;

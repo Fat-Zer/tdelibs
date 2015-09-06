@@ -142,19 +142,27 @@ void CryptoCardDeviceWatcher::run() {
 					if (first_loop) {
 						if (m_readerStates[i].dwEventState & SCARD_STATE_PRESENT) {
 							// sleep(1);	// Allow the card to settle
-							statusChanged("PRESENT", getCardATR(readers[i]));
+							TQString atr = getCardATR(readers[i]);
+							retrieveCardCertificates(readers[i]);
+							statusChanged("PRESENT", atr);
+						}
+						else {
+							deleteAllCertificatesFromCache();
 						}
 						first_loop = false;
 					}
 					if (m_readerStates[i].dwEventState & SCARD_STATE_CHANGED) {
 						if ((m_readerStates[i].dwCurrentState & SCARD_STATE_PRESENT)
 							&& (m_readerStates[i].dwEventState & SCARD_STATE_EMPTY)) {
+							deleteAllCertificatesFromCache();
 							statusChanged("REMOVED", TQString::null);
 						}
 						else if ((m_readerStates[i].dwCurrentState & SCARD_STATE_EMPTY)
 							&& (m_readerStates[i].dwEventState & SCARD_STATE_PRESENT)) {
 							// sleep(1);	// Allow the card to settle
-							statusChanged("INSERTED", getCardATR(readers[i]));
+							TQString atr = getCardATR(readers[i]);
+							retrieveCardCertificates(readers[i]);
+							statusChanged("INSERTED", atr);
 						}
 						m_readerStates[i].dwCurrentState = m_readerStates[i].dwEventState;
 					}
@@ -217,11 +225,138 @@ TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 #endif
 }
 
+static void pkcs_log_hook(IN void * const global_data, IN unsigned flags, IN const char * const format, IN va_list args) {
+	vprintf(format, args);
+	printf("\n");
+}
+
+int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
+#if WITH_PKCS
+	int ret = -1;
+
+	CK_RV rv;
+	pkcs11h_certificate_id_list_t issuers;
+	pkcs11h_certificate_id_list_t certs;
+	pkcs11h_certificate_id_t find = NULL;
+
+	printf("Initializing pkcs11-helper\n");
+	if ((rv = pkcs11h_initialize()) != CKR_OK) {
+		printf("pkcs11h_initialize failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+
+	printf("Registering pkcs11-helper hooks\n");
+	if ((rv = pkcs11h_setLogHook(pkcs_log_hook, NULL)) != CKR_OK) {
+		printf("pkcs11h_setLogHook failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+	pkcs11h_setLogLevel(PKCS11H_LOG_WARN);
+
+#if 0
+	if ((rv = pkcs11h_setTokenPromptHook(_pkcs11h_hooks_token_prompt, NULL)) != CKR_OK) {
+		printf("pkcs11h_setTokenPromptHook failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+	if ((rv = pkcs11h_setPINPromptHook(_pkcs11h_hooks_pin_prompt, NULL)) != CKR_OK) {
+		printf("pkcs11h_setPINPromptHook failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+#endif
+	printf("Adding provider '%s'\n", OPENSC_PKCS11_PROVIDER_LIBRARY);
+		if ((rv = pkcs11h_addProvider (OPENSC_PKCS11_PROVIDER_LIBRARY, OPENSC_PKCS11_PROVIDER_LIBRARY, FALSE, PKCS11H_PRIVATEMODE_MASK_AUTO, PKCS11H_SLOTEVENT_METHOD_AUTO, 0, FALSE)) != CKR_OK) {
+		printf("pkcs11h_addProvider failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+
+	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_NONE, &issuers, &certs);
+	if ((rv != CKR_OK) || (certs == NULL)) {
+		printf("Cannot enumerate certificates: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+	printf("Successfully enumerated certificates\n");
+
+	int i = 0;
+	for (pkcs11h_certificate_id_list_t cert = certs; cert != NULL; cert = cert->next) {
+		TQString label = cert->certificate_id->displayName;
+		printf("The name of the %d certficate is %s\n", i, label.ascii());
+
+		pkcs11h_certificate_t certificate;
+		rv = pkcs11h_certificate_create(find, NULL, PKCS11H_PROMPT_MASK_ALLOW_NONE, PKCS11H_PIN_CACHE_INFINITE, &certificate);
+		if (rv != CKR_OK) {
+			printf("Can not read certificate: %s\n", pkcs11h_getMessage(rv));
+			pkcs11h_certificate_freeCertificateId(find);
+			ret = -1;
+			break;
+		}
+		pkcs11h_certificate_freeCertificateId(find);
+
+		pkcs11h_openssl_session_t openssl_session = NULL;
+		if ((openssl_session = pkcs11h_openssl_createSession(certificate)) == NULL) {
+			printf("Cannot initialize openssl session to retrieve cryptographic objects\n");
+			pkcs11h_certificate_freeCertificate(certificate);
+			ret = -1;
+			break;
+		}
+		certificate = NULL;	// the certificate object is managed by openssl_session
+
+		X509* x509_local;
+		x509_local = pkcs11h_openssl_session_getX509(openssl_session);
+		if (x509_local) {
+			printf("Successfully retrieved X509 certificate\n");
+		}
+		else {
+			printf("Cannot get X509 object\n");
+			ret = -1;
+		}
+#if 0
+		RSA* rsa_local;
+		rsa_local = pkcs11h_openssl_session_getRSA(openssl_session);
+		if (rsa_local) {
+			printf("Successfully retrieved RSA public key\n");
+		}
+		else {
+			printf("Cannot get RSA object\n");
+			ret = -1;
+		}
+#endif
+
+		X509* x509_copy = X509_dup(x509_local);
+		if (x509_copy) {
+			cardDevice->m_cardCertificates.append(x509_copy);
+		}
+		else {
+			printf("Unable to copy X509 certificate\n");
+		}
+
+		pkcs11h_certificate_freeCertificateIdList(issuers);
+		pkcs11h_certificate_freeCertificateIdList(certs);
+
+		pkcs11h_openssl_freeSession(openssl_session);
+
+		i++;
+	}
+
+	return ret;
+#else
+	return -1;
+#endif
+}
+
+void CryptoCardDeviceWatcher::deleteAllCertificatesFromCache() {
+	X509CertificatePtrListIterator it(cardDevice->m_cardCertificates);
+	X509 *x509_cert;
+	while ((x509_cert = it.current()) != 0) {
+		X509_free(x509_cert);
+	}
+
+	cardDevice->m_cardCertificates.clear();
+}
+
 TDECryptographicCardDevice::TDECryptographicCardDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn),
 	m_watcherThread(NULL),
 	m_watcherObject(NULL),
 	m_cardPresent(false) {
-	//
+	m_cardCertificates.setAutoDelete(false);
 }
 
 TDECryptographicCardDevice::~TDECryptographicCardDevice() {
@@ -282,6 +417,18 @@ TQString TDECryptographicCardDevice::cardATR() {
 	}
 	else {
 		return TQString::null;
+	}
+}
+
+X509CertificatePtrList TDECryptographicCardDevice::cardX509Certificates() {
+	if (m_watcherObject && m_watcherThread) {
+		if (m_cardPresent)
+			return m_cardCertificates;
+		else
+			return X509CertificatePtrList();
+	}
+	else {
+		return X509CertificatePtrList();
 	}
 }
 

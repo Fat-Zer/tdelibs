@@ -22,8 +22,12 @@
 
 #include "tdegenericdevice.h"
 
+class x509_st;
 class TQEventLoopThread;
 class CryptoCardDeviceWatcher;
+
+typedef TQPtrList<x509_st> X509CertificatePtrList;
+typedef TQPtrListIterator<x509_st> X509CertificatePtrListIterator;
 
 class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 {
@@ -57,10 +61,20 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 
 		/**
 		 * If monitoring of insert / remove events is enabled,
-		 * and a card has been inserted, return the card's ATR.
+		 * and a card has been inserted, @return the card's ATR.
 		 * @return TQString::null if no card or card status unknown.
 		 */
 		TQString cardATR();
+
+		/**
+		 * If monitoring of insert / remove events is enabled,
+		 * and a card has been inserted, @return a list of all
+		 * X509 certificates on the card.
+		 * @return an empty list if no card or card contents unknown.
+		 *
+		 * @example KSSLCertificate* tdeCert = KSSLCertificate::fromX509(cardX509Certificates().first());
+		 */
+		X509CertificatePtrList cardX509Certificates();
 
 	public slots:
 		void cardStatusChanged(TQString status, TQString atr);
@@ -75,8 +89,10 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 
 		bool m_cardPresent;
 		TQString m_cardATR;
+		X509CertificatePtrList m_cardCertificates;
 
 	friend class TDEHardwareDevices;
+	friend class CryptoCardDeviceWatcher;
 };
 
 #endif // _TDECRYPTOGRAPHICCARDDEVICE_H
