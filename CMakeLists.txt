@@ -60,9 +60,9 @@ add_custom_target(install-apidox
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/cmake/")
 
 
-##### user requested options ####################
+##### user requested OPTIONs ####################
 
-OPTION( WITH_ALL_OPTIONS "Enable all optional support" OFF )
+OPTION( WITH_ALL_OPTIONS "Enable all OPTIONal support" OFF )
 
 OPTION( TDE_MALLOC "Use own malloc implementation" OFF )
 OPTION( TDE_MALLOC_DEBUG "Enable debugging in fast malloc" OFF )
@@ -85,19 +85,21 @@ OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for tdeio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
-option( WITH_TDEHWLIB "Enable TDE hwlib globally" ON )
-option( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_TDEHWLIB} )
-option( WITH_HAL "Enable HAL support" OFF )
-option( WITH_DEVKITPOWER "Enable DeviceKit Power support" OFF )
-option( WITH_LOGINDPOWER "Enable Logind/Systemd Power support" OFF )
-option( WITH_UPOWER "Enable uPower support" ${WITH_ALL_OPTIONS} )
-option( WITH_UDISKS "Enable uDisks support" ${WITH_ALL_OPTIONS} )
-option( WITH_UDISKS2 "Enable uDisks2 support" ${WITH_ALL_OPTIONS} )
-option( WITH_CONSOLEKIT "Enable ConsoleKit support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_TDEHWLIB "Enable TDE hwlib globally" ON )
+OPTION( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_TDEHWLIB} )
+OPTION( WITH_HAL "Enable HAL support" OFF )
+OPTION( WITH_DEVKITPOWER "Enable DeviceKit Power support" OFF )
+OPTION( WITH_LOGINDPOWER "Enable Logind/Systemd Power support" OFF )
+OPTION( WITH_UPOWER "Enable uPower support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_UDISKS "Enable uDisks support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_UDISKS2 "Enable uDisks2 support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_CONSOLEKIT "Enable ConsoleKit support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
 OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
-option( WITH_PCSC "Enable PC/SC SmartCard support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_PCSC "Enable PC/SC SmartCard support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_PKCS "Enable PKCS support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_CRYPTSETUP "Enable cryptsetup support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
 OPTION( WITH_XRANDR "Build the tderandr library" ON )
@@ -615,7 +617,7 @@ set( HAVE_LIBZ 1 )
 
 find_package( BZip2 )
 if( NOT BZIP2_FOUND )
-  # FIXME I'm not sure if bzip2 are required; maybe is optional?
+  # FIXME I'm not sure if bzip2 are required; maybe is OPTIONal?
   message(FATAL_ERROR "\nbzip2 are required, but not found on your system" )
 endif( NOT BZIP2_FOUND )
 
@@ -665,6 +667,36 @@ if( WITH_PCSC )
   endif( NOT PCSCLITE_FOUND )
   set( HAVE_PCSC_SUPPORT 1 )
 endif( WITH_PCSC )
+
+
+##### check for pkcs ############################
+
+if( WITH_PKCS )
+  pkg_search_module( LIBPKCS11-HELPER libpkcs11-helper-1 )
+  if( NOT LIBPKCS11-HELPER_FOUND )
+      message(FATAL_ERROR "\nPKCS support was requested, but libpkcs11-helper-1 was not found on your system" )
+  endif( NOT LIBPKCS11-HELPER_FOUND )
+  find_library( OPENSC_PKCS11_PROVIDER_LIBRARY NAMES opensc-pkcs11.so )
+  if( OPENSC_PKCS11_PROVIDER_LIBRARY )
+    set( OPENSC_PKCS11_PROVIDER_FOUND 1 )
+    message( STATUS "Found OpenSC PKCS11 provider: ${OPENSC_PKCS11_PROVIDER_LIBRARY}" )
+  endif( OPENSC_PKCS11_PROVIDER_LIBRARY )
+  if( NOT OPENSC_PKCS11_PROVIDER_FOUND )
+    tde_message_fatal( "PKCS is requested, but not OpenSC PKCS11 provider was not found on your system" )
+  endif( NOT OPENSC_PKCS11_PROVIDER_FOUND )
+  set( HAVE_PKCS 1 )
+endif( )
+
+
+##### check for pkcs ############################
+
+if( WITH_CRYPTSETUP )
+  pkg_search_module( LIBCRYPTSETUP libcryptsetup )
+  if( NOT LIBCRYPTSETUP_FOUND )
+      message(FATAL_ERROR "\ncryptsetup support was requested, but libcryptsetup was not found on your system" )
+  endif( NOT LIBCRYPTSETUP_FOUND )
+  set( HAVE_CRYPTSETUP 1 )
+endif( )
 
 
 ##### check for jpeg ############################

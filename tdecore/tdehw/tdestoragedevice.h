@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+struct crypt_device;
+
 // Keep readDiskDeviceSubtypeFromString() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEDiskDeviceType {
 #if __cplusplus >= 201103L
@@ -125,240 +127,361 @@ inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
 }
 };
 
+namespace TDELUKSKeySlotStatus {
+enum TDELUKSKeySlotStatus {
+	Invalid =		0x00000000,
+	Inactive =		0x00000001,
+	Active =		0x00000002,
+	Last =			0x00000004,
+	Other =			0x80000000
+};
+
+inline TDELUKSKeySlotStatus operator|(TDELUKSKeySlotStatus a, TDELUKSKeySlotStatus b)
+{
+	return static_cast<TDELUKSKeySlotStatus>(static_cast<int>(a) | static_cast<int>(b));
+}
+
+inline TDELUKSKeySlotStatus operator&(TDELUKSKeySlotStatus a, TDELUKSKeySlotStatus b)
+{
+	return static_cast<TDELUKSKeySlotStatus>(static_cast<int>(a) & static_cast<int>(b));
+}
+
+inline TDELUKSKeySlotStatus operator~(TDELUKSKeySlotStatus a)
+{
+	return static_cast<TDELUKSKeySlotStatus>(~static_cast<int>(a));
+}
+};
+
+typedef TQValueList<TDELUKSKeySlotStatus::TDELUKSKeySlotStatus> TDELUKSKeySlotStatusList;
+
+namespace TDELUKSResult {
+enum TDELUKSResult {
+	Invalid =		0x00000000,
+	Success = 		0x00000001,
+	LUKSNotSupported =	0x00000002,
+	LUKSNotFound = 		0x00000003,
+	InvalidKeyslot = 	0x00000004,
+	KeyslotOpFailed = 	0x00000005,
+	Other =			0x80000000
+};
+};
+
 typedef TQMap<TQString,TQString> TDEStorageMountOptions;
 
 class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 {
 	public:
 		/**
-		*  Constructor.
-		*  @param Device type
-		*/
+		 *  Constructor.
+		 *  @param Device type
+		 */
 		TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
-		* Destructor.
-		*/
+		 * Destructor.
+		 */
 		~TDEStorageDevice();
 
 		/**
-		* @return a TQString with the disk or partition label, if any
-		*/
+		 * @return a TQString with the disk or partition label, if any
+		 */
 		TQString diskLabel();
 
 		/**
-		* @return a TQString with the disk UUID, if any
-		*/
+		 * @return a TQString with the disk UUID, if any
+		 */
 		TQString diskUUID();
 
 		/**
-		* @return an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
-		*/
+		 * @return an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		 */
 		TDEDiskDeviceType::TDEDiskDeviceType diskType();
 
 		/**
-		* @return an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
-		*/
+		 * @return an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		 */
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskStatus();
 
 		/**
-		* @return true if media inserted, false if no media available
-		*/
+		 * @return true if media inserted, false if no media available
+		 */
 		bool mediaInserted();
 
 		/**
-		* @return a TQString with the filesystem name, if any
-		*/
+		 * @return a TQString with the filesystem name, if any
+		 */
 		TQString fileSystemName();
 
 		/**
-		* @return a TQString with the filesystem usage string, if any
-		*/
+		 * @return a TQString with the filesystem usage string, if any
+		 */
 		TQString fileSystemUsage();
 
 		/**
-		* @return a TQStringList containing system paths to all devices with a lock on this device, if any
-		*/
+		 * @return a TQStringList containing system paths to all devices with a lock on this device, if any
+		 */
 		TQStringList holdingDevices();
 
 		/**
-		* @return a TQStringList containing system paths to all devices locked by this device, if any
-		*/
+		 * @return a TQStringList containing system paths to all devices locked by this device, if any
+		 */
 		TQStringList slaveDevices();
 
 		/**
-		* Mounts the device if not encrypted
-		*
-		* @param a TQString containing a requested mount name under /media, if desired
-		* @param a TQString containing any mount options for pmount, if desired
-		* @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
-		* @param a pointer to an integer which will be populated with the return code from pmount, if desired
-		*
-		* @return a TQString with the mount path, if successful
-		*/
+		 * Mounts the device if not encrypted
+		 *
+		 * @param a TQString containing a requested mount name under /media, if desired
+		 * @param a TQString containing any mount options for pmount, if desired
+		 * @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
+		 * @param a pointer to an integer which will be populated with the return code from pmount, if desired
+		 *
+		 * @return a TQString with the mount path, if successful
+		 */
 		TQString mountDevice(TQString mediaName=TQString::null, TDEStorageMountOptions mountOptions=TDEStorageMountOptions(), TQString* errRet=0, int* retcode=0);
 
 		/**
-		* Mounts the encrypted device if the correct passphrase is given
-		*
-		* @param a TQString containing the passphrase
-		* @param a TQString containing a requested mount name under /media, if desired
-		* @param a TQString containing any mount options for pmount, if desired
-		* @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
-		* @param a pointer to an integer which will be populated with the return code from pmount, if desired
-		*
-		* @return a TQString with the mount path, if successful
-		*/
+		 * Mounts the encrypted device if the correct passphrase is given
+		 *
+		 * @param a TQString containing the passphrase
+		 * @param a TQString containing a requested mount name under /media, if desired
+		 * @param a TQString containing any mount options for pmount, if desired
+		 * @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
+		 * @param a pointer to an integer which will be populated with the return code from pmount, if desired
+		 *
+		 * @return a TQString with the mount path, if successful
+		 */
 		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null, TDEStorageMountOptions mountOptions=TDEStorageMountOptions(), TQString* errRet=0, int* retcode=0);
 
 		/**
-		* Unmounts the device
-		*
-		* @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
-		* @param a pointer to an integer which will be populated with the return code from pmount, if desired
-		*
-		* @return TRUE if unmount was successful
-		*/
+		 * Unmounts the device
+		 *
+		 * @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
+		 * @param a pointer to an integer which will be populated with the return code from pmount, if desired
+		 *
+		 * @return TRUE if unmount was successful
+		 */
 		bool unmountDevice(TQString* errRet, int* retcode=0);
 
 		/**
-		* @return a TQString with the mount path, if mounted
-		*/
+		 * @return a TQString with the mount path, if mounted
+		 */
 		TQString mountPath();
 
 		/**
-		* @return an unsigned long with the device size in bytes
-		*/
+		 * @return an unsigned long with the device size in bytes
+		 */
 		unsigned long long deviceSize();
 
 		/**
-		* @return a TQString with the device size in human readable form
-		*/
+		 * @return a TQString with the device size in human readable form
+		 */
 		TQString deviceFriendlySize();
 
 		/**
-		* Get an icon for this device
-		* @param size a TDEIcon::StdSizes structure specifying the desired icon size
-		* @return a TQPixmap containing the icon for the specified type
-		*
-		* This method overrides TDEGenericDevice::icon(TDEIcon::StdSizes size)
-		*/
+		 * Get an icon for this device
+		 * @param size a TDEIcon::StdSizes structure specifying the desired icon size
+		 * @return a TQPixmap containing the icon for the specified type
+		 *
+		 * This method overrides TDEGenericDevice::icon(TDEIcon::StdSizes size)
+		 */
 		TQPixmap icon(TDEIcon::StdSizes size);
 
 		/**
-		* @return a TQString with a friendly name
-		*
-		* This method overrides TDEGenericDevice::friendlyName()
-		*/
+		 * @return a TQString with a friendly name
+		 *
+		 * This method overrides TDEGenericDevice::friendlyName()
+		 */
 		TQString friendlyName();
 
 		/**
-		* @return a TQString with a detailed friendly name
-		*
-		* This method overrides TDEGenericDevice::detailedFriendlyName()
-		*/
+		 * @return a TQString with a detailed friendly name
+		 *
+		 * This method overrides TDEGenericDevice::detailedFriendlyName()
+		 */
 		TQString detailedFriendlyName();
 
 		/**
-		*  @return a TQString containing the friendly type name
-		*
-		* This method overrides TDEGenericDevice::friendlyDeviceType()
-		*/
+		 *  @return a TQString containing the friendly type name
+		 *
+		 * This method overrides TDEGenericDevice::friendlyDeviceType()
+		 */
 		TQString friendlyDeviceType();
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
-		*/
+		 * @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		 */
 		bool isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf);
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
-		*/
+		 * @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		 */
 		bool checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf);
 
 		/**
-		* @param TRUE to engage media lock, FALSE to disable it
-		* @return TRUE on success, FALSE on failure
-		*
-		* This method currently works on CD-ROM drives and similar devices
-		*/
+		 * @param TRUE to engage media lock, FALSE to disable it
+		 * @return TRUE on success, FALSE on failure
+		 *
+		 * This method currently works on CD-ROM drives and similar devices
+		 */
 		bool lockDriveMedia(bool lock);
 
 		/**
-		* @return TRUE on success, FALSE on failure
-		*
-		* This method currently works on CD-ROM drives and similar devices
-		*/
+		 * @return TRUE on success, FALSE on failure
+		 *
+		 * This method currently works on CD-ROM drives and similar devices
+		 */
 		bool ejectDriveMedia();
 
 		/**
-		* @return TRUE on success, FALSE on failure
-		*
-		* This method currently works on all removable storage devices
-		*/
+		 * @return TRUE on success, FALSE on failure
+		 *
+		 * This method currently works on all removable storage devices
+		 */
 		bool ejectDrive();
 
 		/**
-		* @param path Full path to arbitrary file or directory
-		* @return TQString with type of file system containing the given file,
-		* or TQString::null if file system type unknown
-		*/
+		 * @param path Full path to arbitrary file or directory
+		 * @return TQString with type of file system containing the given file,
+		 * or TQString::null if file system type unknown
+		 */
 		static TQString determineFileSystemType(TQString path);
+
+		/**
+		 * Set the unlock password to use in subsequent LUKS operations
+		 * @see cryptClearOperationsUnlockPassword
+		 *
+		 * @param password LUKS unlock password for any keyslot
+		 */
+		void cryptSetOperationsUnlockPassword(TQByteArray password);
+
+		/**
+		 * Erases the unlock password from application memory cache
+		 * @see cryptSetOperationsUnlockPassword
+		 */
+		void cryptClearOperationsUnlockPassword();
+
+		/**
+		 * @return true if unlock password is in the application memory cache
+		 * @see cryptSetOperationsUnlockPassword
+		 * @see cryptClearOperationsUnlockPassword
+		 */
+		bool cryptOperationsUnlockPasswordSet();
+
+		/**
+		 * Adds a new key to the specific keyslot, overwriting the existing key if present
+		 *
+		 * @param keyslot New keyslot number
+		 * @param password New keyslot password
+		 * @return TDELUKSResult::TDELUKSResult containing the status code returned
+		 * from the operation, or TDELUKSResult::LUKSNotSupported if LUKS support unavailable
+		 * @return TDELUKSResult::Success on success
+		 */
+		TDELUKSResult::TDELUKSResult cryptAddKey(unsigned int keyslot, TQByteArray password);
+
+		/**
+		 * Permanently deletes the associated key from a specific keyslot
+		 *
+		 * @param keyslot Keyslot number
+		 * @return TDELUKSResult::TDELUKSResult containing the status code returned
+		 * from the operation, or TDELUKSResult::LUKSNotSupported if LUKS support unavailable
+		 * @return TDELUKSResult::Success on success
+		 */
+		TDELUKSResult::TDELUKSResult cryptDelKey(unsigned int keyslot);
+
+		/**
+		 * @return the maximum number of key slots available
+		 */
+		unsigned int cryptKeySlotCount();
+
+		/**
+		 * @return TDELUKSKeySlotStatusList with the status of all keyslots
+		 */
+		TDELUKSKeySlotStatusList cryptKeySlotStatus();
+
+		/**
+		 * @param status Keyslot status
+		 * @return a TQString with the friendly name of the given slot status
+		 */
+		TQString cryptKeySlotFriendlyName(TDELUKSKeySlotStatus::TDELUKSKeySlotStatus status);
 
 	protected:
 		/**
-		* @param a TQString with the disk or partition label, if any
-		* @internal
-		*/
+		 * @param a TQString with the system device node, if any
+		 * @internal
+		 *
+		 * This method is non-portable, so be careful!
+		 */
+		void internalSetDeviceNode(TQString sn);
+
+		/**
+		 * @param a TQString with the disk or partition label, if any
+		 * @internal
+		 */
 		void internalSetDiskLabel(TQString dn);
 
 		/**
-		* @param a TQString with the disk UUID, if any
-		* @internal
-		*/
+		 * @param a TQString with the disk UUID, if any
+		 * @internal
+		 */
 		void internalSetDiskUUID(TQString id);
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
-		* @internal
-		*/
+		 * @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		 * @internal
+		 */
 		void internalSetDiskType(TDEDiskDeviceType::TDEDiskDeviceType tf);
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
-		* @internal
-		*/
+		 * @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		 * @internal
+		 */
 		void internalSetDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st);
 
 		/**
-		* @param a bool with the media status
-		* @internal
-		*/
+		 * @param a bool with the media status
+		 * @internal
+		 */
 		void internalSetMediaInserted(bool inserted);
 
 		/**
-		* @param a TQString with the filesystem name, if any
-		* @internal
-		*/
+		 * @param a TQString with the filesystem name, if any
+		 * @internal
+		 */
 		void internalSetFileSystemName(TQString fn);
 
 		/**
-		* @param a TQString with the filesystem usage string, if any
-		* @internal
-		*/
+		 * @param a TQString with the filesystem usage string, if any
+		 * @internal
+		 */
 		void internalSetFileSystemUsage(TQString fu);
 
 		/**
-		* @param a TQStringList containing system paths to all devices with a lock on this device, if any
-		* @internal
-		*/
+		 * @param a TQStringList containing system paths to all devices with a lock on this device, if any
+		 * @internal
+		 */
 		void internalSetHoldingDevices(TQStringList hd);
 
 		/**
-		* @param a TQStringList containing system paths to all devices locked by this device, if any
-		* @internal
-		*/
+		 * @param a TQStringList containing system paths to all devices locked by this device, if any
+		 * @internal
+		 */
 		void internalSetSlaveDevices(TQStringList sd);
+
+		/**
+		 * @internal
+		 */
+		void internalInitializeLUKSIfNeeded();
+
+		/**
+		 * @internal
+		 */
+		void internalGetLUKSKeySlotStatus();
+
+	private:
+		/**
+		 * @internal
+		 */
+		static int cryptsetup_password_entry_callback(const char*, char *, size_t, void *);
 
 	private:
 		TDEDiskDeviceType::TDEDiskDeviceType m_diskType;
@@ -371,6 +494,11 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString m_mountPath;
 		TQStringList m_holdingDevices;
 		TQStringList m_slaveDevices;
+		struct crypt_device* m_cryptDevice;
+		TQByteArray m_cryptDevicePassword;
+		TQString m_cryptDeviceType;
+		unsigned int m_cryptKeySlotCount;
+		TDELUKSKeySlotStatusList m_cryptKeyslotStatus;
 
 	friend class TDEHardwareDevices;
 };

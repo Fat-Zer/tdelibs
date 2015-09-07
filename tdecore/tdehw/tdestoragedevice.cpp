@@ -39,6 +39,10 @@
 
 #include "config.h"
 
+#if defined(WITH_CRYPTSETUP)
+	#include <libcryptsetup.h>
+#endif
+
 // uDisks2 integration
 #if defined(WITH_UDISKS) || defined(WITH_UDISKS2)
  	#include <tqdbusdata.h>
@@ -59,20 +63,200 @@
 	TQT_DBusData convertDBUSDataToVariantData(TQT_DBusData);
 #endif // defined(WITH_UDISKS) || defined(WITH_UDISKS2)
 
-TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
+#if defined(WITH_CRYPTSETUP)
+int TDEStorageDevice::cryptsetup_password_entry_callback(const char *msg, char *buf, size_t length, void *usrptr) {
+	TDEStorageDevice* sdevice = (TDEStorageDevice*)usrptr;
+
+	unsigned int passwd_len = sdevice->m_cryptDevicePassword.size();
+	if (passwd_len < length) {
+		memcpy(buf, sdevice->m_cryptDevicePassword.data(), length);
+		return passwd_len;
+	}
+	else {
+		return -1;
+	}
+}
+#endif
+
+TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true), m_cryptDevice(NULL) {
 	m_diskType = TDEDiskDeviceType::Null;
 	m_diskStatus = TDEDiskDeviceStatus::Null;
 }
 
 TDEStorageDevice::~TDEStorageDevice() {
+#if defined(WITH_CRYPTSETUP)
+	if (m_cryptDevice) {
+		crypt_free(m_cryptDevice);
+		m_cryptDevice = NULL;
+	}
+#endif
 }
 
 TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
 	return m_diskType;
 }
 
+void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
+	unsigned int i;
+	crypt_keyslot_info keyslot_status;
+	TDELUKSKeySlotStatus::TDELUKSKeySlotStatus tde_keyslot_status;
+
+	m_cryptKeyslotStatus.clear();
+	for (i = 0; i < m_cryptKeySlotCount; i++) {
+		keyslot_status = crypt_keyslot_status(m_cryptDevice, i);
+		tde_keyslot_status = TDELUKSKeySlotStatus::Invalid;
+		if (keyslot_status == CRYPT_SLOT_INACTIVE) {
+			tde_keyslot_status = TDELUKSKeySlotStatus::Inactive;
+		}
+		else if (keyslot_status == CRYPT_SLOT_ACTIVE) {
+			tde_keyslot_status = TDELUKSKeySlotStatus::Active;
+		}
+		else if (keyslot_status == CRYPT_SLOT_ACTIVE_LAST) {
+			tde_keyslot_status = TDELUKSKeySlotStatus::Active | TDELUKSKeySlotStatus::Last;
+		}
+		m_cryptKeyslotStatus.append(tde_keyslot_status);
+	}
+}
+
+void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
+#if defined(WITH_CRYPTSETUP)
+	int ret;
+
+	if (m_diskType & TDEDiskDeviceType::LUKS) {
+		if (!m_cryptDevice) {
+			TQString node = deviceNode();
+			if (node != "") {
+				ret = crypt_init(&m_cryptDevice, node.ascii());
+				if (ret == 0) {
+					crypt_set_password_callback(m_cryptDevice, TDEStorageDevice::cryptsetup_password_entry_callback, this);
+					ret = crypt_load(m_cryptDevice, NULL, NULL);
+					if (ret == 0) {
+						int keyslot_count;
+						m_cryptDeviceType = crypt_get_type(m_cryptDevice);
+						keyslot_count = crypt_keyslot_max(m_cryptDeviceType.ascii());
+						if (keyslot_count < 0) {
+							m_cryptKeySlotCount = 0;
+						}
+						else {
+							m_cryptKeySlotCount = keyslot_count;
+						}
+						internalGetLUKSKeySlotStatus();
+					}
+				}
+				else {
+					m_cryptDevice = NULL;
+				}
+			}
+		}
+	}
+	else {
+		if (m_cryptDevice) {
+			crypt_free(m_cryptDevice);
+			m_cryptDevice = NULL;
+		}
+	}
+#endif
+}
+
+void TDEStorageDevice::cryptSetOperationsUnlockPassword(TQByteArray password) {
+	m_cryptDevicePassword = password;
+}
+
+void TDEStorageDevice::cryptClearOperationsUnlockPassword() {
+	m_cryptDevicePassword.resize(0);
+}
+
+bool TDEStorageDevice::cryptOperationsUnlockPasswordSet() {
+	if (m_cryptDevicePassword.size() > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+TDELUKSResult::TDELUKSResult TDEStorageDevice::cryptAddKey(unsigned int keyslot, TQByteArray password) {
+#if defined(WITH_CRYPTSETUP)
+	int ret;
+
+	if (m_cryptDevice) {
+		if (keyslot < m_cryptKeySlotCount) {
+			ret = crypt_keyslot_add_by_passphrase(m_cryptDevice, keyslot, m_cryptDevicePassword.data(), m_cryptDevicePassword.size(), password.data(), password.size());
+			if (ret < 0) {
+				return TDELUKSResult::KeyslotOpFailed;
+			}
+			else {
+				internalGetLUKSKeySlotStatus();
+				return TDELUKSResult::Success;
+			}
+		}
+		else {
+			return TDELUKSResult::InvalidKeyslot;
+		}
+	}
+	else {
+		return TDELUKSResult::LUKSNotFound;
+	}
+#else
+	return TDELUKSResult::LUKSNotSupported;
+#endif
+}
+
+TDELUKSResult::TDELUKSResult TDEStorageDevice::cryptDelKey(unsigned int keyslot) {
+#if defined(WITH_CRYPTSETUP)
+	int ret;
+
+	if (m_cryptDevice) {
+		if (keyslot < m_cryptKeySlotCount) {
+			ret = crypt_keyslot_destroy(m_cryptDevice, keyslot);
+			if (ret < 0) {
+				return TDELUKSResult::KeyslotOpFailed;
+			}
+			else {
+				internalGetLUKSKeySlotStatus();
+				return TDELUKSResult::Success;
+			}
+		}
+		else {
+			return TDELUKSResult::InvalidKeyslot;
+		}
+	}
+	else {
+		return TDELUKSResult::LUKSNotFound;
+	}
+#else
+	return TDELUKSResult::LUKSNotSupported;
+#endif
+}
+
+unsigned int TDEStorageDevice::cryptKeySlotCount() {
+	return m_cryptKeySlotCount;
+}
+
+TDELUKSKeySlotStatusList TDEStorageDevice::cryptKeySlotStatus() {
+	return m_cryptKeyslotStatus;
+}
+
+TQString TDEStorageDevice::cryptKeySlotFriendlyName(TDELUKSKeySlotStatus::TDELUKSKeySlotStatus status) {
+	if (status & TDELUKSKeySlotStatus::Inactive) {
+		return i18n("Inactive");
+	}
+	else if (status & TDELUKSKeySlotStatus::Active) {
+		return i18n("Active");
+	}
+	else {
+		return i18n("Unknown");
+	}
+}
+
+void TDEStorageDevice::internalSetDeviceNode(TQString sn) {
+	TDEGenericDevice::internalSetDeviceNode(sn);
+	internalInitializeLUKSIfNeeded();
+}
+
 void TDEStorageDevice::internalSetDiskType(TDEDiskDeviceType::TDEDiskDeviceType dt) {
 	m_diskType = dt;
+	internalInitializeLUKSIfNeeded();
 }
 
 bool TDEStorageDevice::isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf) {
