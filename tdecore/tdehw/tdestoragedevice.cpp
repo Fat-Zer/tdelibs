@@ -97,6 +97,7 @@ TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
 }
 
 void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
+#if defined(WITH_CRYPTSETUP)
 	unsigned int i;
 	crypt_keyslot_info keyslot_status;
 	TDELUKSKeySlotStatus::TDELUKSKeySlotStatus tde_keyslot_status;
@@ -116,6 +117,7 @@ void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
 		}
 		m_cryptKeyslotStatus.append(tde_keyslot_status);
 	}
+#endif
 }
 
 void TDEStorageDevice::internalInitializeLUKSIfNeeded() {

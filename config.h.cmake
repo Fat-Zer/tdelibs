@@ -130,6 +130,9 @@
 /* Defines if lzma/xz is compiled */
 #cmakedefine HAVE_XZ_SUPPORT 1
 
+/* Define OpenSC provider library */
+#cmakedefine OPENSC_PKCS11_PROVIDER_LIBRARY "@OPENSC_PKCS11_PROVIDER_LIBRARY@"
+
 /* Defines if '[KDE4]' is added to KDE4 menu items */
 #cmakedefine KDE4_MENU_SUFFIX 1
 
