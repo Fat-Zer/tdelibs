@@ -16,6 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
+#define _TDECRYPTOGRAPHICCARDDEVICE_INTERNAL 1
+
 #include "tdecryptographiccarddevice_private.h"
 #include "tdecryptographiccarddevice.h"
 
@@ -343,9 +345,11 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 }
 
 void CryptoCardDeviceWatcher::deleteAllCertificatesFromCache() {
-	X509CertificatePtrListIterator it(cardDevice->m_cardCertificates);
 	X509 *x509_cert;
-	while ((x509_cert = it.current()) != 0) {
+
+	X509CertificatePtrListIterator it;
+	for (it = cardDevice->m_cardCertificates.begin(); it != cardDevice->m_cardCertificates.end(); ++it) {
+		x509_cert = *it;
 		X509_free(x509_cert);
 	}
 
@@ -356,7 +360,6 @@ TDECryptographicCardDevice::TDECryptographicCardDevice(TDEGenericDeviceType::TDE
 	m_watcherThread(NULL),
 	m_watcherObject(NULL),
 	m_cardPresent(false) {
-	m_cardCertificates.setAutoDelete(false);
 }
 
 TDECryptographicCardDevice::~TDECryptographicCardDevice() {

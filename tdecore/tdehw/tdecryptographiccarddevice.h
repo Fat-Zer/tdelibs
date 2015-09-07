@@ -22,12 +22,19 @@
 
 #include "tdegenericdevice.h"
 
-class x509_st;
+#ifndef _TDECRYPTOGRAPHICCARDDEVICE_INTERNAL
+	#ifdef KSSL_HAVE_SSL
+		typedef struct x509_st X509;
+	#else
+		class X509;
+	#endif
+#endif
+
 class TQEventLoopThread;
 class CryptoCardDeviceWatcher;
 
-typedef TQPtrList<x509_st> X509CertificatePtrList;
-typedef TQPtrListIterator<x509_st> X509CertificatePtrListIterator;
+typedef TQValueList<X509*> X509CertificatePtrList;
+typedef TQValueListIterator<X509*> X509CertificatePtrListIterator;
 
 class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 {
