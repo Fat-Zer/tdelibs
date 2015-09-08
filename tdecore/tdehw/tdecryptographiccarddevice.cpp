@@ -16,7 +16,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#define _TDECRYPTOGRAPHICCARDDEVICE_INTERNAL 1
+#ifdef WITH_PKCS
+	#define _TDECRYPTOGRAPHICCARDDEVICE_INTERNAL 1
+#endif
 
 #include "tdecryptographiccarddevice_private.h"
 #include "tdecryptographiccarddevice.h"
@@ -227,10 +229,12 @@ TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 #endif
 }
 
+#ifdef WITH_PKCS
 static void pkcs_log_hook(IN void * const global_data, IN unsigned flags, IN const char * const format, IN va_list args) {
 	vprintf(format, args);
 	printf("\n");
 }
+#endif
 
 int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 #if WITH_PKCS
@@ -345,6 +349,7 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 }
 
 void CryptoCardDeviceWatcher::deleteAllCertificatesFromCache() {
+#ifdef WITH_PKCS
 	X509 *x509_cert;
 
 	X509CertificatePtrListIterator it;
@@ -354,6 +359,7 @@ void CryptoCardDeviceWatcher::deleteAllCertificatesFromCache() {
 	}
 
 	cardDevice->m_cardCertificates.clear();
+#endif
 }
 
 TDECryptographicCardDevice::TDECryptographicCardDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn),

@@ -1,4 +1,3 @@
-
 /* This file is part of the TDE libraries
    Copyright (C) 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
@@ -46,7 +45,7 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		 *  @param Device type
 		 */
 		TDECryptographicCardDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
-		
+
 		/**
 		 * Destructor.
 		 */

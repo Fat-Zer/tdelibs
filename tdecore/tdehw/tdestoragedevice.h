@@ -176,7 +176,7 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		 *  @param Device type
 		 */
 		TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
-		
+
 		/**
 		 * Destructor.
 		 */
