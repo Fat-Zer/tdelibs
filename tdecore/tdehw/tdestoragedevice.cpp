@@ -29,18 +29,22 @@
 #include <tqpixmap.h>
 #include <tqfile.h>
 
-#include "tdelocale.h" 
-#include "tdeglobal.h" 
-#include "kiconloader.h" 
-#include "tdetempfile.h" 
+#include "kdebug.h"
+#include "tdelocale.h"
+#include "tdeglobal.h"
+#include "kiconloader.h"
+#include "tdetempfile.h"
 #include "kstandarddirs.h"
 
-#include "tdehardwaredevices.h" 
+#include "tdehardwaredevices.h"
 
 #include "config.h"
 
 #if defined(WITH_CRYPTSETUP)
 	#include <libcryptsetup.h>
+	#ifndef CRYPT_SLOT_INACTIVE
+		#define CRYPTSETUP_OLD_API
+	#endif
 #endif
 
 // uDisks2 integration
@@ -98,6 +102,9 @@ TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
 
 void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
 #if defined(WITH_CRYPTSETUP)
+#ifdef CRYPTSETUP_OLD_API
+	kdWarning() << "TDEStorageDevice: The version of libcryptsetup that TDE was compiled against was too old!  Most LUKS features will not function" << endl;
+#else
 	unsigned int i;
 	crypt_keyslot_info keyslot_status;
 	TDELUKSKeySlotStatus::TDELUKSKeySlotStatus tde_keyslot_status;
@@ -118,10 +125,14 @@ void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
 		m_cryptKeyslotStatus.append(tde_keyslot_status);
 	}
 #endif
+#endif
 }
 
 void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 #if defined(WITH_CRYPTSETUP)
+#ifdef CRYPTSETUP_OLD_API
+	kdWarning() << "TDEStorageDevice: The version of libcryptsetup that TDE was compiled against was too old!  Most LUKS features will not function" << endl;
+#else
 	int ret;
 
 	if (m_diskType & TDEDiskDeviceType::LUKS) {
@@ -157,6 +168,7 @@ void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 			m_cryptDevice = NULL;
 		}
 	}
+#endif
 #endif
 }
 
