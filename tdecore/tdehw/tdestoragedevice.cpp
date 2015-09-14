@@ -41,9 +41,17 @@
 #include "config.h"
 
 #if defined(WITH_CRYPTSETUP)
-	#include <libcryptsetup.h>
-	#ifndef CRYPT_SLOT_INACTIVE
-		#define CRYPTSETUP_OLD_API
+	#ifdef CRYPTSETUP_OLD_API
+		#define class cryptsetup_class
+		#define CRYPT_SLOT_INVALID INVALID
+		#define CRYPT_SLOT_INACTIVE INACTIVE
+		#define CRYPT_SLOT_ACTIVE ACTIVE
+		#define CRYPT_SLOT_BUSY BUSY
+		#define CRYPT_SLOT_ACTIVE_LAST ACTIVE
+		#include <libcryptsetup.h>
+		#undef class
+	#else
+		#include <libcryptsetup.h>
 	#endif
 #endif
 
@@ -102,9 +110,6 @@ TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
 
 void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
 #if defined(WITH_CRYPTSETUP)
-#ifdef CRYPTSETUP_OLD_API
-	kdWarning() << "TDEStorageDevice: The version of libcryptsetup that TDE was compiled against was too old!  Most LUKS features will not function" << endl;
-#else
 	unsigned int i;
 	crypt_keyslot_info keyslot_status;
 	TDELUKSKeySlotStatus::TDELUKSKeySlotStatus tde_keyslot_status;
@@ -125,14 +130,10 @@ void TDEStorageDevice::internalGetLUKSKeySlotStatus() {
 		m_cryptKeyslotStatus.append(tde_keyslot_status);
 	}
 #endif
-#endif
 }
 
 void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 #if defined(WITH_CRYPTSETUP)
-#ifdef CRYPTSETUP_OLD_API
-	kdWarning() << "TDEStorageDevice: The version of libcryptsetup that TDE was compiled against was too old!  Most LUKS features will not function" << endl;
-#else
 	int ret;
 
 	if (m_diskType & TDEDiskDeviceType::LUKS) {
@@ -145,8 +146,14 @@ void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 					ret = crypt_load(m_cryptDevice, NULL, NULL);
 					if (ret == 0) {
 						int keyslot_count;
+#ifdef CRYPTSETUP_OLD_API
+						kdWarning() << "TDEStorageDevice: The version of libcryptsetup that TDE was compiled against was too old!  Most LUKS features will not function" << endl;
+						m_cryptDeviceType = TQString::null;
+						keyslot_count = 0;
+#else
 						m_cryptDeviceType = crypt_get_type(m_cryptDevice);
 						keyslot_count = crypt_keyslot_max(m_cryptDeviceType.ascii());
+#endif
 						if (keyslot_count < 0) {
 							m_cryptKeySlotCount = 0;
 						}
@@ -168,7 +175,6 @@ void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 			m_cryptDevice = NULL;
 		}
 	}
-#endif
 #endif
 }
 

@@ -82,6 +82,16 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		 */
 		X509CertificatePtrList cardX509Certificates();
 
+		/**
+		 * Create a new random key and encrypt with the public key
+		 * contained in the given certificate.
+		 * @param plaintext Generated (decrypted) random key
+		 * @param ciphertext Encrypted key
+		 * @param certificate X509 certificate containing the public key to use
+		 * @return 0 on success, -1 on general failure, -2 on encryption failure
+		 */
+		static int createNewSecretRSAKeyFromCertificate(TQByteArray &plaintext, TQByteArray &ciphertext, X509* certificate);
+
 	public slots:
 		void cardStatusChanged(TQString status, TQString atr);
 

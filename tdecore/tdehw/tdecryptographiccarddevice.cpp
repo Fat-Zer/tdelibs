@@ -31,6 +31,7 @@
 
 #include "tdeglobal.h"
 #include "tdelocale.h"
+#include "tdeapplication.h"
 
 #include "tdehardwaredevices.h"
 
@@ -130,6 +131,7 @@ void CryptoCardDeviceWatcher::run() {
 				if (m_terminationRequested) {
 					for (i=0; i<readers.count(); i++) {
 						free((char*)m_readerStates[i].szReader);
+						m_readerStates[i].szReader = NULL;
 					}
 					eventLoop->exit(0);
 					return;
@@ -209,7 +211,7 @@ TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 				atr_formatted.append(formatted.upper());
 			}
 			atr_formatted = atr_formatted.stripWhiteSpace();
-			free(data);
+			delete [] data;
 			SCardDisconnect(hCard, SCARD_LEAVE_CARD);
 		}
 	}
@@ -243,7 +245,6 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 	CK_RV rv;
 	pkcs11h_certificate_id_list_t issuers;
 	pkcs11h_certificate_id_list_t certs;
-	pkcs11h_certificate_id_t find = NULL;
 
 	printf("Initializing pkcs11-helper\n");
 	if ((rv = pkcs11h_initialize()) != CKR_OK) {
@@ -269,7 +270,7 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 	}
 #endif
 	printf("Adding provider '%s'\n", OPENSC_PKCS11_PROVIDER_LIBRARY);
-		if ((rv = pkcs11h_addProvider (OPENSC_PKCS11_PROVIDER_LIBRARY, OPENSC_PKCS11_PROVIDER_LIBRARY, FALSE, PKCS11H_PRIVATEMODE_MASK_AUTO, PKCS11H_SLOTEVENT_METHOD_AUTO, 0, FALSE)) != CKR_OK) {
+		if ((rv = pkcs11h_addProvider(OPENSC_PKCS11_PROVIDER_LIBRARY, OPENSC_PKCS11_PROVIDER_LIBRARY, FALSE, PKCS11H_PRIVATEMODE_MASK_AUTO, PKCS11H_SLOTEVENT_METHOD_AUTO, 0, FALSE)) != CKR_OK) {
 		printf("pkcs11h_addProvider failed: %s\n", pkcs11h_getMessage(rv));
 		return -1;
 	}
@@ -284,17 +285,17 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 	int i = 0;
 	for (pkcs11h_certificate_id_list_t cert = certs; cert != NULL; cert = cert->next) {
 		TQString label = cert->certificate_id->displayName;
-		printf("The name of the %d certficate is %s\n", i, label.ascii());
+		printf("Certificate %d name: '%s'\n", i, label.ascii());
 
 		pkcs11h_certificate_t certificate;
-		rv = pkcs11h_certificate_create(find, NULL, PKCS11H_PROMPT_MASK_ALLOW_NONE, PKCS11H_PIN_CACHE_INFINITE, &certificate);
+		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_NONE, PKCS11H_PIN_CACHE_INFINITE, &certificate);
 		if (rv != CKR_OK) {
 			printf("Can not read certificate: %s\n", pkcs11h_getMessage(rv));
-			pkcs11h_certificate_freeCertificateId(find);
+			pkcs11h_certificate_freeCertificateId(certs->certificate_id);
 			ret = -1;
 			break;
 		}
-		pkcs11h_certificate_freeCertificateId(find);
+		pkcs11h_certificate_freeCertificateId(certs->certificate_id);
 
 		pkcs11h_openssl_session_t openssl_session = NULL;
 		if ((openssl_session = pkcs11h_openssl_createSession(certificate)) == NULL) {
@@ -335,7 +336,6 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 		}
 
 		pkcs11h_certificate_freeCertificateIdList(issuers);
-		pkcs11h_certificate_freeCertificateIdList(certs);
 
 		pkcs11h_openssl_freeSession(openssl_session);
 
@@ -393,13 +393,15 @@ void TDECryptographicCardDevice::enableCardMonitoring(bool enable) {
 	else {
 		if (m_watcherObject) {
 			m_watcherObject->requestTermination();
-			delete m_watcherObject;
-			m_watcherObject = NULL;
 		}
 		if (m_watcherThread) {
 			m_watcherThread->wait();
 			delete m_watcherThread;
 			m_watcherThread = NULL;
+		}
+		if (m_watcherObject) {
+			delete m_watcherObject;
+			m_watcherObject = NULL;
 		}
 	}
 #endif
@@ -431,10 +433,12 @@ TQString TDECryptographicCardDevice::cardATR() {
 
 X509CertificatePtrList TDECryptographicCardDevice::cardX509Certificates() {
 	if (m_watcherObject && m_watcherThread) {
-		if (m_cardPresent)
+		if (m_cardPresent) {
 			return m_cardCertificates;
-		else
+		}
+		else {
 			return X509CertificatePtrList();
+		}
 	}
 	else {
 		return X509CertificatePtrList();
@@ -456,6 +460,54 @@ void TDECryptographicCardDevice::cardStatusChanged(TQString status, TQString atr
 		m_cardATR = atr;
 		m_cardPresent = true;
 	}
+}
+
+int TDECryptographicCardDevice::createNewSecretRSAKeyFromCertificate(TQByteArray &plaintext, TQByteArray &ciphertext, X509* certificate) {
+	unsigned int i;
+	int retcode = -1;
+
+	// Extract public key from X509 certificate
+	EVP_PKEY* x509_pubkey = NULL;
+	RSA* rsa_pubkey = NULL;
+	x509_pubkey = X509_get_pubkey(certificate);
+	if (x509_pubkey) {
+		rsa_pubkey = EVP_PKEY_get1_RSA(x509_pubkey);
+	}
+
+	if (rsa_pubkey) {
+		// Determine encryption parameters
+		// NOTE
+		// RSA_PKCS1_OAEP_PADDING is preferred but cannot be decoded from
+		// the command line via openssl at this time of this writing.
+		int rsa_padding_style = RSA_PKCS1_PADDING;
+		unsigned int rsa_length = RSA_size(rsa_pubkey);
+		unsigned int max_key_length = rsa_length - 41;
+
+		// Create a new random key as the plaintext
+		plaintext.resize(max_key_length);
+		for (i=0; i < max_key_length; i++) {
+			plaintext[i] = TDEApplication::random();
+		}
+
+		// Encrypt data
+		ciphertext.resize(rsa_length);
+		if (RSA_public_encrypt(plaintext.size(), (unsigned char *)plaintext.data(), (unsigned char *)ciphertext.data(), rsa_pubkey, rsa_padding_style) < 0) {
+			retcode = -2;
+		}
+
+		// Success!
+		retcode = 0;
+	}
+
+	// Clean up
+	if (rsa_pubkey) {
+		RSA_free(rsa_pubkey);
+	}
+	if (x509_pubkey) {
+		EVP_PKEY_free(x509_pubkey);
+	}
+
+	return retcode;
 }
 
 #include "tdecryptographiccarddevice.moc"

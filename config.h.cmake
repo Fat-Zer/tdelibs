@@ -148,6 +148,9 @@
 /* Defines if your system has the crypt function */
 #cmakedefine HAVE_CRYPT 1
 
+/* Defines if your system uses the old cryptsetup API */
+#cmakedefine CRYPTSETUP_OLD_API 1
+
 /* Define to 1 if you have the <ctype.h> header file. */
 #cmakedefine HAVE_CTYPE_H 1
 

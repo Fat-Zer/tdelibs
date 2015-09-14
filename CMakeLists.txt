@@ -696,6 +696,15 @@ if( WITH_CRYPTSETUP )
       message(FATAL_ERROR "\ncryptsetup support was requested, but libcryptsetup was not found on your system" )
   endif( NOT LIBCRYPTSETUP_FOUND )
   set( HAVE_CRYPTSETUP 1 )
+  if ( HAVE_CRYPTSETUP )
+    check_c_source_compiles("
+      #include <libcryptsetup.h>
+      int main(int argc, char *argv[]) { crypt_keyslot_info status = CRYPT_SLOT_INVALID; return 0; } "
+      HAVE_NEW_CRYPTSETUP )
+  endif( )
+  if ( NOT HAVE_NEW_CRYPTSETUP )
+    set( CRYPTSETUP_OLD_API 1 )
+  endif( )
 endif( )
 
 
