@@ -53,6 +53,13 @@ class CryptoCardDeviceWatcher : public TQObject
 
 	signals:
 		void statusChanged(TQString, TQString);
+		void pinRequested(TQString);
+
+	public:
+		int initializePkcs();
+		TQString doPinRequest(TQString prompt);
+		void setProvidedPin(TQString pin);
+		void enablePINEntryCallbacks(bool enable);
 
 	public:
 		TDECryptographicCardDevice *cardDevice;
@@ -62,6 +69,9 @@ class CryptoCardDeviceWatcher : public TQObject
 
 	private:
 		bool m_terminationRequested;
+		bool m_pinCallbacksEnabled;
+		TQString m_cardPIN;
+		bool m_cardPINPromptDone;
 #ifdef WITH_PCSC
 		SCARDCONTEXT m_cardContext;
 		SCARD_READERSTATE *m_readerStates;

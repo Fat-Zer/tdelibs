@@ -58,6 +58,20 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		void enableCardMonitoring(bool enable);
 
 		/**
+		 * Enable / disable PIN entry.
+		 *
+		 * @note You must connect to pinRequested and call setProvidedPin with
+		 * the provided PIN, otherwise the TDECryptographicCardDevice object
+		 * will hang waiting for input.
+		 *
+		 * @param enable true to enable, false to disable.
+		 *
+		 * @see setProvidedPin(TQString pin)
+		 * @see pinRequested
+		 */
+		void enablePINEntryCallbacks(bool enable);
+
+		/**
 		 * If monitoring of insert / remove events is enabled,
 		 * return whether or not a card is present.
 		 * @return -1 if status unknown, 0 if card not present,
@@ -83,6 +97,27 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		X509CertificatePtrList cardX509Certificates();
 
 		/**
+		 * Sets the user-provided PIN from within the pinRequested callback.
+		 * This method must not be called from anywhere else in user code.
+		 * @param pin the user-provided PIN, TQString::null to abort
+		 *
+		 * @see pinRequested(TQString prompt)
+		 */
+		void setProvidedPin(TQString pin);
+
+		/**
+		 * If monitoring of insert / remove events is enabled, and a card has been inserted,
+		 * decrypt data originally encrypted using a public key from one of the certificates
+		 * stored on the card.
+		 * This operation takes place on the card, and in most cases will require PIN entry.
+		 * @param ciphertext Encrypted data
+		 * @param plaintext Decrypted data
+		 * @param errstr Pointer to TQString to be loaded with error description on failure
+		 * @return 0 on success, -1 on general failure, -2 on encryption failure
+		 */
+		int decryptDataEncryptedWithCertPublicKey(TQByteArray &ciphertext, TQByteArray &plaintext, TQString *errstr=NULL);
+
+		/**
 		 * Create a new random key and encrypt with the public key
 		 * contained in the given certificate.
 		 * @param plaintext Generated (decrypted) random key
@@ -94,10 +129,12 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 
 	public slots:
 		void cardStatusChanged(TQString status, TQString atr);
+		void workerRequestedPin(TQString prompt);
 
 	signals:
 		void cardInserted();
 		void cardRemoved();
+		void pinRequested(TQString prompt, TDECryptographicCardDevice* cdevice);
 
 	private:
 		TQEventLoopThread *m_watcherThread;

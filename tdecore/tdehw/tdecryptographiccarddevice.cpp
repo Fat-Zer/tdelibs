@@ -61,6 +61,8 @@ CryptoCardDeviceWatcher::CryptoCardDeviceWatcher() {
 #ifdef WITH_PCSC
 	m_readerStates = NULL;
 #endif
+	m_cardPINPromptDone = true;
+	m_pinCallbacksEnabled = false;
 }
 
 CryptoCardDeviceWatcher::~CryptoCardDeviceWatcher() {
@@ -189,6 +191,11 @@ void CryptoCardDeviceWatcher::requestTermination() {
 	m_terminationRequested = true;
 }
 
+void CryptoCardDeviceWatcher::setProvidedPin(TQString pin) {
+	m_cardPIN = pin;
+	m_cardPINPromptDone = true;
+}
+
 TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 #ifdef WITH_PCSC
 	unsigned int i;
@@ -231,12 +238,91 @@ TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 #endif
 }
 
+void CryptoCardDeviceWatcher::enablePINEntryCallbacks(bool enable) {
+	m_pinCallbacksEnabled = enable;
+}
+
+TQString CryptoCardDeviceWatcher::doPinRequest(TQString prompt) {
+	if (!m_pinCallbacksEnabled) {
+		return TQString::null;
+	}
+
+	m_cardPINPromptDone = false;
+	emit(pinRequested(prompt));
+	while (!m_cardPINPromptDone) {
+		usleep(100);
+	}
+
+	if (m_cardPIN.length() > 0) {
+		return m_cardPIN;
+	}
+	else {
+		return TQString::null;
+	}
+}
+
 #ifdef WITH_PKCS
 static void pkcs_log_hook(IN void * const global_data, IN unsigned flags, IN const char * const format, IN va_list args) {
 	vprintf(format, args);
 	printf("\n");
 }
+
+static PKCS11H_BOOL pkcs_pin_hook(IN void * const global_data, IN void * const user_data, IN const pkcs11h_token_id_t token, IN const unsigned retry, OUT char * const pin, IN const size_t pin_max) {
+	CryptoCardDeviceWatcher* watcher = (CryptoCardDeviceWatcher*)global_data;
+	TQString providedPin = watcher->doPinRequest(i18n("Please enter the PIN for '%1'").arg(token->display));
+	if (providedPin.length() > 0) {
+		snprintf(pin, pin_max, "%s", providedPin.ascii());
+
+		// Success
+		return 1;
+	}
+	else {
+		// Abort
+		return 0;
+	}
+}
 #endif
+
+int CryptoCardDeviceWatcher::initializePkcs() {
+#if WITH_PKCS
+	CK_RV rv;
+	printf("Initializing pkcs11-helper\n");
+	if ((rv = pkcs11h_initialize()) != CKR_OK) {
+		printf("pkcs11h_initialize failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+
+	printf("Registering pkcs11-helper hooks\n");
+	if ((rv = pkcs11h_setLogHook(pkcs_log_hook, this)) != CKR_OK) {
+		printf("pkcs11h_setLogHook failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+	pkcs11h_setLogLevel(PKCS11H_LOG_WARN);
+	// pkcs11h_setLogLevel(PKCS11H_LOG_DEBUG2);
+
+#if 0
+	if ((rv = pkcs11h_setTokenPromptHook(_pkcs11h_hooks_token_prompt, NULL)) != CKR_OK) {
+		printf("pkcs11h_setTokenPromptHook failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+#endif
+
+	if ((rv = pkcs11h_setPINPromptHook(pkcs_pin_hook, this)) != CKR_OK) {
+		printf("pkcs11h_setPINPromptHook failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+
+	printf("Adding provider '%s'\n", OPENSC_PKCS11_PROVIDER_LIBRARY);
+		if ((rv = pkcs11h_addProvider(OPENSC_PKCS11_PROVIDER_LIBRARY, OPENSC_PKCS11_PROVIDER_LIBRARY, FALSE, PKCS11H_PRIVATEMODE_MASK_AUTO, PKCS11H_SLOTEVENT_METHOD_AUTO, 0, FALSE)) != CKR_OK) {
+		printf("pkcs11h_addProvider failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+
+	return 0;
+#else
+	return -1;
+#endif
+}
 
 int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 #if WITH_PKCS
@@ -246,36 +332,12 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 	pkcs11h_certificate_id_list_t issuers;
 	pkcs11h_certificate_id_list_t certs;
 
-	printf("Initializing pkcs11-helper\n");
-	if ((rv = pkcs11h_initialize()) != CKR_OK) {
-		printf("pkcs11h_initialize failed: %s\n", pkcs11h_getMessage(rv));
+	if (initializePkcs() < 0) {
+		printf("Unable to initialize PKCS\n");
 		return -1;
 	}
 
-	printf("Registering pkcs11-helper hooks\n");
-	if ((rv = pkcs11h_setLogHook(pkcs_log_hook, NULL)) != CKR_OK) {
-		printf("pkcs11h_setLogHook failed: %s\n", pkcs11h_getMessage(rv));
-		return -1;
-	}
-	pkcs11h_setLogLevel(PKCS11H_LOG_WARN);
-
-#if 0
-	if ((rv = pkcs11h_setTokenPromptHook(_pkcs11h_hooks_token_prompt, NULL)) != CKR_OK) {
-		printf("pkcs11h_setTokenPromptHook failed: %s\n", pkcs11h_getMessage(rv));
-		return -1;
-	}
-	if ((rv = pkcs11h_setPINPromptHook(_pkcs11h_hooks_pin_prompt, NULL)) != CKR_OK) {
-		printf("pkcs11h_setPINPromptHook failed: %s\n", pkcs11h_getMessage(rv));
-		return -1;
-	}
-#endif
-	printf("Adding provider '%s'\n", OPENSC_PKCS11_PROVIDER_LIBRARY);
-		if ((rv = pkcs11h_addProvider(OPENSC_PKCS11_PROVIDER_LIBRARY, OPENSC_PKCS11_PROVIDER_LIBRARY, FALSE, PKCS11H_PRIVATEMODE_MASK_AUTO, PKCS11H_SLOTEVENT_METHOD_AUTO, 0, FALSE)) != CKR_OK) {
-		printf("pkcs11h_addProvider failed: %s\n", pkcs11h_getMessage(rv));
-		return -1;
-	}
-
-	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_NONE, &issuers, &certs);
+	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, &issuers, &certs);
 	if ((rv != CKR_OK) || (certs == NULL)) {
 		printf("Cannot enumerate certificates: %s\n", pkcs11h_getMessage(rv));
 		return -1;
@@ -288,13 +350,14 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 		printf("Certificate %d name: '%s'\n", i, label.ascii());
 
 		pkcs11h_certificate_t certificate;
-		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_NONE, PKCS11H_PIN_CACHE_INFINITE, &certificate);
+		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, PKCS11H_PIN_CACHE_INFINITE, &certificate);
 		if (rv != CKR_OK) {
-			printf("Can not read certificate: %s\n", pkcs11h_getMessage(rv));
+			printf("Cannot read certificate: %s\n", pkcs11h_getMessage(rv));
 			pkcs11h_certificate_freeCertificateId(certs->certificate_id);
 			ret = -1;
 			break;
 		}
+
 		pkcs11h_certificate_freeCertificateId(certs->certificate_id);
 
 		pkcs11h_openssl_session_t openssl_session = NULL;
@@ -335,12 +398,11 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 			printf("Unable to copy X509 certificate\n");
 		}
 
-		pkcs11h_certificate_freeCertificateIdList(issuers);
-
 		pkcs11h_openssl_freeSession(openssl_session);
-
 		i++;
 	}
+
+	pkcs11h_certificate_freeCertificateIdList(issuers);
 
 	return ret;
 #else
@@ -386,6 +448,7 @@ void TDECryptographicCardDevice::enableCardMonitoring(bool enable) {
 		m_watcherObject->cardDevice = this;
 		m_watcherObject->moveToThread(m_watcherThread);
 		TQObject::connect(m_watcherObject, SIGNAL(statusChanged(TQString,TQString)), this, SLOT(cardStatusChanged(TQString,TQString)));
+		TQObject::connect(m_watcherObject, SIGNAL(pinRequested(TQString)), this, SLOT(workerRequestedPin(TQString)));
 		TQTimer::singleShot(0, m_watcherObject, SLOT(run()));
 
 		m_watcherThread->start();
@@ -405,6 +468,12 @@ void TDECryptographicCardDevice::enableCardMonitoring(bool enable) {
 		}
 	}
 #endif
+}
+
+void TDECryptographicCardDevice::enablePINEntryCallbacks(bool enable) {
+	if (m_watcherObject) {
+		m_watcherObject->enablePINEntryCallbacks(enable);
+	}
 }
 
 int TDECryptographicCardDevice::cardPresent() {
@@ -460,6 +529,134 @@ void TDECryptographicCardDevice::cardStatusChanged(TQString status, TQString atr
 		m_cardATR = atr;
 		m_cardPresent = true;
 	}
+}
+
+void TDECryptographicCardDevice::setProvidedPin(TQString pin) {
+	if (m_watcherObject) {
+		m_watcherObject->setProvidedPin(pin);
+	}
+}
+
+void TDECryptographicCardDevice::workerRequestedPin(TQString prompt) {
+	emit(pinRequested(prompt, this));
+}
+
+int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArray &ciphertext, TQByteArray &plaintext, TQString *errstr) {
+#if WITH_PKCS
+	int ret = -1;
+
+	if (!m_watcherObject) {
+		if (errstr) *errstr = i18n("Card watcher object not available");
+		return -1;
+	}
+
+	CK_RV rv;
+	pkcs11h_certificate_id_list_t issuers;
+	pkcs11h_certificate_id_list_t certs;
+
+	if (m_watcherObject->initializePkcs() < 0) {
+		if (errstr) *errstr = i18n("Unable to initialize PKCS");
+		return -1;
+	}
+
+	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, &issuers, &certs);
+	if ((rv != CKR_OK) || (certs == NULL)) {
+		if (errstr) *errstr = i18n("Cannot enumerate certificates: %1").arg(pkcs11h_getMessage(rv));
+		return -1;
+	}
+
+	int i = 0;
+	for (pkcs11h_certificate_id_list_t cert = certs; cert != NULL; cert = cert->next) {
+		TQString label = cert->certificate_id->displayName;
+
+		pkcs11h_certificate_t certificate;
+		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, PKCS11H_PIN_CACHE_INFINITE, &certificate);
+		if (rv != CKR_OK) {
+			if (errstr) *errstr = i18n("Cannot read certificate: %1").arg(pkcs11h_getMessage(rv));
+			pkcs11h_certificate_freeCertificateId(certs->certificate_id);
+			ret = -1;
+			break;
+		}
+
+		pkcs11h_certificate_freeCertificateId(certs->certificate_id);
+
+		pkcs11h_openssl_session_t openssl_session = NULL;
+		if ((openssl_session = pkcs11h_openssl_createSession(certificate)) == NULL) {
+			if (errstr) *errstr = i18n("Cannot initialize openssl session to retrieve cryptographic objects");
+			pkcs11h_certificate_freeCertificate(certificate);
+			ret = -1;
+			break;
+		}
+
+		if (ciphertext.size() < 16) {
+			if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(i18n("Ciphertext too small"));
+			ret = -2;
+			continue;
+		}
+
+		// Get certificate data
+		X509* x509_local;
+		x509_local = pkcs11h_openssl_session_getX509(openssl_session);
+		if (!x509_local) {
+			if (errstr) *errstr = i18n("Cannot get X509 object\n");
+			ret = -1;
+		}
+
+		// Extract public key from X509 certificate
+		EVP_PKEY* x509_pubkey = NULL;
+		RSA* rsa_pubkey = NULL;
+		x509_pubkey = X509_get_pubkey(x509_local);
+		if (x509_pubkey) {
+			rsa_pubkey = EVP_PKEY_get1_RSA(x509_pubkey);
+		}
+
+		// Try to get RSA parameters
+		if (rsa_pubkey) {
+			unsigned int rsa_length = RSA_size(rsa_pubkey);
+			if (ciphertext.size() > rsa_length) {
+				if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(i18n("Ciphertext too large"));
+				ret = -2;
+				continue;
+			}
+		}
+
+		size_t size = 0;
+		// Determine output buffer size
+		rv = pkcs11h_certificate_decryptAny(certificate, CKM_RSA_PKCS, (unsigned char*)ciphertext.data(), ciphertext.size(), NULL, &size);
+		if (rv != CKR_OK) {
+			if (errstr) *errstr = i18n("Cannot determine decrypted message length: %1").arg(pkcs11h_getMessage(rv));
+			ret = -2;
+		}
+		else {
+			// Decrypt data
+			plaintext.resize(size);
+			rv = pkcs11h_certificate_decryptAny(certificate, CKM_RSA_PKCS, (unsigned char*)ciphertext.data(), ciphertext.size(), (unsigned char*)plaintext.data(), &size);
+			if (rv != CKR_OK) {
+				if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(pkcs11h_getMessage(rv));
+				ret = -2;
+			}
+			else {
+				if (errstr) *errstr = TQString::null;
+				ret = 0;
+			}
+		}
+
+		pkcs11h_openssl_freeSession(openssl_session);
+
+		// Only interested in first certificate for now
+		// FIXME
+		// If cards with multiple certificates are used this should be modified to try decryption
+		// using each certificate in turn...
+		break;
+
+		i++;
+	}
+	pkcs11h_certificate_freeCertificateIdList(issuers);
+
+	return ret;
+#else
+	return -1;
+#endif
 }
 
 int TDECryptographicCardDevice::createNewSecretRSAKeyFromCertificate(TQByteArray &plaintext, TQByteArray &ciphertext, X509* certificate) {
