@@ -40,6 +40,8 @@
 // 1 second
 #define PCSC_POLL_TIMEOUT_S 1000
 
+#define CARD_MAX_LOGIN_RETRY_COUNT 3
+
 /* FIXME
  * This is incomplete
  */
@@ -63,6 +65,7 @@ CryptoCardDeviceWatcher::CryptoCardDeviceWatcher() {
 #endif
 	m_cardPINPromptDone = true;
 	m_pinCallbacksEnabled = false;
+	m_cardReusePIN = false;
 }
 
 CryptoCardDeviceWatcher::~CryptoCardDeviceWatcher() {
@@ -196,6 +199,14 @@ void CryptoCardDeviceWatcher::setProvidedPin(TQString pin) {
 	m_cardPINPromptDone = true;
 }
 
+void CryptoCardDeviceWatcher::retrySamePin(bool enable) {
+	m_cardReusePIN = enable;
+	if (!enable) {
+		m_cardPIN = "SHREDDINGTHEPINISMOSTSECURE";
+		m_cardPIN = TQString::null;
+	}
+}
+
 TQString CryptoCardDeviceWatcher::getCardATR(TQString readerName) {
 #ifdef WITH_PCSC
 	unsigned int i;
@@ -247,6 +258,10 @@ TQString CryptoCardDeviceWatcher::doPinRequest(TQString prompt) {
 		return TQString::null;
 	}
 
+	if (m_cardReusePIN) {
+		return m_cardPIN;
+	}
+
 	m_cardPINPromptDone = false;
 	emit(pinRequested(prompt));
 	while (!m_cardPINPromptDone) {
@@ -269,6 +284,7 @@ static void pkcs_log_hook(IN void * const global_data, IN unsigned flags, IN con
 
 static PKCS11H_BOOL pkcs_pin_hook(IN void * const global_data, IN void * const user_data, IN const pkcs11h_token_id_t token, IN const unsigned retry, OUT char * const pin, IN const size_t pin_max) {
 	CryptoCardDeviceWatcher* watcher = (CryptoCardDeviceWatcher*)global_data;
+
 	TQString providedPin = watcher->doPinRequest(i18n("Please enter the PIN for '%1'").arg(token->display));
 	if (providedPin.length() > 0) {
 		snprintf(pin, pin_max, "%s", providedPin.ascii());
@@ -307,6 +323,11 @@ int CryptoCardDeviceWatcher::initializePkcs() {
 	}
 #endif
 
+	if ((rv = pkcs11h_setMaxLoginRetries(CARD_MAX_LOGIN_RETRY_COUNT)) != CKR_OK) {
+		printf("pkcs11h_setMaxLoginRetries failed: %s\n", pkcs11h_getMessage(rv));
+		return -1;
+	}
+
 	if ((rv = pkcs11h_setPINPromptHook(pkcs_pin_hook, this)) != CKR_OK) {
 		printf("pkcs11h_setPINPromptHook failed: %s\n", pkcs11h_getMessage(rv));
 		return -1;
@@ -337,7 +358,7 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 		return -1;
 	}
 
-	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, &issuers, &certs);
+	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_PIN_PROMPT, &issuers, &certs);
 	if ((rv != CKR_OK) || (certs == NULL)) {
 		printf("Cannot enumerate certificates: %s\n", pkcs11h_getMessage(rv));
 		return -1;
@@ -350,7 +371,7 @@ int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
 		printf("Certificate %d name: '%s'\n", i, label.ascii());
 
 		pkcs11h_certificate_t certificate;
-		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, PKCS11H_PIN_CACHE_INFINITE, &certificate);
+		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_PIN_PROMPT, PKCS11H_PIN_CACHE_INFINITE, &certificate);
 		if (rv != CKR_OK) {
 			printf("Cannot read certificate: %s\n", pkcs11h_getMessage(rv));
 			pkcs11h_certificate_freeCertificateId(certs->certificate_id);
@@ -542,6 +563,19 @@ void TDECryptographicCardDevice::workerRequestedPin(TQString prompt) {
 }
 
 int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArray &ciphertext, TQByteArray &plaintext, TQString *errstr) {
+	TQValueList<TQByteArray> cipherTextList;
+	TQValueList<TQByteArray> plainTextList;
+	TQValueList<int> retCodeList;
+
+	cipherTextList.append(ciphertext);
+
+	this->decryptDataEncryptedWithCertPublicKey(cipherTextList, plainTextList, retCodeList, errstr);
+
+	plaintext = plainTextList[0];
+	return retCodeList[0];
+}
+
+int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQValueList<TQByteArray> &cipherTextList, TQValueList<TQByteArray> &plainTextList, TQValueList<int> &retcodes, TQString *errstr) {
 #if WITH_PKCS
 	int ret = -1;
 
@@ -559,7 +593,7 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArra
 		return -1;
 	}
 
-	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, &issuers, &certs);
+	rv = pkcs11h_certificate_enumCertificateIds(PKCS11H_ENUM_METHOD_CACHE, NULL, PKCS11H_PROMPT_MASK_ALLOW_PIN_PROMPT, &issuers, &certs);
 	if ((rv != CKR_OK) || (certs == NULL)) {
 		if (errstr) *errstr = i18n("Cannot enumerate certificates: %1").arg(pkcs11h_getMessage(rv));
 		return -1;
@@ -570,7 +604,7 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArra
 		TQString label = cert->certificate_id->displayName;
 
 		pkcs11h_certificate_t certificate;
-		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, PKCS11H_PIN_CACHE_INFINITE, &certificate);
+		rv = pkcs11h_certificate_create(certs->certificate_id, NULL, PKCS11H_PROMPT_MASK_ALLOW_PIN_PROMPT, PKCS11H_PIN_CACHE_INFINITE, &certificate);
 		if (rv != CKR_OK) {
 			if (errstr) *errstr = i18n("Cannot read certificate: %1").arg(pkcs11h_getMessage(rv));
 			pkcs11h_certificate_freeCertificateId(certs->certificate_id);
@@ -588,17 +622,11 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArra
 			break;
 		}
 
-		if (ciphertext.size() < 16) {
-			if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(i18n("Ciphertext too small"));
-			ret = -2;
-			continue;
-		}
-
 		// Get certificate data
 		X509* x509_local;
 		x509_local = pkcs11h_openssl_session_getX509(openssl_session);
 		if (!x509_local) {
-			if (errstr) *errstr = i18n("Cannot get X509 object\n");
+			if (errstr) *errstr = i18n("Cannot get X509 object");
 			ret = -1;
 		}
 
@@ -610,34 +638,105 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArra
 			rsa_pubkey = EVP_PKEY_get1_RSA(x509_pubkey);
 		}
 
-		// Try to get RSA parameters
-		if (rsa_pubkey) {
-			unsigned int rsa_length = RSA_size(rsa_pubkey);
-			if (ciphertext.size() > rsa_length) {
-				if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(i18n("Ciphertext too large"));
+		// Check PIN
+		rv = pkcs11h_certificate_ensureKeyAccess(certificate);
+		if (rv != CKR_OK) {
+			if (rv == CKR_CANCEL) {
+				ret = -3;
+				break;
+			}
+			else if ((rv == CKR_PIN_INCORRECT) || (rv == CKR_USER_NOT_LOGGED_IN)) {
 				ret = -2;
-				continue;
+				break;
+			}
+			else {
+				ret = -2;
+				break;
 			}
 		}
 
-		size_t size = 0;
-		// Determine output buffer size
-		rv = pkcs11h_certificate_decryptAny(certificate, CKM_RSA_PKCS, (unsigned char*)ciphertext.data(), ciphertext.size(), NULL, &size);
-		if (rv != CKR_OK) {
-			if (errstr) *errstr = i18n("Cannot determine decrypted message length: %1").arg(pkcs11h_getMessage(rv));
-			ret = -2;
+		// We know the cached PIN is correct; disable any further login prompts
+		m_watcherObject->retrySamePin(true);
+
+		TQValueList<TQByteArray>::iterator it;
+		TQValueList<TQByteArray>::iterator it2;
+		TQValueList<int>::iterator it3;
+		plainTextList.clear();
+		retcodes.clear();
+		for (it = cipherTextList.begin(); it != cipherTextList.end(); ++it) {
+			plainTextList.append(TQByteArray());
+			retcodes.append(-1);
 		}
-		else {
-			// Decrypt data
-			plaintext.resize(size);
-			rv = pkcs11h_certificate_decryptAny(certificate, CKM_RSA_PKCS, (unsigned char*)ciphertext.data(), ciphertext.size(), (unsigned char*)plaintext.data(), &size);
-			if (rv != CKR_OK) {
-				if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(pkcs11h_getMessage(rv));
+		for (it = cipherTextList.begin(), it2 = plainTextList.begin(), it3 = retcodes.begin(); it != cipherTextList.end(); ++it, ++it2, ++it3) {
+			TQByteArray& ciphertext = *it;
+			TQByteArray& plaintext = *it2;
+			int& retcode = *it3;
+
+			// Verify minimum size
+			if (ciphertext.size() < 16) {
+				if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(i18n("Ciphertext too small"));
 				ret = -2;
+				retcode = -2;
+				continue;
+			}
+
+			// Try to get RSA parameters and verify maximum size
+			if (rsa_pubkey) {
+				unsigned int rsa_length = RSA_size(rsa_pubkey);
+				if (ciphertext.size() > rsa_length) {
+					if (errstr) *errstr = i18n("Cannot decrypt: %1").arg(i18n("Ciphertext too large"));
+					ret = -2;
+					retcode = -2;
+					continue;
+				}
+			}
+
+			size_t size = 0;
+			// Determine output buffer size
+			rv = pkcs11h_certificate_decryptAny(certificate, CKM_RSA_PKCS, (unsigned char*)ciphertext.data(), ciphertext.size(), NULL, &size);
+			if (rv != CKR_OK) {
+				if (errstr) *errstr = i18n("Cannot determine decrypted message length: %1 (%2)").arg(pkcs11h_getMessage(rv)).arg(rv);
+				if (rv == CKR_CANCEL) {
+					ret = -3;
+					retcode = -3;
+					break;
+				}
+				else if ((rv == CKR_PIN_INCORRECT) || (rv == CKR_USER_NOT_LOGGED_IN)) {
+					ret = -2;
+					retcode = -2;
+					break;
+				}
+				else {
+					ret = -2;
+					retcode = -2;
+				}
 			}
 			else {
-				if (errstr) *errstr = TQString::null;
-				ret = 0;
+				// Decrypt data
+				plaintext.resize(size);
+				rv = pkcs11h_certificate_decryptAny(certificate, CKM_RSA_PKCS, (unsigned char*)ciphertext.data(), ciphertext.size(), (unsigned char*)plaintext.data(), &size);
+				if (rv != CKR_OK) {
+					if (errstr) *errstr = i18n("Cannot decrypt: %1 (%2)").arg(pkcs11h_getMessage(rv)).arg(rv);
+					if (rv == CKR_CANCEL) {
+						ret = -3;
+						retcode = -3;
+						break;
+					}
+					else if ((rv == CKR_PIN_INCORRECT) || (rv == CKR_USER_NOT_LOGGED_IN)) {
+						ret = -2;
+						retcode = -2;
+						break;
+					}
+					else {
+						ret = -2;
+						retcode = -2;
+					}
+				}
+				else {
+					if (errstr) *errstr = TQString::null;
+					ret = 0;
+					retcode = 0;
+				}
 			}
 		}
 
@@ -652,6 +751,9 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArra
 		i++;
 	}
 	pkcs11h_certificate_freeCertificateIdList(issuers);
+
+	// Restore normal login attempt method
+	m_watcherObject->retrySamePin(false);
 
 	return ret;
 #else

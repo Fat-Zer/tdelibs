@@ -59,6 +59,7 @@ class CryptoCardDeviceWatcher : public TQObject
 		int initializePkcs();
 		TQString doPinRequest(TQString prompt);
 		void setProvidedPin(TQString pin);
+		void retrySamePin(bool enable);
 		void enablePINEntryCallbacks(bool enable);
 
 	public:
@@ -72,6 +73,7 @@ class CryptoCardDeviceWatcher : public TQObject
 		bool m_pinCallbacksEnabled;
 		TQString m_cardPIN;
 		bool m_cardPINPromptDone;
+		bool m_cardReusePIN;
 #ifdef WITH_PCSC
 		SCARDCONTEXT m_cardContext;
 		SCARD_READERSTATE *m_readerStates;

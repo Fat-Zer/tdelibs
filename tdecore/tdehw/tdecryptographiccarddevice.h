@@ -110,12 +110,27 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		 * decrypt data originally encrypted using a public key from one of the certificates
 		 * stored on the card.
 		 * This operation takes place on the card, and in most cases will require PIN entry.
+		 * This method decrypts one data object only
 		 * @param ciphertext Encrypted data
 		 * @param plaintext Decrypted data
 		 * @param errstr Pointer to TQString to be loaded with error description on failure
-		 * @return 0 on success, -1 on general failure, -2 on encryption failure
+		 * @return 0 on success, -1 on general failure, -2 on encryption failure, -3 on user cancel
 		 */
 		int decryptDataEncryptedWithCertPublicKey(TQByteArray &ciphertext, TQByteArray &plaintext, TQString *errstr=NULL);
+
+		/**
+		 * If monitoring of insert / remove events is enabled, and a card has been inserted,
+		 * decrypt data originally encrypted using a public key from one of the certificates
+		 * stored on the card.
+		 * This operation takes place on the card, and in most cases will require PIN entry.
+		 * This method is used to decrypt multiple data objects in one pass.
+		 * @param cipherTextList Encrypted data object list
+		 * @param plainTextList Decrypted data object list
+		 * @param retcodes Return code for each data object
+		 * @param errstr Pointer to TQString to be loaded with error description on failure
+		 * @return 0 on success, -1 on general failure, -2 on encryption failure, -3 on user cancel
+		 */
+		int decryptDataEncryptedWithCertPublicKey(TQValueList<TQByteArray> &cipherTextList, TQValueList<TQByteArray> &plainTextList, TQValueList<int> &retcodes, TQString *errstr);
 
 		/**
 		 * Create a new random key and encrypt with the public key

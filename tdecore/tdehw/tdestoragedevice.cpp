@@ -179,11 +179,16 @@ void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 }
 
 void TDEStorageDevice::cryptSetOperationsUnlockPassword(TQByteArray password) {
+#if defined(WITH_CRYPTSETUP)
+	crypt_memory_lock(NULL, 1);
 	m_cryptDevicePassword = password;
+#endif
 }
 
 void TDEStorageDevice::cryptClearOperationsUnlockPassword() {
+	m_cryptDevicePassword.fill(0);
 	m_cryptDevicePassword.resize(0);
+	crypt_memory_lock(NULL, 0);
 }
 
 bool TDEStorageDevice::cryptOperationsUnlockPasswordSet() {
@@ -193,6 +198,32 @@ bool TDEStorageDevice::cryptOperationsUnlockPasswordSet() {
 	else {
 		return false;
 	}
+}
+
+TDELUKSResult::TDELUKSResult TDEStorageDevice::cryptCheckKey(unsigned int keyslot) {
+#if defined(WITH_CRYPTSETUP)
+	int ret;
+
+	if (m_cryptDevice) {
+		if (keyslot < m_cryptKeySlotCount) {
+			ret = crypt_activate_by_passphrase(m_cryptDevice, NULL, keyslot, m_cryptDevicePassword.data(), m_cryptDevicePassword.size(), 0);
+			if (ret < 0) {
+				return TDELUKSResult::KeyslotOpFailed;
+			}
+			else {
+				return TDELUKSResult::Success;
+			}
+		}
+		else {
+			return TDELUKSResult::InvalidKeyslot;
+		}
+	}
+	else {
+		return TDELUKSResult::LUKSNotFound;
+	}
+#else
+	return TDELUKSResult::LUKSNotSupported;
+#endif
 }
 
 TDELUKSResult::TDELUKSResult TDEStorageDevice::cryptAddKey(unsigned int keyslot, TQByteArray password) {

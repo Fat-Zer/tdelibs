@@ -368,13 +368,27 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		bool cryptOperationsUnlockPasswordSet();
 
 		/**
-		 * Adds a new key to the specific keyslot, overwriting the existing key if present
+		 * Checks the preloaded unlock password against the specified keyslot
+		 *
+		 * @param keyslot Keyslot number
+		 * @return TDELUKSResult::TDELUKSResult containing the status code returned
+		 * from the operation, or TDELUKSResult::LUKSNotSupported if LUKS support unavailable
+		 * @return TDELUKSResult::Success on success
+		 *
+		 * @see cryptSetOperationsUnlockPassword
+		 */
+		TDELUKSResult::TDELUKSResult cryptCheckKey(unsigned int keyslot);
+
+		/**
+		 * Adds a new key to the specified keyslot, overwriting the existing key if present
 		 *
 		 * @param keyslot New keyslot number
 		 * @param password New keyslot password
 		 * @return TDELUKSResult::TDELUKSResult containing the status code returned
 		 * from the operation, or TDELUKSResult::LUKSNotSupported if LUKS support unavailable
 		 * @return TDELUKSResult::Success on success
+		 *
+		 * @see cryptSetOperationsUnlockPassword
 		 */
 		TDELUKSResult::TDELUKSResult cryptAddKey(unsigned int keyslot, TQByteArray password);
 
