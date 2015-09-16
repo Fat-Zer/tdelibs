@@ -540,6 +540,9 @@ void TDECryptographicCardDevice::cardStatusChanged(TQString status, TQString atr
 		m_cardPresent = true;
 		m_cardATR = atr;
 		emit(cardInserted(this));
+		if (m_cardCertificates.count() > 0) {
+			emit(certificateListAvailable(this));
+		}
 	}
 	else if (status == "REMOVED") {
 		m_cardPresent = false;
@@ -549,6 +552,9 @@ void TDECryptographicCardDevice::cardStatusChanged(TQString status, TQString atr
 	else if (status == "PRESENT") {
 		m_cardATR = atr;
 		m_cardPresent = true;
+		if (m_cardCertificates.count() > 0) {
+			emit(certificateListAvailable(this));
+		}
 	}
 }
 

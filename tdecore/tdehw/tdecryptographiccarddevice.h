@@ -149,6 +149,7 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 	signals:
 		void cardInserted(TDECryptographicCardDevice*);
 		void cardRemoved(TDECryptographicCardDevice*);
+		void certificateListAvailable(TDECryptographicCardDevice*);
 		void pinRequested(TQString prompt, TDECryptographicCardDevice* cdevice);
 
 	private:
