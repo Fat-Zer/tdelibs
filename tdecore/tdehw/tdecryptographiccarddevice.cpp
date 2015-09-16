@@ -539,12 +539,12 @@ void TDECryptographicCardDevice::cardStatusChanged(TQString status, TQString atr
 	if (status == "INSERTED") {
 		m_cardPresent = true;
 		m_cardATR = atr;
-		emit(cardInserted());
+		emit(cardInserted(this));
 	}
 	else if (status == "REMOVED") {
 		m_cardPresent = false;
 		m_cardATR = atr;
-		emit(cardRemoved());
+		emit(cardRemoved(this));
 	}
 	else if (status == "PRESENT") {
 		m_cardATR = atr;

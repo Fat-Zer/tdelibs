@@ -25,7 +25,7 @@
 	#ifdef KSSL_HAVE_SSL
 		typedef struct x509_st X509;
 	#else
-		class X509;
+		struct X509;
 	#endif
 #endif
 
@@ -147,8 +147,8 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		void workerRequestedPin(TQString prompt);
 
 	signals:
-		void cardInserted();
-		void cardRemoved();
+		void cardInserted(TDECryptographicCardDevice*);
+		void cardRemoved(TDECryptographicCardDevice*);
 		void pinRequested(TQString prompt, TDECryptographicCardDevice* cdevice);
 
 	private:
