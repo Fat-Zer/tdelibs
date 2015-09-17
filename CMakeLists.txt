@@ -700,7 +700,7 @@ if( WITH_CRYPTSETUP )
     check_c_source_compiles("
       #include <stddef.h>
       #include <libcryptsetup.h>
-      int main(int argc, char *argv[]) { crypt_keyslot_info status = CRYPT_SLOT_INVALID; return 0; } "
+      int main(int argc, char *argv[]) { crypt_keyslot_info status = CRYPT_SLOT_INVALID; crypt_get_type(NULL); return 0; } "
       HAVE_NEW_CRYPTSETUP )
   endif( )
   if ( NOT HAVE_NEW_CRYPTSETUP )
