@@ -151,6 +151,9 @@
 /* Defines if your system uses the old cryptsetup API */
 #cmakedefine CRYPTSETUP_OLD_API 1
 
+/* Defines if your system uses a cryptsetup API that includes crypt_get_type */
+#cmakedefine HAVE_CRYPTSETUP_GET_TYPE 1
+
 /* Define to 1 if you have the <ctype.h> header file. */
 #cmakedefine HAVE_CTYPE_H 1
 

@@ -697,11 +697,22 @@ if( WITH_CRYPTSETUP )
   endif( NOT LIBCRYPTSETUP_FOUND )
   set( HAVE_CRYPTSETUP 1 )
   if ( HAVE_CRYPTSETUP )
+    # save CMAKE_REQUIRED_LIBRARIES
+    set( bak_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} )
+    set( CMAKE_REQUIRED_LIBRARIES ${LIBCRYPTSETUP_LIBRARIES} )
     check_c_source_compiles("
       #include <stddef.h>
       #include <libcryptsetup.h>
-      int main(int argc, char *argv[]) { crypt_keyslot_info status = CRYPT_SLOT_INVALID; crypt_get_type(NULL); return 0; } "
+      int main(int argc, char *argv[]) { crypt_keyslot_info status = CRYPT_SLOT_INVALID; return 0; } "
       HAVE_NEW_CRYPTSETUP )
+    check_c_source_compiles("
+      #include <stddef.h>
+      #include <libcryptsetup.h>
+      int main(int argc, char *argv[]) { crypt_get_type(NULL); return 0; } "
+      HAVE_CRYPTSETUP_GET_TYPE )
+    # restore CMAKE_REQUIRED_LIBRARIES
+    set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
+    unset( bak_CMAKE_REQUIRED_LIBRARIES )
   endif( )
   if ( NOT HAVE_NEW_CRYPTSETUP )
     set( CRYPTSETUP_OLD_API 1 )
