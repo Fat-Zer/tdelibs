@@ -459,7 +459,13 @@ void TDECryptographicCardDevice::enableCardMonitoring(bool enable) {
 #ifdef WITH_PCSC
 	if (enable) {
 		if (m_watcherObject && m_watcherThread) {
-			// Monitoring thread already active; abort!
+			// Monitoring thread already active
+			if ((cardPresent() == 1) && (cardX509Certificates().count() > 0)) {
+				// Card was already inserted and initialized
+				emit(certificateListAvailable(this));
+			}
+
+			// Abort!
 			return;
 		}
 
