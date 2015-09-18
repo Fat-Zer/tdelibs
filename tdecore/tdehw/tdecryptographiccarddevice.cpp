@@ -821,5 +821,9 @@ int TDECryptographicCardDevice::createNewSecretRSAKeyFromCertificate(TQByteArray
 	return retcode;
 }
 
+TQString TDECryptographicCardDevice::pkcsProviderLibrary() {
+	return OPENSC_PKCS11_PROVIDER_LIBRARY;
+}
+
 #include "tdecryptographiccarddevice.moc"
 #include "tdecryptographiccarddevice_private.moc"

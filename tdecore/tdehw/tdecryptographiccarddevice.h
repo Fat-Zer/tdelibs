@@ -142,6 +142,11 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		 */
 		static int createNewSecretRSAKeyFromCertificate(TQByteArray &plaintext, TQByteArray &ciphertext, X509* certificate);
 
+		/**
+		 * @return The built-in PKCS provider library file name, including the full path
+		 */
+		static TQString pkcsProviderLibrary();
+
 	public slots:
 		void cardStatusChanged(TQString status, TQString atr);
 		void workerRequestedPin(TQString prompt);
