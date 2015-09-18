@@ -146,7 +146,7 @@ void TDEStorageDevice::internalInitializeLUKSIfNeeded() {
 					ret = crypt_load(m_cryptDevice, NULL, NULL);
 					if (ret == 0) {
 						int keyslot_count;
-#if defined(CRYPTSETUP_OLD_API) || defined(HAVE_CRYPTSETUP_GET_TYPE)
+#if defined(CRYPTSETUP_OLD_API) || !defined(HAVE_CRYPTSETUP_GET_TYPE)
 						kdWarning() << "TDEStorageDevice: The version of libcryptsetup that TDE was compiled against was too old!  Most LUKS features will not function" << endl;
 						m_cryptDeviceType = TQString::null;
 						keyslot_count = 0;
