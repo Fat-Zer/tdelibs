@@ -570,6 +570,15 @@ void TDECryptographicCardDevice::setProvidedPin(TQString pin) {
 	}
 }
 
+TQString TDECryptographicCardDevice::autoPIN() {
+	// TODO
+	// Use subjAltName field in card certificate to provide the card's PIN,
+	// in order to support optional pin-less operation.
+	// FIXME
+	// Disable fully automatic card login support for now...
+	return TQString::null;
+}
+
 void TDECryptographicCardDevice::workerRequestedPin(TQString prompt) {
 	emit(pinRequested(prompt, this));
 }

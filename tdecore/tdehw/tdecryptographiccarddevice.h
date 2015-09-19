@@ -106,6 +106,16 @@ class TDECORE_EXPORT TDECryptographicCardDevice : public TDEGenericDevice
 		void setProvidedPin(TQString pin);
 
 		/**
+		 * If the inserted card and system configuration provides a PIN for automatic
+		 * pin-less operation, @returns the PIN to use when unlocking the card, otherwise
+		 * @returns TQString::null.
+		 *
+		 * @see pinRequested(TQString prompt)
+		 * @see setProvidedPin(TQString pin)
+		 */
+		TQString autoPIN();
+
+		/**
 		 * If monitoring of insert / remove events is enabled, and a card has been inserted,
 		 * decrypt data originally encrypted using a public key from one of the certificates
 		 * stored on the card.
