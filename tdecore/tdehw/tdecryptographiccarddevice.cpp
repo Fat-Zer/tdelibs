@@ -571,12 +571,69 @@ void TDECryptographicCardDevice::setProvidedPin(TQString pin) {
 }
 
 TQString TDECryptographicCardDevice::autoPIN() {
-	// TODO
+	TQString retString = TQString::null;
+
 	// Use subjAltName field in card certificate to provide the card's PIN,
 	// in order to support optional pin-less operation.
-	// FIXME
-	// Disable fully automatic card login support for now...
-	return TQString::null;
+	// Parse the TDE autologin extension
+	// Structure:
+	// OID 1.3.6.1.4.1.40364.1.2.1
+	// 	SEQUENCE
+	// 		ASN1_CONSTRUCTED [index: 0] (field name: pin)
+	// 			GeneralString
+
+	// Register custom OID type for TDE autopin data
+	ASN1_OBJECT* tde_autopin_data_object = OBJ_txt2obj("1.3.6.1.4.1.40364.1.2.1", 0);
+
+	int i;
+	X509CertificatePtrListIterator it;
+	for (it = m_cardCertificates.begin(); it != m_cardCertificates.end(); ++it) {
+		X509* x509_cert = *it;
+		GENERAL_NAMES* subjectAltNames = (GENERAL_NAMES*)X509_get_ext_d2i(x509_cert, NID_subject_alt_name, NULL, NULL);
+		int altNameCount = sk_GENERAL_NAME_num(subjectAltNames);
+		for (i=0; i < altNameCount; i++) {
+			GENERAL_NAME* generalName = sk_GENERAL_NAME_value(subjectAltNames, i);
+			if (generalName->type == GEN_OTHERNAME) {
+				OTHERNAME* otherName = generalName->d.otherName;
+				if (!OBJ_cmp(otherName->type_id, tde_autopin_data_object)) {
+					ASN1_TYPE* asnValue = otherName->value;
+					if (asnValue) {
+						// Found autopin structure
+						int index;
+						ASN1_TYPE* asnSeqValue = NULL;
+						ASN1_GENERALSTRING* asnGeneralString = NULL;
+						STACK_OF(ASN1_TYPE) *asnSeqValueStack = NULL;
+						long asn1SeqValueObjectLength;
+						int asn1SeqValueObjectTag;
+						int asn1SeqValueObjectClass;
+						int returnCode;
+
+						index = 0;	// Search for the PIN field
+						asnSeqValueStack = ASN1_seq_unpack_ASN1_TYPE(ASN1_STRING_data(asnValue->value.sequence), ASN1_STRING_length(asnValue->value.sequence), d2i_ASN1_TYPE, ASN1_TYPE_free);
+						asnSeqValue = sk_ASN1_TYPE_value(asnSeqValueStack, index);
+						if (asnSeqValue) {
+							if (asnSeqValue->value.octet_string->data[0] == ((V_ASN1_CONSTRUCTED | V_ASN1_CONTEXT_SPECIFIC) + index)) {
+								const unsigned char* asn1SeqValueObjectData = asnSeqValue->value.sequence->data;
+								returnCode = ASN1_get_object(&asn1SeqValueObjectData, &asn1SeqValueObjectLength, &asn1SeqValueObjectTag, &asn1SeqValueObjectClass, asnSeqValue->value.sequence->length);
+								if (!(returnCode & 0x80)) {
+									if (returnCode == (V_ASN1_CONSTRUCTED + index)) {
+										if (d2i_ASN1_GENERALSTRING(&asnGeneralString, &asn1SeqValueObjectData, asn1SeqValueObjectLength) != NULL) {
+											retString = TQString((const char *)ASN1_STRING_data(asnGeneralString));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Clean up
+	OBJ_cleanup();
+
+	return retString;
 }
 
 void TDECryptographicCardDevice::workerRequestedPin(TQString prompt) {

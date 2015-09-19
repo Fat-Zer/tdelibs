@@ -32,6 +32,7 @@
 #ifdef WITH_PKCS
 	#include <pkcs11-helper-1.0/pkcs11h-certificate.h>
 	#include <pkcs11-helper-1.0/pkcs11h-openssl.h>
+	#include <openssl/x509v3.h>
 	#define PKCS11H_PROMPT_MASK_ALLOW_NONE (PKCS11H_PROMPT_MASK_ALLOW_ALL & ~PKCS11H_PROMPT_MASK_ALLOW_ALL)
 #endif
 
