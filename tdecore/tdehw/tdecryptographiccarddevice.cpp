@@ -300,7 +300,7 @@ static PKCS11H_BOOL pkcs_pin_hook(IN void * const global_data, IN void * const u
 #endif
 
 int CryptoCardDeviceWatcher::initializePkcs() {
-#if WITH_PKCS
+#if defined(WITH_PKCS)
 	CK_RV rv;
 	printf("Initializing pkcs11-helper\n");
 	if ((rv = pkcs11h_initialize()) != CKR_OK) {
@@ -346,7 +346,7 @@ int CryptoCardDeviceWatcher::initializePkcs() {
 }
 
 int CryptoCardDeviceWatcher::retrieveCardCertificates(TQString readerName) {
-#if WITH_PKCS
+#if defined(WITH_PKCS)
 	int ret = -1;
 
 	CK_RV rv;
@@ -571,6 +571,7 @@ void TDECryptographicCardDevice::setProvidedPin(TQString pin) {
 }
 
 TQString TDECryptographicCardDevice::autoPIN() {
+#if defined(WITH_PKCS)
 	TQString retString = TQString::null;
 
 	// Use subjAltName field in card certificate to provide the card's PIN,
@@ -634,6 +635,9 @@ TQString TDECryptographicCardDevice::autoPIN() {
 	OBJ_cleanup();
 
 	return retString;
+#else
+	return TQString::null;
+#endif
 }
 
 void TDECryptographicCardDevice::workerRequestedPin(TQString prompt) {
@@ -654,7 +658,7 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQByteArra
 }
 
 int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQValueList<TQByteArray> &cipherTextList, TQValueList<TQByteArray> &plainTextList, TQValueList<int> &retcodes, TQString *errstr) {
-#if WITH_PKCS
+#if defined(WITH_PKCS)
 	int ret = -1;
 
 	if (!m_watcherObject) {
@@ -840,6 +844,7 @@ int TDECryptographicCardDevice::decryptDataEncryptedWithCertPublicKey(TQValueLis
 }
 
 int TDECryptographicCardDevice::createNewSecretRSAKeyFromCertificate(TQByteArray &plaintext, TQByteArray &ciphertext, X509* certificate) {
+#if defined(WITH_PKCS)
 	unsigned int i;
 	int retcode = -1;
 
@@ -885,10 +890,17 @@ int TDECryptographicCardDevice::createNewSecretRSAKeyFromCertificate(TQByteArray
 	}
 
 	return retcode;
+#else
+	return -1;
+#endif
 }
 
 TQString TDECryptographicCardDevice::pkcsProviderLibrary() {
+#if defined(WITH_PKCS)
 	return OPENSC_PKCS11_PROVIDER_LIBRARY;
+#else
+	return TQString::null;
+#endif
 }
 
 #include "tdecryptographiccarddevice.moc"

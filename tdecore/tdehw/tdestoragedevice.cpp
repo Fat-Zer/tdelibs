@@ -188,7 +188,9 @@ void TDEStorageDevice::cryptSetOperationsUnlockPassword(TQByteArray password) {
 void TDEStorageDevice::cryptClearOperationsUnlockPassword() {
 	m_cryptDevicePassword.fill(0);
 	m_cryptDevicePassword.resize(0);
+#if defined(WITH_CRYPTSETUP)
 	crypt_memory_lock(NULL, 0);
+#endif
 }
 
 bool TDEStorageDevice::cryptOperationsUnlockPasswordSet() {
