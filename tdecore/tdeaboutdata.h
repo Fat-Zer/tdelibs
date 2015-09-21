@@ -197,9 +197,9 @@ class TDECORE_EXPORT TDEAboutData
       License_BSD  = 3,
       License_Artistic = 4,
       License_QPL = 5,
-      License_QPL_V1_0 = 5
+      License_QPL_V1_0 = 5,
       License_GPL_V3 = 6,
-      License_LGPL_V3 = 6,
+      License_LGPL_V3 = 6
     };
 
   public:
