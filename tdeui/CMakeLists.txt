@@ -70,7 +70,7 @@ install( FILES
     kcommand.h twindowlistmenu.h tdefontcombo.h tdeaccelgen.h ktip.h
     kdatewidget.h karrowbutton.h kguiitem.h kstdguiitem.h
     kstringvalidator.h twindowinfo.h
-    ktextedit.h kpassivepopup.h
+    ktextedit.h kpassivepopup.h tdepassivepopupstack.h
     kdatetimewidget.h ktimewidget.h ktimezonewidget.h kscrollview.h
     tdespell.h ksconfig.h tdespelldlg.h ksyntaxhighlighter.h
     ktabbar.h ktabwidget.h ksplashscreen.h tdeconfigdialog.h
@@ -135,8 +135,8 @@ set( ${target}_SRCS
   tdemainwindowiface.skel kguiitem.cpp kstdguiitem.cpp
   kstringvalidator.cpp kactivelabel.cpp
   twindowinfo.cpp ktextedit.cpp kwizard.cpp kpassivepopup.cpp
-  tdetoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp
-  ksconfig.cpp tdespelldlg.cpp
+  tdepassivepopupstack.cpp tdetoolbarhandler.cpp kdatetimewidget.cpp
+  ktimewidget.cpp ktimezonewidget.cpp ksconfig.cpp tdespelldlg.cpp
   tdespell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp
   ksplashscreen.cpp tdespellui.ui tdeconfigdialog.cpp
   tdeactionselector.cpp klanguagebutton.cpp tdelistviewsearchline.cpp
