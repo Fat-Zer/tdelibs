@@ -1396,6 +1396,12 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "CryptographicCard") {
 		ret = TDEGenericDeviceType::CryptographicCard;
 	}
+	else if (query == "BiometricSecurity") {
+		ret = TDEGenericDeviceType::BiometricSecurity;
+	}
+	else if (query == "TestAndMeasurement") {
+		ret = TDEGenericDeviceType::TestAndMeasurement;
+	}
 	else if (query == "Event") {
 		ret = TDEGenericDeviceType::Event;
 	}
@@ -2292,14 +2298,6 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 						ifaceprotofile.close();
 					}
 				}
-				if (usbInterfaceClass == 9) {
-					// Hub
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Hub);
-				}
-				if (usbInterfaceClass == 11) {
-					// Smart Card Reader
-					if (!device) device = new TDECryptographicCardDevice(TDEGenericDeviceType::CryptographicCard);
-				}
 				if ((usbInterfaceClass == 6) && (usbInterfaceSubClass == 1) && (usbInterfaceProtocol == 1)) {
 					// PictBridge
 					if (!device) {
@@ -2313,6 +2311,22 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 						parentdev = udev_device_new_from_syspath(m_udevStruct, parentsyspathudev.ascii());
 						devicenode = (udev_device_get_devnode(parentdev));
 					}
+				}
+				else if (usbInterfaceClass == 9) {
+					// Hub
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Hub);
+				}
+				else if (usbInterfaceClass == 11) {
+					// Smart Card Reader
+					if (!device) device = new TDECryptographicCardDevice(TDEGenericDeviceType::CryptographicCard);
+				}
+				else if (usbInterfaceClass == 14) {
+					// Fingerprint Reader
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::BiometricSecurity);
+				}
+				else if (usbInterfaceClass == 254) {
+					// Test and/or Measurement Device
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TestAndMeasurement);
 				}
 				else {
 					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherUSB);
@@ -4096,6 +4110,12 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::CryptographicCard) {
 		ret = i18n("Cryptographic Card");
 	}
+	else if (query == TDEGenericDeviceType::BiometricSecurity) {
+		ret = i18n("Biometric Security");
+	}
+	else if (query == TDEGenericDeviceType::TestAndMeasurement) {
+		ret = i18n("Test and Measurement");
+	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = i18n("Platform Event");
 	}
@@ -4256,6 +4276,12 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::CryptographicCard) {
 		ret = DesktopIcon("password", size);
+	}
+	else if (query == TDEGenericDeviceType::BiometricSecurity) {
+		ret = DesktopIcon("password", size);
+	}
+	else if (query == TDEGenericDeviceType::TestAndMeasurement) {
+		ret = DesktopIcon("kcmdevices", size);
 	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = DesktopIcon("preferences-system", size);
