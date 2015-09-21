@@ -28,6 +28,8 @@
 #include "kiconloader.h"
 #include "kpassivepopup.h"
 
+typedef TQMap<KPassivePopup*, TQString> TQStringPopupIDMap;
+
 class TDEUI_EXPORT TDEPassivePopupStackContainer : public TQWidget
 {
 	Q_OBJECT
@@ -36,20 +38,23 @@ public:
 	TDEPassivePopupStackContainer(TQWidget *parent=0, const char *name=0);
 	~TDEPassivePopupStackContainer();
 
-	KPassivePopup* displayMessage(TQString title, TQString message, TQString icon, int x, int y);
+	KPassivePopup* displayMessage(TQString title, TQString message, TQString icon, int x, int y, TQString id=TQString::null);
+	KPassivePopup* displayMessage(TQString title, TQString message, TQPixmap icon, int x, int y, TQString id=TQString::null);
 	void processEvents();
 
 signals:
-	void popupClicked(KPassivePopup*, TQPoint);
+	void popupClicked(KPassivePopup*, TQPoint, TQString);
 
 private slots:
 	void popupClosed(KPassivePopup*);
 	void popupClicked(TQPoint);
+	void popupDestroyed(TQObject* object);
 
 private:
 	TQPtrList<KPassivePopup> mPopupList;
 	long mTopOfStack;
 	long mRightOfStack;
+	TQStringPopupIDMap mPopupIDMap;
 };
 
 #endif /* TDEPASSIVEPOPUPSTACK_H */

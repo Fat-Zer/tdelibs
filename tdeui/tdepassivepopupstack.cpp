@@ -32,15 +32,19 @@ TDEPassivePopupStackContainer::~TDEPassivePopupStackContainer() {
 	//
 }
 
-KPassivePopup* TDEPassivePopupStackContainer::displayMessage(TQString title, TQString message, TQString icon, int x, int y) {
+KPassivePopup* TDEPassivePopupStackContainer::displayMessage(TQString title, TQString message, TQString icon, int x, int y, TQString id) {
 	TQPixmap px;
 	TDEIconLoader* il = TDEGlobal::iconLoader();
 	px = il->loadIcon(icon, TDEIcon::NoGroup);
 
-	KPassivePopup *pop = new KPassivePopup(KPassivePopup::Boxed, this, "");
-	pop->setAutoDelete(true);
-	pop->setView(title, message, icon);
-	pop->setTimeout(-1);
+	return displayMessage(title, message, px, x, y, id);
+}
+
+KPassivePopup* TDEPassivePopupStackContainer::displayMessage(TQString title, TQString message, TQPixmap icon, int x, int y, TQString id) {
+	KPassivePopup *popup = new KPassivePopup(KPassivePopup::Boxed, this, "");
+	popup->setAutoDelete(true);
+	popup->setView(title, message, icon);
+	popup->setTimeout(-1);
 	TQPoint leftCorner(x, y);
 	if (leftCorner.isNull()) {
 		if (mPopupList.isEmpty()) {
@@ -50,18 +54,20 @@ KPassivePopup* TDEPassivePopupStackContainer::displayMessage(TQString title, TQS
 			mTopOfStack = r.height();
 			mRightOfStack = r.width();
 		}
-		TQSize popupSize = pop->sizeHint();
+		TQSize popupSize = popup->sizeHint();
 		mTopOfStack = mTopOfStack-popupSize.height();
 		if (mTopOfStack < 0) mTopOfStack = 0;
 		leftCorner.setX(mRightOfStack-popupSize.width());
 		leftCorner.setY(mTopOfStack);
 	}
-	connect(pop, SIGNAL(hidden(KPassivePopup*)), this, SLOT(popupClosed(KPassivePopup*)));
-	connect(pop, SIGNAL(clicked(TQPoint)), this, SLOT(popupClicked(TQPoint)));
-	mPopupList.append(pop);
-	pop->show(leftCorner);
+	connect(popup, SIGNAL(hidden(KPassivePopup*)), this, SLOT(popupClosed(KPassivePopup*)));
+	connect(popup, SIGNAL(clicked(TQPoint)), this, SLOT(popupClicked(TQPoint)));
+	connect(popup, SIGNAL(destroyed(TQObject*)), this, SLOT(popupDestroyed(TQObject*)));
+	mPopupList.append(popup);
+	mPopupIDMap[popup] = id;
+	popup->show(leftCorner);
 
-	return pop;
+	return popup;
 }
 
 void TDEPassivePopupStackContainer::processEvents() {
@@ -82,7 +88,20 @@ void TDEPassivePopupStackContainer::popupClosed(KPassivePopup* popup) {
 }
 
 void TDEPassivePopupStackContainer::popupClicked(TQPoint point) {
-	emit(popupClicked(dynamic_cast<KPassivePopup*>(const_cast<TQObject*>(TQObject::sender())), point));
+	KPassivePopup* popup = dynamic_cast<KPassivePopup*>(const_cast<TQObject*>(TQObject::sender()));
+	if (popup) {
+		emit(popupClicked(popup, point, mPopupIDMap[popup]));
+	}
+	else {
+		emit(popupClicked(NULL, point, TQString::null));
+	}
+}
+
+void TDEPassivePopupStackContainer::popupDestroyed(TQObject* object) {
+	KPassivePopup* popup = static_cast<KPassivePopup*>(const_cast<TQObject*>(object));
+	if (popup) {
+		mPopupIDMap.remove(popup);
+	}
 }
 
 #include "tdepassivepopupstack.moc"
