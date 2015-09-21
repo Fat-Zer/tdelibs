@@ -858,63 +858,68 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 }
 
 TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
-	TQPixmap ret = DesktopIcon("drive-harddisk", size);
+	TQString mountString;
+	if (mountPath() != TQString::null) {
+		mountString = "-mounted";
+	}
+
+	TQPixmap ret = DesktopIcon("drive-harddisk" + mountString, size);
 
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
-		ret = DesktopIcon("media-floppy-3_5", size);
+		ret = DesktopIcon("media-floppy-3_5" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
-		ret = DesktopIcon("media-optical-cdrom", size);
+		ret = DesktopIcon("media-optical-cdrom" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
-		ret = DesktopIcon("media-optical-cdrom", size);
+		ret = DesktopIcon("media-optical-cdrom" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
-		ret = DesktopIcon("media-optical-cdwriter", size);
+		ret = DesktopIcon("media-optical-cdwriter" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
-		ret = DesktopIcon("media-optical-dvd", size);
+		ret = DesktopIcon("media-optical-dvd" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
-		ret = DesktopIcon("media-optical-dvd", size);
+		ret = DesktopIcon("media-optical-dvd" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
-		ret = DesktopIcon("media-optical-dvd", size);
+		ret = DesktopIcon("media-optical-dvd" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
-		ret = DesktopIcon("media-floppy-zip", size);
+		ret = DesktopIcon("media-floppy-zip" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
-		ret = DesktopIcon("media-tape", size);
+		ret = DesktopIcon("media-tape" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
-		ret = DesktopIcon("camera_unmount", size);
+		ret = DesktopIcon("camera_unmount" + mountString, size);
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
-		ret = DesktopIcon("drive-harddisk", size);
+		ret = DesktopIcon("drive-harddisk" + mountString, size);
 		if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
-			ret = DesktopIcon("media-flash-usb", size);
+			ret = DesktopIcon("media-flash-usb" + mountString, size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
-			ret = DesktopIcon("media-flash-compact_flash", size);
+			ret = DesktopIcon("media-flash-compact_flash" + mountString, size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
-			ret = DesktopIcon("media-flash-memory_stick", size);
+			ret = DesktopIcon("media-flash-memory_stick" + mountString, size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
-			ret = DesktopIcon("media-flash-smart_media", size);
+			ret = DesktopIcon("media-flash-smart_media" + mountString, size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::SDMMC)) {
-			ret = DesktopIcon("media-flash-sd_mmc", size);
+			ret = DesktopIcon("media-flash-sd_mmc" + mountString, size);
 		}
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
-		ret = DesktopIcon("memory", size);
+		ret = DesktopIcon("memory" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
-		ret = DesktopIcon("blockdevice", size);
+		ret = DesktopIcon("blockdevice" + mountString, size);
 	}
 
 	return ret;
