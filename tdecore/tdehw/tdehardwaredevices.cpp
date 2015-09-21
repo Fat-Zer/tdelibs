@@ -1402,6 +1402,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "TestAndMeasurement") {
 		ret = TDEGenericDeviceType::TestAndMeasurement;
 	}
+	else if (query == "Timekeeping") {
+		ret = TDEGenericDeviceType::Timekeeping;
+	}
 	else if (query == "Event") {
 		ret = TDEGenericDeviceType::Event;
 	}
@@ -2043,8 +2046,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 		if ((devicetypestring == "audio")
 			|| (devicesubsystem == "sound")
+			|| (devicesubsystem == "hdaudio")
 			|| (devicesubsystem == "ac97")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Sound);
+		}
+		if (devicesubsystem == "container") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
 		}
 		if ((devicesubsystem == "video4linux")
 			|| (devicesubsystem == "dvb")) {
@@ -2089,9 +2096,18 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "amba")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
+		if (devicesubsystem == "edac") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
+		}
+		if (devicesubsystem.startsWith("mc") && systempath.contains("/edac/")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
+		}
 		if ((devicesubsystem == "ipmi")
 			|| (devicesubsystem == "ipmi_si")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mainboard);
+		}
+		if (devicesubsystem == "iommu") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "misc") {
 			if (devicedriver.startsWith("tpm_")) {
@@ -2100,6 +2116,15 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			else {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 			}
+		}
+		if (devicesubsystem == "media") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "nd") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
+		}
+		if (devicesubsystem == "ptp") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Timekeeping);
 		}
 		if (devicesubsystem == "leds") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
@@ -4116,6 +4141,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::TestAndMeasurement) {
 		ret = i18n("Test and Measurement");
 	}
+	else if (query == TDEGenericDeviceType::Timekeeping) {
+		ret = i18n("Timekeeping");
+	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = i18n("Platform Event");
 	}
@@ -4282,6 +4310,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::TestAndMeasurement) {
 		ret = DesktopIcon("kcmdevices", size);
+	}
+	else if (query == TDEGenericDeviceType::Timekeeping) {
+		ret = DesktopIcon("history", size);
 	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = DesktopIcon("preferences-system", size);

@@ -66,6 +66,7 @@ enum TDEGenericDeviceType {
 	CryptographicCard,
 	BiometricSecurity,
 	TestAndMeasurement,
+	Timekeeping,
 	Event,
 	Input,
 	PNP,
