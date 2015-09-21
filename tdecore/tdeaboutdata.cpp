@@ -424,6 +424,14 @@ TDEAboutData::license() const
        l = "LGPL v2";
        f = locate("data", "LICENSES/LGPL_V2");
        break;
+    case License_GPL_V3:
+       l = "GPL v3";
+       f = locate("data", "LICENSES/GPL_V3");
+       break;
+    case License_LGPL_V3:
+       l = "LGPL v3";
+       f = locate("data", "LICENSES/LGPL_V3");
+       break;
     case License_BSD:
        l = "BSD License";
        f = locate("data", "LICENSES/BSD");
