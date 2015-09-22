@@ -123,40 +123,96 @@ void KPassivePopup::setView( const TQString &caption, const TQString &text,
     setView( standardView( caption, text, icon, this ) );
 }
 
-TQVBox * KPassivePopup::standardView( const TQString& caption,
+static void truncateStringToFit(TQString &string, TQFont font, int max_width) {
+	bool truncated = false;
+	TQFontMetrics fm(font);
+	while (fm.width(string) > max_width) {
+		string.truncate(string.length() - 1);
+		truncated = true;
+	}
+	if (truncated) {
+		string += " ...";
+	}
+}
+
+TQVBox * KPassivePopup::standardView(const TQString& caption,
                                      const TQString& text,
                                      const TQPixmap& icon,
-                                     TQWidget *parent )
+                                     TQWidget *parent)
 {
-    TQVBox *vb = new TQVBox( parent ? parent : this );
-    vb->setSpacing( KDialog::spacingHint() );
+	TQString sizedCaption = caption;
+	TQString sizedText = text;
 
-    TQHBox *hb=0;
-    if ( !icon.isNull() ) {
-	hb = new TQHBox( vb );
-	hb->setMargin( 0 );
-	hb->setSpacing( KDialog::spacingHint() );
-	ttlIcon = new TQLabel( hb, "title_icon" );
-	ttlIcon->setPixmap( icon );
-        ttlIcon->setAlignment( AlignLeft );
-    }
+#ifdef Q_WS_X11
+	int max_width;
 
-    if ( !caption.isEmpty() ) {
-	ttl = new TQLabel( caption, hb ? hb : vb, "title_label" );
-	TQFont fnt = ttl->font();
-	fnt.setBold( true );
-	ttl->setFont( fnt );
-	ttl->setAlignment( Qt::AlignHCenter );
-        if ( hb )
-            hb->setStretchFactor( ttl, 10 ); // enforce centering
-    }
+	NETRootInfo info( tqt_xdisplay(),
+			NET::NumberOfDesktops |
+			NET::CurrentDesktop |
+			NET::WorkArea,
+			-1, false );
+	info.activate();
+	NETRect workArea = info.workArea(info.currentDesktop());
+	max_width = workArea.size.width / 3;
+#endif
 
-    if ( !text.isEmpty() ) {
-        msg = new TQLabel( text, vb, "msg_label" );
-        msg->setAlignment( AlignLeft );
-    }
+	TQVBox *vb = new TQVBox( parent ? parent : this );
+	vb->setSpacing( KDialog::spacingHint() );
+	
+	TQHBox *hb=0;
+	if ( !icon.isNull() ) {
+		hb = new TQHBox( vb );
+		hb->setMargin( 0 );
+		hb->setSpacing( KDialog::spacingHint() );
+		ttlIcon = new TQLabel( hb, "title_icon" );
+		ttlIcon->setPixmap( icon );
+		ttlIcon->setAlignment( AlignLeft );
+	}
 
-    return vb;
+	if ( !sizedCaption.isEmpty() ) {
+		ttl = new TQLabel( sizedCaption, hb ? hb : vb, "title_label" );
+		TQFont fnt = ttl->font();
+#ifdef Q_WS_X11
+		truncateStringToFit(sizedCaption, fnt, max_width);
+		ttl->setText(sizedCaption);
+#endif
+		fnt.setBold( true );
+		ttl->setFont( fnt );
+		ttl->setAlignment( Qt::AlignHCenter );
+		if ( hb ) {
+			hb->setStretchFactor( ttl, 10 ); // enforce centering
+		}
+	}
+
+	if ( !sizedText.isEmpty() ) {
+		msg = new TQLabel( sizedText, vb, "msg_label" );
+#ifdef Q_WS_X11
+		TQStringList textLines = TQStringList::split("\n", sizedText, true);
+		for (TQStringList::Iterator it = textLines.begin(); it != textLines.end(); ++it) {
+			truncateStringToFit(*it, msg->font(), max_width);
+		}
+
+		// Limit message to 5 lines of text
+		if (textLines.count() > 5) {
+			int count = 3;
+			TQStringList truncatedLines;
+			for (TQStringList::Iterator it = textLines.begin(); it != textLines.end(); ++it) {
+				truncatedLines.append(*it);
+				if (count > 5) {
+					truncatedLines.append("...");
+					break;
+				}
+				count++;
+			}
+			textLines = truncatedLines;
+		}
+		sizedText = textLines.join("\n");
+		msg->setText(sizedText);
+#endif
+		msg->setAlignment( AlignLeft );
+	}
+
+	return vb;
 }
 
 void KPassivePopup::setView( const TQString &caption, const TQString &text )
@@ -194,27 +250,33 @@ void KPassivePopup::mouseReleaseEvent( TQMouseEvent *e )
 
 void KPassivePopup::show()
 {
-    if ( size() != sizeHint() )
-	resize( sizeHint() );
+	TQSize desiredSize = sizeHint();
 
-    if ( d->fixedPosition.isNull() )
-	positionSelf();
-    else {
-	if( d->popupStyle == Balloon )
-	    setAnchor( d->fixedPosition );
-	else
-	    move( d->fixedPosition );
-    }
-    TQFrame::show();
+	if (size() != desiredSize) {
+		resize(desiredSize);
+	}
 
-    int delay = hideDelay;
-    if ( delay < 0 ) {
-        delay = DEFAULT_POPUP_TIME;
-    }
+	if (d->fixedPosition.isNull()) {
+		positionSelf();
+	}
+	else {
+		if( d->popupStyle == Balloon ) {
+			setAnchor(d->fixedPosition);
+		}
+		else {
+			move(d->fixedPosition);
+		}
+	}
+	TQFrame::show();
 
-    if ( delay > 0 ) {
-        hideTimer->start( delay );
-    }
+	int delay = hideDelay;
+	if ( delay < 0 ) {
+		delay = DEFAULT_POPUP_TIME;
+	}
+
+	if ( delay > 0 ) {
+		hideTimer->start( delay );
+	}
 }
 
 void KPassivePopup::show(const TQPoint &p)
@@ -346,13 +408,14 @@ void KPassivePopup::setAnchor(const TQPoint &anchor)
 
 void KPassivePopup::paintEvent( TQPaintEvent* pe )
 {
-    if( d->popupStyle == Balloon )
-    {
-        TQPainter p;
-        p.begin( this );
-        p.drawPolygon( d->surround );
-    } else
-        TQFrame::paintEvent( pe );
+	if( d->popupStyle == Balloon ) {
+		TQPainter p;
+		p.begin( this );
+		p.drawPolygon( d->surround );
+	}
+	else {
+		TQFrame::paintEvent( pe );
+	}
 }
 
 void KPassivePopup::updateMask()
