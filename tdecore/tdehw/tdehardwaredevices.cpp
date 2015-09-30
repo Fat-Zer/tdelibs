@@ -1656,27 +1656,61 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 						for (cndit = conditionmap.begin(); cndit != conditionmap.end(); ++cndit) {
 							TQStringList conditionList = TQStringList::split(',', cndit.data(), false);
 							bool atleastonematch = false;
-							for ( TQStringList::Iterator paramit = conditionList.begin(); paramit != conditionList.end(); ++paramit ) {
-								if (cndit.key() == "VENDOR_ID") {
-									if (device->vendorID() == (*paramit)) {
-										atleastonematch = true;
+							bool allmatch = true;
+							TQString matchtype = rulesFile.readEntry("MATCH_TYPE", "All");
+							if (conditionList.count() < 1) {
+								allmatch = false;
+							}
+							else {
+								for ( TQStringList::Iterator paramit = conditionList.begin(); paramit != conditionList.end(); ++paramit ) {
+									if ((*paramit) == "MatchType") {
+										continue;
 									}
-								}
-								else if (cndit.key() == "MODEL_ID") {
-									if (device->modelID() == (*paramit)) {
-										atleastonematch = true;
+									if (cndit.key() == "VENDOR_ID") {
+										if (device->vendorID() == (*paramit)) {
+											atleastonematch = true;
+										}
+										else {
+											allmatch = false;
+										}
 									}
-								}
-								else if (cndit.key() == "DRIVER") {
-									if (device->deviceDriver() == (*paramit)) {
-										atleastonematch = true;
+									else if (cndit.key() == "MODEL_ID") {
+										if (device->modelID() == (*paramit)) {
+											atleastonematch = true;
+										}
+										else {
+											allmatch = false;
+										}
 									}
-								}
-								else if (readUdevAttribute(dev, cndit.key()) == (*paramit)) {
-									atleastonematch = true;
+									else if (cndit.key() == "DRIVER") {
+										if (device->deviceDriver() == (*paramit)) {
+											atleastonematch = true;
+										}
+										else {
+											allmatch = false;
+										}
+									}
+									else {
+										if (readUdevAttribute(dev, cndit.key()) == (*paramit)) {
+											atleastonematch = true;
+										}
+										else {
+											allmatch = false;
+										}
+									}
 								}
 							}
-							if (!atleastonematch) {
+							if (matchtype == "All") {
+								if (!allmatch) {
+									match = false;
+								}
+							}
+							else if (matchtype == "Any") {
+								if (!atleastonematch) {
+									match = false;
+								}
+							}
+							else {
 								match = false;
 							}
 						}

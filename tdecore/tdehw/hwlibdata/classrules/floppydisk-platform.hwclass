@@ -1,6 +1,7 @@
 [Conditions]
 SUBSYSTEM=block
 DRIVER=floppy
+MatchType=All
 
 [DeviceType]
 GENTYPE=Disk
