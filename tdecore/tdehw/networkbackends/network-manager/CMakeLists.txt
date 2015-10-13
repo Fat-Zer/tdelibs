@@ -21,6 +21,7 @@ include_directories (
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore/tdehw
+  ${CMAKE_BINARY_DIR}/tdeio/kssl
   ${CMAKE_CURRENT_BINARY_DIR}/dbus-introspection
 )
 

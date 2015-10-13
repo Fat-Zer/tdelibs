@@ -36,6 +36,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_BINARY_DIR}/tdeio/kssl
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}

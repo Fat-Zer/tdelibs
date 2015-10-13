@@ -19,6 +19,7 @@
 #ifndef _TDECRYPTOGRAPHICCARDDEVICE_H
 #define _TDECRYPTOGRAPHICCARDDEVICE_H
 
+#include "ksslconfig.h"
 #include "tdegenericdevice.h"
 
 #ifndef _TDECRYPTOGRAPHICCARDDEVICE_INTERNAL
