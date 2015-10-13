@@ -37,6 +37,7 @@
 
 #include <config.h>
 
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -324,8 +325,8 @@ void KCodecs::quotedPrintableDecode(const TQByteArray& in, TQByteArray& out)
     {
       if (i < length - 2)
       {
-        char c1 = in[i + 1];
-        char c2 = in[i + 2];
+        char c1 = toupper(in[i + 1]);
+        char c2 = toupper(in[i + 2]);
 
         if (('\n' == c1) || ('\r' == c1 && '\n' == c2))
         {
