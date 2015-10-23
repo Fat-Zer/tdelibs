@@ -97,6 +97,7 @@ KSSLCertificate::KSSLCertificate() {
 	TDEGlobal::dirs()->addResourceType("kssl", TDEStandardDirs::kde_default("data") + "kssl");
 	#ifdef KSSL_HAVE_SSL
 		d->m_cert = NULL;
+		d->m_cert_crl = NULL;
 	#endif
 }
 
@@ -107,6 +108,7 @@ KSSLCertificate::KSSLCertificate(const KSSLCertificate& x) {
 	TDEGlobal::dirs()->addResourceType("kssl", TDEStandardDirs::kde_default("data") + "kssl");
 	#ifdef KSSL_HAVE_SSL
 		d->m_cert = NULL;
+		d->m_cert_crl = NULL;
 		setCert(KOSSL::self()->X509_dup(const_cast<KSSLCertificate&>(x).getCert()));
 		KSSLCertChain *c = x.d->_chain.replicate();
 		setChain(c->rawChain());
