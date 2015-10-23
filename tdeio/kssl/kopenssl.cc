@@ -80,6 +80,7 @@ static X509_STORE_CTX *(*K_X509_STORE_CTX_new) (void) = 0L;
 static void (*K_X509_STORE_free) (X509_STORE *) = 0L;
 static X509_STORE *(*K_X509_STORE_new) (void) = 0L;
 static void (*K_X509_free) (X509 *) = 0L;
+static void (*K_X509_CRL_free) (X509_CRL *) = 0L;
 static char *(*K_X509_NAME_oneline) (X509_NAME *,char *,int) = 0L;
 static X509_NAME *(*K_X509_get_subject_name) (X509 *) = 0L;
 static X509_NAME *(*K_X509_get_issuer_name) (X509 *) = 0L;
@@ -396,6 +397,7 @@ TDEConfig *cfg;
    if (_cryptoLib) {
 #ifdef KSSL_HAVE_SSL
       K_X509_free = (void (*) (X509 *)) GET_CRYPTOLIB_SYMBOL("X509_free");
+      K_X509_CRL_free = (void (*) (X509_CRL *)) GET_CRYPTOLIB_SYMBOL("X509_CRL_free");
       K_RAND_egd = (int (*)(const char *)) GET_CRYPTOLIB_SYMBOL("RAND_egd");
       K_RAND_load_file = (int (*)(const char *, long)) GET_CRYPTOLIB_SYMBOL("RAND_load_file");
       K_RAND_file_name = (const char* (*)(char *, size_t)) GET_CRYPTOLIB_SYMBOL("RAND_file_name");
@@ -896,6 +898,11 @@ int KOpenSSLProxy::X509_verify_cert(X509_STORE_CTX *ctx) {
 
 void KOpenSSLProxy::X509_free(X509 *a) {
    if (K_X509_free) (K_X509_free)(a);
+}
+
+
+void KOpenSSLProxy::X509_CRL_free(X509_CRL *a) {
+   if (K_X509_CRL_free) (K_X509_CRL_free)(a);
 }
 
 

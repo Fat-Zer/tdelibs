@@ -360,6 +360,11 @@ public:
     */
    void X509_free(X509 *v);
 
+   /*
+    *   X509_CRL_free - free up an X509 CRL
+    */
+   void X509_CRL_free(X509_CRL *v);
+
 
    /*
     *   X509_NAME_oneline - return the X509 data in a string

@@ -118,8 +118,12 @@ KSSLCertificate::KSSLCertificate(const KSSLCertificate& x) {
 
 KSSLCertificate::~KSSLCertificate() {
 #ifdef KSSL_HAVE_SSL
-	if (d->m_cert)
+	if (d->m_cert) {
 		d->kossl->X509_free(d->m_cert);
+	}
+	if (d->m_cert_crl) {
+		d->kossl->X509_CRL_free(d->m_cert_crl);
+	}
 #endif
 	delete d;
 }
