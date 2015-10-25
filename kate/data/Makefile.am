@@ -8,7 +8,7 @@ syntaxkate_DATA = language.dtd syntax.template \
     4dos.xml abap.xml abc.xml actionscript.xml ada.xml ahdl.xml ahk.xml alert_indent.xml \
     alert.xml ample.xml ansic89.xml ansys.xml apache.xml asm6502.xml asm-avr.xml \
     asm-dsp56k.xml asm-m68k.xml asn1.xml asp.xml asterisk.xml awk.xml bash.xml \
-    bibtex.xml bmethod.xml ccss.xml cgis.xml cg.xml changelog.xml chicken.xml \
+    bibtex.xml bmethod.xml carto-css.xml ccss.xml cgis.xml cg.xml changelog.xml chicken.xml \
     cisco.xml clipper.xml clojure.xml cmake.xml coffee.xml coldfusion.xml \
     commonlisp.xml component-pascal.xml context.xml cpp.xml crk.xml css.xml \
     css-php.xml cs.xml cue.xml curry.xml c.xml ddoc.xml debianchangelog.xml debiancontrol.xml \
@@ -17,15 +17,17 @@ syntaxkate_DATA = language.dtd syntax.template \
     euphoria.xml e.xml fasm.xml ferite.xml fgl-4gl.xml fgl-per.xml fortran.xml freebasic.xml \
     fsharp.xml fstab.xml ftl.xml gap.xml gcc.xml gdb.xml gdl.xml gettext.xml git-ignore.xml \
     git-rebase.xml gitolite.xml glosstex.xml glsl.xml gnuassembler.xml gnuplot.xml go.xml \
-    grammar.xml hamlet.xml haml.xml haskell.xml haxe.xml html.xml html-php.xml hunspell-aff.xml \
-    hunspell-dat.xml hunspell-dic.xml hunspell-idx.xml idconsole.xml idl.xml ilerpg.xml inform.xml \
+    grammar.xml groovy.xml hamlet.xml haml.xml haskell.xml haxe.xml html.xml html-php.xml \
+    hunspell-aff.xml hunspell-dat.xml hunspell-dic.xml hunspell-idx.xml \
+    idconsole.xml idl.xml ilerpg.xml inform.xml \
     ini.xml isocpp.xml jam.xml javadoc.xml javascript.xml javascript-php.xml java.xml json.xml \
     jsp.xml julia.xml j.xml kbasic.xml latex.xml ldif.xml ld.xml less.xml lex.xml lilypond.xml \
     literate-curry.xml literate-haskell.xml logtalk.xml lpc.xml lsl.xml lua.xml m3u.xml \
     m4.xml mab.xml makefile.xml mako.xml mandoc.xml mason.xml mathematica.xml matlab.xml \
-    maxima.xml mediawiki.xml mel.xml mergetagtext.xml metafont.xml mips.xml modelica.xml \
+    maxima.xml mediawiki.xml mel.xml mergetagtext.xml meson.xml metafont.xml mips.xml modelica.xml \
     modelines.xml modula-2.xml monobasic.xml mup.xml nagios.xml nasm.xml nemerle.xml nesc.xml \
-    noweb.xml objectivecpp.xml objectivec.xml ocaml.xml octave.xml oors.xml opal.xml opencl.xml \
+    noweb.xml objectivecpp.xml objectivec.xml ocaml.xml ocamllex.xml ocamlyacc.xml \
+    octave.xml oors.xml opal.xml opencl.xml \
     pango.xml pascal.xml perl.xml pgn.xml php.xml picsrc.xml pig.xml pike.xml \
     postscript.xml povray.xml ppd.xml progress.xml prolog.xml protobuf.xml puppet.xml \
     purebasic.xml python.xml qmake.xml qml.xml qt4.xml q.xml rapidq.xml relaxngcompact.xml \
@@ -36,8 +38,8 @@ syntaxkate_DATA = language.dtd syntax.template \
     tcl.xml tcsh.xml template-toolkit.xml texinfo.xml textile.xml tibasic.xml \
     txt2tags.xml update-files.xml uscript.xml valgrind-suppression.xml \
     varnishtest.xml varnish.xml vcard.xml velocity.xml vera.xml verilog.xml vhdl.xml \
-    vrml.xml winehq.xml wml.xml xharbour.xml xmldebug.xml xml.xml xorg.xml xslt.xml \
-    xul.xml yacas.xml yacc.xml yaml.xml zonnon.xml zsh.xml
+    vrml.xml winehq.xml wml.xml xharbour.xml xmldebug.xml xml.xml xonotic-console.xml \
+    xorg.xml xslt.xml xul.xml yacas.xml yacc.xml yaml.xml zonnon.xml zsh.xml
 
 partrcdir   = $(kde_confdir)
 partrc_DATA = katesyntaxhighlightingrc katefiletyperc
