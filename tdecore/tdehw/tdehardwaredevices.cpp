@@ -3082,11 +3082,16 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		}
 
 		// Calculate time remaining
-		// Discharge rate is in watt-hours
+		// Discharge/charge rate is in watt-hours
 		// Energy is in watt-hours
 		// Therefore, energy/rate = time in hours
 		// Convert to seconds...
-		bdevice->internalSetTimeRemaining((bdevice->energy()/bdevice->dischargeRate())*60*60);
+		if (bdevice->status() == TDEBatteryStatus::Charging) {
+			bdevice->internalSetTimeRemaining(((bdevice->maximumEnergy()-bdevice->energy())/bdevice->dischargeRate())*60*60);
+		}
+		else {
+			bdevice->internalSetTimeRemaining((bdevice->energy()/bdevice->dischargeRate())*60*60);
+		}
 	}
 
 	if (device->type() == TDEGenericDeviceType::PowerSupply) {
