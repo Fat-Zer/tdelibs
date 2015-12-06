@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/octet-stream
+X-TDE-PatternsAccuracy=0
 Comment=Unknown
 Comment[af]=Onbekende
 Comment[ar]=غير معروف

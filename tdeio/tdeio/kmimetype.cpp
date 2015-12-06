@@ -221,8 +221,12 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
                     KMimeMagicResult* result =
                             KMimeMagic::self()->findFileType( path );
 
-                    if ( result && result->isValid() && result->accuracy() > 0 )
-                        return mimeType( result->mimeType() );
+                    if ( result && result->isValid() && result->accuracy() > 0 ) {
+                        KMimeType::Ptr resultMime = mimeType( result->mimeType() );
+                        if (resultMime->patternsAccuracy() > 0) {
+                            return resultMime;
+                        }
+                    }
                 }
             }
 
