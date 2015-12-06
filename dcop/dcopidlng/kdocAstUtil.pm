@@ -439,7 +439,7 @@ sub dumpAst
 	}
 
 	print "\t" x $depth, "Documentation nodes:\n" if defined 
-		@{ $node->{Doc}->{ "Text" }};
+		$node->{Doc}->{ "Text" };
 
 	foreach $kid ( @{ $node->{Doc}->{ "Text" }} ) {
 		dumpAst( $kid );
