@@ -192,7 +192,8 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
      if (result == 0) return 0; /* Success */
      unlink(kde_tmp_dir);
      strncat(user_tmp_dir, "XXXXXX", PATH_MAX - strlen(user_tmp_dir));
-     mktemp(user_tmp_dir); /* We want a directory, not a file, so using mkstemp makes no sense and is wrong */
+     if (mkdtemp(user_tmp_dir) == NULL)
+	 return 1;
      return create_link(kde_tmp_dir, user_tmp_dir);
   }
   if ((result == -1) || (!S_ISLNK(stat_buf.st_mode)))
@@ -218,14 +219,16 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
      if (result == 0) return 0; /* Success */
      unlink(kde_tmp_dir);
      strncat(user_tmp_dir, "XXXXXX", PATH_MAX - strlen(user_tmp_dir));
-     mktemp(user_tmp_dir); /* We want a directory, not a file, so using mkstemp makes no sense and is wrong */
+     if (mkdtemp(user_tmp_dir) == NULL)
+	 return 1;
      return create_link(kde_tmp_dir, user_tmp_dir);
   }
   result = check_tmp_dir(tmp_buf);
   if (result == 0) return 0; /* Success */
   unlink(kde_tmp_dir);
   strncat(user_tmp_dir, "XXXXXX", PATH_MAX - strlen(user_tmp_dir));
-  mktemp(user_tmp_dir); /* We want a directory, not a file, so using mkstemp makes no sense and is wrong */
+  if (mkdtemp(user_tmp_dir) == NULL)
+      return 1;
   return create_link(kde_tmp_dir, user_tmp_dir);
 }
 
