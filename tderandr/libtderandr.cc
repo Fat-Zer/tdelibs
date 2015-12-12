@@ -665,7 +665,7 @@ bool KRandrSimpleAPI::applyDisplayConfiguration(TQPtrList<SingleScreenData> scre
 				if (screendata->is_primary || screendata->is_extended) {
 					command.append(TQString(" --mode %1x%2").arg(screendata->current_x_pixel_count).arg(screendata->current_y_pixel_count));
 					command.append(TQString(" --pos %1x%2").arg(screendata->absolute_x_position).arg(screendata->absolute_y_position));
-					command.append(TQString(" --refresh %1").arg((*screendata->refresh_rates.at(screendata->current_refresh_rate_index)).replace("Hz", "")));
+					command.append(TQString(" --refresh %1").arg(atoi((*screendata->refresh_rates.at(screendata->current_refresh_rate_index)).ascii())));
 					command.append(TQString(" --gamma %1:%2:%3").arg(screendata->gamma_red).arg(screendata->gamma_green).arg(screendata->gamma_blue));
 					if (screendata->current_rotation_index == 0) command.append(" --rotate ").append("normal");
 					if (screendata->current_rotation_index == 1) command.append(" --rotate ").append("left");
