@@ -36,7 +36,17 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES tdeio.magic DESTINATION ${CONFIG_INSTALL_DIR}/magic )
+add_custom_command(
+  OUTPUT tdeio.magic.mgc
+  COMMAND file -C -m ${CMAKE_CURRENT_SOURCE_DIR}/tdeio.magic
+)
+
+add_custom_target(
+  tdeio_magic_mgc
+  ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/tdeio.magic.mgc
+)
+
+install( FILES tdeio.magic ${CMAKE_CURRENT_BINARY_DIR}/tdeio.magic.mgc DESTINATION ${CONFIG_INSTALL_DIR}/magic )
 
 install( FILES
     application.desktop kurifilterplugin.desktop

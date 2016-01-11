@@ -35,7 +35,7 @@ libtdeio_la_LIBADD = kssl/libkssl.la tdeio/libtdeiocore.la \
 	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 
 magicdir = $(kde_confdir)/magic
-magic_DATA = tdeio.magic
+magic_DATA = tdeio.magic tdeio.magic.mgc
 
 kde_servicetypes_DATA = application.desktop kurifilterplugin.desktop \
                         kcomprfilter.desktop kscan.desktop kdatatool.desktop \
@@ -63,6 +63,11 @@ messages:
 	$(EXTRACTRC) `find . ../tdeioslave -name "*.rc" -o -name "*.ui"` > rc.cpp
 	$(XGETTEXT) `find . ../tdeioslave -name "*.cpp" -o -name "*.cc" -o -name "*.h"` -o $(podir)/tdeio.pot
 	rm -f rc.cpp
+
+SUFFIXES = .magic .magic.mgc
+
+.magic.magic.mgc:
+	(cd `dirname $@` && file -C -m $<)
 
 DOXYGEN_REFERENCES = tdecore tdefx kjs dcop tdeui tdeio/tdeio tdeio/tdefile
 DOXYGEN_EXCLUDE = kssl/kssl
