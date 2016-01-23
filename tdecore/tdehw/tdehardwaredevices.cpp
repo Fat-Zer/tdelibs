@@ -1012,6 +1012,11 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		disktype = disktype | TDEDiskDeviceType::USB;
 	}
 
+	if ((disktypestring.upper() == "FLOPPY")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLOPPY")) == "1")) {
+		disktype = disktype | TDEDiskDeviceType::Floppy;
+	}
+
 	if (disktypestring.upper() == "ZIP") {
 		disktype = disktype | TDEDiskDeviceType::Zip;
 	}
