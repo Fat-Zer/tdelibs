@@ -1026,7 +1026,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	devNode.replace("'", "'\\''");
 	mediaName.replace("'", "'\\''");
 
-#if defined(WITH_UDISKS2) || defined(WITH_UDISKS)
+#if defined(WITH_UDEVIL) || defined(WITH_UDISKS2) || defined(WITH_UDISKS)
 	// Prepare filesystem options for mount
 	TQStringList udisksOptions;
 	TQString optionString;
@@ -1083,7 +1083,34 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 	if (!optionString.isEmpty()) {
 		optionString.remove(0, 1);
 	}
-#endif // defined(WITH_UDISKS2) || defined(WITH_UDISKS)
+#endif // defined(WITH_UDEVIL) || defined(WITH_UDISKS2) || defined(WITH_UDISKS)
+
+#ifdef WITH_UDEVIL
+	if(command.isEmpty()) {
+		// Use 'udevil' command, if available
+		TQString udevilProg = TDEGlobal::dirs()->findExe("udevil");
+		if (!udevilProg.isEmpty()) {
+
+			TQString fileSystemType;
+			if (mountOptions.contains("filesystem") && !mountOptions["filesystem"].isEmpty()) {
+				fileSystemType = TQString("-t %1").arg(mountOptions["filesystem"]);
+			}
+
+			TQString mountpoint;
+			if (mountOptions.contains("mountpoint")
+				&& !mountOptions["mountpoint"].isEmpty()
+				&& (mountOptions["mountpoint"] != "/media/")) {
+				mountpoint = mountOptions["mountpoint"];
+				mountpoint.replace("'", "'\\''");
+			}
+			else {
+				mountpoint = TQString("/media/%1").arg(mediaName);
+			}
+
+			command = TQString("udevil mount %1 -o '%2' '%3' '%4' 2>&1").arg(fileSystemType).arg(optionString).arg(devNode).arg(mountpoint);
+		}
+	}
+#endif // WITH_UDEVIL
 
 #ifdef WITH_UDISKS2
 	if(command.isEmpty()) {
@@ -1327,6 +1354,13 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 
 	TQString command;
 
+#ifdef WITH_UDEVIL
+	if(command.isEmpty() &&
+	   !(TDEGlobal::dirs()->findExe("udevil").isEmpty())) {
+		command = TQString("udevil umount '%1' 2>&1").arg(mountpoint);
+	}
+#endif // WITH_UDEVIL
+
 #ifdef WITH_UDISKS2
 	if(command.isEmpty()) {
 		// Try to use UDISKS v2 via DBUS, if available
@@ -1354,6 +1388,7 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 		}
 	}
 #endif // WITH_UDISKS2
+
 #ifdef WITH_UDISKS
 	if(command.isEmpty()) {
 		// Try to use UDISKS v1 via DBUS, if available
@@ -1381,6 +1416,7 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 		}
 	}
 #endif // WITH_UDISKS
+
 	if(command.isEmpty() &&
 	   !(TDEGlobal::dirs()->findExe("pumount").isEmpty())) {
 		command = TQString("pumount '%1' 2>&1").arg(mountpoint);

@@ -52,6 +52,10 @@ if( WITH_UDISKS2 )
   add_definitions( -DWITH_UDISKS2 )
 endif( )
 
+if( WITH_UDEVIL )
+  add_definitions( -DWITH_UDEVIL )
+endif( )
+
 if( WITH_CONSOLEKIT )
   add_definitions( -DWITH_CONSOLEKIT )
 endif( )
