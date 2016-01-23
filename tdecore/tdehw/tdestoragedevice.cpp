@@ -1190,10 +1190,21 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOption
 				optionString.append(TQString(" -c %1").arg(mountOptions["locale"]));
 			}
 
+			TQString mountpoint;
+			if (mountOptions.contains("mountpoint")
+				&& !mountOptions["mountpoint"].isEmpty()
+				&& (mountOptions["mountpoint"] != "/media/")) {
+				mountpoint = mountOptions["mountpoint"];
+				mountpoint.replace("'", "'\\''");
+			}
+			else {
+				mountpoint = mediaName;
+			}
+
 			TQString passFileName = passwordFile.name();
 			passFileName.replace("'", "'\\''");
 
-			command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mediaName);
+			command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mountpoint);
 		}
 	}
 
