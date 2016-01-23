@@ -116,6 +116,9 @@ unsigned int reverse_bits(register unsigned int x)
 	return((x >> 16) | (x << 16));
 }
 
+// Helper function implemented in tdestoragedevice.cpp
+TQString decodeHexEncoding(TQString str);
+
 #if defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_NETWORK_MANAGER_BACKEND)
 #include <tqdbusvariant.h>
 #include <tqdbusdata.h>
@@ -2570,7 +2573,10 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
 
 			// Get disk specific info
-			TQString disklabel(TQString::fromLocal8Bit(udev_device_get_property_value(dev, "ID_FS_LABEL")));
+			TQString disklabel(decodeHexEncoding(TQString::fromLocal8Bit(udev_device_get_property_value(dev, "ID_FS_LABEL_ENC"))));
+			if (disklabel == "") {
+				disklabel = TQString::fromLocal8Bit(udev_device_get_property_value(dev, "ID_FS_LABEL"));
+			}
 			TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
 			TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
 			TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
