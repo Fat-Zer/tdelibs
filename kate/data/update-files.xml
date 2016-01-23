@@ -218,6 +218,7 @@
 <Definition name="SystemC" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/systemc.xml" version="0.01"/>
 <Definition name="SystemVerilog" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/systemverilog.xml" version="1.50"/>
 <Definition name="TADS 3" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/tads3.xml" version="1.0"/>
+<Definition name="TaskJuggler" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/taskjuggler.xml" version="1.21"/>
 <Definition name="Tcl/Tk" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/tcl.xml" version="1.11"/>
 <Definition name="Tcsh" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/tcsh.xml" version="0.2-1"/>
 <Definition name="TT2" url="http://git.trinitydesktop.org/cgit/tdelibs/plain/kate/data/template-toolkit.xml" version="0.03-2"/>
