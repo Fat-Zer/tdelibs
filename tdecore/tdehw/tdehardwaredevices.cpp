@@ -1068,20 +1068,8 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	if (disktypestring.upper() == "DISK") {
 		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
-	if (disktypestring.isNull()) {
-		// Fallback
-		// If we can't recognize the disk type then set it as a simple HDD volume
-		disktype = disktype | TDEDiskDeviceType::HDD;
-	}
-
-	// Certain combinations of media flags should never be set at the same time as they don't make sense
-	// This block is needed as udev is more than happy to provide inconsistent data to us
-	if ((disktype & TDEDiskDeviceType::Zip) || (disktype & TDEDiskDeviceType::Floppy) || (disktype & TDEDiskDeviceType::Jaz) || (disktype & TDEDiskDeviceType::Tape)) {
-		disktype = disktype & ~TDEDiskDeviceType::HDD;
-	}
 
 	if (disktypestring.upper() == "CD") {
-		disktype = disktype & ~TDEDiskDeviceType::HDD;
 		disktype = disktype | TDEDiskDeviceType::Optical;
 
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "1") {
@@ -1249,6 +1237,12 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	}
 	if (systempath.startsWith("/sys/devices/virtual/block/loop")) {
 		disktype = disktype | TDEDiskDeviceType::Loop;
+	}
+
+	if (disktype == TDEDiskDeviceType::Null) {
+		// Fallback
+		// If we can't recognize the disk type then set it as a simple HDD volume
+		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if (filesystemtype.upper() == "CRYPTO_LUKS") {
