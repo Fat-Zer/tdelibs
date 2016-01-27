@@ -3597,21 +3597,23 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 	TQDir d("/sys/devices/system/cpu/");
 	d.setFilter( TQDir::Dirs );
 	const TQFileInfoList *list = d.entryInfoList();
-	TQFileInfoListIterator it( *list );
-	TQFileInfo *fi;
-	while ((fi = it.current()) != 0) {
-		TQString directoryName = fi->fileName();
-		if (directoryName.startsWith("cpu")) {
-			directoryName = directoryName.remove(0,3);
-			bool isInt;
-			int processorNumber = directoryName.toUInt(&isInt, 10);
-			if (isInt) {
-				hwdevice = new TDECPUDevice(TDEGenericDeviceType::CPU);
-				hwdevice->internalSetSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
-				m_deviceList.append(hwdevice);
+	if (list) {
+		TQFileInfoListIterator it( *list );
+		TQFileInfo *fi;
+		while ((fi = it.current()) != 0) {
+			TQString directoryName = fi->fileName();
+			if (directoryName.startsWith("cpu")) {
+				directoryName = directoryName.remove(0,3);
+				bool isInt;
+				int processorNumber = directoryName.toUInt(&isInt, 10);
+				if (isInt) {
+					hwdevice = new TDECPUDevice(TDEGenericDeviceType::CPU);
+					hwdevice->internalSetSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
+					m_deviceList.append(hwdevice);
+				}
 			}
+			++it;
 		}
-		++it;
 	}
 
 	// Populate CPU information
