@@ -1041,16 +1041,19 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	if ((disktypestring.upper() == "COMPACT_FLASH")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_CF")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::CompactFlash;
+		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if ((disktypestring.upper() == "MEMORY_STICK")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_MS")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::MemoryStick;
+		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if ((disktypestring.upper() == "SMART_MEDIA")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SM")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::SmartMedia;
+		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if ((disktypestring.upper() == "SD_MMC")
@@ -1058,11 +1061,13 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SDHC")) == "1")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_MMC")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::SDMMC;
+		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if ((disktypestring.upper() == "FLASHKEY")
-		|| (TQString(udev_device_get_property_value(dev, " ID_DRIVE_FLASH")) == "1")) {
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::Flash;
+		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if (disktypestring.upper() == "OPTICAL") {
