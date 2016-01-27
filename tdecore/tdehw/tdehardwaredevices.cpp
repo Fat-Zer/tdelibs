@@ -1015,16 +1015,21 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		disktype = disktype | TDEDiskDeviceType::USB;
 	}
 
+	if (disktypestring.upper() == "DISK") {
+		disktype = disktype | TDEDiskDeviceType::HDD;
+	}
+
 	if ((disktypestring.upper() == "FLOPPY")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLOPPY")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::Floppy;
+		disktype = disktype & ~TDEDiskDeviceType::HDD;
 	}
 
-	if (disktypestring.upper() == "ZIP") {
+	if ((disktypestring.upper() == "ZIP")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLOPPY_ZIP")) == "1")
+		|| ((devicevendor.upper() == "IOMEGA") && (devicemodel.upper().contains("ZIP")))) {
 		disktype = disktype | TDEDiskDeviceType::Zip;
-	}
-	if ((devicevendor.upper() == "IOMEGA") && (devicemodel.upper().contains("ZIP"))) {
-		disktype = disktype | TDEDiskDeviceType::Zip;
+		disktype = disktype & ~TDEDiskDeviceType::HDD;
 	}
 
 	if ((devicevendor.upper() == "APPLE") && (devicemodel.upper().contains("IPOD"))) {
@@ -1076,10 +1081,6 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 
 	if (disktypestring.upper() == "JAZ") {
 		disktype = disktype | TDEDiskDeviceType::Jaz;
-	}
-
-	if (disktypestring.upper() == "DISK") {
-		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
 
 	if (disktypestring.upper() == "CD") {
