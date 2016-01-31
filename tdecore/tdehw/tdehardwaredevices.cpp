@@ -2710,6 +2710,16 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			if (hotpluggable) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
 			}
+			// Force removable flag for flash disks
+			// udev reports disks as non-removable for card readers on PCI controllers
+			if (((disktype & TDEDiskDeviceType::CompactFlash)
+			     || (disktype & TDEDiskDeviceType::MemoryStick)
+			     || (disktype & TDEDiskDeviceType::SmartMedia)
+			     || (disktype & TDEDiskDeviceType::SDMMC))
+			    && !(diskstatus & TDEDiskDeviceStatus::Removable)
+			    && !(diskstatus & TDEDiskDeviceStatus::Hotpluggable)) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
+			}
 
 			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO") && (filesystemtype.upper() != "SWAP") && (!filesystemtype.isNull())) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
