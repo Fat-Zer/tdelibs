@@ -2758,7 +2758,11 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 			}
 			// Partition tables cannot be mounted
-			if (TQString(udev_device_get_property_value(dev, "ID_PART_TABLE_TYPE")) != "") {
+			if ((TQString(udev_device_get_property_value(dev, "ID_PART_TABLE_TYPE")) != "")
+			    && ((TQString(udev_device_get_property_value(dev, "ID_PART_ENTRY_TYPE")).isEmpty())
+				|| (TQString(udev_device_get_property_value(dev, "ID_PART_ENTRY_TYPE")) == "0x5")
+				|| (TQString(udev_device_get_property_value(dev, "ID_PART_ENTRY_TYPE")) == "0xf")
+				|| (TQString(udev_device_get_property_value(dev, "ID_FS_USAGE")).upper() == "RAID"))) {
 				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 			}
 			// If certain disk types do not report the presence of a filesystem, they are likely not mountable
