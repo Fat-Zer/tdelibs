@@ -1044,7 +1044,8 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	}
 
 	if ((disktypestring.upper() == "COMPACT_FLASH")
-		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_CF")) == "1")) {
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_CF")) == "1")
+		|| (TQString(udev_device_get_property_value(dev, "ID_ATA_CFA")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::CompactFlash;
 		disktype = disktype | TDEDiskDeviceType::HDD;
 	}
