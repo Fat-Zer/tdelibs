@@ -893,7 +893,7 @@ TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
 		ret = DesktopIcon("media-tape" + mountString, size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
-		ret = DesktopIcon("camera_unmount" + mountString, size);
+		ret = DesktopIcon("camera" + TQString((mountPath() != TQString::null) ? "_mount" : "_umount"), size);
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
