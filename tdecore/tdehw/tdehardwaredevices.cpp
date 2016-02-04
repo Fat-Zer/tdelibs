@@ -2594,7 +2594,18 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
 			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
 
-			disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+			if (TQString(udev_device_get_property_value(dev, "ID_PART_ENTRY_NUMBER")).isEmpty()) {
+				disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+			}
+			else {
+				// Set partition disk type and status based on the parent device
+				TQString parentsyspath = systempath;
+				parentsyspath.truncate(parentsyspath.length()-1);	// Remove trailing slash
+				parentsyspath.truncate(parentsyspath.findRev("/"));
+				TDEStorageDevice* parentdisk = static_cast<TDEStorageDevice*>(findBySystemPath(parentsyspath));
+				disktype = parentdisk->diskType();
+				diskstatus = diskstatus | parentdisk->diskStatus();
+			}
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
@@ -2723,6 +2734,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 
 			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO") && (filesystemtype.upper() != "SWAP") && (!filesystemtype.isNull())) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
+			}
+			else {
+				diskstatus = diskstatus & ~TDEDiskDeviceStatus::ContainsFilesystem;
 			}
 
 			// Set mountable flag if device is likely to be mountable
