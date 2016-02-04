@@ -2718,7 +2718,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			     || (disktype & TDEDiskDeviceType::SDMMC))
 			    && !(diskstatus & TDEDiskDeviceStatus::Removable)
 			    && !(diskstatus & TDEDiskDeviceStatus::Hotpluggable)) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
 			}
 
 			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO") && (filesystemtype.upper() != "SWAP") && (!filesystemtype.isNull())) {
