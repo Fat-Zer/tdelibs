@@ -2595,17 +2595,20 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
 			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
 
-			if (TQString(udev_device_get_property_value(dev, "ID_PART_ENTRY_NUMBER")).isEmpty()) {
-				disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
-			}
-			else {
-				// Set partition disk type and status based on the parent device
+			TDEStorageDevice* parentdisk = NULL;
+			if (!(TQString(udev_device_get_property_value(dev, "ID_PART_ENTRY_NUMBER")).isEmpty())) {
 				TQString parentsyspath = systempath;
 				parentsyspath.truncate(parentsyspath.length()-1);	// Remove trailing slash
 				parentsyspath.truncate(parentsyspath.findRev("/"));
-				TDEStorageDevice* parentdisk = static_cast<TDEStorageDevice*>(findBySystemPath(parentsyspath));
+				parentdisk = static_cast<TDEStorageDevice*>(findBySystemPath(parentsyspath));
+			}
+			if (parentdisk) {
+				// Set partition disk type and status based on the parent device
 				disktype = parentdisk->diskType();
 				diskstatus = diskstatus | parentdisk->diskStatus();
+			}
+			else {
+				disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			}
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
