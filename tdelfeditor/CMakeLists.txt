@@ -53,8 +53,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libDCOP_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/dcop/libDCOP.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/dcop/libDCOP.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/dcop/libDCOP.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/dcop/libDCOP.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
@@ -68,8 +66,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libtdecore_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdecore/libtdecore.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
@@ -83,8 +79,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libtdeio_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeio/libtdeio.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
@@ -98,8 +92,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libtdeui_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeui/libtdeui.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
@@ -113,8 +105,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libtdeutils_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeutils/libtdeutils.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
@@ -128,8 +118,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libtdeprint_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdeprint/libtdeprint.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
@@ -143,8 +131,6 @@ if( NOT "${TDE_SCM_MODULE_NAME}" STREQUAL "" )
     add_custom_target(
       # embed name and metadata
       update_libtdehtml_metadata ALL
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so ${ELF_EMBEDDING_METADATA} || true
-      COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -m ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so.${scm_embed_metadata_version} ${ELF_EMBEDDING_METADATA} || true
       COMMAND ${CMAKE_BINARY_DIR}/tdelfeditor/tdelfeditor -e ${CMAKE_BINARY_DIR}/tdehtml/libtdehtml.so.${scm_embed_metadata_version} || true
       DEPENDS tdelfeditor
