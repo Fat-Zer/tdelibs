@@ -285,7 +285,7 @@ KBugReport::~KBugReport()
 void KBugReport::updateURL()
 {
     KURL url ( "http://bugs.pearsoncomputing.net/enter_bug.cgi" );
-    url.addQueryItem( "product", "TDE 3.5" );
+    url.addQueryItem( "product", "TDE" );
     url.addQueryItem( "op_sys", d->os );
     url.addQueryItem( "cf_kde_compiler", KDE_COMPILER_VERSION );
     url.addQueryItem( "cf_tde_version", d->tde_version );
