@@ -20,6 +20,7 @@
 
 #include <tqbuffer.h>
 #include <tqdatastream.h>
+#include <tqregexp.h>
 #include <tqstring.h>
 
 #include "agent.h"
@@ -606,27 +607,89 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
   return addrList;
 }
 
-TQDateTime VCardTool::parseDateTime( const TQString &str )
+TQDateTime VCardTool::parseDateTime(const TQString &str)
 {
   TQDateTime dateTime;
-
-  if ( str.find( '-' ) == -1 ) { // is base format (yyyymmdd)
-    dateTime.setDate( TQDate( str.left( 4 ).toInt(), str.mid( 4, 2 ).toInt(),
-                             str.mid( 6, 2 ).toInt() ) );
-
-    if ( str.find( 'T' ) ) // has time information yyyymmddThh:mm:ss
-      dateTime.setTime( TQTime( str.mid( 11, 2 ).toInt(), str.mid( 14, 2 ).toInt(),
-                               str.mid( 17, 2 ).toInt() ) );
-
-  } else { // is extended format yyyy-mm-dd
-    dateTime.setDate( TQDate( str.left( 4 ).toInt(), str.mid( 5, 2 ).toInt(),
-                             str.mid( 8, 2 ).toInt() ) );
-
-    if ( str.find( 'T' ) ) // has time information yyyy-mm-ddThh:mm:ss
-      dateTime.setTime( TQTime( str.mid( 11, 2 ).toInt(), str.mid( 14, 2 ).toInt(),
-                               str.mid( 17, 2 ).toInt() ) );
-  }
-
+  
+  /* This regex matches one of the following formats (description taken from 
+     https://www.w3.org/TR/NOTE-datetime, copyright remains of the respective documentation author(s))
+  	 Year:            YYYY (eg 1997)
+ 		 Year and month:  YYYY-MM (eg 1997-07)
+		 Complete date:   YYYY-MM-DD (eg 1997-07-16)
+		 Complete date plus hours and minutes:             YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
+		 Complete date plus hours, minutes and seconds:    YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+		 Complete date plus hours, minutes, seconds and a decimal fraction of a second
+											YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
+		 where:
+		 YYYY = four-digit year
+		 MM   = two-digit month (01=January, etc.)
+		 DD   = two-digit day of month (01 through 31)
+		 hh   = two digits of hour (00 through 23) (am/pm NOT allowed)
+		 mm   = two digits of minute (00 through 59)
+		 ss   = two digits of second (00 through 59)
+		 s    = one or more digits representing a decimal fraction of a second
+		 TZD  = time zone designator (Z or +hh:mm or -hh:mm)
+  */
+	TQRegExp re("(\\d{4})(?:-(\\d{2})(?:-(\\d{2})(?:T(\\d{2}):(\\d{2})(?::(\\d{2})(?:\\.(\\d+))?)?"
+	            "(?:(Z)|([+-])(\\d{2}):(\\d{2})))?)?)?", true, false);
+	if (!re.exactMatch(str))
+	{
+		// Try alternative format if pattern does not match
+		/* This regex matches one of the following formats (description adapted from 
+			 https://www.w3.org/TR/NOTE-datetime, copyright remains of the respective documentation author(s))
+			 Year:            YYYY (eg 1997)
+			 Year and month:  YYYYMM (eg 199707)
+			 Complete date:   YYYYMMDD (eg 19970716)
+			 Complete date plus hours and minutes:             YYYYMMDDThhmmTZD (eg 19970716T1920+0100)
+			 Complete date plus hours, minutes and seconds:    YYYYMMDDThhmmssTZD (eg 19970716T192030+0100)
+			 Complete date plus hours, minutes, seconds and a decimal fraction of a second
+												YYYYMMDDThhmmsslTZD (eg 19970716T19203045+0100)
+			 where:
+			 YYYY = four-digit year
+			 MM   = two-digit month (01=January, etc.)
+			 DD   = two-digit day of month (01 through 31)
+			 hh   = two digits of hour (00 through 23) (am/pm NOT allowed)
+			 mm   = two digits of minute (00 through 59)
+			 ss   = two digits of second (00 through 59)
+			 l    = one or more digits representing a decimal fraction of a second
+			 TZD  = time zone designator (Z or +hhmm or -hhmm)
+		*/
+		re.setPattern("(\\d{4})(?:(\\d{2})(?:(\\d{2})(?:T(\\d{2})(\\d{2})(?:(\\d{2})(?:(\\d+))?)?"
+	            "(?:(Z)|([+-])(\\d{2})(\\d{2})))?)?)?");
+	}
+	if (re.exactMatch(str))
+	{
+		// Insert date
+	  dateTime.setDate(TQDate(re.cap(1).toInt(),                              // year
+	                          !re.cap(2).isEmpty() ? re.cap(2).toInt() : 1,   // month
+	                          !re.cap(3).isEmpty() ? re.cap(3).toInt() : 1)); // day
+	  if (!re.cap(4).isEmpty())
+	  {
+	    // Time was also specified
+	    int millis = 0;
+	    if (!re.cap(7).isEmpty())
+	    {
+	      millis += re.cap(7)[0].isDigit() ? re.cap(7)[0].digitValue() * 100 : 0;
+	      millis += re.cap(7)[1].isDigit() ? re.cap(7)[1].digitValue() * 10  : 0;
+	      millis += re.cap(7)[2].isDigit() ? re.cap(7)[2].digitValue()       : 0;
+	    }
+	    dateTime.setTime(TQTime(re.cap(4).toInt(),                            // hours
+	  	                        re.cap(5).toInt(),                            // minutes
+	                            !re.cap(6).isEmpty() ? re.cap(6).toInt() : 0, // seconds
+	                            millis));                                     // milliseconds
+			// Add time offset if time not in UTC format
+			if (!re.cap(9).isEmpty())
+			{
+				int offset = re.cap(10).toInt() * 3600 + re.cap(11).toInt() * 60;
+				if (re.cap(9) == "+")
+				{ 
+				  // Local time zone is ahead of UTC time
+					offset = -offset;
+				}
+				dateTime = dateTime.addSecs(offset);
+			}
+	  }
+	}
   return dateTime;
 }
 
