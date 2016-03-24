@@ -730,7 +730,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 	if(!get_iconlist(handle, &icons))
 	{
 		// Failed to obtain a list of ELF icons
-		kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
+		kdDebug() << "failed to obtain ELF icon from " << url.path() << ": " << libr_errmsg() << endl;
 
 		// See if there is a system icon we can use
 		TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");

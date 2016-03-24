@@ -217,7 +217,7 @@ TQString KURIFilterData::iconName()
 
 		if((handle = libr_open(const_cast<char*>(m_pURI.path().ascii()), access)) == NULL)
 		{
-			kdWarning() << "failed to open file" << m_pURI.path() << endl;
+			kdWarning() << "failed to open file " << m_pURI.path() << endl;
 			libr_can_continue = 0;
 		}
 
@@ -234,7 +234,7 @@ TQString KURIFilterData::iconName()
 				if(!get_iconlist(handle, &icons))
 				{
 					// Failed to obtain a list of ELF icons
-					kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
+					kdDebug() << "failed to obtain ELF icon from " << m_pURI.path() << ": " << libr_errmsg() << endl;
 
 					// See if there is a system icon we can use
 					TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");
