@@ -325,13 +325,15 @@ UString RegExp::match(const UString &s, int i, int *pos, int **ovector)
       ++startPos;
 
     nextPos = startPos;
-    while (originalPos[nextPos] < (i + 1))
-      ++nextPos;
+    if (i < s.size()) {
+      while (originalPos[nextPos] < (i + 1))
+        ++nextPos;
+    }
   } else
 #endif
   {
     startPos = i;
-    nextPos  = i + 1;
+    nextPos  = i + (i < s.size() ? 1 : 0);
   }
 
   int baseFlags =
@@ -339,12 +341,13 @@ UString RegExp::match(const UString &s, int i, int *pos, int **ovector)
     utf8Support == Supported ? PCRE_NO_UTF8_CHECK :
 #endif
     0;
-  if (pcre_exec(pcregex, NULL, buffer, bufferSize, startPos,
-                m_notEmpty ? (PCRE_NOTEMPTY | PCRE_ANCHORED | baseFlags) : baseFlags, // see man pcretest
-                ovector ? *ovector : 0L, ovecsize) == PCRE_ERROR_NOMATCH)
+  int numMatches = pcre_exec(pcregex, NULL, buffer, bufferSize, startPos,
+                             m_notEmpty ? (PCRE_NOTEMPTY | PCRE_ANCHORED | baseFlags) : baseFlags, // see man pcretest
+                             ovector ? *ovector : 0L, ovecsize);
+  if (numMatches < 0)
   {
     // Failed to match.
-    if ((flgs & Global) && m_notEmpty && ovector)
+    if (numMatches == PCRE_ERROR_NOMATCH && (flgs & Global) && m_notEmpty && ovector && startPos < nextPos)
     {
       // We set m_notEmpty ourselves, to look for a non-empty match
       // (see man pcretest or pcretest.c for details).
@@ -353,8 +356,9 @@ UString RegExp::match(const UString &s, int i, int *pos, int **ovector)
       fprintf(stderr, "No match after m_notEmpty. +1 and keep going.\n");
 #endif
       m_notEmpty = 0;
-      if (pcre_exec(pcregex, NULL, buffer, bufferSize, nextPos, baseFlags,
-                    ovector ? *ovector : 0L, ovecsize) == PCRE_ERROR_NOMATCH)
+      numMatches = pcre_exec(pcregex, NULL, buffer, bufferSize, nextPos, baseFlags,
+                             ovector ? *ovector : 0L, ovecsize);
+      if (numMatches < 0)
         return UString::null;
     }
     else // done
@@ -364,7 +368,7 @@ UString RegExp::match(const UString &s, int i, int *pos, int **ovector)
   // Got a match, proceed with it.
   // But fix up the ovector if need be..
   if (ovector && originalPos) {
-    for (unsigned c = 0; c < 2 * (nrSubPatterns + 1); ++c) {
+    for (unsigned c = 0; c < 2 * TQMIN((unsigned)numMatches, nrSubPatterns+1); ++c) {
       if ((*ovector)[c] != -1)
         (*ovector)[c] = originalPos[(*ovector)[c]];
     }
