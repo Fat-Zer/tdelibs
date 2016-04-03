@@ -413,9 +413,12 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
           addr.setAgent( parseAgent( *lineIt ) );
 
         // BDAY
-        else if ( identifier == "bday" )
-          addr.setBirthday( parseDateTime( (*lineIt).value().asString() ) );
-
+        else if ( identifier == "bday" ) {
+          TQString s((*lineIt).value().asString());
+          if ( s.length() > 0 )
+            addr.setBirthday( parseDateTime( s ) );
+        }
+        
         // CATEGORIES
         else if ( identifier == "categories" ) {
           const TQStringList categories = splitString( commaSep, (*lineIt).value().asString() );
