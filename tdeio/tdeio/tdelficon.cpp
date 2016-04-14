@@ -1,5 +1,9 @@
+#include "config.h"
 #include "tdelficon.h"
 
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
 #include <cstring>
 
 /*

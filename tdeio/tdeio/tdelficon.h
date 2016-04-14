@@ -1,6 +1,5 @@
 #include <tdelibs_export.h>
 
-#include <alloca.h>
 #include <stdint.h>
 #include <cstdlib>
 
