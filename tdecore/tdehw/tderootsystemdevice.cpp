@@ -296,9 +296,12 @@ bool TDERootSystemDevice::canSuspend() {
 
 bool TDERootSystemDevice::canHibernate() {
 	TQString statenode = "/sys/power/state";
-	int rval = access (statenode.ascii(), W_OK);
-	if (rval == 0) {
-		if (powerStates().contains(TDESystemPowerState::Hibernate)) {
+	TQString disknode  = "/sys/power/disk";
+	int state_rval = access (statenode.ascii(), W_OK);
+	int disk_rval  = access (disknode.ascii(), W_OK);
+	if (state_rval == 0 && disk_rval == 0) {
+		if (powerStates().contains(TDESystemPowerState::Hibernate) &&
+		    hibernationMethods().contains(TDESystemHibernationMethod::Platform)) {
 			return TRUE;
 		}
 		else {
@@ -396,6 +399,83 @@ bool TDERootSystemDevice::canHibernate() {
 						"/org/trinitydesktop/hardwarecontrol",
 						"org.trinitydesktop.hardwarecontrol.Power",
 						"CanHibernate");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
+	}
+#endif // WITH_TDEHWLIB_DAEMONS
+
+	return FALSE;
+}
+
+bool TDERootSystemDevice::canHybridSuspend() {
+	TQString statenode = "/sys/power/state";
+	TQString disknode  = "/sys/power/disk";
+	int state_rval = access (statenode.ascii(), W_OK);
+	int disk_rval  = access (disknode.ascii(), W_OK);
+	if (state_rval == 0 && disk_rval == 0) {
+		if (powerStates().contains(TDESystemPowerState::Hibernate) &&
+		    hibernationMethods().contains(TDESystemHibernationMethod::Suspend)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+
+#ifdef WITH_LOGINDPOWER
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can hybrid suspend?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.login1",
+						"/org/freedesktop/login1",
+						"org.freedesktop.login1.Manager",
+						"CanHybridSleep");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return (reply[0].toString() == "yes");
+			}
+		}
+	}
+#endif // WITH_LOGINDPOWER
+
+	// No support "hybrid suspend" in org.freedesktop.UPower
+	// No support "hybrid suspend" in org.freedesktop.DeviceKit.Power
+
+#ifdef WITH_HAL
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy halProperties("org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer", "org.freedesktop.Hal.Device", dbusConn);
+			if (halProperties.canSend()) {
+				// can hybrid suspend?
+				TQValueList<TQT_DBusData> params;
+				TQT_DBusMessage reply;
+				params.clear();
+				params << TQT_DBusData::fromString("power_management.can_suspend_hybrid");
+				reply = halProperties.sendWithReply("GetPropertyBoolean", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toBool();
+				}
+			}
+		}
+	}
+#endif // WITH_HAL
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can hybrid suspend?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.trinitydesktop.hardwarecontrol",
+						"/org/trinitydesktop/hardwarecontrol",
+						"org.trinitydesktop.hardwarecontrol.Power",
+						"CanHybridSuspend");
 			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
 			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 				return reply[0].toBool();
@@ -574,31 +654,47 @@ void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESy
 }
 
 bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState ps) {
-	if ((ps == TDESystemPowerState::Standby) || (ps == TDESystemPowerState::Freeze) || (ps == TDESystemPowerState::Suspend) || (ps == TDESystemPowerState::Hibernate)) {
+	if ((ps == TDESystemPowerState::Freeze)  || (ps == TDESystemPowerState::Standby)   ||  
+	    (ps == TDESystemPowerState::Suspend) || (ps == TDESystemPowerState::Hibernate) ||
+	    (ps == TDESystemPowerState::HybridSuspend)) {
 		TQString statenode = "/sys/power/state";
-		TQFile file( statenode );
-		if ( file.open( IO_WriteOnly ) ) {
+		TQString disknode  = "/sys/power/disk";
+		TQFile statefile( statenode );
+		TQFile diskfile( disknode );
+		if ( statefile.open( IO_WriteOnly ) &&
+		     ((ps != TDESystemPowerState::Hibernate && ps != TDESystemPowerState::HybridSuspend) || 
+		       diskfile.open( IO_WriteOnly )) ) {
 			TQString powerCommand;
-			if (ps == TDESystemPowerState::Standby) {
-				powerCommand = "standby";
-			}
 			if (ps == TDESystemPowerState::Freeze) {
 				powerCommand = "freeze";
 			}
-			if (ps == TDESystemPowerState::Suspend) {
+			else if (ps == TDESystemPowerState::Standby) {
+				powerCommand = "standby";
+			}
+			else if (ps == TDESystemPowerState::Suspend) {
 				powerCommand = "mem";
 			}
-			if (ps == TDESystemPowerState::Hibernate) {
+			else if (ps == TDESystemPowerState::Hibernate) {
 				powerCommand = "disk";
+				TQTextStream diskstream( &diskfile );
+				diskstream << "platform";
+				diskfile.close();
 			}
-			TQTextStream stream( &file );
-			stream << powerCommand;
-			file.close();
+			else if (ps == TDESystemPowerState::HybridSuspend) {
+				powerCommand = "disk";
+				TQTextStream diskstream( &diskfile );
+				diskstream << "suspend";
+				diskfile.close();
+			}
+			TQTextStream statestream( &statefile );
+			statestream << powerCommand;
+			statefile.close();
 			return true;
 		}
 
 #ifdef WITH_LOGINDPOWER
 		{
+		  // No support for "freeze" in org.freedesktop.login1
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -624,12 +720,24 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 						return true;
 					}
 				}
+				else if (ps == TDESystemPowerState::HybridSuspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.login1",
+								"/org/freedesktop/login1",
+								"org.freedesktop.login1.Manager",
+								"HybridSleep");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
 			}
 		}
 #endif // WITH_LOGINDPOWER
 
 #ifdef WITH_UPOWER
 		{
+		  // No support for "freeze" and "hybrid suspend" in org.freedesktop.UPower
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -661,6 +769,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 
 #ifdef WITH_DEVKITPOWER
 		{
+		  // No support for "freeze" and "hybrid suspend" in org.freedesktop.DeviceKit.Power
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -692,6 +801,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 
 #ifdef WITH_HAL
 		{
+		  // No support for "freeze" in org.freedesktop.Hal
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -714,6 +824,17 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 								"/org/freedesktop/Hal/devices/computer",
 								"org.freedesktop.Hal.Device.SystemPowerManagement",
 								"Hibernate");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::HybridSuspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.Hal",
+								"/org/freedesktop/Hal/devices/computer",
+								"org.freedesktop.Hal.Device.SystemPowerManagement",
+								"SuspendHybrid");
 					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
 					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
 						return true;
@@ -772,6 +893,17 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 						return true;
 					}
 				}
+				else if (ps == TDESystemPowerState::HybridSuspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.trinitydesktop.hardwarecontrol",
+								"/org/trinitydesktop/hardwarecontrol",
+								"org.trinitydesktop.hardwarecontrol.Power",
+								"HybridSuspend");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
 			}
 		}
 #endif // WITH_TDEHWLIB_DAEMONS
@@ -819,7 +951,24 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		}
 #endif // WITH_CONSOLEKIT
 		// Power down the system using a DCOP command
-		// Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
+		/* As found at http://lists.kde.org/?l=kde-linux&m=115770988603387
+		Logout parameters explanation:
+		First parameter: 	confirm
+			Obey the user's confirmation setting:	-1
+			Don't confirm, shutdown without asking: 0
+			Always confirm, ask even if the user turned it off: 1
+		Second parameter:	type
+			Select previous action or the default if it's the first time: -1
+			Only log out: 0
+			Log out and reboot the machine: 1
+			Log out and halt the machine: 2
+		Third parameter:	mode
+			Select previous mode or the default if it's the first time: -1
+			Schedule a shutdown (halt or reboot) for the time all active sessions have exited: 0
+			Shut down, if no sessions are active. Otherwise do nothing: 1
+			Force shutdown. Kill any possibly active sessions: 2
+			Pop up a dialog asking the user what to do if sessions are still active: 3
+		*/
 		TQByteArray data;
 		TQDataStream arg(data, IO_WriteOnly);
 		arg << (int)0 << (int)2 << (int)2;
@@ -869,7 +1018,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		}
 #endif // WITH_CONSOLEKIT
 		// Power down the system using a DCOP command
-		// Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
+		// See above PowerOff section for logout() parameters explanation
 		TQByteArray data;
 		TQDataStream arg(data, IO_WriteOnly);
 		arg << (int)0 << (int)1 << (int)2;

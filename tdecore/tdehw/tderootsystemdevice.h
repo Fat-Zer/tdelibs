@@ -41,7 +41,8 @@ enum TDESystemPowerState {
 	Suspend,
 	Hibernate,
 	PowerOff,
-	Reboot
+	Reboot,
+	HybridSuspend
 };
 };
 
@@ -52,7 +53,8 @@ enum TDESystemHibernationMethod {
 	Shutdown,
 	Reboot,
 	TestProc,
-	Test
+	Test,
+	Suspend
 };
 };
 
@@ -122,6 +124,11 @@ class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		* @return TRUE if hardware and permissions allow the system to be hibernated, FALSE if not
 		*/
 		bool canHibernate();
+
+		/**
+		* @return TRUE if hardware and permissions allow the system to be hybrid suspended, FALSE if not
+		*/
+		bool canHybridSuspend();
 
 		/**
 		* @return TRUE if permissions allow the system to be powered down, FALSE if not

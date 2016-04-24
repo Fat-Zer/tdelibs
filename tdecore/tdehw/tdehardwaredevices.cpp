@@ -3363,6 +3363,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						if (line.contains("reboot")) {
 							hibernationmethods.append(TDESystemHibernationMethod::Reboot);
 						}
+						if (line.contains("suspend")) {
+							hibernationmethods.append(TDESystemHibernationMethod::Suspend);
+						}
 						if (line.contains("testproc")) {
 							hibernationmethods.append(TDESystemHibernationMethod::TestProc);
 						}
@@ -3383,6 +3386,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						}
 						if (line.contains("reboot")) {
 							hibernationmethod = TDESystemHibernationMethod::Reboot;
+						}
+						if (line.contains("suspend")) {
+							hibernationmethod = TDESystemHibernationMethod::Suspend;
 						}
 						if (line.contains("testproc")) {
 							hibernationmethod = TDESystemHibernationMethod::TestProc;
