@@ -291,6 +291,121 @@ void reply_SetPower(DBusMessage* msg, DBusConnection* conn, char* state) {
 	reply_SetGivenPath(msg, conn, "/sys/power/state", state);
 }
 
+void reply_CanSetHibernation(DBusMessage* msg, DBusConnection* conn, char* state, char* disk) {
+
+	// check if path is writable
+	bool state_writable = false;
+	int rval = access ("/sys/power/state", W_OK);
+	if (rval == 0) {
+		state_writable = true;
+	}
+	bool disk_writable = false;
+	rval = access ("/sys/power/disk", W_OK);
+	if (rval == 0) {
+		disk_writable = true;
+	}
+
+	// check if method is supported
+	bool method1 = false, method2 = false;
+	if (state_writable && disk_writable) {
+		FILE *statenode = fopen("/sys/power/state", "r");
+		if (statenode != NULL) {
+			char *line = NULL;
+			size_t len = 0;
+			ssize_t read = getline(&line, &len, statenode);
+			if (read > 0 && line) {
+				method1 = (strstr(line, state) != NULL);
+				free(line);
+			}
+			if (fclose(statenode) == EOF) {
+				// Error!
+			}
+		}
+		FILE *disknode = fopen("/sys/power/disk", "r");
+		if (disknode != NULL) {
+			char *line = NULL;
+			size_t len = 0;
+			ssize_t read = getline(&line, &len, disknode);
+			if (read > 0 && line) {
+				method2 = (strstr(line, disk) != NULL);
+				free(line);
+			}
+			if (fclose(disknode) == EOF) {
+				// Error!
+			}
+		}
+	}
+
+	// send reply
+	reply_Bool(msg, conn, state_writable && disk_writable && method1 && method2);
+}
+
+void reply_SetHibernation(DBusMessage* msg, DBusConnection* conn, char* state, char* disk) {
+	// set hibernation state
+	DBusMessage* reply;
+	DBusMessageIter args;
+	const char* member = dbus_message_get_member(msg);
+	dbus_uint32_t serial = 0;
+	bool written1 = false, written2 = false;
+
+	// check if path is writable
+	int state_writable = false;
+	int rval = access ("/sys/power/state", W_OK);
+	if (rval == 0) {
+		state_writable = true;
+	}
+	int disk_writable = false;
+	rval = access ("/sys/power/disk", W_OK);
+	if (rval == 0) {
+		disk_writable = true;
+	}
+	
+	if (state_writable && disk_writable) {
+		FILE *disknode = fopen("/sys/power/disk", "w");
+		if (disknode != NULL) {
+			if (fputs(disk, disknode) != EOF) {
+				written1 = true;
+			}
+			if (fclose(disknode) == EOF) {
+				// Error!
+			}
+		}
+		if (written1)
+		{
+			FILE *statenode = fopen("/sys/power/state", "w");
+			if (statenode != NULL) {
+				if (fputs(state, statenode) != EOF) {
+					written2 = true;
+				}
+				if (fclose(statenode) == EOF) {
+					// Error!
+				}
+			}
+		}
+	}
+
+	// create a reply from the message
+	reply = dbus_message_new_method_return(msg);
+
+	// add the arguments to the reply
+	bool written = written1 && written2;
+	dbus_message_iter_init_append(reply, &args);
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_BOOLEAN, &written)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_append_basic failed\n", member);
+		return;
+	}
+
+	// send the reply && flush the connection
+	if (!dbus_connection_send(conn, reply, &serial)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_connection_send failed\n", member);
+		return;
+	}
+	dbus_connection_flush(conn);
+
+	// free the reply
+	dbus_message_unref(reply);
+}
+
 void reply_CanSetHibernationMethod(DBusMessage* msg, DBusConnection* conn) {
 
 	// check if path is writable
@@ -514,6 +629,12 @@ void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 			"    <method name=\"Hibernate\">\n"
 			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
 			"    </method>\n"
+			"    <method name=\"CanHybridSuspend\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"HybridSuspend\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
 			"    <method name=\"CanSetHibernationMethod\">\n"
 			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
 			"    </method>\n"
@@ -684,10 +805,16 @@ void listen() {
 			reply_SetPower(msg, conn, "mem");
 		}
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanHibernate")) {
-			reply_CanSetPower(msg, conn, "disk");
+			reply_CanSetHibernation(msg, conn, "disk", "platform");
 		}
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Hibernate")) {
-			reply_SetPower(msg, conn, "disk");
+			reply_SetHibernation(msg, conn, "disk", "platform");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanHybridSuspend")) {
+			reply_CanSetHibernation(msg, conn, "disk", "suspend");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "HybridSuspend")) {
+			reply_SetHibernation(msg, conn, "disk", "suspend");
 		}
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanSetHibernationMethod")) {
 			reply_CanSetHibernationMethod(msg, conn);
