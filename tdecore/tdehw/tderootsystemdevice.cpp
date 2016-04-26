@@ -599,17 +599,20 @@ void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESy
 		if (hm == TDESystemHibernationMethod::Platform) {
 			hibernationCommand = "platform";
 		}
-		if (hm == TDESystemHibernationMethod::Shutdown) {
+		else if (hm == TDESystemHibernationMethod::Shutdown) {
 			hibernationCommand = "shutdown";
 		}
-		if (hm == TDESystemHibernationMethod::Reboot) {
+		else if (hm == TDESystemHibernationMethod::Reboot) {
 			hibernationCommand = "reboot";
 		}
-		if (hm == TDESystemHibernationMethod::TestProc) {
+		else if (hm == TDESystemHibernationMethod::TestProc) {
 			hibernationCommand = "testproc";
 		}
-		if (hm == TDESystemHibernationMethod::Test) {
+		else if (hm == TDESystemHibernationMethod::Test) {
 			hibernationCommand = "test";
+		}
+		else if (hm == TDESystemHibernationMethod::Suspend) {
+			hibernationCommand = "suspend";
 		}
 		TQTextStream stream( &file );
 		stream << hibernationCommand;
@@ -629,17 +632,20 @@ void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESy
 				if (hm == TDESystemHibernationMethod::Platform) {
 					hibernationCommand = "platform";
 				}
-				if (hm == TDESystemHibernationMethod::Shutdown) {
+				else if (hm == TDESystemHibernationMethod::Shutdown) {
 					hibernationCommand = "shutdown";
 				}
-				if (hm == TDESystemHibernationMethod::Reboot) {
+				else if (hm == TDESystemHibernationMethod::Reboot) {
 					hibernationCommand = "reboot";
 				}
-				if (hm == TDESystemHibernationMethod::TestProc) {
+				else if (hm == TDESystemHibernationMethod::TestProc) {
 					hibernationCommand = "testproc";
 				}
-				if (hm == TDESystemHibernationMethod::Test) {
+				else if (hm == TDESystemHibernationMethod::Test) {
 					hibernationCommand = "test";
+				}
+				else if (hm == TDESystemHibernationMethod::Suspend) {
+					hibernationCommand = "suspend";
 				}
 				params << TQT_DBusData::fromString(hibernationCommand);
 				TQT_DBusMessage reply = hardwareControl.sendWithReply("SetHibernationMethod", params);
