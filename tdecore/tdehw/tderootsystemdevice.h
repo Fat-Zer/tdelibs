@@ -42,7 +42,8 @@ enum TDESystemPowerState {
 	Hibernate,
 	PowerOff,
 	Reboot,
-	HybridSuspend
+	HybridSuspend,
+	Disk   // Used temporarily to detect hibernation and hybrid suspend capability
 };
 };
 

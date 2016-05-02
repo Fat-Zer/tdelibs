@@ -300,8 +300,7 @@ bool TDERootSystemDevice::canHibernate() {
 	int state_rval = access (statenode.ascii(), W_OK);
 	int disk_rval  = access (disknode.ascii(), W_OK);
 	if (state_rval == 0 && disk_rval == 0) {
-		if (powerStates().contains(TDESystemPowerState::Hibernate) &&
-		    hibernationMethods().contains(TDESystemHibernationMethod::Platform)) {
+		if (powerStates().contains(TDESystemPowerState::Hibernate)) {
 			return TRUE;
 		}
 		else {
@@ -416,8 +415,7 @@ bool TDERootSystemDevice::canHybridSuspend() {
 	int state_rval = access (statenode.ascii(), W_OK);
 	int disk_rval  = access (disknode.ascii(), W_OK);
 	if (state_rval == 0 && disk_rval == 0) {
-		if (powerStates().contains(TDESystemPowerState::Hibernate) &&
-		    hibernationMethods().contains(TDESystemHibernationMethod::Suspend)) {
+		if (powerStates().contains(TDESystemPowerState::HybridSuspend)) {
 			return TRUE;
 		}
 		else {

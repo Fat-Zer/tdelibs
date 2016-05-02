@@ -3325,6 +3325,10 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		if (dirlist) {
 			TQFileInfoListIterator valuesdirit(*dirlist);
 			TQFileInfo *dirfi;
+			TDESystemPowerStateList powerstates;
+			TDESystemHibernationMethodList hibernationmethods;
+			TDESystemHibernationMethod::TDESystemHibernationMethod hibernationmethod = 
+																				TDESystemHibernationMethod::Unsupported;
 			while ( (dirfi = valuesdirit.current()) != 0 ) {
 				nodename = dirfi->fileName();
 				TQFile file( valuesnodename + nodename );
@@ -3333,7 +3337,6 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					TQString line;
 					line = stream.readLine();
 					if (nodename == "state") {
-						TDESystemPowerStateList powerstates;
 						// Always assume that these two fully on/fully off states are available
 						powerstates.append(TDESystemPowerState::Active);
 						powerstates.append(TDESystemPowerState::PowerOff);
@@ -3347,13 +3350,11 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 							powerstates.append(TDESystemPowerState::Suspend);
 						}
 						if (line.contains("disk")) {
-							powerstates.append(TDESystemPowerState::Hibernate);
+							powerstates.append(TDESystemPowerState::Disk);
 						}
-						rdevice->internalSetPowerStates(powerstates);
 					}
 					if (nodename == "disk") {
 						// Get list of available hibernation methods
-						TDESystemHibernationMethodList hibernationmethods;
 						if (line.contains("platform")) {
 							hibernationmethods.append(TDESystemHibernationMethod::Platform);
 						}
@@ -3372,12 +3373,10 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						if (line.contains("test")) {
 							hibernationmethods.append(TDESystemHibernationMethod::Test);
 						}
-						rdevice->internalSetHibernationMethods(hibernationmethods);
 
 						// Get current hibernation method
 						line.truncate(line.findRev("]"));
 						line.remove(0, line.findRev("[")+1);
-						TDESystemHibernationMethod::TDESystemHibernationMethod hibernationmethod = TDESystemHibernationMethod::Unsupported;
 						if (line.contains("platform")) {
 							hibernationmethod = TDESystemHibernationMethod::Platform;
 						}
@@ -3396,7 +3395,6 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						if (line.contains("test")) {
 							hibernationmethod = TDESystemHibernationMethod::Test;
 						}
-						rdevice->internalSetHibernationMethod(hibernationmethod);
 					}
 					if (nodename == "image_size") {
 						rdevice->internalSetDiskSpaceNeededForHibernation(line.toULong());
@@ -3405,6 +3403,22 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				}
 				++valuesdirit;
 			}
+			// Hibernation and Hybrid Suspend are not real power states, being just two different
+			// ways of suspending to disk. Since they are very common and it is very convenient to
+			// treat them as power states, we do so, as other power frameworks also do.
+			if (powerstates.contains(TDESystemPowerState::Disk) && 
+			    hibernationmethods.contains(TDESystemHibernationMethod::Platform)) {
+				powerstates.append(TDESystemPowerState::Hibernate);
+			}
+			if (powerstates.contains(TDESystemPowerState::Disk) && 
+			    hibernationmethods.contains(TDESystemHibernationMethod::Suspend)) {
+				powerstates.append(TDESystemPowerState::HybridSuspend);
+			}
+			powerstates.remove(TDESystemPowerState::Disk);
+			// Set power states and hibernation methods
+			rdevice->internalSetPowerStates(powerstates);
+			rdevice->internalSetHibernationMethods(hibernationmethods);
+			rdevice->internalSetHibernationMethod(hibernationmethod);
 		}
 	}
 
