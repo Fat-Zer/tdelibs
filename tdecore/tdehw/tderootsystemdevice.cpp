@@ -834,12 +834,14 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 					}
 				}
 				else if (ps == TDESystemPowerState::HybridSuspend) {
-					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
-								"org.freedesktop.Hal",
-								"/org/freedesktop/Hal/devices/computer",
-								"org.freedesktop.Hal.Device.SystemPowerManagement",
-								"SuspendHybrid");
-					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					TQT_DBusProxy halPowerManagement(
+							"org.freedesktop.Hal",
+							"/org/freedesktop/Hal/devices/computer",
+							"org.freedesktop.Hal.Device.SystemPowerManagement",
+							dbusConn);
+					TQValueList<TQT_DBusData> params;
+					params << TQT_DBusData::fromInt32(0);
+					TQT_DBusMessage reply = halPowerManagement.sendWithReply("SuspendHybrid", params);
 					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
 						return true;
 					}
