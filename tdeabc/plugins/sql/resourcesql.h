@@ -30,22 +30,23 @@ class TQSqlDatabase;
 
 namespace TDEABC {
 
-class ResourceSql : public Resource
+class KABC_EXPORT ResourceSql : public Resource
 {
 public:
   ResourceSql( AddressBook *ab, const TQString &user, const TQString &password,
     const TQString &db, const TQString &host );
   ResourceSql( AddressBook *ab, const TDEConfig * );
   
-  bool open();
-  void close();
+  virtual bool open();
+  virtual void close();
   
-  Ticket *requestSaveTicket();
+  virtual Ticket *requestSaveTicket();
+  virtual void releaseSaveTicket( Ticket* );
 
-  bool load();
-  bool save( Ticket * ticket );
+  virtual bool load();
+  virtual bool save( Ticket * ticket );
 
-  TQString identifier() const;
+  virtual TQString identifier() const;
 
 private:
   void init(const TQString &user, const TQString &password,

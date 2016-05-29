@@ -78,6 +78,11 @@ Ticket *ResourceSql::requestSaveTicket()
   return createTicket( this );
 }
 
+void ResourceSql::releaseSaveTicket( Ticket *ticket )
+{
+  delete ticket;
+}
+
 bool ResourceSql::open()
 {
   TQStringList drivers = TQSqlDatabase::drivers();

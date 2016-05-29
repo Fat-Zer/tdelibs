@@ -13,6 +13,7 @@ add_subdirectory( vcard )
 add_subdirectory( vcardparser )
 add_subdirectory( formats )
 add_subdirectory( plugins )
+add_subdirectory( tests )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}

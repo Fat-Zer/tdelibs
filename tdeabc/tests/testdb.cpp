@@ -20,12 +20,12 @@ int main(int argc,char **argv)
 
   AddressBook ab;
   
-  ResourceSql r( &ab, "root", "kde4ever", "localhost" );
+  ResourceSql r( &ab, "root", "kde4ever", "tdeabc", "localhost" );
   if ( ! r.open() ) {
     kdDebug() << "Failed to open resource." << endl;
   }
   
-  r.load( &ab );
+  r.load();
   
   r.close();
   
