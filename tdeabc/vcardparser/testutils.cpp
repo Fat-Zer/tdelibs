@@ -1,6 +1,7 @@
-#include <vcardparser.h>
+#include "vcardparser.h"
 #include <tdeabc/addressee.h>
 #include <tqfile.h>
+#include <tqstring.h>
 
 using namespace TDEABC;
 
@@ -60,8 +61,52 @@ vcard3()
     return addr;
 }
 
+Addressee
+vcard8()
+{
+    Addressee addr;
 
-QString
+    addr.setName( TQString::fromUtf8("Jahn") );
+    addr.setFamilyName( TQString::fromUtf8("Böhmermann") );
+    addr.setFormattedName( TQString::fromUtf8("Jahn Böhmermann") );
+    addr.setOrganization( TQString::fromUtf8("HansWürstel AG") );
+    addr.insertEmail( TQString::fromUtf8("boehmermann@wuerstel.com") );
+    addr.setTitle( TQString::fromUtf8("Komödiant") );
+    addr.insertPhoneNumber( PhoneNumber("+43 699373419",PhoneNumber::Voice|PhoneNumber::Msg|PhoneNumber::Work) );
+    Address a( Address::Work );
+    a.setStreet( TQString::fromUtf8("Müllerstrasse 21") );
+    a.setLocality( TQString::fromUtf8("Wörthersee") );
+    a.setRegion( TQString::fromUtf8("Kärnten") );
+    a.setPostalCode( "8400" );
+    a.setCountry( TQString::fromUtf8("Österreich") );
+    addr.insertAddress( a );
+    return addr;
+}
+
+Addressee
+vcard9()
+{
+    Addressee addr;
+
+    addr.setName( TQString::fromUtf8("Иван") );
+    addr.setFamilyName( TQString::fromUtf8("Иванов") );
+    addr.setFormattedName( TQString::fromUtf8("Иван Иванов") );
+    addr.setOrganization( TQString::fromUtf8("България ООД") );
+    addr.insertEmail( TQString::fromUtf8("иван.иванов@българия.com") );
+    addr.setTitle( TQString::fromUtf8("Др") );
+    addr.insertPhoneNumber( PhoneNumber("+359 888 111 222",PhoneNumber::Voice|PhoneNumber::Msg|PhoneNumber::Work) );
+    Address a( Address::Work );
+    a.setStreet( TQString::fromUtf8("Цар Борис III") );
+    a.setLocality( TQString::fromUtf8("София") );
+    a.setRegion( TQString::fromUtf8("София град") );
+    a.setPostalCode( "1000" );
+    a.setCountry( TQString::fromUtf8("България") );
+    addr.insertAddress( a );
+    return addr;
+}
+
+
+TQString
 vcardAsText( const TQString& location )
 {
     TQString line;
@@ -84,16 +129,20 @@ vCardsAsAddresseeList()
     l.append( vcard1() );
     l.append( vcard2() );
     l.append( vcard3() );
+    l.append( vcard8() );
+    l.append( vcard9() );
 
     return l;
 }
 
-QString
-vCardsAsText()
+TQString
+ vCardsAsText()
 {
     TQString vcards = vcardAsText( "tests/vcard1.vcf" );
     vcards += vcardAsText( "tests/vcard2.vcf" );
     vcards += vcardAsText( "tests/vcard3.vcf" );
+    vcards += vcardAsText( "tests/vcard8.vcf" );
+    vcards += vcardAsText( "tests/vcard9.vcf" );
 
     return vcards;
 }

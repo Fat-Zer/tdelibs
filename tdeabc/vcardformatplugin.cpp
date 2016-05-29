@@ -41,7 +41,7 @@ bool VCardFormatPlugin::load( Addressee &addressee, TQFile *file )
   TQString data;
 
   TQTextStream t( file );
-  t.setEncoding( TQTextStream::Latin1 );
+  t.setEncoding( TQTextStream::UnicodeUTF8 );
   data = t.read();
 
   VCardConverter converter;
@@ -60,7 +60,7 @@ bool VCardFormatPlugin::loadAll( AddressBook*, Resource *resource, TQFile *file 
   TQString data;
 
   TQTextStream t( file );
-  t.setEncoding( TQTextStream::Latin1 );
+  t.setEncoding( TQTextStream::UnicodeUTF8 );
   data = t.read();
 
   VCardConverter converter;
@@ -88,7 +88,11 @@ void VCardFormatPlugin::save( const Addressee &addressee, TQFile *file )
 
   TQTextStream t( file );
   t.setEncoding( TQTextStream::UnicodeUTF8 );
-  t << converter.createVCards( vcardlist );
+  TQString text = converter.createVCards( vcardlist );
+//  kdDebug(5700)<< ">>>>>>>>> DEBUG <<<<<<<<<<" << endl;
+//  kdDebug(5700)<< text << endl;
+//  kdDebug(5700)<< ">>>>>>>>> DEBUG <<<<<<<<<<" << endl;
+  t << text;
 }
 
 void VCardFormatPlugin::saveAll( AddressBook*, Resource *resource, TQFile *file )
@@ -104,7 +108,11 @@ void VCardFormatPlugin::saveAll( AddressBook*, Resource *resource, TQFile *file 
 
   TQTextStream t( file );
   t.setEncoding( TQTextStream::UnicodeUTF8 );
-  t << converter.createVCards( vcardlist );
+  TQString text = converter.createVCards( vcardlist );
+//  kdDebug(5700)<< ">>>>>>>>> DEBUG <<<<<<<<<<" << endl;
+//  kdDebug(5700)<< text << endl;
+//  kdDebug(5700)<< ">>>>>>>>> DEBUG <<<<<<<<<<" << endl;
+  t << text;
 }
 
 bool VCardFormatPlugin::checkFormat( TQFile *file ) const

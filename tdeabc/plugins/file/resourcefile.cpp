@@ -164,33 +164,45 @@ bool ResourceFile::doOpen()
 
     if ( file.size() == 0 ) {
       file.close();
-      kdDebug() << "File size is zero. Evaluating backups" << endl;
+      kdDebug(5700) << "File size is zero. Evaluating backups" << endl;
       for (int i=0; i!=20; i++)
       {
         TQFile backup( mFileName + "__" + TQString::number(i) );
-        kdDebug() << "Evaluating" << backup.name() << " size: " << backup.size() << endl;
+        kdDebug(5700) << "Evaluating" << backup.name() << " size: " << backup.size() << endl;
         if ( backup.size() != 0 )
         {
-          kdDebug() << "Restoring backup " << i << endl;
+          kdDebug(5700) << "Restoring backup " << i << endl;
           const TQString src = mFileName + "__" + TQString::number(i);
           const TQString dest = mFileName;
+
+          // copy src to dest
+          if ( ! backup.open( IO_ReadOnly ) ) {
+//             const TQByteArray data = backup.readAll();
+	    kdDebug(5700) << "can not open source for reading " << src << endl;
+	    continue;
+	  }
 
           // remove dest
           TQFile::remove( dest );
 
-          // copy src to dest
-          if ( backup.open( IO_ReadOnly ) ) {
-            const TQByteArray data = backup.readAll();
+	  TQString text;
+	  TQTextStream instream( &backup );
+	  instream.setEncoding( TQTextStream::UnicodeUTF8 );
+	  text = instream.read();
+	  backup.close();
 
-            TQFile out( dest );
-            if ( out.open( IO_WriteOnly ) ) {
-              out.writeBlock( data );
-              out.close();
-            }
+	  TQFile out( dest );
+	  if ( ! out.open( IO_WriteOnly ) ) {
+//          out.writeBlock( data );
+		kdDebug(5700) << "can not open target for writing " << dest << endl;
+		continue;
+	  }
+	  TQTextStream outstream( &out );
+	  outstream.setEncoding( TQTextStream::UnicodeUTF8 );
+	  outstream << text;
+	  out.close();
 
-            backup.close();
-          }
-          return true; 
+          return true;
         }
       }
       return true;
@@ -248,7 +260,7 @@ bool ResourceFile::save( Ticket * )
   TQFile file( mFileName + "__0" );
   if ( file.size() != 0 ) {
     const TQString last = mFileName + "__20";
-    kdDebug() << "deleting " << last << endl;
+    kdDebug(5700) << "deleting " << last << endl;
 
     TQFile::remove( last );
 
@@ -260,28 +272,40 @@ bool ResourceFile::save( Ticket * )
 
       // copy src to dest
       TQFile in( src );
-      if ( in.open( IO_ReadOnly ) ) {
-        const TQByteArray data = in.readAll();
-
-        TQFile out( dest );
-        if ( out.open( IO_WriteOnly ) ) {
-          out.writeBlock( data );
-          out.close();
-        }
-
-        in.close();
+      if ( ! in.exists() )
+	continue;
+      if ( ! in.open( IO_ReadOnly ) ) {
+//         const TQByteArray data = in.readAll();
+	  kdDebug(5700) << "can not open source for reading " << src << endl;
+	  return false;
       }
+      TQString text;
+      TQTextStream instream( &in );
+
+      instream.setEncoding( TQTextStream::UnicodeUTF8 );
+      text = instream.read();
+      in.close();
+
+      TQFile out( dest );
+      if ( ! out.open( IO_WriteOnly ) ) {
+//          out.writeBlock( data );
+	  kdDebug(5700) << "can not open target for writing " << dest << endl;
+	  return false;
+      }
+      TQTextStream outstream( &out );
+      outstream.setEncoding( TQTextStream::UnicodeUTF8 );
+      outstream << text;
+      out.close();
 
       // remove src
       TQFile::remove( src );
     }
   } else
-    kdDebug() << "Not starting logrotate __0 is 0 bytes." << endl;
+    kdDebug(5700) << "Not starting logrotate __0 is 0 bytes." << endl;
 
   TQString extension = "__0";
   (void) KSaveFile::backupFile( mFileName, TQString::null /*directory*/,
                                 extension );
-
   mDirWatch.stopScan();
 
   KSaveFile saveFile( mFileName );

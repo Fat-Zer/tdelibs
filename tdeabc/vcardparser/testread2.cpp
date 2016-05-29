@@ -34,7 +34,9 @@ main()
             kdDebug()<<"\t\t"<< (*itr1).fullEmail() << " VS. " << (*itr2).fullEmail()<<endl;
         } else {
             kdDebug()<<"\tAddressee  - FAILED"<<endl;
+            kdDebug()<<">>>>>>>Addressee from code<<<<<<<<"<<endl;
             (*itr1).dump();
+            kdDebug()<<">>>>>>>Addressee from file<<<<<<<<"<<endl;
             (*itr2).dump();
             //kdDebug()<<"\t\t"<< (*itr1).fullEmail() << " VS. " << (*itr2).fullEmail()<<endl;
         }

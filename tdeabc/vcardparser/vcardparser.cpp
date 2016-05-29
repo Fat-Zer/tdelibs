@@ -151,8 +151,8 @@ VCard::List VCardParser::parseVCards( const TQString& text )
             input = TQCString(value.latin1());
             KCodecs::quotedPrintableDecode( input, output );
           }
-        } else {
-          output = TQCString(value.latin1());
+        } else { //assume it's in UTF-8 (as used in previous KDE versions)
+          output = TQCString(value.utf8());
         }
 
         if ( params.findIndex( "charset" ) != -1 ) { // have to convert the data
@@ -275,7 +275,7 @@ TQString VCardParser::createVCards( const VCard::List& list )
               for ( uint i = 0; i <= ( textLine.length() / FOLD_WIDTH ); ++i )
                 text.append( ( i == 0 ? "" : " " ) + textLine.mid( i * FOLD_WIDTH, FOLD_WIDTH ) + "\r\n" );
             } else
-              text.append( textLine + "\r\n" );
+            text.append( textLine + "\r\n" );
           }
           else {
             // URIs can be full of weird symbols, etc. so bypass all checks

@@ -30,7 +30,7 @@
 #include <tdelocale.h>
 #include <tdeaboutdata.h>
 
-#include "vcardconverter.h"
+#include "tdeabc/vcardconverter.h"
 #include "vcard.h"
 
 static const TDECmdLineOptions options[] =
@@ -70,7 +70,7 @@ int main( int argc, char **argv )
   TQString text;
 
   TQTextStream s( &file );
-  s.setEncoding( TQTextStream::Latin1 );
+  s.setEncoding( TQTextStream::UnicodeUTF8 );
   text = s.read();
   file.close();
 
