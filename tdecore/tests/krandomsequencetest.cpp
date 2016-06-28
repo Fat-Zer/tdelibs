@@ -26,7 +26,7 @@
 int
 main(int argc, char *argv[])
 {
-   TDEApplication a(argc, argv, "krandomsequencetest");
+   TDEApplication a(argc, argv, TQCString("krandomsequencetest"));
 
    long seed;
    KRandomSequence seq;

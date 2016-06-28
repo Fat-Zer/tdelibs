@@ -12,6 +12,7 @@
 add_subdirectory( malloc )
 add_subdirectory( network )
 add_subdirectory( tdeconfig_compiler )
+add_subdirectory( tests )
 
 if( WITH_TDEHWLIB )
   add_subdirectory( tdehw )

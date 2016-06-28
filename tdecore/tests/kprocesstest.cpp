@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 {
  TDEProcess p1, p2, p3, p4;
  Dummy dummy; 
- TDEApplication app(argc, argv, "kprocesstest");
+ TDEApplication app(argc, argv, TQCString("kprocesstest"));
 
 
  printf("Welcome to the TDEProcess Demo Application!\n");

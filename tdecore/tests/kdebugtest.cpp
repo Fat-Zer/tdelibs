@@ -59,7 +59,7 @@ public:
     il << 1 << 2 << 3 << 4 << 5;
     kdDebug() << "TQValueList<int> filled: " << il << endl;
 
-    Q_LLONG big = 65536LL*65536*500;
+    TQ_LLONG big = 65536LL*65536*500;
     kdDebug() << big << endl;
 
     TQVariant v( 0.12345 );

@@ -44,6 +44,7 @@ include( TDESetupPaths )
 
 tde_setup_paths( )
 tde_setup_architecture_flags( )
+enable_testing( )
 find_package( TQt )
 
 list( APPEND TDECORE_LIBRARY_DIRS ${TQT_LIBRARY_DIRS} )

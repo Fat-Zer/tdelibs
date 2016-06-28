@@ -32,7 +32,7 @@ werke\nmerkt\nich\nund\nden\nbrauch\nund\nmit\ngeistesstaerke\ntu\nich\nwunder\n
 int main(int argc, char *argv[])
 {
  Dummy dummy; 
- TDEApplication app(argc, argv, "kprociotest");
+ TDEApplication app(argc, argv, TQCString("kprociotest"));
 
  printf("Welcome to the KProcIO Demo Application!\n");
 

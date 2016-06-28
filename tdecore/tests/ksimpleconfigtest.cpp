@@ -20,7 +20,7 @@
 
 int main( int argc, char **argv )
 {
-  TDEApplication  a( argc, argv, "tdeconfigtest" );
+  TDEApplication  a( argc, argv, TQCString("tdeconfigtest") );
 
   KSimpleConfig aConfig( _PATH_TMP"/simpleconfig.cfg" );
 

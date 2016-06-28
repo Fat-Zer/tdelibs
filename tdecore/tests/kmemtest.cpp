@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
   }
 //  showMem("second");
 
-    TDEApplication app(argc,argv,"kurltest");
+    TDEApplication app(argc,argv,TQCString("kurltest"));
 
 //  showMem("After TDEApplication constructor");
 

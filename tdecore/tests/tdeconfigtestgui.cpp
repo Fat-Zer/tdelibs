@@ -192,7 +192,7 @@ void TDEConfigTestView::writeButtonClicked()
 
 int main( int argc, char **argv )
 {
-  TDEApplication a( argc, argv, "bla" );
+  TDEApplication a( argc, argv, TQCString ("bla") );
 
   TDEConfigTestView *w = new TDEConfigTestView();
   a.setMainWidget( w );

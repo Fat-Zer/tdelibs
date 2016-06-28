@@ -47,7 +47,6 @@
 
 #include "tdeaccelmanager_private.h"
 #include "../tdeui/kstdaction_p.h"
-#include "../tdeutils/tdemultitabbar.h"
 
 
 /*********************************************************************
@@ -321,7 +320,7 @@ void TDEAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
 
   if (dynamic_cast<TQComboBox*>(w) || dynamic_cast<TQLineEdit*>(w) ||
       dynamic_cast<TQTextEdit*>(w) || dynamic_cast<TQTextView*>(w) ||
-      dynamic_cast<TQSpinBox*>(w) || static_cast<KMultiTabBar*>(w->tqt_cast("KMultiTabBar")))
+      dynamic_cast<TQSpinBox*>(w) || w->tqt_cast("KMultiTabBar"))
       return;
 
   // now treat 'ordinary' widgets

@@ -100,7 +100,7 @@ void Test::createFields()
 int main( int argc, char ** argv )
 {
   TDELocale::setMainCatalogue("tdelibs");
-  TDEApplication a( argc, argv, "klocaletest" );
+  TDEApplication a( argc, argv, TQCString("klocaletest") );
 
   TDEGlobal::locale()->setLanguage(TQString::fromLatin1("en_US"));
   TDEGlobal::locale()->setCountry(TQString::fromLatin1("C"));

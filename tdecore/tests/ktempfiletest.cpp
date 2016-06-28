@@ -28,7 +28,7 @@
 int
 main(int argc, char *argv[])
 {
-   TDEApplication a(argc, argv, "ktempfiletest");
+   TDEApplication a(argc, argv, TQCString("ktempfiletest"));
    printf("Making tempfile after TDEApplication constructor.\n");
    KTempFile f4;
    printf("Filename = %s\n", f4.name().ascii());

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
      printf( "UTC timezone offset should be 0: %d\n", timezone->offset(TQDateTime::currentDateTime()) );
 
      // Find some offsets for Europe/London.
-     char *london = "Europe/London";
+     const char *london = "Europe/London";
      timezone = timezones.zone(london);
      TQDateTime winter(TQDateTime::fromString("2005-01-01T00:00:00", Qt::ISODate));
      TQDateTime summer(TQDateTime::fromString("2005-06-01T00:00:00", Qt::ISODate));
@@ -29,10 +29,10 @@ int main(int argc, char *argv[])
 
      // Try timezone conversions.
      const KTimezone *losAngeles = timezones.zone("America/Los_Angeles");
-     char *bstBeforePdt = "2005-03-28T00:00:00";
-     char *bstAfterPdt = "2005-05-01T00:00:00";
-     char *gmtBeforePst = "2005-10-30T01:00:00";
-     char *gmtAfterPst = "2005-12-01T00:00:00";
+     const char *bstBeforePdt = "2005-03-28T00:00:00";
+     const char *bstAfterPdt = "2005-05-01T00:00:00";
+     const char *gmtBeforePst = "2005-10-30T01:00:00";
+     const char *gmtAfterPst = "2005-12-01T00:00:00";
      TQString result;
      result = timezone->convert(losAngeles, TQDateTime::fromString(bstBeforePdt, Qt::ISODate)).toString(Qt::ISODate);
      printf( "BST before PDT, %s should be 2005-03-27T15:00:00: %s\n", bstBeforePdt, result.latin1() );

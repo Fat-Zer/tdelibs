@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-  TDEApplication app(argc,argv,"kiconloadertest"/*,false,false*/);
+  TDEApplication app(argc,argv,TQCString("kiconloadertest")/*,false,false*/);
 
   TDEIconLoader * mpLoader = TDEGlobal::iconLoader();
   TDEIcon::Context mContext = TDEIcon::Application;

@@ -176,17 +176,17 @@ bool testKernel()
       printf("succeeded\n");
 
       if (getsockname(sock, (struct sockaddr*)&sin6, &len) == 0)
-	printf("\tSize of kernel's sockaddr_in6 is %d bytes\n", len);
+	printf("\tSize of kernel's sockaddr_in6 is %lu bytes\n", (unsigned long)len);
       else
 	printf("\tCould not get socket name\n");
     }
 
-  printf("\tSize of TDE's internal sockaddr_in6 is %d bytes\n",
-	 sizeof(kde_sockaddr_in6));
+  printf("\tSize of TDE's internal sockaddr_in6 is %lu bytes\n",
+	 (unsigned long)sizeof(kde_sockaddr_in6));
 
 # ifdef HAVE_SOCKADDR_IN6
-  printf("\tSize of system libraries' sockaddr_in6 is %d bytes\n",
-	 sizeof(sockaddr_in6));
+  printf("\tSize of system libraries' sockaddr_in6 is %lu bytes\n",
+	 (unsigned long)sizeof(sockaddr_in6));
 # else
   printf("\tSystem libraries don't define sockaddr_in6\n");
 # endif

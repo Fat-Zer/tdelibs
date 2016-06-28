@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-static QCString
+static TQCString
 ps(const TQString &s)
 {
   if (s.isNull())
