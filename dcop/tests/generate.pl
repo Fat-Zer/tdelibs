@@ -34,7 +34,7 @@ print HEADER <<END;
 class Test2;
 
 // this has to work too
-#include <qstring.h>
+#include <tqstring.h>
 
 
 

@@ -21,11 +21,11 @@
 # Then you should put c++ style arguments: 
 # QString::fromLatin1("string with spaces"),4,"string_with_spaces"
 #
-# Note that the first argument has type QString and the last type const char*
+# Note that the first argument has type TQString and the last type const char*
 # (adapt accordingly)
 #
 // 1. easy case
-QString 
+TQString 
 url
 ()
 {
@@ -57,9 +57,9 @@ getObject
 
 
 // 2.2 overloading on type of args
-QString
+TQString
 identity
-( QString x)
+( TQString x)
 {
 	return x;
 }
@@ -87,7 +87,7 @@ getObject24
 
 
 
-#virtual QString identity( QCString );
+#virtual TQString identity( QCString );
 #
 #// 4. simple template argument:
 #virtual 

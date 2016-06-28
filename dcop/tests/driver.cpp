@@ -20,8 +20,8 @@ Driver::Driver(const char* app)
 
 }
 
-TQTextStream output(  fopen( "driver.returns", "w" ) , IO_WriteOnly );	
-#include <iostream>
+TQTextStream output(  fopen( "driver.returns", "w" ) , IO_WriteOnly );
+
 void Driver::test()
 {
 	// This is written like this to allow the potentially ASYNC calls to be syncronized

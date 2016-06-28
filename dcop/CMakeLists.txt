@@ -14,6 +14,7 @@ add_subdirectory( dcopidl )
 add_subdirectory( dcopidlng )
 add_subdirectory( dcopidl2cpp )
 add_subdirectory( client )
+add_subdirectory( tests )
 
 include_directories(
   ${TQT_INCLUDE_DIRS}

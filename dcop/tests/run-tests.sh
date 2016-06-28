@@ -19,7 +19,7 @@ echo '* Running driver mode'
 ./driver `dcop 'TestApp-*'` >driver.stdout
 
 echo '* Running shell mode'
-source shell.generated >shell.returns
+source ./shell.generated >shell.returns
 
 echo -n '* Comparing ... '
 
