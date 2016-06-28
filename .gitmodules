@@ -3,7 +3,7 @@
 	url = http://system@scm.trinitydesktop.org/scm/git/tde-common-admin
 [submodule "cmake"]
 	path = cmake
-	url = http://system@scm.trinitydesktop.org/scm/git/tde-common-cmake
+	url = https://github.com/Fat-Zer/tde-common-cmake.git
 [submodule "libltdl"]
 	path = libltdl
 	url = http://system@scm.trinitydesktop.org/scm/git/libltdl
