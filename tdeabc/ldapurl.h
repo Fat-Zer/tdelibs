@@ -48,7 +48,7 @@ namespace TDEABC {
       bool critical;
     };
     
-    typedef enum Scope { Base, One, Sub };
+    enum Scope { Base, One, Sub };
 
     /** Constructs an empty KLDAPUrl. */
     LDAPUrl();

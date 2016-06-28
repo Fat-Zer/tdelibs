@@ -273,7 +273,7 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 {
     if( i >= args.count() )
     {
-	tqWarning("Not enough arguments (expected %d, got %d).",  i,  args.count());
+	tqWarning("Not enough arguments (expected %u, got %lu).",  i,  args.count());
 	exit(1);
     }
     TQString s = TQString::fromLocal8Bit( args[ i ] );
