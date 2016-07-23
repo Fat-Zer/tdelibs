@@ -41,6 +41,7 @@ enum TDEGenericDeviceType {
 	Modem,
 	Monitor,
 	Network,
+	NonvolatileMemory,
 	Printer,
 	Scanner,
 	Sound,

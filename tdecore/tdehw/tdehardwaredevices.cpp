@@ -1336,6 +1336,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Network") {
 		ret = TDEGenericDeviceType::Network;
 	}
+	else if (query == "NonvolatileMemory") {
+		ret = TDEGenericDeviceType::NonvolatileMemory;
+	}
 	else if (query == "Printer") {
 		ret = TDEGenericDeviceType::Printer;
 	}
@@ -2217,6 +2220,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			else {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 			}
+		}
+		if (devicesubsystem == "nvmem") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::NonvolatileMemory);
 		}
 		if (devicesubsystem == "serio") {
 			if (devicedriver.contains("atkbd")) {
@@ -4170,6 +4176,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::Network) {
 		ret = i18n("Network");
 	}
+	else if (query == TDEGenericDeviceType::NonvolatileMemory) {
+		ret = i18n("Nonvolatile Memory");
+	}
 	else if (query == TDEGenericDeviceType::Printer) {
 		ret = i18n("Printer");
 	}
@@ -4339,6 +4348,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::Network) {
 		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::NonvolatileMemory) {
+		ret = DesktopIcon("memory", size);
 	}
 	else if (query == TDEGenericDeviceType::Printer) {
 		ret = DesktopIcon("printer", size);
