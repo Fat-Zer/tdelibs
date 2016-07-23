@@ -2065,6 +2065,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			// This might pick up thermal sensors
 			if (!device) device = new TDESensorDevice(TDEGenericDeviceType::OtherSensor);
 		}
+		else if (devicesubsystem == "vio") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
 		else if (devicesubsystem == "virtio") {
 			if (devicedriver == "virtio_blk") {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::SCSI);
