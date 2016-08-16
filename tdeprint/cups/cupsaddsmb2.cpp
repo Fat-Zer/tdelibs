@@ -39,6 +39,7 @@
 #include <kstdguiitem.h>
 
 #include <cups/cups.h>
+#include <cups/ppd.h>
 #include <ctype.h>
 
 CupsAddSmb::CupsAddSmb(TQWidget *parent, const char *name)
