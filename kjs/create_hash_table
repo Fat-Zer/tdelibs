@@ -69,7 +69,9 @@ while (<IN>) {
       my $att = $3;
       my $param = $4;
       push(@keys, $key);
-      push(@values, $val);
+      # values in HashEntry are short but can be unsigned in C++ code
+      # therefore it is necessary to force the cast in the generated files
+      push(@values, "(short)".$val);
       printf STDERR "WARNING: Number of arguments missing for $key/$val\n"
         if ( $att =~ m/Function/ && length($param) == 0);
       push(@attrs, length($att) > 0 ? $att : "0");

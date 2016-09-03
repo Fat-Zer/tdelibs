@@ -61,7 +61,7 @@
 #define CONFIGURATION_FILE_SEPARATOR ';'
 
 KDE_EXPORT KRsync::KRsync (TQObject* parent, const char* name)
-                : TQObject (parent, name), m_progressDialog(false), m_progressDialogExists(false), m_bSettingsLoaded(false), m_bInSpecialSync(false)
+                : TQObject (parent, name), m_progressDialog(0), m_progressDialogExists(false), m_bSettingsLoaded(false), m_bInSpecialSync(false)
 {
     loadSettings();
 

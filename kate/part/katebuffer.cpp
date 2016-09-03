@@ -122,7 +122,7 @@ class KateFileLoader
           if ((c >= 2) && (m_codec->mibEnum() == 1000) && (m_buffer[1] == 0x00))
           {
             // utf16LE, we need to put the decoder in LE mode
-            char reverseUtf16[3] = {0xFF, 0xFE, 0x00};
+            char reverseUtf16[3] = {'\xFF', '\xFE', '\x00'};
             m_decoder->toUnicode(reverseUtf16, 2);
           }
 
@@ -917,7 +917,7 @@ void KateBuffer::updatePreviousNotEmptyLine(KateBufBlock *blk,uint current_line,
   } while (textLine->firstChar()==-1);
   kdDebug(13020)<<"updatePreviousNotEmptyLine: updating line:"<<(blk->startLine()+current_line)<<endl;
   TQMemArray<uint> foldingList=textLine->foldingListArray();
-  while ( (foldingList.size()>0)  && ( abs(foldingList[foldingList.size()-2])==1)) {
+  while ( (foldingList.size()>0)  && ( labs(foldingList[foldingList.size()-2])==1)) {
     foldingList.resize(foldingList.size()-2,TQGArray::SpeedOptim);
   }
   addIndentBasedFoldingInformation(foldingList,addindent,deindent);
