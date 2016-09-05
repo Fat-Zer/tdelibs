@@ -2339,6 +2339,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 		}
 
+		if ((devicesubsystem == "usb")
+			&& (devicedriver == "uvcvideo")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+
 		// Last ditch attempt at classification
 		// Likely inaccurate and sweeping
 		if ((devicesubsystem == "usb")
