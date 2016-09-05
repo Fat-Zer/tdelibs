@@ -2616,13 +2616,11 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				parentsyspath.truncate(parentsyspath.findRev("/"));
 				parentdisk = static_cast<TDEStorageDevice*>(findBySystemPath(parentsyspath));
 			}
+			disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			if (parentdisk) {
 				// Set partition disk type and status based on the parent device
-				disktype = parentdisk->diskType();
+				disktype = disktype | parentdisk->diskType();
 				diskstatus = diskstatus | parentdisk->diskStatus();
-			}
-			else {
-				disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			}
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
