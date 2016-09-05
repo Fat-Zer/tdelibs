@@ -171,10 +171,17 @@ void CryptoCardDeviceWatcher::run() {
 						SCardDisconnect(hCard, SCARD_LEAVE_CARD);
 					}
 
-					if (!readers[i].contains(cardDevice->friendlyName())) {
-						if (!cardDevice->friendlyName().contains(reader_vendor_name) ||
-							((reader_interface_type != "") && !cardDevice->friendlyName().contains(reader_vendor_name))) {
-							continue;
+					/* FIXME
+					 * If only one reader was detected by PCSC, assume it corresponds to the current device node.
+					 * This is fragile, but avoids corner cases with common systems failing to work due to
+					 * mismatched udev / PCSC card reader vendor names...
+					 */
+					if (readers.count() > 1) {
+						if (!readers[i].contains(cardDevice->friendlyName())) {
+							if (!cardDevice->friendlyName().contains(reader_vendor_name) ||
+								((reader_interface_type != "") && !cardDevice->friendlyName().contains(reader_vendor_name))) {
+								continue;
+							}
 						}
 					}
 
