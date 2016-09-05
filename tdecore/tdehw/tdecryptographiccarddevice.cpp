@@ -146,8 +146,36 @@ void CryptoCardDeviceWatcher::run() {
 					/* FIXME
 					 * Find a better / more reliable way to match the card low level device to the PCSC name
 					 */
+					SCARDHANDLE hCard = 0;
+					DWORD dwActiveProtocol = 0;
+					DWORD cByte = 0;
+					TQString reader_vendor_name;
+					TQString reader_interface_type;
+					
+					ret = SCardConnect(m_cardContext, readers[i].ascii(), SCARD_SHARE_DIRECT, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, &hCard, &dwActiveProtocol);
+					if (ret == SCARD_S_SUCCESS) {
+						ret = SCardGetAttrib(hCard, SCARD_ATTR_VENDOR_NAME, NULL, &cByte);
+						if (ret == SCARD_S_SUCCESS) {
+							char* data = new char[cByte];
+							ret = SCardGetAttrib(hCard, SCARD_ATTR_VENDOR_NAME, (LPBYTE)data, &cByte);
+							reader_vendor_name = data;
+							delete [] data;
+						}
+						ret = SCardGetAttrib(hCard, SCARD_ATTR_VENDOR_IFD_TYPE, NULL, &cByte);
+						if (ret == SCARD_S_SUCCESS) {
+							char* data = new char[cByte];
+							ret = SCardGetAttrib(hCard, SCARD_ATTR_VENDOR_IFD_TYPE, (LPBYTE)data, &cByte);
+							reader_interface_type = data;
+							delete [] data;
+						}
+						SCardDisconnect(hCard, SCARD_LEAVE_CARD);
+					}
+
 					if (!readers[i].contains(cardDevice->friendlyName())) {
-						continue;
+						if (!cardDevice->friendlyName().contains(reader_vendor_name) ||
+							((reader_interface_type != "") && !cardDevice->friendlyName().contains(reader_vendor_name))) {
+							continue;
+						}
 					}
 
 					if (first_loop) {
