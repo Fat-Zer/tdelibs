@@ -90,9 +90,14 @@ tde_add_executable( testvcardformatimpl
   LINK ${TDEABC_TESTS_LINK}
 )
 
-add_custom_target(testing ALL
-   COMMAND echo "creating test infrastructure"
-   DEPENDS testread
+add_custom_target(test ALL echo "performing tests on vcardparser"
+   COMMAND bash ./test.sh
+   DEPENDS testing
+   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_target(testing ALL echo "creating test infrastructure"
+   DEPENDS testvcardformatimpl testvcardformat testwrite2 testwrite testread2 testread
    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 

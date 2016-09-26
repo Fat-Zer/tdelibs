@@ -44,7 +44,8 @@ if ( $#refcont != $#prscont ) {
   system "touch FAILED";
   exit 1;
 }
-
+@prscont = sort @prscont;
+@refcont = sort @refcont;
 for (my $i=0; $i<=$#refcont; $i++) {
    if ( $refcont[$i] ne $prscont[$i] ) {
 	$error++;
