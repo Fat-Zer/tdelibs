@@ -31,86 +31,25 @@ include_directories(
 )
 
 link_directories(
-  ${TDECORE_LIBRARY_DIRS}
+  ${TQT_LIBRARY_DIRS}
 )
-
-set( TDEABC_TESTS_LINK
-  ${TQT_LIBRARIES}
-  DCOP-shared
-  tdecore-shared
-  tdeui-shared
-  tdefx-shared
-  tdeio-shared
-  tdetexteditor-shared
-  tdeabc-shared
-)
-
 
 ##### test programs ##############################
 
-tde_add_executable( testlock
-  SOURCES testlock.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
+tde_add_check_executable( testlock            AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testldapclient      AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testkabc            AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testkabcdlg         AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testdistlist        AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testaddressee       AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testaddresseelist   AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testaddressfmt      AUTOMOC LINK tdeabc-shared )
+tde_add_check_executable( testaddresslineedit AUTOMOC LINK tdeabc-shared )
 
-tde_add_executable( testldapclient
-  SOURCES testldapclient.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
+tde_add_check_executable( bigread  AUTOMOC LINK tdeabc_file-shared )
+tde_add_check_executable( bigwrite AUTOMOC LINK tdeabc_file-shared )
+# FIXME Skip build due to sql plugin is turned off permanently and unmaintained
+# tde_add_check_executable( testdb   AUTOMOC LINK tdeabc_file-shared )
+tde_add_check_executable( kabcargl AUTOMOC LINK tdeabc_file-shared )
 
-tde_add_executable( testkabc
-  SOURCES testkabc.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testaddressee
-  SOURCES testaddressee.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testaddresseelist
-  SOURCES testaddresseelist.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testaddressfmt
-  SOURCES testaddressfmt.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testkabcdlg
-  SOURCES testkabcdlg.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testdistlist
-  SOURCES testdistlist.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testaddresslineedit
-  SOURCES testaddresslineedit.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( bigread
-  SOURCES bigread.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK} tdeabc_file-shared
-)
-
-tde_add_executable( bigwrite
-  SOURCES bigwrite.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK} tdeabc_file-shared
-)
-
-# Plugin ResourceSql is not built == can not be tested
-#
-# tde_add_executable( testdb
-#   SOURCES testdb.cpp AUTOMOC
-#   LINK ${TDEABC_TESTS_LINK} tdeabc_file-shared
-# )
-
-tde_add_executable( kabcargl
-  SOURCES kabcargl.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK} tdeabc_file-shared
-)
+add_test( testldapclient testldapclient )

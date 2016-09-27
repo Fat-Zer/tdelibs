@@ -17,7 +17,7 @@ static const TDECmdLineOptions options[] =
   TDECmdLineLastOption
 };
 
-int main(int /*argc*/, char** /*argv*/)
+int main(int /*argc*/,char ** /*argv*/)
 {
 /*  TDEAboutData aboutData("testaddresseelist","TestAddresseeList","0.1");
   TDECmdLineArgs::init(argc, argv, &aboutData);
