@@ -90,34 +90,26 @@ tde_add_executable( testvcardformatimpl
   LINK ${TDEABC_TESTS_LINK}
 )
 
-add_custom_target(test ALL echo "performing tests on vcardparser"
-   COMMAND bash ./test.sh
-   DEPENDS testing
-   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-add_custom_target(testing ALL echo "creating test infrastructure"
-   DEPENDS testvcardformatimpl testvcardformat testwrite2 testwrite testread2 testread
-   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-add_custom_command(
-  TARGET testing PRE_BUILD
-  COMMAND test
-  ARGS -f ${CMAKE_CURRENT_BINARY_DIR}/test.sh || ln -s ${CMAKE_SOURCE_DIR}/tdeabc/vcardparser/test.sh ${CMAKE_CURRENT_BINARY_DIR}
+add_custom_target( vcardparser_tests ALL
+  COMMENT "[VCardParser] Performing tests"
+  COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/FAILED
+  DEPENDS
+    testvcardformatimpl testvcardformat testwrite2 testwrite testread2 testread
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_custom_command(
-  TARGET testing PRE_BUILD
-  COMMAND test
-  ARGS -f ${CMAKE_CURRENT_BINARY_DIR}/checkvcard.pl || ln -s ${CMAKE_SOURCE_DIR}/tdeabc/vcardparser/checkvcard.pl ${CMAKE_CURRENT_BINARY_DIR}
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
+file( GLOB vcardparser_testfiles "tests/*.vcf" )
+list( REMOVE_ITEM vcardparser_testfiles "${CMAKE_CURRENT_SOURCE_DIR}/tests/vcard5.vcf" )
+list( SORT vcardparser_testfiles )
+
+foreach(testfile ${vcardparser_testfiles})
+  add_custom_command(
+    TARGET vcardparser_tests
+    COMMAND perl ${CMAKE_CURRENT_SOURCE_DIR}/checkvcard.pl ${testfile}
+  )
+endforeach(testfile)
 
 add_custom_command(
-  TARGET testing PRE_BUILD
-  COMMAND test
-  ARGS -d ${CMAKE_CURRENT_BINARY_DIR}/tests || ln -s ${CMAKE_SOURCE_DIR}/tdeabc/vcardparser/tests ${CMAKE_CURRENT_BINARY_DIR}
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  TARGET vcardparser_tests
+  COMMAND test ! -f ${CMAKE_CURRENT_BINARY_DIR}/FAILED
 )
