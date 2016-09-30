@@ -31,8 +31,8 @@ int main(int argc, char** argv)
 		batch();
 		return 0;
 	}
-	TDECmdLineArgs::init( argc, argv, "TestApp", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
-	TDEApplication app;
+	TDECmdLineArgs::init( argc, argv, argv[0], "TestApp", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
+	TDEApplication app (/*stylesEnabled=*/ false, /*GUIEnabled=*/ false);
 	if(!app.dcopClient()->attach(  ))
 		return 1;
 
