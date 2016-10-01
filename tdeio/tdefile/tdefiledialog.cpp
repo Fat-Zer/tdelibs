@@ -334,6 +334,20 @@ void KFileDialog::slotOk()
 {
     kdDebug(tdefile_area) << "slotOK\n";
 
+    // If the user typed in the path field without confirming it with ENTER,
+    // "ops" will most likely point do a different folder. Make sure the folder exists,
+    // then update "ops" accordingly and only if necessary
+    TQDir savedir = TQDir(d->pathCombo->lineEdit()->text());
+    if (!savedir.exists())
+    {
+			KMessageBox::information(this, i18n("The selected folder does not exists. Please select an existing one."));
+			return;
+    }
+    if (ops->url().path(1) != KURL(savedir.absPath()).path(1)) 
+    {
+    	setURL(savedir.absPath());
+    }
+    
     // a list of all selected files/directories (if any)
     // can only be used if the user didn't type any filenames/urls himself
     const KFileItemList *items = ops->selectedItems();
@@ -981,9 +995,11 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     d->pathCombo->setCompletionObject( pathCompletionObj );
     d->pathCombo->setAutoDeleteCompletionObject( true );
 
-    connect( d->pathCombo, TQT_SIGNAL( urlActivated( const KURL&  )),
+    connect( d->pathCombo, TQT_SIGNAL( urlActivated( const KURL& )),
              this,  TQT_SLOT( enterURL( const KURL& ) ));
-    connect( d->pathCombo, TQT_SIGNAL( returnPressed( const TQString&  )),
+    connect( d->pathCombo, TQT_SIGNAL( returnPressed( const TQString& )),
+             this,  TQT_SLOT( enterURL( const TQString& ) ));
+    connect( d->pathCombo, TQT_SIGNAL( activated( const TQString& )),
              this,  TQT_SLOT( enterURL( const TQString& ) ));
 
     TQString whatsThisText;
