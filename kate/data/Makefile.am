@@ -7,7 +7,7 @@ syntaxkatedir = $(kde_datadir)/katepart/syntax
 syntaxkate_DATA = language.dtd syntax.template \
     4dos.xml abap.xml abc.xml actionscript.xml ada.xml ahdl.xml ahk.xml alert_indent.xml \
     alert.xml ample.xml ansic89.xml ansys.xml apache.xml asm6502.xml asm-avr.xml \
-    asm-dsp56k.xml asm-m68k.xml asn1.xml asp.xml asterisk.xml awk.xml bash.xml \
+    asm-dsp56k.xml asm-m68k.xml asn1.xml asp.xml asterisk.xml awk.xml bash.xml bitbake.xml \
     bibtex.xml bmethod.xml carto-css.xml ccss.xml cgis.xml cg.xml changelog.xml chicken.xml \
     cisco.xml clipper.xml clojure.xml cmake.xml coffee.xml coldfusion.xml \
     commonlisp.xml component-pascal.xml context.xml cpp.xml crk.xml css.xml \
@@ -23,13 +23,13 @@ syntaxkate_DATA = language.dtd syntax.template \
     ini.xml isocpp.xml jam.xml javadoc.xml javascript.xml javascript-php.xml java.xml json.xml \
     jsp.xml julia.xml j.xml kbasic.xml latex.xml ldif.xml ld.xml less.xml lex.xml lilypond.xml \
     literate-curry.xml literate-haskell.xml logtalk.xml lpc.xml lsl.xml lua.xml m3u.xml \
-    m4.xml mab.xml makefile.xml mako.xml mandoc.xml mason.xml mathematica.xml matlab.xml \
+    m4.xml mab.xml magma.xml makefile.xml mako.xml mandoc.xml mason.xml mathematica.xml matlab.xml \
     maxima.xml mediawiki.xml mel.xml mergetagtext.xml meson.xml metafont.xml mips.xml modelica.xml \
     modelines.xml modula-2.xml monobasic.xml mup.xml nagios.xml nasm.xml nemerle.xml nesc.xml \
     noweb.xml objectivecpp.xml objectivec.xml ocaml.xml ocamllex.xml ocamlyacc.xml \
     octave.xml oors.xml opal.xml opencl.xml \
     pango.xml pascal.xml perl.xml pgn.xml php.xml picsrc.xml pig.xml pike.xml \
-    postscript.xml povray.xml ppd.xml progress.xml prolog.xml protobuf.xml puppet.xml \
+    postscript.xml povray.xml ppd.xml praat.xml progress.xml prolog.xml protobuf.xml puppet.xml \
     purebasic.xml python.xml qmake.xml qml.xml qt4.xml q.xml rapidq.xml relaxngcompact.xml \
     relaxng.xml replicode.xml restructuredtext.xml rest.xml rexx.xml rhtml.xml rib.xml \
     roff.xml rpmspec.xml rsiidl.xml rtf.xml ruby.xml rust.xml r.xml sather.xml scala.xml scheme.xml \

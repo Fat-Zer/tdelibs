@@ -14,7 +14,7 @@ v1.0:
 -first Release
 -->
 
-<language name="M3U" section="Other" extensions="*.m3u" mimetype="audio/x-mpegurl" version="1.10-1" kateversion="2.4" author="Jan Janssen (medhefgo@web.de)" license="LGPL" >
+<language name="M3U" section="Other" extensions="*.m3u" mimetype="audio/x-mpegurl" version="2" kateversion="2.4" author="Jan Janssen (medhefgo@web.de)" license="LGPL" >
 
 <highlighting>
 <contexts>
@@ -25,7 +25,7 @@ v1.0:
  </context>
 
  <context name="FindEXTINF" attribute="Normal Text" lineEndContext="#stay">
-  <RegExpr attribute="Length" String=":\d+" />
+  <RegExpr attribute="Lenght" String=":\d+" />
   <RegExpr attribute="Descr" context="#pop" String=",.*$" />
  </context>
 </contexts>
@@ -36,7 +36,7 @@ v1.0:
  <itemData name="Comment" defStyleNum="dsComment" />
 
  <itemData name="EXTINF" defStyleNum="dsOthers" />
- <itemData name="Length" defStyleNum="dsDecVal" />
+ <itemData name="Lenght" defStyleNum="dsDecVal" />
  <itemData name="Descr" defStyleNum="dsString" />
 </itemDatas>
 </highlighting>

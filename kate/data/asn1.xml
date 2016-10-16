@@ -9,7 +9,7 @@
         Look at language.dtd for some documentation of the allowed elements and their attributes.
         There is also a description of how to validate your syntax file.
 -->
-<language name="ASN.1" section="Markup" version="1.01-1" kateversion="2.3" extensions="*.asn;*.asn1" mimetype="" author="Philippe Rigault" license="GPL">
+<language name="ASN.1" section="Markup" version="2-1" kateversion="2.3" extensions="*.asn;*.asn1" mimetype="" author="Philippe Rigault" license="GPL">
   <highlighting>
     <list name="keywords">
       <item> DEFINITIONS </item>
