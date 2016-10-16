@@ -71,8 +71,13 @@ static void updatePoliciesConfig(TDEConfig *cfg) {
 
 		cfg->setGroup(*i);
 
+		bool permanent = cfg->readBoolEntry("Permanent");
+		TQDateTime expires = cfg->readDateTimeEntry("Expires");
+		kdDebug(7029) << "static void updatePoliciesConfig(TDEConfig *cfg) permanent: " << permanent << endl;
+		kdDebug(7029) << "static void updatePoliciesConfig(TDEConfig *cfg) expires: " << expires.toString() << endl;
+
 		// remove it if it has expired
-		if (!cfg->readBoolEntry("Permanent") && cfg->readDateTimeEntry("Expires") < TQDateTime::currentDateTime()) {
+		if (!permanent && expires < TQDateTime::currentDateTime()) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
@@ -86,8 +91,6 @@ static void updatePoliciesConfig(TDEConfig *cfg) {
 		}
 
 		KSSLCertificateCache::KSSLCertificatePolicy policy = (KSSLCertificateCache::KSSLCertificatePolicy) cfg->readNumEntry("Policy");
-		bool permanent = cfg->readBoolEntry("Permanent");
-		TQDateTime expires = cfg->readDateTimeEntry("Expires");
 		TQStringList hosts = cfg->readListEntry("Hosts");
 		TQStringList chain = cfg->readListEntry("Chain");
 		cfg->deleteGroup(*i);
@@ -182,7 +185,7 @@ KSSLCNode *node;
 			for (KSSLCertificate *c = cl.first();
 							c != 0;
 							c = cl.next()) {
-				//kdDebug() << "Certificate in chain: "
+				//kdDebug(7029) << "Certificate in chain: "
 				//	    <<  c->toString() << endl;
 				qsl << c->toString();
 			}
@@ -275,14 +278,23 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			node->policy = policy;
-			node->permanent = permanent;
+		
+			if (!permanent) // check if we've set it to permanent before
+			   node->permanent = cacheIsPermanent(cert);
+			else
+			   node->permanent = true;
 
-			if (!permanent) {
+			if ( !node->permanent ) {
 				node->expires = TQDateTime::currentDateTime();
 				// FIXME: make this configurable
 				node->expires = TQT_TQDATETIME_OBJECT(node->expires.addSecs(3600));
+			} else {
+				if ( !node->expires.isValid() )
+					node->expires = node->cert->getQDTNotAfter(); // set to certs expiry date
 			}
 
+			kdDebug(7029) << "KSSLD::cacheAddCertificate(...) node permanent: " << node->permanent << endl;
+			kdDebug(7029) << "KSSLD::cacheAddCertificate(...) node expires: " << node->expires.toString() << endl;
 			cacheSaveToDisk();
 			return;
 		}
@@ -299,7 +311,12 @@ KSSLCNode *node;
 	if (!permanent) {
 		n->expires = TQDateTime::currentDateTime();
 		n->expires = TQT_TQDATETIME_OBJECT(n->expires.addSecs(3600));
+	} else {
+		if ( !n->expires.isValid() )
+			n->expires = n->cert->getQDTNotAfter(); // set to certs expiry date
 	}
+	kdDebug(7029) << "KSSLD::cacheAddCertificate(...) new node permanent: " << n->permanent << endl;
+	kdDebug(7029) << "KSSLD::cacheAddCertificate(...) new node expires: " << n->expires.toString() << endl;
 
 	searchAddCert(n->cert);
 	cacheSaveToDisk();
@@ -905,7 +922,7 @@ TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 	TQStringList rc;
 	TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email.lower());
 
-	kdDebug() << "GETKDEKey " << email.latin1() << endl;
+	kdDebug(7029) << "GETKDEKey " << email.latin1() << endl;
 
 	if (it == skEmail.end())
 		return rc;
@@ -918,7 +935,7 @@ TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 		}
 	}
 
-	kdDebug() << "ergebnisse: " << rc.size() << " " << elem.size() << endl;
+	kdDebug(7029) << "results: " << rc.size() << " " << elem.size() << endl;
 	return rc;
 }
 
@@ -926,13 +943,13 @@ TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 KSSLCertificate KSSLD::getCertByMD5Digest(const TQString &key) {
 	TQMap<TQString, KSSLCertificate *>::iterator iter = skMD5Digest.find(key);
 	
-	kdDebug() << "Searching cert for " << key.latin1() << endl;
+	kdDebug(7029) << "Searching cert for " << key.latin1() << endl;
 
 	if (iter != skMD5Digest.end())
 		return **iter;
 	
 	KSSLCertificate rc; // FIXME: Better way to return a not found condition?
-	kdDebug() << "Not found: " << rc.toString().latin1() << endl;
+	kdDebug(7029) << "Not found: " << rc.toString().latin1() << endl;
 	return rc;
 }	
 
