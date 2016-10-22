@@ -77,7 +77,7 @@ static void updatePoliciesConfig(TDEConfig *cfg) {
 		kdDebug(7029) << "static void updatePoliciesConfig(TDEConfig *cfg) expires: " << expires.toString() << endl;
 
 		// remove it if it has expired
-		if (!permanent && expires < TQDateTime::currentDateTime()) {
+		if ( !permanent || expires <= TQDateTime::currentDateTime() ) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
@@ -152,7 +152,7 @@ class KSSLCNode {
 		TQStringList hosts;
 		KSSLCNode() { cert = 0L;
 				policy = KSSLCertificateCache::Unknown; 
-				permanent = true;
+				permanent = false;
 			}
 		~KSSLCNode() { delete cert; }
 };
@@ -166,8 +166,6 @@ KSSLCNode *node;
 	cfg->writeEntry("policies version", 2);
 
 	for (node = certList.first(); node; node = certList.next()) {
-		if (node->permanent ||
-			node->expires > TQDateTime::currentDateTime()) {
 			// First convert to a binary format and then write the
 			// tdeconfig entry write the (CN, policy, cert) to
 			// KSimpleConfig
@@ -193,7 +191,6 @@ KSSLCNode *node;
 			cl.setAutoDelete(true);
 			cfg->writeEntry("Chain", qsl);
 		}
-	}  
 
 	cfg->sync();
 
@@ -233,16 +230,18 @@ TQStringList groups = cfg->groupList();
 	for (TQStringList::Iterator i = groups.begin();
 				i != groups.end();
 				++i) {
-		if ((*i).isEmpty() || *i == "General") {
+		if ((*i).isEmpty() || *i == "General")
 			continue;
-		}
 
 		cfg->setGroup(*i);
 
+		bool permanent = cfg->readBoolEntry("Permanent");
+		TQDateTime expires = cfg->readDateTimeEntry("Expires");
+		kdDebug(7029) << "static void cacheLoadDefaultPolicies() permanent: " << permanent << endl;
+		kdDebug(7029) << "static void cacheLoadDefaultPolicies() expires: " << expires.toString() << endl;
+		
 		// remove it if it has expired
-		if (!cfg->readBoolEntry("Permanent") &&
-			cfg->readDateTimeEntry("Expires") <
-				TQDateTime::currentDateTime()) {
+		if ( !permanent || expires <= TQDateTime::currentDateTime()) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
@@ -260,8 +259,8 @@ TQStringList groups = cfg->groupList();
 		KSSLCNode *n = new KSSLCNode;
 		n->cert = newCert;
 		n->policy = (KSSLCertificateCache::KSSLCertificatePolicy) cfg->readNumEntry("Policy");
-		n->permanent = cfg->readBoolEntry("Permanent");
-		n->expires = cfg->readDateTimeEntry("Expires");
+		n->permanent = permanent;
+		n->expires = expires;
 		n->hosts = cfg->readListEntry("Hosts");
 		newCert->chain().setCertChain(cfg->readListEntry("Chain"));
 		certList.append(n); 
@@ -284,13 +283,14 @@ KSSLCNode *node;
 			else
 			   node->permanent = true;
 
+			if ( !node->expires.isValid() ) {
 			if ( !node->permanent ) {
 				node->expires = TQDateTime::currentDateTime();
 				// FIXME: make this configurable
-				node->expires = TQT_TQDATETIME_OBJECT(node->expires.addSecs(3600));
+					node->expires = TQT_TQDATETIME_OBJECT(node->expires.addSecs(5));
 			} else {
-				if ( !node->expires.isValid() )
 					node->expires = node->cert->getQDTNotAfter(); // set to certs expiry date
+			}
 			}
 
 			kdDebug(7029) << "KSSLD::cacheAddCertificate(...) node permanent: " << node->permanent << endl;
@@ -310,7 +310,7 @@ KSSLCNode *node;
 
 	if (!permanent) {
 		n->expires = TQDateTime::currentDateTime();
-		n->expires = TQT_TQDATETIME_OBJECT(n->expires.addSecs(3600));
+		n->expires = TQT_TQDATETIME_OBJECT(n->expires.addSecs(5));
 	} else {
 		if ( !n->expires.isValid() )
 			n->expires = n->cert->getQDTNotAfter(); // set to certs expiry date
@@ -328,22 +328,11 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (KSSLX509Map(node->cert->getSubject()).getValue("CN") == cn) {
-			if (!node->permanent &&
-				node->expires < TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				delete node;
-				continue;
-			}
-
 			certList.remove(node);
 			certList.prepend(node);
-			cacheSaveToDisk();
 			return node->policy;
 		}
 	}
-
-	cacheSaveToDisk();
 
 return KSSLCertificateCache::Unknown;
 }
@@ -354,15 +343,6 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {  
-			if (!node->permanent &&
-				node->expires < TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				delete node;
-				cacheSaveToDisk();
-				return KSSLCertificateCache::Unknown;
-			}
-
 			certList.remove(node);
 			certList.prepend(node);
 			return node->policy;
@@ -378,15 +358,6 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (KSSLX509Map(node->cert->getSubject()).getValue("CN") == cn) {
-			if (!node->permanent &&
-				node->expires < TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				delete node;
-				cacheSaveToDisk();
-				continue;
-			}
-
 			certList.remove(node);
 			certList.prepend(node);
 			return true;
@@ -402,15 +373,6 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
-			if (!node->permanent &&
-				node->expires < TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				delete node;
-				cacheSaveToDisk();
-				return false;
-			}
-
 			certList.remove(node);
 			certList.prepend(node);
 			return true;
@@ -426,15 +388,6 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
-			if (!node->permanent && node->expires <
-					TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				delete node;
-				cacheSaveToDisk();
-				return false;
-			}
-
 			certList.remove(node);
 			certList.prepend(node);
 			return node->permanent;
@@ -460,7 +413,6 @@ bool gotOne = false;
 	}
 
 	cacheSaveToDisk();
-
 return gotOne;
 }
 
@@ -480,7 +432,6 @@ bool gotOne = false;
 	}
 
 	cacheSaveToDisk();
-
 return gotOne;
 }
 
@@ -504,7 +455,8 @@ return false;
 
 
 bool KSSLD::cacheModifyByCN(TQString cn,
-                            KSSLCertificateCache::KSSLCertificatePolicy policy,                             bool permanent,
+                            KSSLCertificateCache::KSSLCertificatePolicy policy,
+                            bool permanent,
                             TQDateTime expires) {
 KSSLCNode *node;
 
@@ -551,16 +503,6 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
-			if (!node->permanent && node->expires <
-				       TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				searchRemoveCert(node->cert);
-				delete node;
-				cacheSaveToDisk();
-				return TQStringList();
-			}
-
 			certList.remove(node);
 			certList.prepend(node);
 			return node->hosts;
@@ -579,19 +521,8 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
-			if (!node->permanent && node->expires <
-				       	TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				searchRemoveCert(node->cert);
-				delete node;
-				cacheSaveToDisk();
-				return false;
-			}
-
-			if (!node->hosts.contains(host)) {
+			if (!node->hosts.contains(host))
 				node->hosts << host;
-			}
 
 			certList.remove(node);
 			certList.prepend(node);
@@ -609,15 +540,6 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
-			if (!node->permanent && node->expires <
-				       	TQDateTime::currentDateTime()) {
-				certList.remove(node);
-				cfg->deleteGroup(node->cert->getMD5Digest());
-				searchRemoveCert(node->cert);
-				delete node;
-				cacheSaveToDisk();
-				return false;
-			}
 			node->hosts.remove(host);
 			certList.remove(node);
 			certList.prepend(node);
