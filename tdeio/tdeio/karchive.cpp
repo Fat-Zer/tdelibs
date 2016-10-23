@@ -601,6 +601,7 @@ void KArchiveDirectory::addEntry( KArchiveEntry* entry )
 void KArchiveDirectory::copyTo(const TQString& dest, bool recursiveCopy ) const
 {
   TQDir root;
+  const TQString destDir(TQDir(dest).absPath()); // get directory path without any "." or ".."
 
   PosSortedPtrList fileList;
   TQMap<int, TQString> fileToDir;
@@ -620,10 +621,19 @@ void KArchiveDirectory::copyTo(const TQString& dest, bool recursiveCopy ) const
   TQValueStack<TQString> dirNameStack;
 
   dirStack.push( this );     // init stack at current directory
-  dirNameStack.push( dest ); // ... with given path
+  dirNameStack.push( destDir ); // ... with given path
   do {
     curDir = dirStack.pop();
-    curDirName = dirNameStack.pop();
+
+    // extract only to specified folder if it is located within archive's extraction folder
+    // otherwise put file under root position in extraction folder
+    TQString curDirName = dirNameStack.pop();
+    if (!TQDir(curDirName).absPath().startsWith(destDir)) {
+        kdWarning() << "Attempted export into folder" << curDirName
+            << "which is outside of the extraction root folder" << destDir << "."
+            << "Changing export of contained files to extraction root folder.";
+        curDirName = destDir;
+    }
     root.mkdir(curDirName);
 
     dirEntries = curDir->entries();
