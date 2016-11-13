@@ -1054,13 +1054,28 @@ void KDoubleSpinBox::setPrecision( int precision ) {
 }
 
 void KDoubleSpinBox::setPrecision( int precision, bool force ) {
-  if ( precision < 1 ) return;
+  if ( precision < 0 ) return;
   if ( !force ) {
     int maxPrec = maxPrecision();
     if ( precision > maxPrec )
+    {
       precision = maxPrec;
+    }
   }
+  // Update minValue, maxValue, value and lineStep to match the precision change
+  int oldPrecision = d->mPrecision;
+  double oldValue = value();
+  double oldMinValue = minValue();
+  double oldMaxValue = maxValue();
+  double oldLineStep = lineStep();
   d->mPrecision = precision;
+  if (precision != oldPrecision)
+  {
+    setMinValue(oldMinValue);
+    setMaxValue(oldMaxValue);
+    setValue(oldValue);
+    setLineStep(oldLineStep);
+  }
   updateValidator();
 }
 
