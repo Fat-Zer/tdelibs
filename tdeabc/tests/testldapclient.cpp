@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 {
   TDEApplication::disableAutoDcopRegistration();
   TDECmdLineArgs::init(argc,argv,"testldapclient", 0, 0, 0, 0);
-  TDEApplication app;
+  TDEApplication app (/*stylesEnabled=*/ false, /*GUIEnabled=*/ false);
 
   TestLDAPClient test;
   test.setup();
