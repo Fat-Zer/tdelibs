@@ -8,6 +8,7 @@ using namespace TDEABC;
 int
 main()
 {
+    int rc=0;
     Addressee::List l = vCardsAsAddresseeList();
     TQString vcards = vCardsAsText();
 
@@ -17,6 +18,7 @@ main()
 
     if ( l.size() != parsed.size() ) {
         kdDebug()<<"\tSize - FAILED : "<<l.size()<<" vs. parsed "<<parsed.size()<<endl;
+        rc=1;
     } else {
         kdDebug()<<"\tSize - PASSED"<<endl;
     }
@@ -39,6 +41,9 @@ main()
             kdDebug()<<">>>>>>>Addressee from file<<<<<<<<"<<endl;
             (*itr2).dump();
             //kdDebug()<<"\t\t"<< (*itr1).fullEmail() << " VS. " << (*itr2).fullEmail()<<endl;
+            rc=1;
         }
     }
+
+    return rc;
 }

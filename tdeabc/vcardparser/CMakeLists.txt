@@ -2,6 +2,8 @@
 #
 #  (C) 2010 Serghei Amelian
 #  serghei (DOT) amelian (AT) gmail.com
+#  (C) 2016 Alexander Golubev
+#  fatzer2 (AT) gmail.com
 #
 #  Improvements and feedback are welcome
 #
@@ -60,56 +62,27 @@ tde_add_library( ${target} STATIC_PIC
 
 ##### test programs ##############################
 
-tde_add_executable( testread
-  SOURCES testread.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
+tde_add_check_executable( testread AUTOMOC LINK ${TDEABC_TESTS_LINK} )
+tde_add_check_executable( testwrite AUTOMOC LINK ${TDEABC_TESTS_LINK} )
+tde_add_check_executable( testwrite2 AUTOMOC LINK ${TDEABC_TESTS_LINK} )
+tde_add_check_executable( testvcardformat AUTOMOC LINK ${TDEABC_TESTS_LINK} )
+tde_add_check_executable( testvcardformatimpl AUTOMOC LINK ${TDEABC_TESTS_LINK} )
 
-tde_add_executable( testread2
+tde_add_check_executable( testread2
   SOURCES testread2.cpp testutils.cpp AUTOMOC
   LINK ${TDEABC_TESTS_LINK}
 )
 
-tde_add_executable( testwrite
-  SOURCES testwrite.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
+add_test( NAME tdeabc/vcardparser/testread2 COMMAND testread2 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" )
 
-tde_add_executable( testwrite2
-  SOURCES testwrite2.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testvcardformat
-  SOURCES testvcardformat.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-tde_add_executable( testvcardformatimpl
-  SOURCES testvcardformatimpl.cpp AUTOMOC
-  LINK ${TDEABC_TESTS_LINK}
-)
-
-add_custom_target( vcardparser_tests ALL
-  COMMENT "[VCardParser] Performing tests"
-  COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/FAILED
-  DEPENDS
-    testvcardformatimpl testvcardformat testwrite2 testwrite testread2 testread
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
+# testread tests
 file( GLOB vcardparser_testfiles "tests/*.vcf" )
 list( REMOVE_ITEM vcardparser_testfiles "${CMAKE_CURRENT_SOURCE_DIR}/tests/vcard5.vcf" )
 list( SORT vcardparser_testfiles )
 
 foreach(testfile ${vcardparser_testfiles})
-  add_custom_command(
-    TARGET vcardparser_tests
-    COMMAND perl ${CMAKE_CURRENT_SOURCE_DIR}/checkvcard.pl ${testfile}
+  get_filename_component(testfile_name "${testfile}" NAME_WE )
+  add_test( NAME tdeabc/vcardparser/testread-${testfile_name} COMMAND 
+    perl ${CMAKE_CURRENT_SOURCE_DIR}/checkvcard.pl ${testfile}
   )
 endforeach(testfile)
-
-add_custom_command(
-  TARGET vcardparser_tests
-  COMMAND test ! -f ${CMAKE_CURRENT_BINARY_DIR}/FAILED
-)
