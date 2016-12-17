@@ -52,4 +52,4 @@ tde_add_check_executable( bigwrite AUTOMOC LINK tdeabc_file-shared )
 # tde_add_check_executable( testdb   AUTOMOC LINK tdeabc_file-shared )
 tde_add_check_executable( kabcargl AUTOMOC LINK tdeabc_file-shared )
 
-add_test( testldapclient testldapclient )
+add_test( tdeabc/testldapclient testldapclient )

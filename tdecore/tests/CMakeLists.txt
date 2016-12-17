@@ -52,5 +52,5 @@ tde_add_check_executable( kidlclienttest AUTOMOC SOURCES KIDLTestClient.cpp
   KIDLTest.stub LINK tdeconfigtest-shared )
 
 foreach( _test ${TESTS})
-  add_test( ${_test} ${_test} )
+  add_test( tdecore/${_test} ${_test} )
 endforeach( )

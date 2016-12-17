@@ -34,7 +34,8 @@ tde_add_check_executable( driver AUTOMOC
   LINK tdecore-shared
 )
 
-add_test( NAME dcop-tests COMMAND sh -x "${CMAKE_CURRENT_SOURCE_DIR}/run-tests.sh"
+add_test( NAME "dcop/dcop-tests"
+    COMMAND sh -x "${CMAKE_CURRENT_SOURCE_DIR}/run-tests.sh"
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
 
 
