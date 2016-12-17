@@ -2268,16 +2268,20 @@ bool TDEApplication::x11EventFilter( XEvent *_event )
 void TDEApplication::updateUserTimestamp( unsigned long time )
 {
 #if defined Q_WS_X11
+    Display *display = tqt_xdisplay();
+    if (!display) {
+        return;
+    }
     if( time == 0 )
     { // get current X timestamp
-        Window w = XCreateSimpleWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0, 0, 0 );
+        Window w = XCreateSimpleWindow( display, tqt_xrootwin(), 0, 0, 1, 1, 0, 0, 0 );
         XSelectInput( tqt_xdisplay(), w, PropertyChangeMask );
         unsigned char data[ 1 ];
-        XChangeProperty( tqt_xdisplay(), w, XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
+        XChangeProperty( display, w, XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
         XEvent ev;
-        XWindowEvent( tqt_xdisplay(), w, PropertyChangeMask, &ev );
+        XWindowEvent( display, w, PropertyChangeMask, &ev );
         time = ev.xproperty.time;
-        XDestroyWindow( tqt_xdisplay(), w );
+        XDestroyWindow( display, w );
     }
     if( GET_QT_X_USER_TIME() == 0
         || NET::timestampCompare( time, GET_QT_X_USER_TIME() ) > 0 ) // check time > tqt_x_user_time
