@@ -26,7 +26,7 @@ Test4::Test4(  )
   mSelf = this;
   setCurrentGroup( TQString::fromLatin1( "Foo" ) );
 
-TQColor defaultColor[4] = { Qt::red, Qt::blue, Qt::green, Qt::black };
+TQColor defaultColor[4] = { TQt::red, TQt::blue, TQt::green, TQt::black };
   TDEConfigSkeleton::ItemColor  *itemColor[4];
   itemColor[0] = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #0" ), mColor[0], defaultColor[0] );
   addItem( itemColor[0], TQString::fromLatin1( "Color0" ) );

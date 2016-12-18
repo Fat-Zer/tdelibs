@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <include>qdir.h</include>
+  <include>tqdir.h</include>
   <kcfgfile name="examplerc">
     <parameter name="transport" />
     <parameter name="folder" />
@@ -35,7 +35,7 @@
     </entry>
     <entry name="MyPath" type="Path">
       <label>This is a path</label>
-      <default code="true">QDir::homeDirPath()+QString::fromLatin1(".hidden_file")</default>
+      <default code="true">TQDir::homeDirPath()+TQString::fromLatin1(".hidden_file")</default>
     </entry>
     <entry name="AnotherOption2" type="Int" key="Another Option">
       <label>Another option</label>

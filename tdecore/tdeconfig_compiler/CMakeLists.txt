@@ -9,6 +9,8 @@
 #
 #################################################
 
+add_subdirectory(tests)
+
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}/tdecore
