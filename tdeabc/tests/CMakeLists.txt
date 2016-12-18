@@ -37,7 +37,6 @@ link_directories(
 ##### test programs ##############################
 
 tde_add_check_executable( testlock            AUTOMOC LINK tdeabc-shared )
-tde_add_check_executable( testldapclient      AUTOMOC LINK tdeabc-shared )
 tde_add_check_executable( testkabc            AUTOMOC LINK tdeabc-shared )
 tde_add_check_executable( testkabcdlg         AUTOMOC LINK tdeabc-shared )
 tde_add_check_executable( testdistlist        AUTOMOC LINK tdeabc-shared )
@@ -52,4 +51,4 @@ tde_add_check_executable( bigwrite AUTOMOC LINK tdeabc_file-shared )
 # tde_add_check_executable( testdb   AUTOMOC LINK tdeabc_file-shared )
 tde_add_check_executable( kabcargl AUTOMOC LINK tdeabc_file-shared )
 
-add_test( tdeabc/testldapclient testldapclient )
+tde_add_check_executable( testldapclient      AUTOMOC LINK tdeabc-shared TEST)

@@ -32,25 +32,23 @@ tde_add_library( tdeconfigtest SHARED AUTOMOC
 
 set( CHECKS 
   tdeconfigtestgui klocaletest kprocesstest ksimpleconfigtest kstddirstest
-  kurltest kuniqueapptest ktempfiletest krandomsequencetest kdebugtest
+  kuniqueapptest ktempfiletest krandomsequencetest kdebugtest
   ksocktest kstringhandlertest kcmdlineargstest kapptest kmemtest
   dcopkonqtest kipctest cplusplustest kiconloadertest kresolvertest
   kmdcodectest knotifytest ksortablevaluelisttest krfcdatetest testqtargs
   kprociotest kcharsetstest kcalendartest kmacroexpandertest kshelltest
-  kxerrorhandlertest startserviceby tdestdacceltest kglobaltest ktimezonestest
+  kxerrorhandlertest startserviceby kglobaltest ktimezonestest
 )
 
-set( TESTS kurltest tdestdacceltest )
 
 foreach( _check ${CHECKS} )
   tde_add_check_executable( ${_check} AUTOMOC LINK tdeconfigtest-shared )
 endforeach( )
 
+tde_add_check_executable( kurltest        AUTOMOC LINK tdeconfigtest-shared TEST )
+tde_add_check_executable( tdestdacceltest AUTOMOC LINK tdeconfigtest-shared TEST )
+
 tde_add_check_executable( kidlservertest AUTOMOC SOURCES KIDLTest.cpp KIDLTest.skel
   LINK tdeconfigtest-shared )
 tde_add_check_executable( kidlclienttest AUTOMOC SOURCES KIDLTestClient.cpp
   KIDLTest.stub LINK tdeconfigtest-shared )
-
-foreach( _test ${TESTS})
-  add_test( tdecore/${_test} ${_test} )
-endforeach( )
