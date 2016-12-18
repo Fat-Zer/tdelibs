@@ -38,6 +38,7 @@ add_test( NAME "dcop/dcop-tests"
     COMMAND sh -x "${CMAKE_CURRENT_SOURCE_DIR}/run-tests.sh"
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
 
+set_tests_properties( dcop/dcop-tests PROPERTIES TIMEOUT 30)
 
 ##### test.h and files ##########################
 

@@ -10,9 +10,12 @@ DCOP_SERVER_PID=$!
 
 die() {
     kill $DCOP_SERVER_PID
+    [ -n $DCOP_TEST_PID ] && kill $DCOP_TEST_PID
     echo "$1"
     exit 1;
 }
+
+trap 'die "The script interrupted by user"' 2 15
 
 echo '* Running batch mode'
 ./dcop_test --batch >batch.stdout || die "Failed to run dcop_test"
@@ -21,10 +24,16 @@ echo -n '* Starting test app '
 ./dcop_test >shell.stdout &
 DCOP_TEST_PID=$!
 
+cnt=0
 while ! ../client/dcop | grep -q "TestApp-$DCOP_TEST_PID"; do
     echo -n '.'
-    sleep 2
+    cnt=$((cnt+1))
+    if [ "$cnt" -gt 15 ] ; then
+        kill "$DCOP_TEST_PID"
+        die "dcop_test seems to hanged up"
+    fi
     kill -0 "$DCOP_TEST_PID" || die "dcop_test died unexpectadly"
+    sleep 1
 done
 
 echo ' started'

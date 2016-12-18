@@ -11,7 +11,8 @@ my $OBJECT_NAME = 'TestInterface';
 
 
 sub shell_header {
-	print SHELL "TEST_APP=\`$DCOP 'TestApp-*'\`\n";
+	print SHELL "TEST_APP=\"\${DCOP_TEST_PID:+TestApp-\$DCOP_TEST_PID\}\"\n" .
+	            "TEST_APP=\"\${TEST_APP:-\$($DCOP 'TestApp-*')}\"\n";
 }
 sub shell_footer {
 	print SHELL "$DCOP $TEST_APP 'MainApplication-Interface' quit";
