@@ -2,12 +2,28 @@
 #include <stdio.h>
 
 #include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <tqstring.h>
 
 #include "tdewalletbackend.h"
 
+#define CHECK_RETURN(func, test, test_str) { \
+    int rc = (func); \
+    test_cnt++;\
+    if (test) {\
+        printf("%-20s returned %d as expected  (should be %s)\n", #func, rc, test_str);\
+    } else {\
+        printf("%-20s returned %d UNEXPECTEDLY (should be %s)\n", #func, rc, test_str);\
+        test_failed++;\
+    }\
+}
+
 int main(int argc, char **argv) {
-   TDEApplication a(argc, argv, "tdewalletbackendtest");
+   TDEAboutData aboutData( "tdewalletbackendtest", "tdewallet backend testing routine", "0.1" );
+
+   TDECmdLineArgs::init( argc, argv, &aboutData );
+   TDEApplication a(false, false);
 
    TDEWallet::Backend be("ktestwallet");
    printf("TDEWalletBackend constructed\n");
@@ -18,28 +34,22 @@ int main(int argc, char **argv) {
    bpass.duplicate("bpassword", 9);
    cpass.duplicate("cpassword", 9);
 
+
+   int test_cnt = 0;
+   int test_failed = 0;
+
    printf("Passwords initialised.\n");
-   int rc = be.close(apass);
 
-   printf("be.close(apass) returned %d  (should be -255)\n", rc);
+   CHECK_RETURN(be.close(apass), rc==-255,        "-255");
+   CHECK_RETURN(be.open(bpass),  rc==0 || rc==1, "0 or 1");
+   CHECK_RETURN(be.close(bpass), rc==0,          "0 or 1");
+   CHECK_RETURN(be.open(apass),  rc<0,           "negative");
+   CHECK_RETURN(be.open(bpass),  rc==0,          "0");
 
-   rc = be.open(bpass);
+   printf ("===========================================\n");
+   printf ("%d test failed out of %d\n", test_failed, test_cnt);
 
-   printf("be.open(bpass) returned %d  (should be 0 or 1)\n", rc);
-
-   rc = be.close(bpass);
-
-   printf("be.close(bpass) returned %d  (should be 0)\n", rc);
-
-   rc = be.open(apass);
-
-   printf("be.open(apass) returned %d  (should be negative)\n", rc);
-
-   rc = be.open(bpass);
-
-   printf("be.open(bpass) returned %d  (should be 0)\n", rc);
-
-   return 0;
+   return test_failed == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 

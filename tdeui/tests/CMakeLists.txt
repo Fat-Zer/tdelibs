@@ -22,7 +22,7 @@ link_directories(
   ${TQT_LIBRARY_DIRS}
 )
 
-set( test_PROGS
+set( check_PROGS
   kaboutdialogtest kblendtest kbuttonboxtest kcharselecttest
   kcolortest kcolordlgtest kcomboboxtest kcompletiontest
   kdatepicktest kdatewidgettest kdialogbasetest
@@ -45,5 +45,5 @@ set( test_PROGS
 )
 
 foreach( PROG ${test_PROGS} )
-  tde_add_executable( ${PROG} AUTOMOC SOURCES "${PROG}.cpp" LINK tdeui-shared )
+  tde_add_check_executable( ${PROG} AUTOMOC LINK tdeui-shared )
 endforeach( PROG ${test_PROGS} )

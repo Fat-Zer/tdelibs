@@ -11,3 +11,4 @@
 
 add_subdirectory( client )
 add_subdirectory( backend )
+add_subdirectory( tests )
