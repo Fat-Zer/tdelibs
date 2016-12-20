@@ -44,7 +44,7 @@
 
 int main(int argc, char **argv)
 {
-    TDEApplication a(argc, argv, "kfstest");
+    TDEApplication a(argc, argv, "kfstest", true);
     TQString name1;
     TQStringList names;
 

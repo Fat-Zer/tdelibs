@@ -33,7 +33,7 @@
 #  include <stdlib.h>
 #endif
 #ifdef TESTKIO
-#  include <iostream.h>
+#  include <iostream>
 #endif
 
 #if !defined(DATAKIOSLAVE) && !defined(TESTKIO)

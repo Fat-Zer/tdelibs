@@ -90,14 +90,14 @@ int TestService::exec()
 
 int main(int argc, char *argv[])
 {
-   putenv("IGNORE_SYCOCA_VERSION=true");
-   TDEApplication k(argc,argv,"whatever",false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
+   setenv("IGNORE_SYCOCA_VERSION", "true", true);
+   TDEApplication k(argc,argv,"whatever",false/*nostyle*/,false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
 
    k.dcopClient()->setNotifications(true);
 
    KService::List list = KService::allServices();
 
-   tqWarning("I found %d services.", list.count());
+   tqWarning("I found %ld services.", list.count());
    int i = 0;
    for(KService::List::ConstIterator it = list.begin(); it != list.end(); ++it)
    {

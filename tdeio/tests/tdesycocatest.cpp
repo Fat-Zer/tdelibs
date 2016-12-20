@@ -43,7 +43,7 @@ bool check(TQString txt, TQString a, TQString b)
     kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "ok" << endl;
   }
   else {
-    kdDebug() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "KO !" << endl
+    kdError() << txt << " : checking '" << a << "' against expected value '" << b << "'... " << "KO !" << endl
 ;
     exit(1);
   }
@@ -52,7 +52,7 @@ bool check(TQString txt, TQString a, TQString b)
 
 void debug(TQString txt)
 {
- fprintf(stderr, "%s\n", txt.ascii());
+ fprintf(stderr, "%s\n", txt.utf8().data());
 }
 
 void debug(const char *txt)
@@ -67,7 +67,7 @@ void debug(const char *format, const char *txt)
 
 int main(int argc, char *argv[])
 {
-   TDEApplication k(argc,argv,"whatever",false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
+   TDEApplication k(argc,argv,"whatever",true); // KMessageBox needs KApp for makeStdCaption
 
    TQCString instname = "kword";
    TQString desktopPath = TQString::fromLatin1( "Office/%1.desktop" ).arg( instname );

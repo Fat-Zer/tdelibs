@@ -200,7 +200,7 @@ void JobTest::get()
     kapp->eventLoop()->enterLoop();
     assert( m_result == 0 ); // no error
     assert( m_data.size() == 11 );
-    assert( TQCString( m_data ) == "Hello world" );
+    assert( memcmp (m_data, "Hello world", m_data.size()) == 0 ); // m_data is not null-terminated
 }
 
 void JobTest::slotGetResult( TDEIO::Job* job )

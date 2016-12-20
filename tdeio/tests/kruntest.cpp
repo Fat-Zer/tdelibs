@@ -121,7 +121,7 @@ void checkPDE(const KService &service, const KURL::List &urls, bool hs, bool tf,
 
 int main(int argc, char **argv)
 {
-  TDEApplication app( argc, argv, "kruntest", true /* it _has_ a GUI ! */);
+  TDEApplication app( argc, argv, "kruntest", true /*styles*/, true /* it _has_ a GUI ! */);
 
   // First some non-interactive tests
   checkBN( "/usr/bin/ls", true, "ls");
@@ -164,16 +164,16 @@ int main(int argc, char **argv)
       for (int te = 0; te < 2; te++)
         for (int ex = 0; ex < 2; ex++) {
           int fd = creat("kruntest.desktop", 0666);
-	  FILE *f;
+          FILE *f;
           if (fd < 0) abort();
-	  f = KDE_fdopen(fd, "w");
+          f = KDE_fdopen(fd, "w");
           fprintf(f, "[Desktop Entry]\n"
-		"Type=Application\n"
-		"Name=just_a_test\n"
-		"Icon=~/icon.png\n"
-		"%s\n%s\n%s\n",execs[ex],terms[te],sus[su]);
+            "Type=Application\n"
+            "Name=just_a_test\n"
+            "Icon=~/icon.png\n"
+            "%s\n%s\n%s\n",execs[ex],terms[te],sus[su]);
           close(fd);
-	  fclose(f);
+          fclose(f);
           KService s(TQDir::currentDirPath() + "/kruntest.desktop");
           unlink("kruntest.desktop");
           checkPDE( s, l0, hs, false, rslts[ex+te*2+su*4+hs*8]);

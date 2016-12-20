@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 {
     TDEApplication::disableAutoDcopRegistration();
     TDECmdLineArgs::init(argc,argv,"kacltest", 0, 0, 0, 0);
-    TDEApplication app;
+    TDEApplication app(/*styles=*/false, /*gui=*/false);
 
     KACLTest test;
     test.setup();

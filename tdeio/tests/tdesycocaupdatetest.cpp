@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-   TDEApplication k(argc,argv,"whatever"); // KMessageBox needs KApp for makeStdCaption
+   TDEApplication k(argc,argv,"whatever",true,true); // KMessageBox needs KApp for makeStdCaption
 
    KService::rebuildKSycoca(0);
    return 0;

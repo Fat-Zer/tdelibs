@@ -5,7 +5,7 @@
 
 int main( int argc, char **argv )
 {
-    TDEApplication app(argc, argv, "kdirselectdialogtest");
+    TDEApplication app(argc, argv, "kdirselectdialogtest", true);
 
     KURL u = KDirSelectDialog::selectDirectory( (argc >= 1) ? argv[1] : TQString::null );
     if ( u.isValid() )

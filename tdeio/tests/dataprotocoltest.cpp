@@ -21,7 +21,9 @@
 #include <tqcstring.h>
 #include <tqstring.h>
 
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
 
 class KURL;
 

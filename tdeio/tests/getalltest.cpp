@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-   TDEApplication k(argc,argv,"getalltest",false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
+   TDEApplication k(argc,argv,"getalltest",false/*nostyle*/,false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
 
 //for (int i = 0 ; i < 2 ; ++i ) { // test twice to see if they got deleted
    kdDebug() << "All services" << endl;

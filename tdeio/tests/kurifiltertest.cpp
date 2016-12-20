@@ -155,14 +155,14 @@ int main(int argc, char **argv)
 {
     // Ensure that user configuration doesn't change the results of those tests
     // TDEHOME needs to be writable though, for a tdesycoca database
-    setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.tde-kurifiltertest" ), true );
+    setenv( "TDEHOME", TQFile::encodeName( TQDir::currentDirPath() + "/.tde-kurifiltertest" ), true );
     setenv( "TDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
     TDEAboutData aboutData(appName, programName, version, description);
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions( options );
 
-    TDEApplication app;
+    TDEApplication app; // it _is_ GUI app
     app.disableAutoDcopRegistration();
 
     // Allow testing of the search engine using both delimiters...
@@ -294,7 +294,9 @@ int main(int argc, char **argv)
 
     filter( "$SOMEVAR/tdelibs/tdeio", 0, KURIFilterData::ERROR ); // note: this dir doesn't exist...
     filter( "$ETC/passwd", "/etc/passwd", KURIFilterData::LOCAL_FILE );
-    filter( "$QTDIR/doc/html/functions.html#s", TQCString("file://")+qtdir+"/doc/html/functions.html#s", KURIFilterData::LOCAL_FILE );
+    if( !qtdir.isEmpty() ) {
+        filter( "$QTDIR/doc/html/functions.html#s", TQCString("file://")+qtdir+"/doc/html/functions.html#s", KURIFilterData::LOCAL_FILE );
+    }
     filter( "http://www.kde.org/$USER", "http://www.kde.org/$USER", KURIFilterData::NET_PROTOCOL ); // no expansion
 
     // Assume the default (~/.trinity) if
@@ -333,13 +335,15 @@ int main(int argc, char **argv)
     // the shortURI filter will return the string
     // itself if the requested environment variable
     // is not already set.
-    filter( "$QTDIR", 0, KURIFilterData::LOCAL_DIR, "tdeshorturifilter" ); //use specific filter.
+    if( !qtdir.isEmpty() ) {
+        filter( "$QTDIR", 0, KURIFilterData::LOCAL_DIR, "tdeshorturifilter" ); //use specific filter.
+    }
     filter( "$HOME", home, KURIFilterData::LOCAL_DIR, "tdeshorturifilter" ); //use specific filter.
 
 
     TQCString sc;
     filter( sc.sprintf("gg%cfoo bar",delimiter), "http://www.google.com/search?q=foo+bar&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );
-    filter( sc.sprintf("bug%c55798", delimiter), "http://bugs.kde.org/show_bug.cgi?id=55798", KURIFilterData::NET_PROTOCOL );
+    filter( sc.sprintf("bug%c55798", delimiter), "http://bugs.pearsoncomputing.net/show_bug.cgi?id=55798", KURIFilterData::NET_PROTOCOL );
 
     filter( sc.sprintf("gg%cC++", delimiter), "http://www.google.com/search?q=C%2B%2B&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );
     filter( sc.sprintf("ya%cfoo bar was here", delimiter), 0, -1 ); // this triggers default search, i.e. google

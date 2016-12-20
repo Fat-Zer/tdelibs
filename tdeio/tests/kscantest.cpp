@@ -3,11 +3,11 @@
 
 int main( int argc, char **argv )
 {
-    TDEApplication app( argc, argv, "kscantest" );
+    TDEApplication app( argc, argv, "kscantest", true, true );
     KScanDialog *dlg = KScanDialog::getScanDialog();
     if ( !dlg ) {
 	tqDebug("*** EEK, no Scan-service available, aborting!");
-	return 0;
+	return EXIT_FAILURE;
     }
     
     dlg->show();

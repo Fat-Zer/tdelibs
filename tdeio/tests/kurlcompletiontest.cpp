@@ -166,7 +166,7 @@ int main( int argc, char **argv )
 {
     TDEApplication::disableAutoDcopRegistration();
     TDECmdLineArgs::init(argc,argv,"kurlcompletiontest", 0, 0, 0, 0);
-    TDEApplication app;
+    TDEApplication app(/*styles=*/false, /*gui=*/false);
 
     {
         KURLCompletionTest test;

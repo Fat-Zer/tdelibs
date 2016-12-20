@@ -11,8 +11,14 @@
 
 include_directories(
   ${TQT_INCLUDE_DIRS}
+  ${CMAKE_BINARY_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
   ${CMAKE_SOURCE_DIR}/tdeio/tdeio
 )
 
@@ -34,3 +40,37 @@ tde_add_executable( ${target}
   LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
+
+
+##### check and test ##############################
+
+# Force assertions to work
+add_definitions( -UNDEBUG )
+
+set( CHECKS
+  getalltest jobtest kdcopcheck kdefaultprogresstest kdirlistertest
+  kdirwatchtest kfiltertest kionetrctest kiopassdlgtest kmfitest kmimefromext
+  kmimemagictest kpropsdlgtest kprotocolinfotest kruntest kscantest kshredtest
+  ktartest kurifiltertest kurlcompletiontest kziptest metatest netaccesstest
+  previewtest speed tdeioslavetest tdesycocatest tdesycocaupdatetest
+)
+
+foreach( _check ${CHECKS} )
+  tde_add_check_executable( ${_check} AUTOMOC LINK tdeio-shared )
+endforeach( )
+
+# NOTE some apps here are suitable to be run as tests but not included due to
+#      following reasons:
+#  - jobtest may fail if run on an unusual system configuration
+#            and requires GUI
+#  - kprotocolinfotest tries to connect to network and requires running DCOP
+#  - kurifiltertest requires network access and GUI.
+#  - tdesycocatest requires installed kdebasea and GUI
+
+set( TESTS dataprotocoltest kacltest kmimetypetest )
+
+foreach( _check ${TESTS} )
+    tde_add_check_executable( ${_check} AUTOMOC LINK tdeio-shared TEST)
+endforeach( )
+
+# TODO add kdirwatchunittest

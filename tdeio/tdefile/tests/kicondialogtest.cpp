@@ -3,7 +3,7 @@
 
 int main( int argc, char **argv )
 {
-    TDEApplication app( argc, argv, "kicondialogtest" );
+    TDEApplication app( argc, argv, "kicondialogtest", true );
 
 //    TDEIconDialog::getIcon(); 
 

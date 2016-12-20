@@ -7,7 +7,7 @@ using namespace TDEIO;
 
 int main(int argc, char **argv)
 {
-    TDEApplication app(argc, argv, "kdefaultprogresstest");
+    TDEApplication app(argc, argv, "kdefaultprogresstest",true,true);
 
     DefaultProgress* dlg = new DefaultProgress();
     KURL src("http://this.host.doesn't.exist/this/dir/neither/andthisfileneither");

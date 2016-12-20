@@ -36,6 +36,17 @@ static void checkIcon( const KURL& url, const TQString& expectedIcon )
   }
 }
 
+static void checkExtention( const TQString& fileName, const TQString& expectedExtention ) {
+  TQString ext;
+  KMimeType::diagnoseFileName(fileName, ext);
+  if ( ext == expectedExtention) {
+    tqDebug("extension of %s is '%s: OK'", fileName.latin1(), ext.latin1());
+  } else {
+    tqDebug("extension of %s is '%s, expected %s!'", fileName.latin1(), ext.latin1(), expectedExtention.latin1());
+    exit(1);
+  }
+}
+
 int main( int argc, char** argv )
 {
   TDEInstance blah("kmimetypetest");
@@ -63,14 +74,8 @@ int main( int argc, char** argv )
     checkIcon( "trash:/foo/", "folder" );
   }
 
-  TQString pdf;
-  KMimeType::diagnoseFileName("foo.pdf", pdf);
-  tqDebug("extension: '%s'", pdf.latin1());
-  assert(pdf == TQString("*.pdf"));
-  TQString ps;
-  KMimeType::diagnoseFileName("foo.ps", ps);
-  tqDebug("extension: '%s'", ps.latin1());
-  assert(ps == TQString("*.ps"));
+  checkExtention(TQString::fromLatin1("foo.pdf"), TQString::fromLatin1("*.pdf"));
+  checkExtention(TQString::fromLatin1("foo.ps"), TQString::fromLatin1("*.ps"));
 
   return 0;
 }

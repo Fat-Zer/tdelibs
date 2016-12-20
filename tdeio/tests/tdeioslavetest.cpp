@@ -452,7 +452,7 @@ void KioslaveTest::slotDataReq(TDEIO::Job*, TQByteArray &data)
          "Hello world\n",
          "This is a test file\n",
          "You can safely delete it.\n",
-	 "BIG\n",
+         "BIG\n",
          0
        };
     const char *fileData = fileDataArray[putBuffer++];

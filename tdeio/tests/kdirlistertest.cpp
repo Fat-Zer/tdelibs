@@ -151,7 +151,7 @@ void KDirListerTest::completed()
 
 int main ( int argc, char *argv[] )
 {
-  TDEApplication app( argc, argv, "kdirlistertest" );
+  TDEApplication app( argc, argv, "kdirlistertest", true /*styles*/ );
 
   KDirListerTest *test = new KDirListerTest( 0 );
   test->show();
