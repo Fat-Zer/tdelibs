@@ -192,7 +192,7 @@ void process(struct config_rec* conf, const TQString & fn) {
 	KDE_struct_stat sb;
         TQCString fileName = TQFile::encodeName( fn );
 
-	int magic_flags = MAGIC_CONTINUE|MAGIC_ERROR|MAGIC_MIME_TYPE/*|MAGIC_DEBUG*/;
+	int magic_flags = MAGIC_ERROR|MAGIC_MIME_TYPE/*|MAGIC_DEBUG*/;
 	if (conf->followLinks) {
 		magic_flags |= MAGIC_SYMLINK;
 	}
@@ -299,7 +299,7 @@ KMimeMagicResult *KMimeMagic::findBufferType(const TQByteArray &array) {
 		conf->resultBuf = MIME_BINARY_ZEROSIZE;
 	}
 	else {
-		int magic_flags = MAGIC_CONTINUE|MAGIC_ERROR|MAGIC_MIME_TYPE/*|MAGIC_DEBUG*/;
+		int magic_flags = MAGIC_ERROR|MAGIC_MIME_TYPE/*|MAGIC_DEBUG*/;
 		if (conf->followLinks) {
 			magic_flags |= MAGIC_SYMLINK;
 		}
